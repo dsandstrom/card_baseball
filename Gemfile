@@ -31,9 +31,19 @@ gem 'bootsnap', '>= 1.4.4', require: false
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  # gem 'dotenv-rails', '~> 2.7'
+  # gem 'fabrication', '~> 2.22'
+  # gem 'guard', '~> 2.0'
+  # gem 'guard-bundler', require: false
+  # gem 'guard-rails', '~> 0.8.1', require: false
+  # gem 'guard-rspec', '~> 4.7.3', require: false
+  # gem 'rspec', '~> 3.10'
+  # gem 'rspec-rails', '~> 4.0'
 end
 
 group :development do
+  gem 'better_errors'
+  # gem 'binding_of_caller'
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
   gem 'web-console', '>= 4.1.0'
   # Display performance information such as SQL time and flame graphs for each request in your browser.
@@ -42,6 +52,10 @@ group :development do
   gem 'listen', '~> 3.3'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
+  # gem 'guard-livereload', '~> 2.5', require: false
+  # gem 'rubocop', '~> 1.4.2', require: false
+  # gem 'scss_lint', '~> 0.59', require: false
+  # gem 'scss_lint_reporter_junit', '~> 0.1', require: false
 end
 
 group :test do
@@ -50,6 +64,9 @@ group :test do
   gem 'selenium-webdriver'
   # Easy installation and use of web drivers to run system tests with browsers
   gem 'webdrivers'
+  # for circleci support
+  # gem 'rspec_junit_formatter', '~> 0.4.1'
+  # gem 'shoulda-matchers', '~> 3.1'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
