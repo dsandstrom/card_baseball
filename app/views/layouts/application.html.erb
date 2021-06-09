@@ -8,9 +8,16 @@
 
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'flash_messages', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
-    <%= yield %>
+    <div class="page">
+      <% flash_messages if defined?(flash_messages) %>
+
+      <div class="main-content">
+        <%= yield %>
+      </div>
+    </div>
   </body>
 </html>

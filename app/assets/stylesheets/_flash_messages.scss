@@ -1,0 +1,75 @@
+.flash-message {
+  display: block;
+  visibility: visible;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  right: 0;
+  margin: 2rem;
+  opacity: 1;
+
+  &.flash-message-success {
+    .flash-message-container {
+      border-color: $color-success;
+    }
+  }
+
+  &.flash-message-warning {
+    .flash-message-container {
+      border-color: $color-warning;
+    }
+  }
+
+  &.flash-message-danger {
+    .flash-message-container {
+      border-color: $color-danger;
+    }
+  }
+
+  &.hide {
+    visibility: hidden;
+    transition: visibility 300ms,
+                opacity 300ms ease-in;
+    opacity: 0;
+
+    .flash-message-container {
+      transition: box-shadow 200ms ease-in;
+      box-shadow: none;
+    }
+  }
+}
+
+.flash-message-container {
+  display: inline-block;
+  position: relative;
+  padding: 1rem 4.5rem 1rem 1.5rem;
+  border-left: .5rem solid $color-primary;
+  border-radius: $border-radius;
+  background: $off-white;
+  box-shadow: 0 3px 15px 1px rgba($ink, .3);
+}
+
+.flash-message-close-link,
+.notification-close-link {
+  padding: .5rem .8rem;
+  color: $red;
+  font-size: 1.8rem;
+  font-weight: bold;
+  line-height: 1;
+
+  &:hover {
+    color: $dark-red;
+  }
+}
+
+.flash-message-close-link {
+  position: absolute;
+  top: 0;
+  right: 0;
+  border-radius: $border-radius;
+  background: rgba($ink, .05);
+
+  &:hover {
+    background: rgba($ink, .09);
+  }
+}

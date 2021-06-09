@@ -1,0 +1,136 @@
+.button {
+  &.button-warning {
+    &:not(.button-clear) {
+      border-color: $color-warning;
+      background-color: $color-warning;
+    }
+
+    &.button-outline {
+      background-color: transparent;
+      color: $color-warning;
+    }
+
+    &.button-clear {
+      color: $color-warning;
+    }
+
+    &:focus,
+    &:hover {
+      &:not(.button-clear) {
+        border-color: $color-warning-hover;
+        background-color: $color-warning-hover;
+      }
+
+      &.button-outline {
+        border-color: $color-warning-hover;
+        background-color: transparent;
+        color: $color-warning-hover;
+      }
+
+      &.button-clear {
+        color: $color-warning-hover;
+      }
+    }
+  }
+
+  &.button-success {
+    &:not(.button-clear) {
+      border-color: $color-success;
+      background-color: $color-success;
+    }
+
+    &.button-outline {
+      background-color: transparent;
+      color: $color-success;
+    }
+
+    &.button-clear {
+      color: $color-success;
+    }
+
+    &:focus,
+    &:hover {
+      &:not(.button-clear) {
+        border-color: $color-success-hover;
+        background-color: $color-success-hover;
+      }
+
+      &.button-outline {
+        border-color: $color-success-hover;
+        background-color: transparent;
+        color: $color-success-hover;
+      }
+
+      &.button-clear {
+        color: $color-success-hover;
+      }
+    }
+  }
+
+  &.button-secondary {
+    &:not(.button-clear) {
+      border-color: $color-tertiary;
+      background-color: $color-tertiary;
+    }
+
+    &.button-outline {
+      background-color: transparent;
+      color: $color-tertiary;
+    }
+
+    &.button-clear {
+      color: $color-tertiary;
+    }
+
+    &:focus,
+    &:hover {
+      &:not(.button-clear) {
+        border-color: $color-secondary;
+        background-color: $color-secondary;
+      }
+
+      &.button-outline {
+        border-color: $color-secondary;
+        background-color: transparent;
+        color: $color-secondary;
+      }
+
+      &.button-clear {
+        color: $color-secondary;
+      }
+    }
+  }
+
+  &.button-disabled {
+    opacity: .7;
+    pointer-events: none;
+  }
+
+  &.button-wrap {
+    line-height: 1.3;
+    white-space: normal;
+  }
+
+  &.button-icon {
+    padding-right: 1.25rem;
+    padding-left: 1.25rem;
+  }
+}
+
+.button-wrapper {
+  display: flex;
+
+  .button {
+    margin: 0;
+
+    &:first-child {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+
+    &:last-child {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+  }
+}

@@ -1,0 +1,43 @@
+// basic
+$black: #000;
+$dark-gray: #696969;
+$light-gray: #e1e1e1;
+$white: #fff;
+
+// colormind
+$blue: #287eff;
+$light-blue: #5cbedb;
+$dark-blue: #1c1e34;
+
+$ink: #191919;
+$gray: #999;
+$pearl: #f6efec;
+$off-white: #f6f6f6;
+
+$light-brown: #c5b2b2;
+$lavender: #7b5c78;
+
+$green: #42a17f;
+$yellow: #bf9147;
+$red: #f44335;
+
+$dark-green: darken($green, 10%);
+$dark-yellow: darken($yellow, 10%);
+$dark-red: #d61a0b;
+$brown: darken($light-brown, 30%);
+
+$color-danger: $red;
+$color-warning: $yellow;
+$color-success: $green;
+
+$color-danger-hover: $dark-red;
+$color-warning-hover: darken($yellow, 5%);
+$color-success-hover: darken($green, 8%);
+
+// milligram
+$color-initial: $white;
+$color-primary: $blue;
+$color-secondary: $light-blue;
+$color-tertiary: $gray;
+$color-quaternary: $dark-blue;
+$color-quinary: $lavender;
