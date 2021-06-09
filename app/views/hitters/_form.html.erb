@@ -1,0 +1,152 @@
+<%= form_with(model: hitter) do |form| %>
+  <% if hitter.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(hitter.errors.count, "error") %> prohibited this hitter from being saved:</h2>
+
+      <ul>
+        <% hitter.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :first_name %>
+    <%= form.text_field :first_name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :middle_name %>
+    <%= form.text_field :middle_name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :last_name %>
+    <%= form.text_field :last_name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :roster_name %>
+    <%= form.text_field :roster_name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :bats %>
+    <%= form.text_field :bats %>
+  </div>
+
+  <div class="field">
+    <%= form.label :bunt %>
+    <%= form.text_field :bunt %>
+  </div>
+
+  <div class="field">
+    <%= form.label :speed %>
+    <%= form.number_field :speed %>
+  </div>
+
+  <div class="field">
+    <%= form.label :durability %>
+    <%= form.number_field :durability %>
+  </div>
+
+  <div class="field">
+    <%= form.label :overall_rating %>
+    <%= form.number_field :overall_rating %>
+  </div>
+
+  <div class="field">
+    <%= form.label :left_rating %>
+    <%= form.number_field :left_rating %>
+  </div>
+
+  <div class="field">
+    <%= form.label :right_rating %>
+    <%= form.number_field :right_rating %>
+  </div>
+
+  <div class="field">
+    <%= form.label :left_on_base_percentage %>
+    <%= form.number_field :left_on_base_percentage %>
+  </div>
+
+  <div class="field">
+    <%= form.label :left_slugging %>
+    <%= form.number_field :left_slugging %>
+  </div>
+
+  <div class="field">
+    <%= form.label :left_homeruns %>
+    <%= form.number_field :left_homeruns %>
+  </div>
+
+  <div class="field">
+    <%= form.label :right_on_base_percentage %>
+    <%= form.number_field :right_on_base_percentage %>
+  </div>
+
+  <div class="field">
+    <%= form.label :right_slugging %>
+    <%= form.number_field :right_slugging %>
+  </div>
+
+  <div class="field">
+    <%= form.label :right_homeruns %>
+    <%= form.number_field :right_homeruns %>
+  </div>
+
+  <div class="field">
+    <%= form.label :catcher_defense %>
+    <%= form.number_field :catcher_defense %>
+  </div>
+
+  <div class="field">
+    <%= form.label :first_base_defense %>
+    <%= form.number_field :first_base_defense %>
+  </div>
+
+  <div class="field">
+    <%= form.label :second_base_defense %>
+    <%= form.number_field :second_base_defense %>
+  </div>
+
+  <div class="field">
+    <%= form.label :third_base_defense %>
+    <%= form.number_field :third_base_defense %>
+  </div>
+
+  <div class="field">
+    <%= form.label :short_stop_defense %>
+    <%= form.number_field :short_stop_defense %>
+  </div>
+
+  <div class="field">
+    <%= form.label :center_field_defense %>
+    <%= form.number_field :center_field_defense %>
+  </div>
+
+  <div class="field">
+    <%= form.label :outfield_defense %>
+    <%= form.number_field :outfield_defense %>
+  </div>
+
+  <div class="field">
+    <%= form.label :pitcher_defense %>
+    <%= form.number_field :pitcher_defense %>
+  </div>
+
+  <div class="field">
+    <%= form.label :catcher_bar %>
+    <%= form.number_field :catcher_bar %>
+  </div>
+
+  <div class="field">
+    <%= form.label :pitcher_bar %>
+    <%= form.number_field :pitcher_bar %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

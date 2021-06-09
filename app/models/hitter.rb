@@ -1,0 +1,2 @@
+class Hitter < ApplicationRecord
+end
