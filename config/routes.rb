@@ -1,7 +1,10 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  resources :leagues
   resources :hitters
-  root to: 'hitters#index'
+  resources :leagues do
+    resources :teams
+  end
+
+  root to: 'leagues#index'
 end
