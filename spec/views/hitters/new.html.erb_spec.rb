@@ -1,43 +1,44 @@
-require 'rails_helper'
+# frozen_string_literal: true
+
+require "rails_helper"
 
 RSpec.describe "hitters/new", type: :view do
   before(:each) do
     assign(:hitter, Hitter.new(
-      first_name: "MyString",
-      middle_name: "MyString",
-      last_name: "MyString",
-      roster_name: "MyString",
-      bats: "MyString",
-      bunt: "MyString",
-      speed: 1,
-      durability: 1,
-      overall_rating: 1,
-      left_rating: 1,
-      right_rating: 1,
-      left_on_base_percentage: 1,
-      left_slugging: 1,
-      left_homeruns: 1,
-      right_on_base_percentage: 1,
-      right_slugging: 1,
-      right_homeruns: 1,
-      catcher_defense: 1,
-      first_base_defense: 1,
-      second_base_defense: 1,
-      third_base_defense: 1,
-      short_stop_defense: 1,
-      center_field_defense: 1,
-      outfield_defense: 1,
-      pitcher_defense: 1,
-      catcher_bar: 1,
-      pitcher_bar: 1
-    ))
+                      first_name: "MyString",
+                      middle_name: "MyString",
+                      last_name: "MyString",
+                      roster_name: "MyString",
+                      bats: "MyString",
+                      bunt: "MyString",
+                      speed: 1,
+                      durability: 1,
+                      overall_rating: 1,
+                      left_rating: 1,
+                      right_rating: 1,
+                      left_on_base_percentage: 1,
+                      left_slugging: 1,
+                      left_homeruns: 1,
+                      right_on_base_percentage: 1,
+                      right_slugging: 1,
+                      right_homeruns: 1,
+                      catcher_defense: 1,
+                      first_base_defense: 1,
+                      second_base_defense: 1,
+                      third_base_defense: 1,
+                      short_stop_defense: 1,
+                      center_field_defense: 1,
+                      outfield_defense: 1,
+                      pitcher_defense: 1,
+                      catcher_bar: 1,
+                      pitcher_bar: 1
+                    ))
   end
 
   it "renders new hitter form" do
     render
 
     assert_select "form[action=?][method=?]", hitters_path, "post" do
-
       assert_select "input[name=?]", "hitter[first_name]"
 
       assert_select "input[name=?]", "hitter[middle_name]"

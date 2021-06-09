@@ -1,36 +1,38 @@
-require 'rails_helper'
+# frozen_string_literal: true
+
+require "rails_helper"
 
 RSpec.describe "hitters/show", type: :view do
   before(:each) do
     @hitter = assign(:hitter, Hitter.create!(
-      first_name: "First Name",
-      middle_name: "Middle Name",
-      last_name: "Last Name",
-      roster_name: "Roster Name",
-      bats: "Bats",
-      bunt: "Bunt",
-      speed: 2,
-      durability: 3,
-      overall_rating: 4,
-      left_rating: 5,
-      right_rating: 6,
-      left_on_base_percentage: 7,
-      left_slugging: 8,
-      left_homeruns: 9,
-      right_on_base_percentage: 10,
-      right_slugging: 11,
-      right_homeruns: 12,
-      catcher_defense: 13,
-      first_base_defense: 14,
-      second_base_defense: 15,
-      third_base_defense: 16,
-      short_stop_defense: 17,
-      center_field_defense: 18,
-      outfield_defense: 19,
-      pitcher_defense: 20,
-      catcher_bar: 21,
-      pitcher_bar: 22
-    ))
+                                first_name: "First Name",
+                                middle_name: "Middle Name",
+                                last_name: "Last Name",
+                                roster_name: "Roster Name",
+                                bats: "Bats",
+                                bunt: "Bunt",
+                                speed: 2,
+                                durability: 3,
+                                overall_rating: 4,
+                                left_rating: 5,
+                                right_rating: 6,
+                                left_on_base_percentage: 7,
+                                left_slugging: 8,
+                                left_homeruns: 9,
+                                right_on_base_percentage: 10,
+                                right_slugging: 11,
+                                right_homeruns: 12,
+                                catcher_defense: 13,
+                                first_base_defense: 14,
+                                second_base_defense: 15,
+                                third_base_defense: 16,
+                                short_stop_defense: 17,
+                                center_field_defense: 18,
+                                outfield_defense: 19,
+                                pitcher_defense: 20,
+                                catcher_bar: 21,
+                                pitcher_bar: 22
+                              ))
   end
 
   it "renders attributes in <p>" do
