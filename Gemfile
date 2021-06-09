@@ -38,8 +38,7 @@ group :development, :test do
   # gem 'guard-bundler', require: false
   # gem 'guard-rails', '~> 0.8.1', require: false
   # gem 'guard-rspec', '~> 4.7.3', require: false
-  # gem 'rspec', '~> 3.10'
-  # gem 'rspec-rails', '~> 4.0'
+  gem 'rspec-rails', '~> 4.1'
 end
 
 group :development do
