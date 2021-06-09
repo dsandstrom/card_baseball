@@ -1,9 +1,23 @@
-<p id="notice"><%= notice %></p>
+<%= content_tag :h2, "#{@league.name} League Teams" %>
+
+<table>
+  <tbody>
+    <% @teams.each do |team| %>
+      <tr>
+        <td><%= team.name %></td>
+        <td><%= link_to 'Show', league_team_path(@league, team) %></td>
+        <td><%= link_to 'Edit', edit_league_team_path(@league, team) %></td>
+        <td><%= link_to 'Destroy', league_team_path(@league, team), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
 
 <p>
-  <strong>Name:</strong>
-  <%= @league.name %>
+  <%= link_to 'New Team', new_league_team_path(@league) %>
 </p>
 
-<%= link_to 'Edit', edit_league_path(@league) %> |
-<%= link_to 'Back', leagues_path %>
+<p>
+  <%= link_to 'Edit', edit_league_path(@league) %> |
+  <%= link_to 'Back', leagues_path %>
+</p>

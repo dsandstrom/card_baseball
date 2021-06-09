@@ -1,19 +1,13 @@
-<p id="notice"><%= notice %></p>
+<%= content_tag :h2, @team.name %>
+<p>from <%= link_to "#{@league.name} League", @league %></p>
+
+<% if @icon.present? %>
+  <div class="team-icon">
+    <%= image_tag @icon, alt: "#{@team.name} Icon" %>
+  </div>
+<% end %>
 
 <p>
-  <strong>Name:</strong>
-  <%= @team.name %>
+  <%= link_to 'Edit', edit_league_team_path(@league, @team) %> |
+  <%= link_to 'Back', @league %>
 </p>
-
-<p>
-  <strong>Icon:</strong>
-  <%= @team.icon %>
-</p>
-
-<p>
-  <strong>League:</strong>
-  <%= @team.league_id %>
-</p>
-
-<%= link_to 'Edit', edit_team_path(@team) %> |
-<%= link_to 'Back', teams_path %>

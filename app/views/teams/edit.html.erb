@@ -1,6 +1,9 @@
-<h1>Editing Team</h1>
+<%= content_tag :h2, @team.name %>
+<p>from <%= link_to "#{@league.name} League", @league %></p>
 
-<%= render 'form', team: @team %>
+<%= render 'form', league: @league, team: @team %>
 
-<%= link_to 'Show', @team %> |
-<%= link_to 'Back', teams_path %>
+<p>
+  <%= link_to 'Show', league_team_path(@league, @team) %> |
+  <%= link_to 'Back', @league %>
+</p>

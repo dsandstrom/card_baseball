@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class TeamsController < ApplicationController
+  before_action :set_league, except: :index
   before_action :set_team, only: %i[show edit update destroy]
 
   # GET /teams or /teams.json
@@ -13,7 +14,7 @@ class TeamsController < ApplicationController
 
   # GET /teams/new
   def new
-    @team = Team.new
+    @team = @league.teams.build
   end
 
   # GET /teams/1/edit
@@ -21,12 +22,13 @@ class TeamsController < ApplicationController
 
   # POST /teams or /teams.json
   def create
-    @team = Team.new(team_params)
+    @team = @league.teams.build(team_params)
 
     respond_to do |format|
       if @team.save
         format.html do
-          redirect_to @team, notice: 'Team was successfully created.'
+          redirect_to league_team_path(@league, @team),
+                      notice: 'Team was successfully created.'
         end
         format.json { render :show, status: :created, location: @team }
       else
@@ -41,7 +43,8 @@ class TeamsController < ApplicationController
     respond_to do |format|
       if @team.update(team_params)
         format.html do
-          redirect_to @team, notice: 'Team was successfully updated.'
+          redirect_to league_team_path(@league, @team),
+                      notice: 'Team was successfully updated.'
         end
         format.json { render :show, status: :ok, location: @team }
       else
@@ -56,7 +59,7 @@ class TeamsController < ApplicationController
     @team.destroy
     respond_to do |format|
       format.html do
-        redirect_to teams_url, notice: 'Team was successfully destroyed.'
+        redirect_to @league, notice: 'Team was successfully destroyed.'
       end
       format.json { head :no_content }
     end
@@ -65,8 +68,12 @@ class TeamsController < ApplicationController
   private
 
     # Use callbacks to share common setup or constraints between actions.
+    def set_league
+      @league = League.find(params[:league_id])
+    end
+
     def set_team
-      @team = Team.find(params[:id])
+      @team = @league.teams.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
