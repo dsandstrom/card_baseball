@@ -18,5 +18,15 @@ module CardBaseball
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+
+    config.generators do |g|
+      g.test_framework :rspec, fixture: false
+      g.assets false
+      g.helper false
+      g.jbuilder false
+      g.fixture_replacement :fabrication
+      g.request_specs false
+      g.routing_specs false
+    end
   end
 end
