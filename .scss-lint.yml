@@ -1,0 +1,7 @@
+scss_files: 'app/assets/stylesheets/**/*.scss'
+
+linters:
+  PropertySortOrder:
+    order: smacss
+  NestingDepth:
+    max_depth: 4

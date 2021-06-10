@@ -60,7 +60,7 @@ group :development do
   gem 'spring'
   # gem 'guard-livereload', '~> 2.5', require: false
   gem 'rubocop', '~> 1.16.1', require: false
-  # gem 'scss_lint', '~> 0.59', require: false
+  gem 'scss_lint', '~> 0.59', require: false
   # gem 'scss_lint_reporter_junit', '~> 0.1', require: false
 end
 
