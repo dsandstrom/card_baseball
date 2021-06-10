@@ -7,6 +7,5 @@ class HitterContract < ApplicationRecord
   belongs_to :team
 
   validates :hitter_id, presence: true
-  validates :team_id, presence: true
   validates :length, inclusion: { in: LENGTH_OPTIONS }
 end
