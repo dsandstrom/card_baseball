@@ -36,16 +36,17 @@ group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'dotenv-rails', '~> 2.7'
   # gem 'fabrication', '~> 2.22'
-  # gem 'guard', '~> 2.0'
-  # gem 'guard-bundler', require: false
-  # gem 'guard-rails', '~> 0.8.1', require: false
-  # gem 'guard-rspec', '~> 4.7.3', require: false
+  gem 'guard', '~> 2.0'
+  gem 'guard-bundler', require: false
+  gem 'guard-rails', '~> 0.8.1', require: false
+  gem 'guard-rspec', '~> 4.7.3', require: false
   gem 'rspec-rails', '~> 4.1'
 end
 
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller'
+  gem 'guard-livereload', '~> 2.5', require: false
   # Access an interactive console on exception pages or by calling 'console'
   # anywhere in the code.
   gem 'web-console', '>= 4.1.0'
@@ -57,11 +58,10 @@ group :development do
   gem 'rack-mini-profiler', '~> 2.0'
   # Spring speeds up development by keeping your application running in the
   # background. Read more: https://github.com/rails/spring
-  gem 'spring'
-  # gem 'guard-livereload', '~> 2.5', require: false
   gem 'rubocop', '~> 1.16.1', require: false
   gem 'scss_lint', '~> 0.59', require: false
   # gem 'scss_lint_reporter_junit', '~> 0.1', require: false
+  gem 'spring'
 end
 
 group :test do
