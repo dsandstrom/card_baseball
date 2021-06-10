@@ -4,14 +4,14 @@
 @import 'foundation-sites/scss/util/breakpoint';
 
 // global
-@import 'colors';
-@import 'milligram';
+@import 'partials/colors';
+@import 'partials/milligram';
 
 $border-radius: .2rem;
 
-@import 'typography';
-@import 'layout';
-@import 'buttons';
-@import 'forms';
-@import 'flash_messages';
-@import 'pagination';
+@import 'partials/typography';
+@import 'partials/layout';
+@import 'partials/buttons';
+@import 'partials/forms';
+@import 'partials/flash_messages';
+@import 'partials/pagination';
