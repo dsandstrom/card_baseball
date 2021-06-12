@@ -18,7 +18,7 @@
 # and, you'll have to watch "config/Guardfile" instead of "Guardfile"
 
 group :frontend do
-  guard 'livereload' do
+  guard 'livereload', apply_css_live: false do
     extensions = {
       css: :css,
       scss: :css,
