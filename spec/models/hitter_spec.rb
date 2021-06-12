@@ -32,6 +32,8 @@ RSpec.describe Hitter, type: :model do
 
   it { is_expected.to be_valid }
 
+  it { is_expected.to respond_to(:hitting_pitcher) }
+
   it { is_expected.to validate_length_of(:first_name).is_at_most(200) }
   it { is_expected.to validate_length_of(:middle_name).is_at_most(200) }
   it { is_expected.to validate_length_of(:last_name).is_at_most(200) }
