@@ -1,4 +1,8 @@
-<%= content_tag :h2, "#{@league.name} League Teams" %>
+<%= breadcrumbs([['Home', root_path]]) %>
+
+<%= content_tag :h2, "#{@league.name} League" %>
+
+<h3>Teams</h3>
 
 <table>
   <tbody>

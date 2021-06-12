@@ -1,5 +1,6 @@
+<%= breadcrumbs([['Home', root_path], ["#{@league.name} League", @league]]) %>
+
 <%= content_tag :h2, @team.name %>
-<p>from <%= link_to "#{@league.name} League", @league %></p>
 
 <% if @icon.present? %>
   <div class="team-icon">
