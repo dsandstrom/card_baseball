@@ -97,6 +97,7 @@ GEM
       http_parser.rb (~> 0.6.0)
     erubi (1.10.0)
     eventmachine (1.2.7)
+    fabrication (2.22.0)
     ffi (1.15.1)
     formatador (0.2.5)
     globalid (0.4.2)
@@ -261,6 +262,8 @@ GEM
       rubyzip (>= 1.2.2)
     semantic_range (3.0.0)
     shellany (0.0.1)
+    shoulda-matchers (4.5.1)
+      activesupport (>= 4.2.0)
     spring (2.1.1)
     sprockets (4.0.2)
       concurrent-ruby (~> 1.0)
@@ -308,6 +311,7 @@ DEPENDENCIES
   byebug
   capybara (>= 3.26)
   dotenv-rails (~> 2.7)
+  fabrication (~> 2.22)
   guard (~> 2.0)
   guard-bundler
   guard-livereload (~> 2.5)
@@ -324,6 +328,7 @@ DEPENDENCIES
   sass-rails (>= 6)
   scss_lint (~> 0.59)
   selenium-webdriver
+  shoulda-matchers (~> 4.0)
   spring
   turbolinks (~> 5)
   tzinfo-data

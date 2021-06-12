@@ -35,7 +35,7 @@ group :development, :test do
   # console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'dotenv-rails', '~> 2.7'
-  # gem 'fabrication', '~> 2.22'
+  gem 'fabrication', '~> 2.22'
   gem 'guard', '~> 2.0'
   gem 'guard-bundler', require: false
   gem 'guard-rails', '~> 0.8.1', require: false
@@ -72,7 +72,7 @@ group :test do
   gem 'webdrivers'
   # for circleci support
   # gem 'rspec_junit_formatter', '~> 0.4.1'
-  # gem 'shoulda-matchers', '~> 3.1'
+  gem 'shoulda-matchers', '~> 4.0'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
