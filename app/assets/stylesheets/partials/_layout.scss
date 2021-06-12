@@ -326,7 +326,7 @@ body {
 
     &:not(:last-child) {
       &::after {
-        content: '>';
+        content: '/';
         padding-left: .5rem;
         color: $gray;
       }

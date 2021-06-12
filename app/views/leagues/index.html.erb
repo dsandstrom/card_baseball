@@ -1,5 +1,7 @@
 <h1>Leagues</h1>
 
+<p><%= link_to 'Add League', new_league_path %></p>
+
 <table>
   <tbody>
     <% @leagues.each do |league| %>
@@ -11,7 +13,3 @@
     <% end %>
   </tbody>
 </table>
-
-<br>
-
-<%= link_to 'New League', new_league_path %>
