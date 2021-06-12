@@ -1,9 +1,5 @@
-<%= content_tag :h2, @team.name %>
-<p>from <%= link_to "#{@league.name} League", @league %></p>
+<%= league_team_breadcrumbs(@league, @team) %>
+
+<h1>Team Settings</h1>
 
 <%= render 'form', league: @league, team: @team %>
-
-<p>
-  <%= link_to 'Show', league_team_path(@league, @team) %> |
-  <%= link_to 'Back', @league %>
-</p>

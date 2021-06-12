@@ -3,10 +3,10 @@
 require "rails_helper"
 
 RSpec.describe "leagues/new", type: :view do
+  let(:league) { Fabricate.build(:league) }
+
   before(:each) do
-    assign(:league, League.new(
-                      name: "MyString"
-                    ))
+    assign(:league, league)
   end
 
   it "renders new league form" do

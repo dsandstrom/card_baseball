@@ -1,6 +1,6 @@
-<%= breadcrumbs([['Home', root_path], ["#{@league.name} League", @league]]) %>
+<%= league_breadcrumbs(@league) %>
 
-<%= content_tag :h2, @team.name %>
+<%= content_tag :h1, @team.name, class: 'team-name' %>
 
 <% if @icon.present? %>
   <div class="team-icon">
@@ -9,6 +9,5 @@
 <% end %>
 
 <p>
-  <%= link_to 'Edit', edit_league_team_path(@league, @team) %> |
-  <%= link_to 'Back', @league %>
+  <%= link_to 'Settings', edit_league_team_path(@league, @team) %>
 </p>

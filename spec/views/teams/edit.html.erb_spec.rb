@@ -3,23 +3,21 @@
 require "rails_helper"
 
 RSpec.describe "teams/edit", type: :view do
+  let(:league) { Fabricate(:league) }
+  let(:team) { Fabricate(:team, league: league) }
+  let(:path) { league_team_path(league, team) }
+
   before(:each) do
-    @team = assign(:team, Team.create!(
-                            name: "MyString",
-                            icon: "MyString",
-                            league_id: 1
-                          ))
+    assign(:league, league)
+    assign(:team, team)
   end
 
   it "renders the edit team form" do
     render
 
-    assert_select "form[action=?][method=?]", team_path(@team), "post" do
+    assert_select "form[action=?][method=?]", path, "post" do
       assert_select "input[name=?]", "team[name]"
-
       assert_select "input[name=?]", "team[icon]"
-
-      assert_select "input[name=?]", "team[league_id]"
     end
   end
 end

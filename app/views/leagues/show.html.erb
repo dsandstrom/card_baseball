@@ -1,16 +1,19 @@
-<%= breadcrumbs([['Home', root_path]]) %>
+<%= breadcrumbs([['All Leagues', root_path]]) %>
 
-<%= content_tag :h2, "#{@league.name} League" %>
+<%= content_tag :h1, "#{@league.name} League", class: 'league-name' %>
 
-<h3>Teams</h3>
+<p>
+  <%= link_to 'League Settings', edit_league_path(@league) %>
+</p>
+
+<h2>Teams</h2>
 
 <table>
-  <tbody>
+  <tbody class="teams">
     <% @teams.each do |team| %>
-      <tr>
-        <td><%= team.name %></td>
-        <td><%= link_to 'Show', league_team_path(@league, team) %></td>
-        <td><%= link_to 'Edit', edit_league_team_path(@league, team) %></td>
+      <tr id="team_<%= team.id %>" class="team">
+        <td><%= link_to team.name, league_team_path(@league, team) %></td>
+        <td><%= link_to 'Team Settings', edit_league_team_path(@league, team) %></td>
         <td><%= link_to 'Destroy', league_team_path(@league, team), method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
@@ -18,10 +21,5 @@
 </table>
 
 <p>
-  <%= link_to 'New Team', new_league_team_path(@league) %>
-</p>
-
-<p>
-  <%= link_to 'Edit', edit_league_path(@league) %> |
-  <%= link_to 'Back', leagues_path %>
+  <%= link_to 'Add Team to League', new_league_team_path(@league) %>
 </p>

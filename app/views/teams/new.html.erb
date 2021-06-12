@@ -1,5 +1,5 @@
-<%= content_tag :h2, "New #{@league.name} League Team" %>
+<%= league_breadcrumbs(@league) %>
+
+<%= content_tag :h1, "New Team" %>
 
 <%= render 'form', league: @league, team: @team %>
-
-<%= link_to 'Back', @league %>
