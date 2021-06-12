@@ -1,0 +1,8 @@
+$border-color: $light-gray;
+
+table {
+  td {
+    border-width: 2px;
+    border-color: $border-color;
+  }
+}
