@@ -1,15 +1,5 @@
 <%= form_with(model: hitter) do |form| %>
-  <% if hitter.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(hitter.errors.count, "error") %> prohibited this hitter from being saved:</h2>
-
-      <ul>
-        <% hitter.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
+  <%= form_errors(hitter) %>
 
   <div class="field">
     <%= form.label :first_name %>
