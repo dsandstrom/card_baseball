@@ -13,6 +13,7 @@ RSpec.describe Hitter, type: :model do
       roster_name: "Gwynn",
       bats: "L",
       bunt_grade: "A",
+      primary_position: 7,
       speed: 4,
       durability: 88,
       overall_rating: 75,
@@ -44,6 +45,8 @@ RSpec.describe Hitter, type: :model do
   it { is_expected.to validate_inclusion_of(:bunt_grade).in_array(%w[A B]) }
   it { is_expected.to validate_presence_of(:speed) }
   it { is_expected.to validate_inclusion_of(:speed).in_range(0..5) }
+  it { is_expected.to validate_presence_of(:primary_position) }
+  it { is_expected.to validate_inclusion_of(:primary_position).in_range(1..8) }
   it { is_expected.to validate_presence_of(:durability) }
   it { is_expected.to validate_inclusion_of(:durability).in_range(0..99) }
   it { is_expected.to validate_presence_of(:overall_rating) }

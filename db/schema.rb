@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_12_065216) do
+ActiveRecord::Schema.define(version: 2021_06_12_071836) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -53,7 +53,10 @@ ActiveRecord::Schema.define(version: 2021_06_12_065216) do
     t.integer "pitcher_bar"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "primary_position", null: false
+    t.boolean "hitting_pitcher", default: false
     t.index ["last_name"], name: "index_hitters_on_last_name"
+    t.index ["primary_position"], name: "index_hitters_on_primary_position"
     t.index ["roster_name"], name: "index_hitters_on_roster_name", unique: true
   end
 

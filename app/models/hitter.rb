@@ -3,6 +3,7 @@
 class Hitter < ApplicationRecord
   BATS_OPTIONS = %w[R L B].freeze
   BUNT_GRADE_OPTIONS = %w[A B].freeze
+  POSITION_RANGE = 1..8
   SPEED_RANGE = 0..5
   BAR_RANGE = 0..5
   RATING_RANGE = 0..99
@@ -19,6 +20,7 @@ class Hitter < ApplicationRecord
   validates :bats, presence: true, inclusion: { in: BATS_OPTIONS }
   validates :bunt_grade, presence: true, inclusion: { in: BUNT_GRADE_OPTIONS }
   validates :speed, presence: true, inclusion: { in: SPEED_RANGE }
+  validates :primary_position, presence: true, inclusion: { in: POSITION_RANGE }
   validates :durability, presence: true, inclusion: { in: RATING_RANGE }
   validates :overall_rating, presence: true, inclusion: { in: RATING_RANGE }
   validates :left_rating, presence: true, inclusion: { in: RATING_RANGE }
