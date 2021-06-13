@@ -105,4 +105,159 @@ RSpec.describe Hitter, type: :model do
 
   it { is_expected.to have_one(:hitter_contract) }
   it { is_expected.to have_one(:team) }
+
+  describe "#name" do
+    let(:hitter) { Fabricate.build(:hitter) }
+
+    context "when all names nil" do
+      before do
+        hitter.first_name = nil
+        hitter.middle_name = nil
+        hitter.last_name = nil
+      end
+
+      it "returns ''" do
+        expect(hitter.name).to eq("")
+      end
+    end
+
+    context "when first_name is not nil" do
+      before do
+        hitter.first_name = "Tom"
+        hitter.middle_name = nil
+        hitter.last_name = nil
+      end
+
+      it "returns ''" do
+        expect(hitter.name).to eq("Tom")
+      end
+    end
+
+    context "when last_name is not nil" do
+      before do
+        hitter.first_name = nil
+        hitter.middle_name = nil
+        hitter.last_name = "Glavine"
+      end
+
+      it "returns ''" do
+        expect(hitter.name).to eq("Glavine")
+      end
+    end
+
+    context "when first and last names " do
+      before do
+        hitter.first_name = " Tom"
+        hitter.middle_name = nil
+        hitter.last_name = "Glavine"
+      end
+
+      it "returns ''" do
+        expect(hitter.name).to eq("Tom Glavine")
+      end
+    end
+
+    context "when all names " do
+      before do
+        hitter.first_name = "Tom"
+        hitter.middle_name = "South Paw"
+        hitter.last_name = "Glavine"
+      end
+
+      it "returns ''" do
+        expect(hitter.name).to eq('Tom "South Paw" Glavine')
+      end
+    end
+  end
+
+  describe "#set_roster_name" do
+    let(:hitter) { Fabricate.build(:hitter, roster_name: nil) }
+
+    context "when roster_name is set" do
+      before do
+        hitter.last_name = "Something Else"
+        hitter.roster_name = "Something"
+      end
+
+      it "doesn't change it" do
+        expect do
+          hitter.set_roster_name
+        end.not_to change(hitter, :roster_name)
+        expect(hitter).to be_valid
+      end
+    end
+
+    context "when last_name is blank" do
+      before do
+        hitter.last_name = ""
+      end
+
+      it "doesn't change it" do
+        expect do
+          hitter.set_roster_name
+        end.not_to change(hitter, :roster_name)
+        expect(hitter).not_to be_valid
+      end
+    end
+
+    context "when roster_name is blank" do
+      before do
+        hitter.first_name = "Trevor"
+        hitter.last_name = "Hoffman"
+      end
+
+      it "changes it the last_name" do
+        expect do
+          hitter.set_roster_name
+        end.to change(hitter, :roster_name).to("Hoffman")
+        expect(hitter).to be_valid
+      end
+    end
+
+    context "when last_name is already taken" do
+      before do
+        Fabricate(:hitter, roster_name: "Hoffman")
+        hitter.first_name = "Trevor"
+        hitter.last_name = "Hoffman"
+      end
+
+      it "adds first name initial" do
+        expect do
+          hitter.set_roster_name
+        end.to change(hitter, :roster_name).to("T.Hoffman")
+        expect(hitter).to be_valid
+      end
+    end
+
+    context "when first_name initial is already taken" do
+      before do
+        Fabricate(:hitter, roster_name: "Hoffman")
+        Fabricate(:hitter, roster_name: "T.Hoffman")
+        hitter.first_name = "Trevor"
+        hitter.last_name = "Hoffman"
+      end
+
+      it "adds first name initial" do
+        expect do
+          hitter.set_roster_name
+        end.to change(hitter, :roster_name).to("Tr.Hoffman")
+        expect(hitter).to be_valid
+      end
+    end
+
+    context "when last_name is already taken and no first name" do
+      before do
+        Fabricate(:hitter, roster_name: "Hoffman")
+        hitter.first_name = nil
+        hitter.last_name = "Hoffman"
+      end
+
+      it "adds first name initial" do
+        expect do
+          hitter.set_roster_name
+        end.to change(hitter, :roster_name).to("Hoffman")
+        expect(hitter).not_to be_valid
+      end
+    end
+  end
 end

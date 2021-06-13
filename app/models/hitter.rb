@@ -54,7 +54,7 @@ class Hitter < ApplicationRecord
   # INSTANCE
 
   def name
-    @name ||= "#{first_name} #{middle_name} #{last_name}".squeeze(' ')
+    @name ||= build_name
   end
 
   def set_roster_name
@@ -62,11 +62,21 @@ class Hitter < ApplicationRecord
 
     range = 0
     self.roster_name = last_name
+    return if first_name.blank?
 
     while Hitter.find_by(roster_name: roster_name)
+
       prefix = first_name[0..range]
-      range += range
       self.roster_name = "#{prefix}.#{last_name}"
+      range += 1
     end
   end
+
+  private
+
+    def build_name
+      temp = first_name.to_s
+      temp += " \"#{middle_name}\" " if middle_name.present?
+      "#{temp} #{last_name}".squish
+    end
 end
