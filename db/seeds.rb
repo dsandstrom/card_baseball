@@ -13,7 +13,7 @@ class Seeds
 
   private
 
-    def hitter_attrs
+    def hitter_attrs # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
       attrs = {}
       attrs[:first_name] = Faker::Name.male_first_name
       attrs[:middle_name] = Faker::Name.middle_name if rand(10).zero?
