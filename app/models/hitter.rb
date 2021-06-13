@@ -50,4 +50,23 @@ class Hitter < ApplicationRecord
                                    allow_nil: true
   validates :catcher_bar, inclusion: { in: BAR_RANGE }, allow_nil: true
   validates :pitcher_bar, inclusion: { in: BAR_RANGE }, allow_nil: true
+
+  # INSTANCE
+
+  def name
+    @name ||= "#{first_name} #{middle_name} #{last_name}".squeeze(' ')
+  end
+
+  def set_roster_name
+    return if roster_name.present? || last_name.blank?
+
+    range = 0
+    self.roster_name = last_name
+
+    while Hitter.find_by(roster_name: roster_name)
+      prefix = first_name[0..range]
+      range += range
+      self.roster_name = "#{prefix}.#{last_name}"
+    end
+  end
 end

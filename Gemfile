@@ -36,6 +36,7 @@ group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'dotenv-rails', '~> 2.7'
   gem 'fabrication', '~> 2.22'
+  gem 'faker', '~> 2.18', require: false
   gem 'guard', '~> 2.0'
   gem 'guard-bundler', require: false
   gem 'guard-rails', '~> 0.8.1', require: false

@@ -1,14 +1,13 @@
-<p id="notice"><%= notice %></p>
-
 <h1>Hitters</h1>
+
+<p>
+  <%= link_to 'Add Hitter', new_hitter_path %>
+</p>
 
 <table>
   <thead>
     <tr>
-      <th>First name</th>
-      <th>Middle name</th>
-      <th>Last name</th>
-      <th>Roster name</th>
+      <th>Name</th>
       <th>Bats</th>
       <th>Bunt</th>
       <th>Speed</th>
@@ -30,21 +29,19 @@
       <th>Center field defense</th>
       <th>Outfield defense</th>
       <th>Pitcher defense</th>
-      <th>Catcher bar</th>
-      <th>Pitcher bar</th>
-      <th colspan="3"></th>
+      <th>Catcher Bar</th>
+      <th>Pitcher Bar</th>
+      <th>Roster name</th>
+      <th colspan="2"></th>
     </tr>
   </thead>
 
-  <tbody>
+  <tbody class="hitters">
     <% @hitters.each do |hitter| %>
-      <tr>
-        <td><%= hitter.first_name %></td>
-        <td><%= hitter.middle_name %></td>
-        <td><%= hitter.last_name %></td>
-        <td><%= hitter.roster_name %></td>
+      <tr class="hitter" id="hitter_<%= hitter.id %>">
+        <td><%= link_to hitter.name, hitter, class: 'hitter-name' %></td>
         <td><%= hitter.bats %></td>
-        <td><%= hitter.bunt %></td>
+        <td><%= hitter.bunt_grade %></td>
         <td><%= hitter.speed %></td>
         <td><%= hitter.durability %></td>
         <td><%= hitter.overall_rating %></td>
@@ -66,14 +63,10 @@
         <td><%= hitter.pitcher_defense %></td>
         <td><%= hitter.catcher_bar %></td>
         <td><%= hitter.pitcher_bar %></td>
-        <td><%= link_to 'Show', hitter %></td>
-        <td><%= link_to 'Edit', edit_hitter_path(hitter) %></td>
+        <td><%= hitter.roster_name %></td>
+        <td><%= link_to 'Settings', edit_hitter_path(hitter) %></td>
         <td><%= link_to 'Destroy', hitter, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
-
-<br>
-
-<%= link_to 'New Hitter', new_hitter_path %>

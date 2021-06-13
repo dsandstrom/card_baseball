@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# TODO: add move team controller or action
+
 class TeamsController < ApplicationController
   before_action :set_league, except: :index
   before_action :set_team, only: %i[show edit update destroy]
@@ -78,6 +80,6 @@ class TeamsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def team_params
-      params.require(:team).permit(:name, :icon, :league_id)
+      params.require(:team).permit(:name, :icon)
     end
 end
