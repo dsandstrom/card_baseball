@@ -22,7 +22,7 @@ class CreateHitters < ActiveRecord::Migration[6.1]
       t.integer :first_base_defense
       t.integer :second_base_defense
       t.integer :third_base_defense
-      t.integer :short_stop_defense
+      t.integer :shortstop_defense
       t.integer :center_field_defense
       t.integer :outfield_defense
       t.integer :pitcher_defense

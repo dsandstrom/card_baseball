@@ -47,8 +47,8 @@ class Hitter < ApplicationRecord
                                   allow_nil: true
   validates :third_base_defense, inclusion: { in: DEFENSE_RANGE },
                                  allow_nil: true
-  validates :short_stop_defense, inclusion: { in: DEFENSE_RANGE },
-                                 allow_nil: true
+  validates :shortstop_defense, inclusion: { in: DEFENSE_RANGE },
+                                allow_nil: true
   validates :outfield_defense, inclusion: { in: DEFENSE_RANGE }, allow_nil: true
   validates :center_field_defense, inclusion: { in: DEFENSE_RANGE },
                                    allow_nil: true

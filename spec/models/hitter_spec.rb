@@ -91,7 +91,7 @@ RSpec.describe Hitter, type: :model do
     is_expected.to validate_inclusion_of(:third_base_defense).in_range(-20..20)
   end
   it do
-    is_expected.to validate_inclusion_of(:short_stop_defense).in_range(-20..20)
+    is_expected.to validate_inclusion_of(:shortstop_defense).in_range(-20..20)
   end
   it do
     is_expected.to validate_inclusion_of(:center_field_defense)

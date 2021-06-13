@@ -76,6 +76,6 @@ class HittersController < ApplicationController
     # Only allow a list of trusted parameters through.
     def hitter_params
       params.require(:hitter).permit(:first_name, :middle_name, :last_name,
-                                     :roster_name, :bats, :bunt, :speed, :durability, :overall_rating, :left_rating, :right_rating, :left_on_base_percentage, :left_slugging, :left_homeruns, :right_on_base_percentage, :right_slugging, :right_homeruns, :catcher_defense, :first_base_defense, :second_base_defense, :third_base_defense, :short_stop_defense, :center_field_defense, :outfield_defense, :pitcher_defense, :catcher_bar, :pitcher_bar)
+                                     :roster_name, :bats, :bunt, :speed, :durability, :overall_rating, :left_rating, :right_rating, :left_on_base_percentage, :left_slugging, :left_homeruns, :right_on_base_percentage, :right_slugging, :right_homeruns, :catcher_defense, :first_base_defense, :second_base_defense, :third_base_defense, :shortstop_defense, :center_field_defense, :outfield_defense, :pitcher_defense, :catcher_bar, :pitcher_bar)
     end
 end

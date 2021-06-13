@@ -38,7 +38,7 @@ RSpec.describe "hitters/new", type: :view do
       assert_select "input[name=?]", "hitter[first_base_defense]"
       assert_select "input[name=?]", "hitter[second_base_defense]"
       assert_select "input[name=?]", "hitter[third_base_defense]"
-      assert_select "input[name=?]", "hitter[short_stop_defense]"
+      assert_select "input[name=?]", "hitter[shortstop_defense]"
       assert_select "input[name=?]", "hitter[center_field_defense]"
       assert_select "input[name=?]", "hitter[outfield_defense]"
       assert_select "input[name=?]", "hitter[pitcher_defense]"
