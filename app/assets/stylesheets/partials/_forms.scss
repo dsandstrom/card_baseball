@@ -125,7 +125,7 @@ label {
 }
 
 .error-card {
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
   border-radius: $border-radius;
   background: $pearl;
   color: $black;
@@ -140,7 +140,11 @@ label {
   }
 
   .card-body {
-    padding: 2rem;
+    padding: 1.5rem;
+  }
+
+  p {
+    margin-bottom: 1rem;
   }
 
   ol {
