@@ -8,6 +8,10 @@ class Hitter < ApplicationRecord
   BAR_RANGE = 0..5
   RATING_RANGE = 0..99
   DEFENSE_RANGE = -20..20
+  POSITION_OPTIONS =
+    [['Pitcher', 1], ['Catcher', 2], ['First Base', 3], ['Second Base', 4],
+     ['Third Base', 5], ['Shortstop', 6], ['Outfield', 7],
+     ['Center Field', 8]].freeze
 
   has_one :hitter_contract
   has_one :team, through: :hitter_contract

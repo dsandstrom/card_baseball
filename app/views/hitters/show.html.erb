@@ -1,16 +1,9 @@
-<p>
-  <strong>First name:</strong>
-  <%= @hitter.first_name %>
-</p>
+<%= hitter_breadcrumbs %>
+
+<%= content_tag :h1, @hitter.name, class: 'hitter-name' %>
 
 <p>
-  <strong>Middle name:</strong>
-  <%= @hitter.middle_name %>
-</p>
-
-<p>
-  <strong>Last name:</strong>
-  <%= @hitter.last_name %>
+  <%= link_to 'Edit Hitter', edit_hitter_path(@hitter) %>
 </p>
 
 <p>
@@ -24,8 +17,8 @@
 </p>
 
 <p>
-  <strong>Bunt:</strong>
-  <%= @hitter.bunt %>
+  <strong>Bunt Grade:</strong>
+  <%= @hitter.bunt_grade %>
 </p>
 
 <p>
@@ -132,6 +125,3 @@
   <strong>Pitcher bar:</strong>
   <%= @hitter.pitcher_bar %>
 </p>
-
-<%= link_to 'Edit', edit_hitter_path(@hitter) %> |
-<%= link_to 'Back', hitters_path %>

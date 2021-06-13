@@ -22,10 +22,10 @@ module BreadcrumbsHelper
                  [team.name, league_team_path(league, team)]])
   end
 
-  def hitter_breadcrumbs(hitter)
-    breadcrumbs([['Home', root_path],
-                 ['All Hitters', hitters_path],
-                 [hitter.name, hitter_path(hitter)]])
+  def hitter_breadcrumbs(hitter = nil)
+    pages = [['Home', root_path], ['All Hitters', hitters_path]]
+    pages << [hitter.name, hitter_path(hitter)] if hitter
+    breadcrumbs(pages)
   end
 
   private

@@ -7,28 +7,38 @@
   </div>
 
   <div class="field">
-    <%= form.label :middle_name %>
+    <%= form.label :middle_name, 'Nickname' %>
     <%= form.text_field :middle_name %>
   </div>
 
   <div class="field">
-    <%= form.label :last_name %>
+    <%= required_field_label form, :last_name %>
     <%= form.text_field :last_name %>
   </div>
 
   <div class="field">
     <%= form.label :roster_name %>
-    <%= form.text_field :roster_name %>
+    <%= form.text_field :roster_name, placeholder: 'leave blank for default' %>
   </div>
 
   <div class="field">
     <%= form.label :bats %>
-    <%= form.text_field :bats %>
+    <%= form.select :bats, Hitter::BATS_OPTIONS %>
   </div>
 
   <div class="field">
-    <%= form.label :bunt %>
-    <%= form.text_field :bunt %>
+    <%= form.label :bunt_grade %>
+    <%= form.select :bunt_grade, Hitter::BUNT_GRADE_OPTIONS %>
+  </div>
+
+  <div class="field">
+    <%= form.label :primary_position %>
+    <%= form.select :primary_position, Hitter::POSITION_OPTIONS %>
+  </div>
+
+  <div class="field">
+    <%= form.label :hitting_pitcher %>
+    <%= form.check_box :hitting_pitcher %>
   </div>
 
   <div class="field">
