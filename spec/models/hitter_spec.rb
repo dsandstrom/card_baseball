@@ -103,7 +103,7 @@ RSpec.describe Hitter, type: :model do
   it { is_expected.to validate_inclusion_of(:catcher_bar).in_range(0..5) }
   it { is_expected.to validate_inclusion_of(:pitcher_bar).in_range(0..5) }
 
-  it { is_expected.to have_one(:hitter_contract) }
+  it { is_expected.to have_one(:contract) }
   it { is_expected.to have_one(:team) }
 
   describe "#name" do

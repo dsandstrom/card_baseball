@@ -13,8 +13,8 @@ class Hitter < ApplicationRecord
      ['Third Base', 5], ['Shortstop', 6], ['Outfield', 7],
      ['Center Field', 8]].freeze
 
-  has_one :hitter_contract, dependent: :destroy
-  has_one :team, through: :hitter_contract
+  has_one :contract, class_name: 'HitterContract', dependent: :destroy
+  has_one :team, through: :contract
 
   validates :first_name, length: { maximum: 200 }
   validates :middle_name, length: { maximum: 200 }
