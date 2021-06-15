@@ -3,5 +3,5 @@
 class League < ApplicationRecord
   validates :name, presence: true, uniqueness: { case_sensitive: false }
 
-  has_many :teams
+  has_many :teams, dependent: :nullify
 end

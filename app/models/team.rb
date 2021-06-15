@@ -5,6 +5,6 @@ class Team < ApplicationRecord
   validates :league_id, presence: true
 
   belongs_to :league
-  has_many :hitter_contracts
+  has_many :hitter_contracts, dependent: :nullify
   has_many :hitters, through: :hitter_contracts
 end
