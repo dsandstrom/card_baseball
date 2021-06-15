@@ -18,7 +18,8 @@
 
   <div class="field">
     <%= form.label :roster_name %>
-    <%= form.text_field :roster_name, placeholder: 'leave blank for default' %>
+    <%= form.text_field :roster_name,
+                        placeholder: 'leave blank for default' %>
   </div>
 
   <div class="field">
@@ -33,7 +34,8 @@
 
   <div class="field">
     <%= form.label :primary_position %>
-    <%= form.select :primary_position, Hitter::POSITION_OPTIONS %>
+    <%= form.select :primary_position,
+                    Hitter.position_form_options %>
   </div>
 
   <div class="field">

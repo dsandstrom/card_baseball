@@ -106,6 +106,20 @@ RSpec.describe Hitter, type: :model do
   it { is_expected.to have_one(:contract) }
   it { is_expected.to have_one(:team) }
 
+  # CLASS
+
+  describe ".position_form_options" do
+    it "returns [position name, position number] format" do
+      expect(Hitter.position_form_options).to eq(
+        [["Pitcher", 1], ["Catcher", 2], ["First Base", 3], ["Second Base", 4],
+         ["Third Base", 5], ["Shortstop", 6], ["Outfield", 7],
+         ["Center Field", 8]]
+      )
+    end
+  end
+
+  # INSTANCE
+
   describe "#name" do
     let(:hitter) { Fabricate.build(:hitter) }
 

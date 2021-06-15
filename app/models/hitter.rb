@@ -8,10 +8,16 @@ class Hitter < ApplicationRecord
   BAR_RANGE = 0..5
   RATING_RANGE = 0..99
   DEFENSE_RANGE = -20..20
-  POSITION_OPTIONS =
-    [['Pitcher', 1], ['Catcher', 2], ['First Base', 3], ['Second Base', 4],
-     ['Third Base', 5], ['Shortstop', 6], ['Outfield', 7],
-     ['Center Field', 8]].freeze
+  POSITION_OPTIONS = {
+    1 => { initial: 'P', name: 'Pitcher' },
+    2 => { initial: 'C', name: 'Catcher' },
+    3 => { initial: '1B', name: 'First Base' },
+    4 => { initial: '2B', name: 'Second Base' },
+    5 => { initial: '3B', name: 'Third Base' },
+    6 => { initial: 'SS', name: 'Shortstop' },
+    7 => { initial: 'OF', name: 'Outfield' },
+    8 => { initial: 'CF', name: 'Center Field' }
+  }.freeze
 
   has_one :contract, class_name: 'HitterContract', dependent: :destroy
   has_one :team, through: :contract
@@ -24,7 +30,8 @@ class Hitter < ApplicationRecord
   validates :bats, presence: true, inclusion: { in: BATS_OPTIONS }
   validates :bunt_grade, presence: true, inclusion: { in: BUNT_GRADE_OPTIONS }
   validates :speed, presence: true, inclusion: { in: SPEED_RANGE }
-  validates :primary_position, presence: true, inclusion: { in: POSITION_RANGE }
+  validates :primary_position, presence: true,
+                               inclusion: { in: POSITION_OPTIONS.keys }
   validates :durability, presence: true, inclusion: { in: RATING_RANGE }
   validates :overall_rating, presence: true, inclusion: { in: RATING_RANGE }
   validates :left_rating, presence: true, inclusion: { in: RATING_RANGE }
@@ -54,6 +61,14 @@ class Hitter < ApplicationRecord
                                    allow_nil: true
   validates :catcher_bar, inclusion: { in: BAR_RANGE }, allow_nil: true
   validates :pitcher_bar, inclusion: { in: BAR_RANGE }, allow_nil: true
+
+  # CLASS
+
+  def self.position_form_options
+    POSITION_OPTIONS.map do |key, value|
+      [value[:name], key]
+    end
+  end
 
   # INSTANCE
 
