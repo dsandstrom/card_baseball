@@ -3,11 +3,21 @@
 require 'faker'
 
 class Seeds
-  def add_hitters(quanity = 10)
+  def add_hitters(quanity = 100)
     quanity.times do
       hitter = Hitter.new(hitter_attrs)
       hitter.set_roster_name
       hitter.save
+    end
+  end
+
+  def add_teams(league_quantity: 4, team_quantity: 5)
+    league_quantity.times do
+      league = League.create!(name: Faker::Compass.unique.direction.titleize)
+
+      team_quantity.times do
+        league.teams.create!(name: Faker::Team.unique.creature.titleize)
+      end
     end
   end
 
@@ -38,3 +48,4 @@ end
 
 seeds = Seeds.new
 seeds.add_hitters
+seeds.add_teams
