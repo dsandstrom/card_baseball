@@ -1,7 +1,13 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  resources :hitters
+  resources :hitters do
+    get 'contract' => 'hitter_contracts#edit', as: :contract
+    post 'contract' => 'hitter_contracts#update'
+    patch 'contract' => 'hitter_contracts#update'
+    delete 'contract' => 'hitter_contracts#destroy'
+  end
+
   resources :leagues do
     resources :teams, except: :index
   end
