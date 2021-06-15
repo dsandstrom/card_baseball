@@ -10,6 +10,10 @@ module ApplicationHelper
     end
   end
 
+  def divider
+    content_tag :span, '|', class: 'divider'
+  end
+
   private
 
     def enable_page_title(title)

@@ -1,0 +1,8 @@
+<strong>Contract:</strong>
+
+<%= pluralize(hitter_contract.length, 'year') %>
+<% if hitter_contract.team %>
+  with <%= hitter_contract.team.name %>
+<% else %>
+  <em>unassigned</em>
+<% end %>

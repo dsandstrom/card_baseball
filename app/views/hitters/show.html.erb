@@ -7,6 +7,17 @@
 </p>
 
 <p>
+  <% if @contract %>
+    <%= render @contract %>
+  <% else %>
+    No contract
+  <% end %>
+
+  <%= divider %>
+  <%= link_to 'change', hitter_contract_path(@hitter) %>
+</p>
+
+<p>
   <strong>Roster name:</strong>
   <%= @hitter.roster_name %>
 </p>

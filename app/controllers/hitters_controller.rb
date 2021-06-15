@@ -16,7 +16,9 @@ class HittersController < ApplicationController
     @hitters = Hitter.all
   end
 
-  def show; end
+  def show
+    @contract = @hitter.contract
+  end
 
   def new
     @hitter = Hitter.new
