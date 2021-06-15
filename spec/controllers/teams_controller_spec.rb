@@ -84,7 +84,7 @@ RSpec.describe TeamsController, type: :controller do
     end
 
     context "when invalid params" do
-      it "doesn't create a new Team" do
+      it "doesn't change the requested Team's name" do
         expect do
           put :update, params: { league_id: league.to_param,
                                  id: team.to_param,
