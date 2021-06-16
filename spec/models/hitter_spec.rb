@@ -274,4 +274,98 @@ RSpec.describe Hitter, type: :model do
       end
     end
   end
+
+  describe "#primary_position_initial" do
+    context "when primary_position is nil" do
+      before { subject.primary_position = nil }
+
+      it "returns nil" do
+        expect(subject.primary_position_initial).to eq(nil)
+      end
+    end
+
+    context "when primary_position is ''" do
+      before { subject.primary_position = "" }
+
+      it "returns nil" do
+        expect(subject.primary_position_initial).to eq(nil)
+      end
+    end
+
+    context "when primary_position is 1" do
+      before { subject.primary_position = 1 }
+
+      context "and hitting_pitcher is false" do
+        before { subject.hitting_pitcher = false }
+
+        it "returns 'P'" do
+          expect(subject.primary_position_initial).to eq("P")
+        end
+      end
+
+      context "and hitting_pitcher is true" do
+        before { subject.hitting_pitcher = true }
+
+        it "returns 'P'" do
+          expect(subject.primary_position_initial).to eq("P+H")
+        end
+      end
+    end
+
+    context "when primary_position is 2" do
+      before { subject.primary_position = 2 }
+
+      it "returns 'C'" do
+        expect(subject.primary_position_initial).to eq("C")
+      end
+    end
+
+    context "when primary_position is 3" do
+      before { subject.primary_position = 3 }
+
+      it "returns '1B'" do
+        expect(subject.primary_position_initial).to eq("1B")
+      end
+    end
+
+    context "when primary_position is 4" do
+      before { subject.primary_position = 4 }
+
+      it "returns '2B'" do
+        expect(subject.primary_position_initial).to eq("2B")
+      end
+    end
+
+    context "when primary_position is 5" do
+      before { subject.primary_position = 5 }
+
+      it "returns '3B'" do
+        expect(subject.primary_position_initial).to eq("3B")
+      end
+    end
+
+    context "when primary_position is 6" do
+      before { subject.primary_position = 6 }
+
+      it "returns 'SS'" do
+        expect(subject.primary_position_initial).to eq("SS")
+      end
+    end
+
+    context "when primary_position is 7" do
+      before { subject.primary_position = 7 }
+
+      it "returns 'OF'" do
+        expect(subject.primary_position_initial).to eq("OF")
+      end
+    end
+
+    context "when primary_position is 8" do
+      before { subject.primary_position = 8 }
+
+      it "returns 'CF'" do
+        expect(subject.primary_position_initial).to eq("CF")
+      end
+    end
+  end
 end

@@ -91,11 +91,25 @@ class Hitter < ApplicationRecord
     end
   end
 
+  def primary_position_initial
+    @primary_position_initial ||= build_primary_position_initial
+  end
+
   private
 
     def build_name
       temp = first_name.to_s
       temp += " \"#{middle_name}\" " if middle_name.present?
       "#{temp} #{last_name}".squish
+    end
+
+    def build_primary_position_initial
+      return if primary_position.blank?
+
+      if primary_position == 1 && hitting_pitcher?
+        'P+H'
+      else
+        POSITION_OPTIONS[primary_position][:initial]
+      end
     end
 end
