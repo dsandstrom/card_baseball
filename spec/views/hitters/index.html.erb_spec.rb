@@ -17,13 +17,9 @@ RSpec.describe "hitters/index", type: :view do
 
     assert_select "#hitter_#{first_hitter.id}"
     expect(rendered).to have_link(nil, href: first_path)
-    expect(rendered).to have_link(nil, href: edit_hitter_path(first_hitter))
-    assert_select "a[href='#{first_path}'][data-method='delete']"
 
     assert_select "#hitter_#{second_hitter.id}"
     expect(rendered).to have_link(nil, href: second_path)
-    expect(rendered).to have_link(nil, href: edit_hitter_path(second_hitter))
-    assert_select "a[href='#{second_path}'][data-method='delete']"
   end
 
   it "renders new hitter link" do

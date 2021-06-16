@@ -1,8 +1,23 @@
 $border-color: $light-gray;
 
 table {
+  td,
+  th {
+    padding: .5rem;
+  }
+
+  th {
+    font-size: 1.2rem;
+    text-transform: uppercase;
+  }
+
   td {
     border-width: 2px;
     border-color: $border-color;
+  }
+
+  .hitter-name,
+  .roster-name {
+    white-space: nowrap;
   }
 }

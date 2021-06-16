@@ -1,0 +1,16 @@
+<%
+  contract = hitter.contract
+  team = hitter.team
+%>
+
+<% if contract %>
+  <% if team %>
+    <%= link_to team.name, league_team_path(team.league, team) %>
+  <% else %>
+    <%= content_tag :span, 'Free Agent', class: 'no-wrap' %>
+  <% end %>
+  <%= content_tag :span, pluralize(contract.length, 'year'),
+                  class: 'no-wrap' %>
+<% else %>
+  none
+<% end %>

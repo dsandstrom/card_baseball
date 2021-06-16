@@ -20,4 +20,10 @@ RSpec.describe "hitters/show", type: :view do
 
     expect(rendered).to have_link(nil, href: edit_hitter_path(hitter))
   end
+
+  it "renders destroy link" do
+    render
+
+    assert_select "a[href='#{hitter_path(hitter)}'][data-method='delete']"
+  end
 end
