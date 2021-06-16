@@ -1,23 +1,78 @@
 $border-color: $light-gray;
 
 table {
-  td,
-  th {
-    padding: .5rem;
-  }
-
-  th {
-    font-size: 1.2rem;
-    text-transform: uppercase;
-  }
-
-  td {
-    border-width: 2px;
-    border-color: $border-color;
-  }
+  border-collapse: collapse;
 
   .hitter-name,
   .roster-name {
     white-space: nowrap;
+  }
+}
+
+thead {
+  th {
+    &.vs-left,
+    &.defense {
+      border-left: 1px solid $light-gray;
+      background-color: $light-gray;
+    }
+  }
+
+  tr {
+    background-color: $off-white;
+
+    &:last-child {
+      background-color: $color-quaternary;
+      color: $off-white;
+
+      .left-border {
+        border-left: 1px solid $dark-gray;
+      }
+    }
+  }
+}
+
+tbody {
+  border: 1px solid $light-gray;
+  border-width: 0 1px;
+
+  td {
+    &.left-border {
+      border-left: 1px solid $gray;
+    }
+  }
+
+  tr {
+    border-bottom: 1px solid $light-gray;
+
+    &:nth-child(2n + 1) {
+      background-color: $off-white;
+    }
+  }
+}
+
+td,
+th {
+  padding: .5rem;
+}
+
+th {
+  font-size: 1.2rem;
+  font-weight: normal;
+  text-transform: uppercase;
+
+  &:first-child {
+    text-align: left;
+  }
+}
+
+td {
+  border-width: 2px;
+  border-color: $border-color;
+  font-size: 1.4rem;
+  text-align: center;
+
+  &:first-child {
+    text-align: left;
   }
 }

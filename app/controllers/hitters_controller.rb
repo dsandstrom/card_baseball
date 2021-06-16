@@ -13,7 +13,7 @@ class HittersController < ApplicationController
   before_action :set_hitter, only: %i[show edit update destroy]
 
   def index
-    @hitters = Hitter.all
+    @hitters = Hitter.all.order(overall_rating: :desc)
   end
 
   def show
