@@ -5,10 +5,14 @@ require "rails_helper"
 RSpec.describe "teams/show", type: :view do
   let(:league) { Fabricate(:league) }
   let(:team) { Fabricate(:team, league: league) }
+  let(:hitter) { Fabricate(:hitter) }
 
   before(:each) do
+    Fabricate(:hitter_contract, hitter: hitter, team: team)
+
     @league = assign(:league, league)
     @team = assign(:team, team)
+    @hitters = assign(:hitters, @team.hitters)
   end
 
   it "renders team's name" do

@@ -10,7 +10,9 @@ class TeamsController < ApplicationController
     @teams = Team.all
   end
 
-  def show; end
+  def show
+    @hitters = @team.hitters
+  end
 
   def new
     @team = @league.teams.build

@@ -1,0 +1,45 @@
+<% show_team = true if show_team.nil?  %>
+
+<table>
+  <thead>
+    <tr>
+      <th colspan="7"></th>
+      <th colspan="4">vs Lefties</th>
+      <th colspan="4">vs Righties</th>
+      <th colspan="8">Defense</th>
+      <th colspan="2"></th>
+    </tr>
+    <tr>
+      <th>Name</th>
+      <th>Bat</th>
+      <th>Spd</th>
+      <th>Bnt</th>
+      <th>Pos</th>
+      <th>Rtg</th>
+      <th>Dur</th>
+      <th>Hit</th>
+      <th>OBP</th>
+      <th>Slg</th>
+      <th>HR</th>
+      <th>Hit</th>
+      <th>OBP</th>
+      <th>Slg</th>
+      <th>HR</th>
+      <th class="no-wrap">C / Bar</th>
+      <th>1B</th>
+      <th>2B</th>
+      <th>3B</th>
+      <th>SS</th>
+      <th>OF</th>
+      <th>CF</th>
+      <th class="no-wrap">P / Bar</th>
+      <% if show_team %>
+        <th>Team</th>
+      <% end %>
+    </tr>
+  </thead>
+
+  <tbody class="hitters">
+    <%= render hitters, show_team: show_team %>
+  </tbody>
+</table>

@@ -1,0 +1,44 @@
+<% show_team = true if show_team.nil?  %>
+
+<tr class="hitter" id="hitter_<%= hitter.id %>">
+  <td><%= link_to hitter.roster_name, hitter, class: 'hitter-name' %></td>
+  <td><%= hitter.bats %></td>
+  <td><%= hitter.speed %></td>
+  <td><%= hitter.bunt_grade %></td>
+  <td><%= hitter.primary_position_initial %></td>
+  <td><%= hitter.overall_rating %></td>
+  <td><%= hitter.durability %></td>
+  <td><%= hitter.left_rating %></td>
+  <td><%= hitter.left_on_base_percentage %></td>
+  <td><%= hitter.left_slugging %></td>
+  <td><%= hitter.left_homeruns %></td>
+  <td><%= hitter.right_rating %></td>
+  <td><%= hitter.right_on_base_percentage %></td>
+  <td><%= hitter.right_slugging %></td>
+  <td><%= hitter.right_homeruns %></td>
+  <td>
+    <% if hitter.catcher_defense && hitter.catcher_defense > -10 %>
+      <%= hitter.catcher_defense %>
+      (<%= hitter.catcher_bar || 0 %>)
+    <% else %>
+      <%= hitter.catcher_defense %>
+    <% end %>
+  </td>
+  <td><%= hitter.first_base_defense %></td>
+  <td><%= hitter.second_base_defense %></td>
+  <td><%= hitter.third_base_defense %></td>
+  <td><%= hitter.shortstop_defense %></td>
+  <td><%= hitter.outfield_defense %></td>
+  <td><%= hitter.center_field_defense %></td>
+  <td>
+    <% if hitter.pitcher_defense && hitter.pitcher_defense > -10 %>
+      <%= hitter.pitcher_defense %>
+      (<%= hitter.pitcher_bar || 0 %>)
+    <% else %>
+      <%= hitter.pitcher_defense %>
+    <% end %>
+  </td>
+  <% if show_team %>
+    <td><%= render 'hitters/contract', hitter: hitter %></td>
+  <% end %>
+</tr>

@@ -11,3 +11,8 @@
 <p>
   <%= link_to 'Settings', edit_league_team_path(@league, @team) %>
 </p>
+
+<h2>Roster</h2>
+
+<%= render 'hitters/hitters', hitters: @hitters,
+                              show_team: false %>
