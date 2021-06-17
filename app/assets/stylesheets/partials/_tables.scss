@@ -1,9 +1,37 @@
 table {
-  border-collapse: collapse;
+  table-layout: fixed;
+  border-spacing: 0;
+  border-collapse: separate;
 
   .hitter-name,
   .roster-name {
     white-space: nowrap;
+  }
+
+  // sticky thead and first column
+  // https://css-tricks.com/a-table-with-both-a-sticky-header-and-a-sticky-first-column/
+  &.full-width {
+    min-width: 100%;
+
+    thead {
+      position: sticky;
+      z-index: 3;
+      top: 0;
+      left: 0;
+    }
+
+    tbody td {
+      position: relative;
+      z-index: 1;
+
+      &:first-child {
+        position: sticky;
+        z-index: 2;
+        top: 0;
+        left: 0;
+        border-right: 1px solid $light-gray;
+      }
+    }
   }
 }
 
@@ -43,8 +71,14 @@ tbody {
   tr {
     border-bottom: 1px solid $light-gray;
 
+    td {
+      background-color: $background-color;
+    }
+
     &:nth-child(2n + 1) {
-      background-color: $off-white;
+      td {
+        background-color: $off-white;
+      }
     }
   }
 }

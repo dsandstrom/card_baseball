@@ -6,7 +6,7 @@
       <% if @team.icon.present? %>
         <div class="logo-wrapper">
           <%= image_tag @team.icon,
-              alt: "#{@team.name} Icon", class: 'logo' %>
+              alt: "#{@team.name} Logo", class: 'logo' %>
         </div>
       <% end %>
 
@@ -16,7 +16,8 @@
 
   <div class="second-column">
     <p>
-      <%= link_to 'Team Settings', edit_league_team_path(@league, @team),
+      <%= link_to 'Team Settings',
+                  edit_league_team_path(@league, @team),
                   class: 'button' %>
     </p>
   </div>
