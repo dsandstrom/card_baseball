@@ -12,5 +12,9 @@ Rails.application.routes.draw do
     resources :teams, except: :index
   end
 
+  resources :teams, only: nil do
+    resources :lineups
+  end
+
   root to: 'leagues#index'
 end
