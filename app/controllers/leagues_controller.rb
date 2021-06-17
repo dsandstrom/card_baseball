@@ -4,7 +4,7 @@ class LeaguesController < ApplicationController
   before_action :set_league, only: %i[show edit update destroy]
 
   def index
-    @leagues = League.all
+    @leagues = League.all.preload(:teams).order(name: :asc)
   end
 
   def show
@@ -21,7 +21,8 @@ class LeaguesController < ApplicationController
     @league = League.new(league_params)
 
     if @league.save
-      redirect_to leagues_url, notice: 'League was successfully created.'
+      redirect_to @league,
+                  notice: "#{@league.full_name} was successfully created."
     else
       render :new, status: :unprocessable_entity
     end
@@ -29,15 +30,17 @@ class LeaguesController < ApplicationController
 
   def update
     if @league.update(league_params)
-      redirect_to @league, notice: 'League was successfully updated.'
+      redirect_to @league,
+                  notice: "#{@league.full_name} was successfully updated."
     else
       render :edit, status: :unprocessable_entity
     end
   end
 
   def destroy
+    name = @league.full_name
     @league.destroy
-    redirect_to leagues_url, notice: 'League was successfully destroyed.'
+    redirect_to leagues_url, notice: "#{name} was successfully destroyed."
   end
 
   private
