@@ -16,7 +16,7 @@
   <td><%= hitter.right_homeruns %></td>
   <td class="left-border">
     <% if hitter.catcher_defense && hitter.catcher_defense > -10 %>
-      <%= format_defense(hitter.catcher_defense) %>/<%= hitter.catcher_bar || 0 %>
+      <%= format_defense(hitter.catcher_defense) %><span class="defense-bar">/<%= hitter.catcher_bar || 0 %></span>
     <% else %>
       <%= format_defense(hitter.catcher_defense) %>
     <% end %>
@@ -29,7 +29,7 @@
   <td><%= format_defense(hitter.center_field_defense) %></td>
   <td>
     <% if hitter.pitcher_defense && hitter.pitcher_defense > -10 %>
-      <%= format_defense(hitter.pitcher_defense) %>/<%= hitter.pitcher_bar || 0 %>
+      <%= format_defense(hitter.pitcher_defense) %><span class="defense-bar">/<%= hitter.pitcher_bar || 0 %></span>
     <% else %>
       <%= format_defense(hitter.pitcher_defense) %>
     <% end %>

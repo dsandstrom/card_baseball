@@ -42,6 +42,10 @@ thead {
       border-left: 1px solid $light-gray;
       background-color: $light-gray;
     }
+
+    .defense-bar {
+      color: $gray;
+    }
   }
 
   tr {
@@ -65,6 +69,10 @@ tbody {
   td {
     &.left-border {
       border-left: 1px solid $gray;
+    }
+
+    .defense-bar {
+      color: $gray;
     }
   }
 
