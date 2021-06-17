@@ -59,30 +59,8 @@ body {
   }
 }
 
-.search-form {
-  .issue-filters,
-  .task-filters {
-    &.hide {
-      display: none;
-    }
-  }
-}
-
-.heading-and-link {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  a {
-    margin-left: 1rem;
-  }
-}
 
 .page-header {
-  padding: 1rem 0 0;
-  border-bottom: 2px solid $light-gray;
-  background-color: $off-white;
-
   .page-nav {
     display: flex;
     margin: 0 0 -2px;
@@ -151,6 +129,14 @@ body {
 
   p {
     margin-bottom: 0;
+  }
+}
+
+.name-and-logo {
+  display: flex;
+
+  .logo {
+    max-width: 8rem;
   }
 }
 
@@ -298,6 +284,18 @@ body {
     }
   }
 
+  .page-header {
+    align-items: baseline;
+
+    .second-column {
+      text-align: right;
+
+      .button {
+        margin: 0;
+      }
+    }
+  }
+
   .main-footer {
     .columns {
       justify-content: space-between;
@@ -356,7 +354,7 @@ body {
 
 .cards {
   display: grid;
-  grid-gap: 1rem;
+  grid-gap: 1.5rem;
   grid-template-columns: 1fr 1fr;
 }
 
@@ -366,13 +364,16 @@ body {
   margin: 0;
   border: 1px solid $border-color;
 
-  &.new-league {
+  &.centered {
     display: flex;
     align-items: center;
     justify-content: center;
 
     a {
       padding: 1rem;
+      font-size: 1.5rem;
+      text-align: center;
+      text-transform: uppercase;
     }
   }
 
@@ -394,9 +395,9 @@ body {
 
   .card-footer {
     margin-top: auto;
+    padding: .5rem 0;
 
     a {
-      margin: 0;
       padding: 1rem;
       font-size: 1.5rem;
       text-align: center;

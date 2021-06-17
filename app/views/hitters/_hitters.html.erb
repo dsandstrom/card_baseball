@@ -36,6 +36,12 @@
   </thead>
 
   <tbody class="hitters">
-    <%= render hitters %>
+    <% if hitters.any? %>
+      <%= render hitters %>
+    <% else %>
+      <tr>
+        <td colspan="30">No hitters yet</td>
+      </tr>
+    <% end %>
   </tbody>
 </table>

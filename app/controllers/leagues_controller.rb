@@ -8,7 +8,7 @@ class LeaguesController < ApplicationController
   end
 
   def show
-    @teams = @league.teams
+    @teams = @league.teams.order(name: :asc)
   end
 
   def new

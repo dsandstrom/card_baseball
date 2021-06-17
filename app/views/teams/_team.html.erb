@@ -1,0 +1,34 @@
+<%
+  hitters = team.hitters.order(overall_rating: :desc).limit(10)
+  confirm = "Are you sure you want to remove #{team.name}?"
+%>
+
+<section id="team_<%= team.id %>" class="team card">
+  <header class="card-header">
+    <h2><%= link_to team.name, league_team_path(league, team) %></h2>
+  </header>
+
+  <main class="card-main">
+    <div class="team-hitters">
+    </div>
+
+    <% if hitters.any? %>
+      <ul class="team-hitters card-link-list">
+        <% hitters.each do |hitter| %>
+          <li><%= link_to hitter.roster_name, hitter %></li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p>
+        <em>No hitters yet</em>
+      </p>
+    <% end %>
+  </main>
+
+  <footer class="card-footer">
+    <%= link_to 'Settings', edit_league_team_path(league, team) %>
+    <%= link_to 'Remove', league_team_path(league, team),
+                method: :delete,
+                data: { confirm: confirm } %>
+  </footer>
+</section>

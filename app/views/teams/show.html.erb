@@ -1,16 +1,26 @@
 <%= league_breadcrumbs(@league) %>
 
-<%= content_tag :h1, @team.name, class: 'team-name' %>
+<div class="columns page-header">
+  <div class="first-column">
+    <div class="name-and-logo">
+      <% if @team.icon.present? %>
+        <div class="logo-wrapper">
+          <%= image_tag @team.icon,
+              alt: "#{@team.name} Icon", class: 'logo' %>
+        </div>
+      <% end %>
 
-<% if @icon.present? %>
-  <div class="team-icon">
-    <%= image_tag @icon, alt: "#{@team.name} Icon" %>
+      <%= content_tag :h1, @team.name, class: 'team-name' %>
+    </div>
   </div>
-<% end %>
 
-<p>
-  <%= link_to 'Settings', edit_league_team_path(@league, @team) %>
-</p>
+  <div class="second-column">
+    <p>
+      <%= link_to 'Team Settings', edit_league_team_path(@league, @team),
+                  class: 'button' %>
+    </p>
+  </div>
+</div>
 
 <h2>Roster</h2>
 

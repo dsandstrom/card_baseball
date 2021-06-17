@@ -1,25 +1,19 @@
 <%= breadcrumbs([['Home', root_path]]) %>
 
-<%= content_tag :h1, @league.full_name, class: 'league-name' %>
+<div class="columns page-header">
+  <div class="first-column">
+    <%= content_tag :h1, @league.full_name, class: 'league-name' %>
+  </div>
 
-<p>
-  <%= link_to 'League Settings', edit_league_path(@league) %>
-</p>
+  <div class="second-column">
+    <p>
+      <%= link_to 'League Settings', edit_league_path(@league),
+                  class: 'button' %>
+    </p>
+  </div>
+</div>
 
-<h2>Teams</h2>
-
-<table>
-  <tbody class="teams">
-    <% @teams.each do |team| %>
-      <tr id="team_<%= team.id %>" class="team">
-        <td><%= link_to team.name, league_team_path(@league, team) %></td>
-        <td><%= link_to 'Team Settings', edit_league_team_path(@league, team) %></td>
-        <td><%= link_to 'Destroy', league_team_path(@league, team), method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<p>
-  <%= link_to 'Add Team to League', new_league_team_path(@league) %>
-</p>
+<div class="teams cards">
+  <%= render @teams, league: @league %>
+  <%= render 'teams/new', league: @league %>
+</div>
