@@ -13,12 +13,12 @@ module BreadcrumbsHelper
 
   def league_breadcrumbs(league)
     breadcrumbs([['Home', root_path],
-                 ["#{league.name} League", league_path(league)]])
+                 [league.full_name, league_path(league)]])
   end
 
   def league_team_breadcrumbs(league, team)
     breadcrumbs([['Home', root_path],
-                 ["#{league.name} League", league_path(league)],
+                 [league.full_name, league_path(league)],
                  [team.name, league_team_path(league, team)]])
   end
 

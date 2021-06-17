@@ -1,4 +1,6 @@
-<%= content_tag :h1, "#{@league.name} League", class: 'league-name' %>
+<%= breadcrumbs([['Home', root_path]]) %>
+
+<%= content_tag :h1, @league.full_name, class: 'league-name' %>
 
 <p>
   <%= link_to 'League Settings', edit_league_path(@league) %>

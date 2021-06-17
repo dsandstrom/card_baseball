@@ -1,0 +1,31 @@
+<%
+  teams = league.teams
+  confirm = "Are you sure you want to remove #{league.full_name}?"
+%>
+
+<section id="league_<%= league.id %>" class="league card">
+  <header class="card-header">
+    <h2><%= link_to league.full_name, league %></h2>
+  </header>
+
+  <main class="card-main">
+    <% if teams.any? %>
+      <ul class="league-teams card-link-list">
+        <% teams.order(name: :asc).each do |team| %>
+          <li><%= link_to team.name, league_team_path(league, team) %></li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p>
+        <em>No teams yet</em>
+      </p>
+    <% end %>
+  </main>
+
+  <footer class="card-footer">
+    <%= link_to 'Settings', edit_league_path(league) %>
+    <%= link_to 'Remove', league,
+                method: :delete,
+                data: { confirm: confirm } %>
+  </footer>
+</section>

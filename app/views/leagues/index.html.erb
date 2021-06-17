@@ -1,15 +1,6 @@
-<h1>Leagues</h1>
+<h1>Leagues & Teams</h1>
 
-<p><%= link_to 'Add League', new_league_path %></p>
-
-<table>
-  <tbody>
-    <% @leagues.each do |league| %>
-      <tr id="league_<%= league.id %>" class="league">
-        <td><%= link_to league.name, league %></td>
-        <td><%= link_to 'Settings', edit_league_path(league) %></td>
-        <td><%= link_to 'Destroy', league, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<div class="leagues cards">
+  <%= render @leagues %>
+  <%= render 'new' %>
+</div>
