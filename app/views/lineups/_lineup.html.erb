@@ -1,0 +1,17 @@
+<% confirm = "Are you sure you want to remove #{lineup.full_name}?"  %>
+
+<section id="lineup_<%= lineup.id %>" class="lineup card">
+  <header class="card-header">
+    <h2><%= link_to lineup.full_name, team_lineup_path(team, lineup) %></h2>
+  </header>
+
+  <main class="card-main">
+  </main>
+
+  <footer class="card-footer">
+    <%= link_to 'Edit', edit_team_lineup_path(team, lineup) %>
+    <%= link_to 'Destroy', team_lineup_path(team, lineup),
+                method: :delete,
+                data: { confirm: confirm } %>
+  </footer>
+</section>

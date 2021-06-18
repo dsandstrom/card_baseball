@@ -1,11 +1,13 @@
 # frozen_string_literal: true
 
 class Lineup < ApplicationRecord
+  VS_OPTIONS = %w[left right].freeze
+
   validates :name, presence: true, uniqueness: { scope: %i[team_id vs with_dh],
                                                  case_sensitive: false }
   validates :team_id, presence: true
   # nil vs = either side
-  validates :vs, inclusion: { in: %w[left right] }, allow_nil: true
+  validates :vs, inclusion: { in: VS_OPTIONS }, allow_blank: true
 
   belongs_to :team
 

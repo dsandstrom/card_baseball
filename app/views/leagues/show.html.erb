@@ -1,15 +1,15 @@
 <%= breadcrumbs([['Home', root_path]]) %>
 
-<div class="columns page-header">
-  <div class="first-column">
-    <%= content_tag :h1, @league.full_name, class: 'league-name' %>
-  </div>
+<div class="page-header">
+  <div class="columns">
+    <div class="first-column">
+      <%= content_tag :h1, @league.full_name, class: 'league-name' %>
+    </div>
 
-  <div class="second-column">
-    <p>
+    <div class="second-column">
       <%= link_to 'League Settings', edit_league_path(@league),
                   class: 'button' %>
-    </p>
+    </div>
   </div>
 </div>
 

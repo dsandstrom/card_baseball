@@ -63,13 +63,19 @@ body {
 .page-header {
   .page-nav {
     display: flex;
-    margin: 0 0 -2px;
+    margin: 0;
+    border-bottom: 2px solid $border-color;
 
     a {
       display: block;
+      margin-bottom: -2px;
       padding: 0 1rem;
       border-bottom: 2px solid transparent;
+      color: $dark-gray;
+      font-size: 1.2rem;
+      font-weight: bold;
       line-height: 3;
+      text-transform: uppercase;
       white-space: nowrap;
 
       &.current-page {
@@ -285,13 +291,15 @@ body {
   }
 
   .page-header {
-    align-items: baseline;
+    .columns {
+      align-items: flex-end;
+    }
 
     .second-column {
       text-align: right;
 
       .button {
-        margin-bottom: .5rem;
+        margin-bottom: 1.5rem;
       }
     }
   }

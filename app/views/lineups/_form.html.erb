@@ -1,0 +1,32 @@
+<%
+  vs_options = [['Lefty', 'left'], ['Righty', 'right']]
+  url =
+    if lineup.persisted?
+      team_lineup_path(team, lineup)
+    else
+      team_lineups_path(team)
+    end
+%>
+
+<%= form_with(model: lineup, url: url) do |form| %>
+  <%= form_errors(lineup) %>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :vs %>
+    <%= form.select :vs, vs_options, include_blank: 'any' %>
+  </div>
+
+  <div class="field">
+    <%= form.label :with_dh %>
+    <%= form.check_box :with_dh %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,8 @@
+<%= league_team_breadcrumbs(@league, @team) %>
+
+<h1>Lineups</h1>
+
+<div class="lineups cards">
+  <%= render @lineups, team: @team %>
+  <%= render 'new', team: @team %>
+</div>

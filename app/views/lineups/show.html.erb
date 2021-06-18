@@ -1,0 +1,15 @@
+<%= league_team_breadcrumbs(@league, @team, [['Lineups', team_lineups_path(@team)]]) %>
+
+<div class="page-header">
+  <div class="columns">
+    <div class="first-column">
+      <%= content_tag :h1, @lineup.full_name, class: 'lineup-name' %>
+    </div>
+
+    <div class="second-column">
+      <%= link_to 'Lineup Options',
+                  edit_team_lineup_path(@team, @lineup),
+                  class: 'button' %>
+    </div>
+  </div>
+</div>

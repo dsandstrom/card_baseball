@@ -1,0 +1,8 @@
+<%=
+  league_team_breadcrumbs(@league, @team,
+                          [['Lineups', team_lineups_path(@team)]])
+%>
+
+<h1>New Lineup</h1>
+
+<%= render 'form', lineup: @lineup, team: @team %>
