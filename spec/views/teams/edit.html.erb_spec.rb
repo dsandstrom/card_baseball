@@ -17,7 +17,7 @@ RSpec.describe "teams/edit", type: :view do
 
     assert_select "form[action=?][method=?]", path, "post" do
       assert_select "input[name=?]", "team[name]"
-      assert_select "input[name=?]", "team[icon]"
+      assert_select "input[name=?]", "team[logo]"
     end
   end
 end

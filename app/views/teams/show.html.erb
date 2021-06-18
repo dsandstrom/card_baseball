@@ -4,9 +4,9 @@
   <div class="columns">
     <div class="first-column">
       <div class="name-and-logo">
-        <% if @team.icon.present? %>
+        <% if @team.logo.present? %>
           <div class="logo-wrapper">
-            <%= image_tag @team.icon,
+            <%= image_tag @team.logo,
                 alt: "#{@team.name} Logo", class: 'logo' %>
           </div>
         <% end %>
