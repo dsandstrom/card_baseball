@@ -6,6 +6,6 @@ class League < ApplicationRecord
   has_many :teams, dependent: :nullify
 
   def full_name
-    @full_name ||= "#{name} League"
+    @full_name ||= "#{name} League" if name.present?
   end
 end
