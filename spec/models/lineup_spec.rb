@@ -13,7 +13,6 @@ RSpec.describe Lineup, type: :model do
 
   it { is_expected.to be_valid }
 
-  it { is_expected.to validate_presence_of(:name) }
   it { is_expected.to validate_presence_of(:team_id) }
 
   it do
@@ -28,6 +27,26 @@ RSpec.describe Lineup, type: :model do
   it { is_expected.to belong_to(:team) }
   it { is_expected.to have_many(:spots) }
 
+  describe "#validate" do
+    context "when name and vs are blank" do
+      before do
+        subject.name = ""
+        subject.vs = ""
+      end
+
+      it { is_expected.not_to be_valid }
+    end
+
+    context "when vs is not blank" do
+      before do
+        subject.name = ""
+        subject.vs = "left"
+      end
+
+      it { is_expected.to be_valid }
+    end
+  end
+
   describe "#full_name" do
     context "when name, vs, with_dh are blank" do
       before do
@@ -36,7 +55,7 @@ RSpec.describe Lineup, type: :model do
         subject.with_dh = false
       end
 
-      it "returns blank" do
+      it "returns nil" do
         expect(subject.full_name).to be_nil
       end
     end
@@ -48,7 +67,7 @@ RSpec.describe Lineup, type: :model do
         subject.with_dh = false
       end
 
-      it "returns blank" do
+      it "returns name only" do
         expect(subject.full_name).to eq("Something")
       end
     end
@@ -60,7 +79,7 @@ RSpec.describe Lineup, type: :model do
         subject.with_dh = true
       end
 
-      it "returns blank" do
+      it "returns name and DH" do
         expect(subject.full_name).to eq("Something (DH)")
       end
     end
@@ -69,11 +88,23 @@ RSpec.describe Lineup, type: :model do
       before do
         subject.name = ""
         subject.vs = "left"
+        subject.with_dh = false
+      end
+
+      it "returns 'vs Lefty'" do
+        expect(subject.full_name).to eq("vs Lefty")
+      end
+    end
+
+    context "when vs is something with DH" do
+      before do
+        subject.name = ""
+        subject.vs = "left"
         subject.with_dh = true
       end
 
-      it "returns blank" do
-        expect(subject.full_name).to be_nil
+      it "returns 'vs Lefty (DH)'" do
+        expect(subject.full_name).to eq("vs Lefty (DH)")
       end
     end
 
@@ -84,7 +115,7 @@ RSpec.describe Lineup, type: :model do
         subject.with_dh = false
       end
 
-      it "returns blank" do
+      it "returns name and vs" do
         expect(subject.full_name).to eq("Main vs Lefty")
       end
     end
@@ -96,7 +127,7 @@ RSpec.describe Lineup, type: :model do
         subject.with_dh = false
       end
 
-      it "returns blank" do
+      it "returns name and vs" do
         expect(subject.full_name).to eq("Main vs Righty")
       end
     end
@@ -108,7 +139,7 @@ RSpec.describe Lineup, type: :model do
         subject.with_dh = true
       end
 
-      it "returns blank" do
+      it "returns name, vs, DH" do
         expect(subject.full_name).to eq("Main vs Lefty (DH)")
       end
     end
@@ -120,7 +151,7 @@ RSpec.describe Lineup, type: :model do
         subject.with_dh = true
       end
 
-      it "returns blank" do
+      it "returns name, vs, DH" do
         expect(subject.full_name).to eq("Main vs Righty (DH)")
       end
     end
