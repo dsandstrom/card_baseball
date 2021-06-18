@@ -26,6 +26,7 @@ RSpec.describe Lineup, type: :model do
   end
 
   it { is_expected.to belong_to(:team) }
+  it { is_expected.to have_many(:spots) }
 
   describe "#full_name" do
     context "when name, vs, with_dh are blank" do
@@ -121,6 +122,50 @@ RSpec.describe Lineup, type: :model do
 
       it "returns blank" do
         expect(subject.full_name).to eq("Main vs Righty (DH)")
+      end
+    end
+  end
+
+  describe "#remove_dh_spot" do
+    let(:lineup) { Fabricate(:lineup) }
+
+    before { Fabricate(:spot, lineup: lineup, batting_order: 2, position: 2) }
+
+    context "when the dh spot and 9th batting order are empty" do
+      it "doesn't destroy any spots" do
+        expect do
+          lineup.remove_dh_spot
+        end.not_to change(lineup.spots, :count)
+      end
+    end
+
+    context "when the dh spot taken" do
+      before { Fabricate(:spot, lineup: lineup, batting_order: 3, position: 9) }
+
+      it "destroys the spot" do
+        expect do
+          lineup.remove_dh_spot
+        end.to change(lineup.spots, :count).by(-1)
+      end
+    end
+
+    context "when 9th batting_order taken" do
+      before { Fabricate(:spot, lineup: lineup, batting_order: 9, position: 7) }
+
+      it "destroys the spot" do
+        expect do
+          lineup.remove_dh_spot
+        end.to change(lineup.spots, :count).by(-1)
+      end
+    end
+
+    context "when dh is batting 9th" do
+      before { Fabricate(:spot, lineup: lineup, batting_order: 9, position: 9) }
+
+      it "destroys the spot" do
+        expect do
+          lineup.remove_dh_spot
+        end.to change(lineup.spots, :count).by(-1)
       end
     end
   end
