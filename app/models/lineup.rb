@@ -13,7 +13,8 @@ class Lineup < ApplicationRecord
   validate :name_or_vs_present
 
   belongs_to :team
-  has_many :spots
+  has_many :spots, -> { order('batting_order asc') }
+  has_many :hitters, through: :spots
 
   def full_name
     @full_name ||= build_full_name

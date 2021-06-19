@@ -26,6 +26,7 @@ RSpec.describe Lineup, type: :model do
 
   it { is_expected.to belong_to(:team) }
   it { is_expected.to have_many(:spots) }
+  it { is_expected.to have_many(:hitters) }
 
   describe "#validate" do
     context "when name and vs are blank" do

@@ -105,6 +105,8 @@ RSpec.describe Hitter, type: :model do
 
   it { is_expected.to have_one(:contract) }
   it { is_expected.to have_one(:team) }
+  it { is_expected.to have_many(:spots).dependent(:destroy) }
+  it { is_expected.to have_many(:lineups) }
 
   # CLASS
 
