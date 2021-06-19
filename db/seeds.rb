@@ -1,13 +1,20 @@
 # frozen_string_literal: true
 
+# TODO: add defense to hitters
+
 require 'faker'
 
 class Seeds
-  def add_hitters(quanity = 100)
+  def add_hitters(team: nil, quanity: 2, position: nil)
     quanity.times do
-      hitter = Hitter.new(hitter_attrs)
+      return if team && team.hitters.count >= 15
+
+      attrs = hitter_attrs(position)
+      hitter = Hitter.new(attrs)
       hitter.set_roster_name
       hitter.save
+
+      add_hitter_contract(hitter, team)
     end
   end
 
@@ -16,19 +23,32 @@ class Seeds
       league = League.create!(name: Faker::Compass.unique.direction.titleize)
 
       team_quantity.times do
-        league.teams.create!(name: Faker::Team.unique.creature.titleize)
+        team = league.teams.create!(name: Faker::Team.unique.creature.titleize)
+        (2..8).each do |position|
+          add_hitters(team: team, quanity: 2, position: position)
+        end
+
+        add_hitters(team: team, quanity: 1, position: 7)
       end
     end
   end
 
+  def add_hitter_contract(hitter, team)
+    contract = hitter.build_contract(
+      team: team,
+      length: rand(HitterContract::LENGTH_OPTIONS)
+    )
+    contract.save!
+  end
+
   private
 
-    def hitter_attrs # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+    def hitter_attrs(position) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
       attrs = {}
       attrs[:first_name] = Faker::Name.male_first_name
       attrs[:middle_name] = Faker::Name.middle_name if rand(10).zero?
       attrs[:last_name] = Faker::Name.last_name
-      attrs[:primary_position] = rand(Hitter::POSITION_RANGE)
+      attrs[:primary_position] = position || rand(Hitter::POSITION_RANGE)
       attrs[:bats] = Hitter::BATS_OPTIONS.sample
       attrs[:bunt_grade] = Hitter::BUNT_GRADE_OPTIONS.sample
       attrs[:speed] = rand(Hitter::SPEED_RANGE)
@@ -47,5 +67,5 @@ class Seeds
 end
 
 seeds = Seeds.new
-seeds.add_hitters
 seeds.add_teams
+seeds.add_hitters(quanity: 10)
