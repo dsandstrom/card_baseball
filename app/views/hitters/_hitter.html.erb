@@ -1,4 +1,9 @@
+<% table_index ||= nil  %>
+
 <tr class="hitter" id="hitter_<%= hitter.id %>">
+  <% if table_index.present? %>
+    <%= content_tag :td, table_index, class: 'table-index' %>
+  <% end %>
   <td><%= link_to hitter.roster_name, hitter, class: 'hitter-name' %></td>
   <td><%= hitter.bats %></td>
   <td><%= hitter.speed %></td>

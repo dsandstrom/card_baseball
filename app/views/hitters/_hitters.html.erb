@@ -1,14 +1,37 @@
-<table class="full-width">
+<%
+  pages = hitters.respond_to?(:entry_name)
+  page_index =
+    if pages
+      hitters.current_per_page * (hitters.current_page - 1)
+    else
+      0
+    end
+%>
+
+<% if pages %>
+  <div class="page-links">
+    <%= paginate @hitters %>
+  </div>
+<% end %>
+
+<table class="full-width hitters">
   <thead>
     <tr>
-      <th colspan="7">Hitters</th>
+      <th colspan="8">
+        <% if pages %>
+          <%= page_entries_info hitters %>
+        <% else %>
+          Hitters
+        <% end %>
+      </th>
       <th colspan="4" class="vs-left">vs Lefties</th>
       <th colspan="4" class="vs-right">vs Righties</th>
       <th colspan="8" class="defense">Defense</th>
       <th class="left-border"></th>
     </tr>
     <tr>
-      <th>Name</th>
+      <th></th>
+      <th class="align-left">Name</th>
       <th>Bat</th>
       <th>Spd</th>
       <th>Bnt</th>
@@ -41,7 +64,9 @@
 
   <tbody class="hitters">
     <% if hitters.any? %>
-      <%= render hitters %>
+      <% hitters.each_with_index do |hitter, table_index| %>
+        <%= render hitter, table_index: (table_index + page_index + 1) %>
+      <% end %>
     <% else %>
       <tr>
         <td colspan="30">No hitters yet</td>
@@ -49,3 +74,9 @@
     <% end %>
   </tbody>
 </table>
+
+<% if pages %>
+  <div class="page-links">
+    <%= paginate @hitters %>
+  </div>
+<% end %>

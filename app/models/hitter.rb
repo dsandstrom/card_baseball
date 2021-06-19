@@ -62,6 +62,8 @@ class Hitter < ApplicationRecord
   validates :catcher_bar, inclusion: { in: BAR_RANGE }, allow_nil: true
   validates :pitcher_bar, inclusion: { in: BAR_RANGE }, allow_nil: true
 
+  paginates_per 50
+
   # CLASS
 
   def self.position_form_options

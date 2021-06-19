@@ -9,7 +9,7 @@ RSpec.describe "hitters/show", type: :view do
     @hitter = assign(:hitter, hitter)
   end
 
-  it "renders attributes in <p>" do
+  it "renders hitter's name" do
     render
 
     assert_select ".hitter-name", hitter.name

@@ -14,6 +14,7 @@ class HittersController < ApplicationController
 
   def index
     @hitters = Hitter.all.order(overall_rating: :desc)
+                     .page(params[:page])
   end
 
   def show

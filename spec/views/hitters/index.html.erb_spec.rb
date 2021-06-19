@@ -9,7 +9,7 @@ RSpec.describe "hitters/index", type: :view do
   let(:second_path) { hitter_path(second_hitter) }
 
   before(:each) do
-    assign(:hitters, [first_hitter, second_hitter])
+    assign(:hitters, page([first_hitter, second_hitter]))
   end
 
   it "renders a list of hitters" do

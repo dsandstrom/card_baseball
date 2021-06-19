@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class HitterContract < ApplicationRecord
-  LENGTH_OPTIONS = [1, 2, 3].freeze
+  LENGTH_OPTIONS = 1..3
 
   belongs_to :hitter
   belongs_to :team, optional: true

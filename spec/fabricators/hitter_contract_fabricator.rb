@@ -2,5 +2,5 @@
 
 Fabricator(:hitter_contract) do
   hitter
-  length { HitterContract::LENGTH_OPTIONS.sample }
+  length { rand(HitterContract::LENGTH_OPTIONS) }
 end

@@ -11,7 +11,7 @@ class TeamsController < ApplicationController
   end
 
   def show
-    @hitters = @team.hitters
+    @hitters = @team.hitters.order(overall_rating: :desc)
   end
 
   def new

@@ -24,7 +24,7 @@ table {
       position: relative;
       z-index: 1;
 
-      &:first-child {
+      &:nth-child(2) {
         position: sticky;
         z-index: 2;
         top: 0;
@@ -94,6 +94,10 @@ tbody {
 td,
 th {
   padding: .5rem;
+
+  &.align-left {
+    text-align: left;
+  }
 }
 
 th {
@@ -112,7 +116,13 @@ td {
   font-size: 1.4rem;
   text-align: center;
 
-  &:first-child {
+  &:nth-child(2) {
     text-align: left;
+  }
+
+  &.table-index {
+    color: $gray;
+    font-size: 1.2rem;
+    text-align: right;
   }
 }
