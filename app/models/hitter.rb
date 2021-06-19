@@ -9,14 +9,14 @@ class Hitter < ApplicationRecord
   RATING_RANGE = 0..99
   DEFENSE_RANGE = -20..20
   POSITION_OPTIONS = {
-    1 => { initial: 'P', name: 'Pitcher' },
-    2 => { initial: 'C', name: 'Catcher' },
-    3 => { initial: '1B', name: 'First Base' },
-    4 => { initial: '2B', name: 'Second Base' },
-    5 => { initial: '3B', name: 'Third Base' },
-    6 => { initial: 'SS', name: 'Shortstop' },
-    7 => { initial: 'OF', name: 'Outfield' },
-    8 => { initial: 'CF', name: 'Center Field' }
+    1 => { initial: 'P', name: 'Pitcher', key: :pitcher },
+    2 => { initial: 'C', name: 'Catcher', key: :catcher },
+    3 => { initial: '1B', name: 'First Base', key: :first_base },
+    4 => { initial: '2B', name: 'Second Base', key: :second_base },
+    5 => { initial: '3B', name: 'Third Base', key: :third_base },
+    6 => { initial: 'SS', name: 'Shortstop', key: :shortstop },
+    7 => { initial: 'OF', name: 'Outfield', key: :outfield },
+    8 => { initial: 'CF', name: 'Center Field', key: :center_field }
   }.freeze
 
   has_one :contract, class_name: 'HitterContract', dependent: :destroy
