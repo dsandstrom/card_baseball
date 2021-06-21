@@ -4,9 +4,9 @@ require "rails_helper"
 
 RSpec.describe SpotsController, type: :controller do
   let(:team) { Fabricate(:team) }
-  let(:hitter) { Fabricate(:hitter) }
+  let(:hitter) { Fabricate(:hitter, catcher_defense: 5) }
   let(:lineup) { Fabricate(:lineup, team: team) }
-  let(:spot) { Fabricate(:spot, lineup: lineup) }
+  let(:spot) { Fabricate(:spot, lineup: lineup, batting_order: 4) }
 
   before do
     Fabricate(:hitter_contract, hitter: hitter, team: team)

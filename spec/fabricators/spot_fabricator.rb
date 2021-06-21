@@ -4,7 +4,19 @@
 
 Fabricator(:spot) do
   lineup
-  hitter
   position { rand(2..8) }
   batting_order { rand(1..8) }
+
+  hitter do |attrs|
+    if attrs[:position]
+      key = Hitter.defense_key_for_position(attrs[:position])
+      if key
+        Fabricate(:hitter, key => rand(0..10))
+      else
+        Fabricate(:hitter)
+      end
+    else
+      Fabricate(:hitter)
+    end
+  end
 end

@@ -238,8 +238,8 @@ RSpec.describe Lineup, type: :model do
     end
 
     context "when team has 2 hitters" do
-      let(:first_hitter) { Fabricate(:hitter) }
-      let(:second_hitter) { Fabricate(:hitter) }
+      let(:first_hitter) { Fabricate(:hitter, catcher_defense: 2) }
+      let(:second_hitter) { Fabricate(:hitter, first_base_defense: 5) }
 
       before do
         Fabricate(:hitter_contract, team: team, hitter: first_hitter)
@@ -254,7 +254,9 @@ RSpec.describe Lineup, type: :model do
       end
 
       context "and one in the lineup" do
-        before { Fabricate(:spot, hitter: first_hitter, lineup: lineup) }
+        before do
+          Fabricate(:spot, hitter: first_hitter, lineup: lineup, position: 2)
+        end
 
         it "returns both" do
           expect(lineup.bench).to match_array([second_hitter])

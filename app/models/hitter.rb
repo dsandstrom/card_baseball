@@ -74,6 +74,12 @@ class Hitter < ApplicationRecord
     end
   end
 
+  def self.defense_key_for_position(position)
+    return unless position && POSITION_OPTIONS[position]
+
+    "#{POSITION_OPTIONS[position][:key]}_defense".to_sym
+  end
+
   # INSTANCE
 
   def name
@@ -100,7 +106,9 @@ class Hitter < ApplicationRecord
   end
 
   def defense_for_position(position)
-    key = "#{POSITION_OPTIONS[position][:key]}_defense".to_sym
+    key = Hitter.defense_key_for_position(position)
+    return unless key
+
     send(key)
   end
 

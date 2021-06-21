@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe Spot, type: :model do
   let(:lineup) { Fabricate(:lineup) }
-  let(:hitter) { Fabricate(:hitter) }
+  let(:hitter) { Fabricate(:hitter, catcher_defense: 5) }
 
   before do
     @spot = Spot.new(lineup_id: lineup.id, hitter_id: hitter.id,
@@ -45,16 +45,43 @@ RSpec.describe Spot, type: :model do
         end
 
         context "and position is 7" do
-          before { subject.position = 7 }
+          before do
+            subject.position = 7
+            hitter.update(outfield_defense: -3)
+          end
 
           it { is_expected.to be_valid }
         end
 
         context "and position is 3" do
-          before { subject.position = 3 }
+          before { subject.position = 2 }
 
           it { is_expected.not_to be_valid }
         end
+      end
+    end
+
+    describe "#hitter_plays_position" do
+      context "when position is 4" do
+        before { subject.position = 4 }
+
+        context "and hitter has a defense score" do
+          before { hitter.update(second_base_defense: 1) }
+
+          it { is_expected.to be_valid }
+        end
+
+        context "and hitter doesn't have a defense score" do
+          before { hitter.update(second_base_defense: nil) }
+
+          it { is_expected.not_to be_valid }
+        end
+      end
+
+      context "when position is 9" do
+        before { subject.position = 9 }
+
+        it { is_expected.to be_valid }
       end
     end
   end
@@ -89,7 +116,7 @@ RSpec.describe Spot, type: :model do
     end
 
     context "when hitter doesn't play the position" do
-      let(:spot) { Fabricate(:spot, hitter: hitter, position: 7) }
+      let(:spot) { Fabricate.build(:spot, hitter: hitter, position: 7) }
 
       it "returns nil" do
         expect(spot.defense).to be_nil
