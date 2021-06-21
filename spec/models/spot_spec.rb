@@ -31,4 +31,42 @@ RSpec.describe Spot, type: :model do
 
   it { is_expected.to belong_to(:lineup) }
   it { is_expected.to belong_to(:hitter) }
+
+  describe "#defense" do
+    let(:hitter) do
+      Fabricate(:hitter, first_base_defense: 1, second_base_defense: -1)
+    end
+
+    context "when no hitter" do
+      let(:spot) { Fabricate.build(:spot, hitter: nil, position: 3) }
+
+      it "returns nil" do
+        expect(spot.defense).to be_nil
+      end
+    end
+
+    context "when no position" do
+      let(:spot) { Fabricate.build(:spot, hitter: hitter, position: nil) }
+
+      it "returns nil" do
+        expect(spot.defense).to be_nil
+      end
+    end
+
+    context "when hitter plays the position" do
+      let(:spot) { Fabricate(:spot, hitter: hitter, position: 3) }
+
+      it "returns their score" do
+        expect(spot.defense).to eq(1)
+      end
+    end
+
+    context "when hitter doesn't play the position" do
+      let(:spot) { Fabricate(:spot, hitter: hitter, position: 7) }
+
+      it "returns nil" do
+        expect(spot.defense).to be_nil
+      end
+    end
+  end
 end

@@ -11,4 +11,13 @@ class Spot < ApplicationRecord
 
   belongs_to :lineup
   belongs_to :hitter
+
+  # hitter's def score
+  def defense
+    @defense ||= hitter.defense_for_position(position) if hitter && position
+  end
+
+  def position_initials
+    @position_initials ||= Hitter::POSITION_OPTIONS[position][:initials]
+  end
 end

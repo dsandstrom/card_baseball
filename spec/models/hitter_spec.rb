@@ -277,12 +277,12 @@ RSpec.describe Hitter, type: :model do
     end
   end
 
-  describe "#primary_position_initial" do
+  describe "#primary_position_initials" do
     context "when primary_position is nil" do
       before { subject.primary_position = nil }
 
       it "returns nil" do
-        expect(subject.primary_position_initial).to eq(nil)
+        expect(subject.primary_position_initials).to eq(nil)
       end
     end
 
@@ -290,7 +290,7 @@ RSpec.describe Hitter, type: :model do
       before { subject.primary_position = "" }
 
       it "returns nil" do
-        expect(subject.primary_position_initial).to eq(nil)
+        expect(subject.primary_position_initials).to eq(nil)
       end
     end
 
@@ -301,7 +301,7 @@ RSpec.describe Hitter, type: :model do
         before { subject.hitting_pitcher = false }
 
         it "returns 'P'" do
-          expect(subject.primary_position_initial).to eq("P")
+          expect(subject.primary_position_initials).to eq("P")
         end
       end
 
@@ -309,7 +309,7 @@ RSpec.describe Hitter, type: :model do
         before { subject.hitting_pitcher = true }
 
         it "returns 'P'" do
-          expect(subject.primary_position_initial).to eq("P+H")
+          expect(subject.primary_position_initials).to eq("P+H")
         end
       end
     end
@@ -318,7 +318,7 @@ RSpec.describe Hitter, type: :model do
       before { subject.primary_position = 2 }
 
       it "returns 'C'" do
-        expect(subject.primary_position_initial).to eq("C")
+        expect(subject.primary_position_initials).to eq("C")
       end
     end
 
@@ -326,7 +326,7 @@ RSpec.describe Hitter, type: :model do
       before { subject.primary_position = 3 }
 
       it "returns '1B'" do
-        expect(subject.primary_position_initial).to eq("1B")
+        expect(subject.primary_position_initials).to eq("1B")
       end
     end
 
@@ -334,7 +334,7 @@ RSpec.describe Hitter, type: :model do
       before { subject.primary_position = 4 }
 
       it "returns '2B'" do
-        expect(subject.primary_position_initial).to eq("2B")
+        expect(subject.primary_position_initials).to eq("2B")
       end
     end
 
@@ -342,7 +342,7 @@ RSpec.describe Hitter, type: :model do
       before { subject.primary_position = 5 }
 
       it "returns '3B'" do
-        expect(subject.primary_position_initial).to eq("3B")
+        expect(subject.primary_position_initials).to eq("3B")
       end
     end
 
@@ -350,7 +350,7 @@ RSpec.describe Hitter, type: :model do
       before { subject.primary_position = 6 }
 
       it "returns 'SS'" do
-        expect(subject.primary_position_initial).to eq("SS")
+        expect(subject.primary_position_initials).to eq("SS")
       end
     end
 
@@ -358,7 +358,7 @@ RSpec.describe Hitter, type: :model do
       before { subject.primary_position = 7 }
 
       it "returns 'OF'" do
-        expect(subject.primary_position_initial).to eq("OF")
+        expect(subject.primary_position_initials).to eq("OF")
       end
     end
 
@@ -366,7 +366,25 @@ RSpec.describe Hitter, type: :model do
       before { subject.primary_position = 8 }
 
       it "returns 'CF'" do
-        expect(subject.primary_position_initial).to eq("CF")
+        expect(subject.primary_position_initials).to eq("CF")
+      end
+    end
+  end
+
+  describe "#defense_for_position" do
+    let(:hitter) do
+      Fabricate(:hitter, first_base_defense: 1, second_base_defense: -1)
+    end
+
+    context "when hitter plays the position" do
+      it "returns their score" do
+        expect(hitter.defense_for_position(4)).to eq(-1)
+      end
+    end
+
+    context "when hitter doesn't play the position" do
+      it "returns nil" do
+        expect(hitter.defense_for_position(8)).to be_nil
       end
     end
   end

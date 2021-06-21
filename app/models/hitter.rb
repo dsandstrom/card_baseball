@@ -95,8 +95,13 @@ class Hitter < ApplicationRecord
     end
   end
 
-  def primary_position_initial
-    @primary_position_initial ||= build_primary_position_initial
+  def primary_position_initials
+    @primary_position_initials ||= build_primary_position_initials
+  end
+
+  def defense_for_position(position)
+    key = "#{POSITION_OPTIONS[position][:key]}_defense".to_sym
+    send(key)
   end
 
   private
@@ -107,7 +112,7 @@ class Hitter < ApplicationRecord
       "#{temp} #{last_name}".squish
     end
 
-    def build_primary_position_initial
+    def build_primary_position_initials
       return if primary_position.blank?
 
       if primary_position == 1 && hitting_pitcher?
