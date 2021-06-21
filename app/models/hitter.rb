@@ -9,14 +9,14 @@ class Hitter < ApplicationRecord
   RATING_RANGE = 0..99
   DEFENSE_RANGE = -20..20
   POSITION_OPTIONS = {
-    1 => { initial: 'P', name: 'Pitcher', key: :pitcher },
-    2 => { initial: 'C', name: 'Catcher', key: :catcher },
-    3 => { initial: '1B', name: 'First Base', key: :first_base },
-    4 => { initial: '2B', name: 'Second Base', key: :second_base },
-    5 => { initial: '3B', name: 'Third Base', key: :third_base },
-    6 => { initial: 'SS', name: 'Shortstop', key: :shortstop },
-    7 => { initial: 'OF', name: 'Outfield', key: :outfield },
-    8 => { initial: 'CF', name: 'Center Field', key: :center_field }
+    1 => { initials: 'P', name: 'Pitcher', key: :pitcher },
+    2 => { initials: 'C', name: 'Catcher', key: :catcher },
+    3 => { initials: '1B', name: 'First Base', key: :first_base },
+    4 => { initials: '2B', name: 'Second Base', key: :second_base },
+    5 => { initials: '3B', name: 'Third Base', key: :third_base },
+    6 => { initials: 'SS', name: 'Shortstop', key: :shortstop },
+    7 => { initials: 'OF', name: 'Outfield', key: :outfield },
+    8 => { initials: 'CF', name: 'Center Field', key: :center_field }
   }.freeze
 
   has_one :contract, class_name: 'HitterContract', dependent: :destroy
@@ -113,7 +113,7 @@ class Hitter < ApplicationRecord
       if primary_position == 1 && hitting_pitcher?
         'P+H'
       else
-        POSITION_OPTIONS[primary_position][:initial]
+        POSITION_OPTIONS[primary_position][:initials]
       end
     end
 end
