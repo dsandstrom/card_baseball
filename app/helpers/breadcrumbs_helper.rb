@@ -23,6 +23,12 @@ module BreadcrumbsHelper
     breadcrumbs(pages)
   end
 
+  def lineup_breadcrumbs(league, team, lineup = nil)
+    pages = [['Lineups', team_lineups_path(team)]]
+    pages << [lineup.full_name, team_lineup_path(team, lineup)] if lineup
+    league_team_breadcrumbs(league, team, pages)
+  end
+
   def hitter_breadcrumbs(hitter = nil)
     pages = [['Home', root_path], ['All Hitters', hitters_path]]
     pages << [hitter.name, hitter_path(hitter)] if hitter

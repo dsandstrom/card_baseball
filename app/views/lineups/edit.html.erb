@@ -1,8 +1,4 @@
-<%=
-  league_team_breadcrumbs(@league, @team,
-                          [['Lineups', team_lineups_path(@team)],
-                           [@lineup.full_name, team_lineup_path(@team, @lineup)]])
-%>
+<%= lineup_breadcrumbs(@league, @team, @lineup) %>
 
 <h1>Lineup Options</h1>
 
