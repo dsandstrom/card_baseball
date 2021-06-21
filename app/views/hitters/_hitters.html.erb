@@ -2,7 +2,7 @@
   pages = hitters.respond_to?(:entry_name)
   page_index =
     if pages
-      hitters.current_per_page * (hitters.current_page - 1)
+      hitters.limit_value * (hitters.current_page - 1)
     else
       0
     end
