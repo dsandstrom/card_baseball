@@ -48,6 +48,32 @@ RSpec.describe Lineup, type: :model do
     end
   end
 
+  # INSTANCE
+
+  describe ".position_form_options" do
+    context "when with_dh is false" do
+      before { subject.with_dh = false }
+
+      it "returns [position initials, position number] format" do
+        expect(subject.position_form_options).to eq(
+          [["C", 2], ["1B", 3], ["2B", 4], ["3B", 5], ["SS", 6], ["OF", 7],
+           ["CF", 8]]
+        )
+      end
+    end
+
+    context "when with_dh is false" do
+      before { subject.with_dh = true }
+
+      it "returns [position initials, position number] format" do
+        expect(subject.position_form_options).to eq(
+          [["C", 2], ["1B", 3], ["2B", 4], ["3B", 5], ["SS", 6], ["OF", 7],
+           ["CF", 8], ["DH", 9]]
+        )
+      end
+    end
+  end
+
   describe "#full_name" do
     context "when name, vs, with_dh are blank" do
       before do

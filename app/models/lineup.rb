@@ -25,6 +25,10 @@ class Lineup < ApplicationRecord
          .destroy_all
   end
 
+  def position_form_options
+    @position_form_options ||= build_position_form_options
+  end
+
   private
 
     def name_or_vs_present
@@ -45,5 +49,15 @@ class Lineup < ApplicationRecord
       end
       temp += '(DH)' if with_dh?
       temp.squish
+    end
+
+    def build_position_form_options
+      options =
+        [2, 3, 4, 5, 6, 7, 8].map do |position|
+          [Hitter::POSITION_OPTIONS[position][:initials], position]
+        end
+      return options unless with_dh
+
+      options << ['DH', 9]
     end
 end
