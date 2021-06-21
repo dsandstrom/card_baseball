@@ -23,7 +23,6 @@ RSpec.describe Spot, type: :model do
   it { is_expected.to validate_inclusion_of(:position).in_range(2..9) }
   it { is_expected.to validate_inclusion_of(:batting_order).in_range(1..9) }
 
-  it { is_expected.to validate_uniqueness_of(:position).scoped_to(:lineup_id) }
   it do
     is_expected.to validate_uniqueness_of(:batting_order).scoped_to(:lineup_id)
   end
@@ -31,6 +30,34 @@ RSpec.describe Spot, type: :model do
 
   it { is_expected.to belong_to(:lineup) }
   it { is_expected.to belong_to(:hitter) }
+
+  describe "#validate" do
+    describe "#position_available" do
+      context "when already 1 of each position" do
+        before do
+          subject.position = nil
+          subject.batting_order = 8
+
+          [2, 3, 4, 5, 6, 7, 8].each_with_index do |position, index|
+            Fabricate(:spot, lineup: lineup, position: position,
+                             batting_order: (index + 1))
+          end
+        end
+
+        context "and position is 7" do
+          before { subject.position = 7 }
+
+          it { is_expected.to be_valid }
+        end
+
+        context "and position is 3" do
+          before { subject.position = 3 }
+
+          it { is_expected.not_to be_valid }
+        end
+      end
+    end
+  end
 
   describe "#defense" do
     let(:hitter) do
