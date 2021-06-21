@@ -38,6 +38,14 @@ table {
 thead {
   th {
     &.vs-left,
+    &.vs-right {
+      &.highlight {
+        background-color: $color-quinary;
+        color: $white;
+      }
+    }
+
+    &.vs-left,
     &.defense {
       border-left: 1px solid $light-gray;
       background-color: $light-gray;
@@ -81,11 +89,21 @@ tbody {
 
     td {
       background-color: $background-color;
+
+      &.highlight {
+        background-color: rgba($color-quinary, .15);
+      }
     }
 
     &:nth-child(2n + 1) {
       td {
         background-color: $off-white;
+
+        // scss-lint:disable NestingDepth
+        &.highlight {
+          background-color: rgba($color-quinary, .2);
+        }
+        // scss-lint:enable NestingDepth
       }
     }
   }

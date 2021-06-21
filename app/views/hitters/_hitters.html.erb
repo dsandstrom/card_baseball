@@ -6,6 +6,8 @@
     else
       0
     end
+  show_contract = true if show_contract.nil?
+  highlight ||= nil
 %>
 
 <% if pages %>
@@ -24,10 +26,12 @@
           Hitters
         <% end %>
       </th>
-      <th colspan="4" class="vs-left">vs Lefties</th>
-      <th colspan="4" class="vs-right">vs Righties</th>
+      <th colspan="4" class="vs-left<%= ' highlight' if highlight == 'left' %>">vs Lefties</th>
+      <th colspan="4" class="vs-right<%= ' highlight' if highlight == 'right' %>">vs Righties</th>
       <th colspan="8" class="defense">Defense</th>
-      <th class="left-border"></th>
+      <% if show_contract %>
+        <th class="left-border"></th>
+      <% end %>
     </tr>
     <tr>
       <th></th>
@@ -58,14 +62,18 @@
       <th class=" no-wrap">
         P<span class="defense-bar">/Bar</span>
       </th>
-      <th class="left-border">Contract</th>
+      <% if show_contract %>
+        <th class="left-border">Contract</th>
+      <% end %>
     </tr>
   </thead>
 
   <tbody class="hitters">
     <% if hitters.any? %>
       <% hitters.each_with_index do |hitter, table_index| %>
-        <%= render hitter, table_index: (table_index + page_index + 1) %>
+        <%= render hitter, table_index: (table_index + page_index + 1),
+                           show_contract: show_contract,
+                           highlight: highlight %>
       <% end %>
     <% else %>
       <tr>

@@ -20,6 +20,18 @@ module ApplicationHelper
     end
   end
 
+  def left_td(value, options = {})
+    options[:class] ||= 'vs-left'
+    options[:class] += ' highlight' if options.delete(:highlight) == 'left'
+    content_tag :td, value, options
+  end
+
+  def right_td(value, options = {})
+    options[:class] ||= 'vs-right'
+    options[:class] += ' highlight' if options.delete(:highlight) == 'right'
+    content_tag :td, value, options
+  end
+
   private
 
     def enable_page_title(title)

@@ -1,4 +1,7 @@
-<% table_index ||= nil  %>
+<%
+  table_index ||= nil
+  highlight ||= nil
+%>
 
 <tr class="hitter" id="hitter_<%= hitter.id %>">
   <% if table_index.present? %>
@@ -11,14 +14,14 @@
   <td><%= hitter.primary_position_initial %></td>
   <td><%= hitter.overall_rating %></td>
   <td><%= hitter.durability %></td>
-  <td class="left-border"><%= hitter.left_rating %></td>
-  <td><%= hitter.left_on_base_percentage %></td>
-  <td><%= hitter.left_slugging %></td>
-  <td><%= hitter.left_homeruns %></td>
-  <td class="left-border"><%= hitter.right_rating %></td>
-  <td><%= hitter.right_on_base_percentage %></td>
-  <td><%= hitter.right_slugging %></td>
-  <td><%= hitter.right_homeruns %></td>
+  <%= left_td hitter.left_rating, highlight: highlight, class: 'left-border' %></td>
+  <%= left_td hitter.left_on_base_percentage, highlight: highlight %></td>
+  <%= left_td hitter.left_slugging, highlight: highlight %></td>
+  <%= left_td hitter.left_homeruns, highlight: highlight %></td>
+  <%= right_td hitter.right_rating, class: 'left-border', highlight: highlight %>
+  <%= right_td hitter.right_on_base_percentage, highlight: highlight %>
+  <%= right_td hitter.right_slugging, highlight: highlight %>
+  <%= right_td hitter.right_homeruns, highlight: highlight %>
   <td class="left-border">
     <% if hitter.catcher_defense && hitter.catcher_defense > -10 %>
       <%= format_defense(hitter.catcher_defense) %><span class="defense-bar">/<%= hitter.catcher_bar || 0 %></span>
@@ -39,5 +42,7 @@
       <%= format_defense(hitter.pitcher_defense) %>
     <% end %>
   </td>
-  <td class="left-border"><%= render 'hitters/contract', hitter: hitter %></td>
+  <% if show_contract %>
+    <td class="left-border"><%= render 'hitters/contract', hitter: hitter %></td>
+  <% end %>
 </tr>
