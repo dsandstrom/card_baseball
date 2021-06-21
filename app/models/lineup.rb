@@ -25,6 +25,10 @@ class Lineup < ApplicationRecord
          .destroy_all
   end
 
+  def bench
+    team.hitters.where.not(id: hitters.map(&:id))
+  end
+
   def position_form_options
     @position_form_options ||= build_position_form_options
   end

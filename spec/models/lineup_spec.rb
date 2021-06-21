@@ -227,4 +227,52 @@ RSpec.describe Lineup, type: :model do
       end
     end
   end
+
+  describe "#bench" do
+    let(:lineup) { Fabricate(:lineup, team: team) }
+
+    context "when no hitters" do
+      it "returns []" do
+        expect(lineup.bench).to eq([])
+      end
+    end
+
+    context "when team has 2 hitters" do
+      let(:first_hitter) { Fabricate(:hitter) }
+      let(:second_hitter) { Fabricate(:hitter) }
+
+      before do
+        Fabricate(:hitter_contract, team: team, hitter: first_hitter)
+        Fabricate(:hitter_contract, team: team, hitter: second_hitter)
+        Fabricate(:hitter_contract)
+      end
+
+      context "and none in the lineup" do
+        it "returns both" do
+          expect(lineup.bench).to match_array([first_hitter, second_hitter])
+        end
+      end
+
+      context "and one in the lineup" do
+        before { Fabricate(:spot, hitter: first_hitter, lineup: lineup) }
+
+        it "returns both" do
+          expect(lineup.bench).to match_array([second_hitter])
+        end
+      end
+
+      context "and both in the lineup" do
+        before do
+          Fabricate(:spot, hitter: first_hitter, lineup: lineup, position: 2,
+                           batting_order: 1)
+          Fabricate(:spot, hitter: second_hitter, lineup: lineup, position: 3,
+                           batting_order: 2)
+        end
+
+        it "returns both" do
+          expect(lineup.bench).to match_array([])
+        end
+      end
+    end
+  end
 end
