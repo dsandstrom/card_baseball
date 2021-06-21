@@ -143,4 +143,18 @@ td {
     font-size: 1.2rem;
     text-align: right;
   }
+
+  &.defense-positive {
+    color: $color-success;
+    font-weight: bold;
+  }
+
+  &.defense-negative {
+    color: $color-warning;
+    font-weight: bold;
+  }
+
+  &.defense-missing {
+    color: $light-gray;
+  }
 }

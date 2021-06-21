@@ -22,26 +22,14 @@
   <%= right_td hitter.right_on_base_percentage, highlight: highlight %>
   <%= right_td hitter.right_slugging, highlight: highlight %>
   <%= right_td hitter.right_homeruns, highlight: highlight %>
-  <td class="left-border">
-    <% if hitter.catcher_defense && hitter.catcher_defense > -10 %>
-      <%= format_defense(hitter.catcher_defense) %><span class="defense-bar">/<%= hitter.catcher_bar || 0 %></span>
-    <% else %>
-      <%= format_defense(hitter.catcher_defense) %>
-    <% end %>
-  </td>
-  <td><%= format_defense(hitter.first_base_defense) %></td>
-  <td><%= format_defense(hitter.second_base_defense) %></td>
-  <td><%= format_defense(hitter.third_base_defense) %></td>
-  <td><%= format_defense(hitter.shortstop_defense) %></td>
-  <td><%= format_defense(hitter.outfield_defense) %></td>
-  <td><%= format_defense(hitter.center_field_defense) %></td>
-  <td>
-    <% if hitter.pitcher_defense && hitter.pitcher_defense > -10 %>
-      <%= format_defense(hitter.pitcher_defense) %><span class="defense-bar">/<%= hitter.pitcher_bar || 0 %></span>
-    <% else %>
-      <%= format_defense(hitter.pitcher_defense) %>
-    <% end %>
-  </td>
+  <%= defense_td(hitter.catcher_defense, hitter.catcher_bar, class: 'left-border') %>
+  <%= defense_td(hitter.first_base_defense) %>
+  <%= defense_td(hitter.second_base_defense) %>
+  <%= defense_td(hitter.third_base_defense) %>
+  <%= defense_td(hitter.shortstop_defense) %>
+  <%= defense_td(hitter.outfield_defense) %>
+  <%= defense_td(hitter.center_field_defense) %>
+  <%= defense_td(hitter.pitcher_defense, hitter.pitcher_bar) %>
   <% if show_contract %>
     <td class="left-border"><%= render 'hitters/contract', hitter: hitter %></td>
   <% end %>
