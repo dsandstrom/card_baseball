@@ -10,6 +10,7 @@ RSpec.describe "lineups/show", type: :view do
     assign(:team, team)
     assign(:league, team.league)
     @lineup = assign(:lineup, lineup)
+    assign(:spots, lineup.spots)
   end
 
   it "renders lineup's name" do

@@ -8,7 +8,11 @@ class LineupsController < ApplicationController
     @lineups = @team.lineups
   end
 
-  def show; end
+  def show
+    @spots = @lineup.spots
+    @hitters = @lineup.hitters
+    @bench = @lineup.bench
+  end
 
   def new
     @lineup = @team.lineups.build

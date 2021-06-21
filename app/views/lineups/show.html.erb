@@ -13,3 +13,27 @@
     </div>
   </div>
 </div>
+
+<div class="lineup-spots">
+  <% 8.times do |n|  %>
+    <% batting_order = n + 1 %>
+    <%= batting_order %>.
+    <% spot = @spots.find_or_initialize_by(batting_order: batting_order)  %>
+
+    <%= render 'spots/form', spot: spot, lineup: @lineup, team: @team %>
+  <% end %>
+
+  <% if @lineup.with_dh? %>
+    9.
+    <% spot = @spots.find_or_initialize_by(batting_order: 9)  %>
+    <%= render 'spots/form', spot: spot, lineup: @lineup, team: @team %>
+  <% end %>
+</div>
+
+<div class="hitters-bench">
+  <h2>Bench</h2>
+
+  <%= render 'hitters/hitters', hitters: @lineup.bench,
+                                show_contract: false,
+                                highlight: @lineup.vs %>
+</div>

@@ -16,5 +16,9 @@ Rails.application.routes.draw do
     resources :lineups
   end
 
+  resources :lineups, only: nil do
+    resources :spots, except: %i[index show]
+  end
+
   root to: 'leagues#index'
 end

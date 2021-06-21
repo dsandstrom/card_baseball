@@ -6,6 +6,18 @@
   </header>
 
   <main class="card-main">
+    <div class="lineup-spots">
+      <% (1..8).each do |batting_order| %>
+        <% spot = lineup.spots.find_by(batting_order: batting_order)  %>
+        <% if spot %>
+          <%= render spot %>
+        <% else %>
+          <div class="empty spot">
+            <%= content_tag :span, batting_order %>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
   </main>
 
   <footer class="card-footer">

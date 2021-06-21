@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 
+# TODO: fabricator - make position/batting_order unique
+
 Fabricator(:spot) do
   lineup
   hitter
-  position 5
-  batting_order 5
+  position { rand(2..8) }
+  batting_order { rand(1..8) }
 end

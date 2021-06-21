@@ -1,0 +1,27 @@
+<%
+  url =
+    if spot.persisted?
+      lineup_spot_path(lineup, spot)
+    else
+      lineup_spots_path(lineup)
+    end
+%>
+
+<%= form_with(model: spot, url: url) do |form| %>
+  <%= form_errors(spot) %>
+  <%= form.hidden_field :batting_order %>
+
+  <div class="field">
+    <%= form.label :hitter_id %>
+    <%= form.collection_select :hitter_id, lineup.bench, :id, :roster_name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :position %>
+    <%= form.select :position, lineup.position_form_options, prompt: '-Pick-' %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
