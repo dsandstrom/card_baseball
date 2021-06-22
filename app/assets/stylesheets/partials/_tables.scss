@@ -1,7 +1,6 @@
 table {
-  table-layout: fixed;
   border-spacing: 0;
-  border-collapse: separate;
+  border-collapse: collapse;
 
   .hitter-name,
   .roster-name {
@@ -11,7 +10,7 @@ table {
   // sticky thead and first column
   // https://css-tricks.com/a-table-with-both-a-sticky-header-and-a-sticky-first-column/
   &.full-width {
-    min-width: 100%;
+    width: 100%;
 
     thead {
       position: sticky;
@@ -71,12 +70,12 @@ thead {
 }
 
 tbody {
-  border: 1px solid $light-gray;
+  border: 0 solid $light-gray;
   border-width: 0 1px;
 
   td {
     &.left-border {
-      border-left: 1px solid $gray;
+      border-left: 1px solid $light-gray;
     }
 
     .defense-bar {
