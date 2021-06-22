@@ -84,6 +84,58 @@ RSpec.describe Spot, type: :model do
         it { is_expected.to be_valid }
       end
     end
+
+    describe "#correct_batters_amount" do
+      let(:lineup) { Fabricate(:lineup) }
+
+      context "when no DH" do
+        context "for first batting spot" do
+          before { subject.batting_order = 1 }
+
+          it { is_expected.to be_valid }
+        end
+
+        context "for 9th batting_order" do
+          before { subject.batting_order = 9 }
+
+          it { is_expected.not_to be_valid }
+        end
+
+        context "for 0 batting_order" do
+          before { subject.batting_order = 0 }
+
+          it { is_expected.not_to be_valid }
+        end
+
+        context "for -1 batting_order" do
+          before { subject.batting_order = -1 }
+
+          it { is_expected.not_to be_valid }
+        end
+      end
+
+      context "when DH" do
+        let(:lineup) { Fabricate(:dh_lineup) }
+
+        context "for 8th batting_order" do
+          before { subject.batting_order = 8 }
+
+          it { is_expected.to be_valid }
+        end
+
+        context "for 9th batting_order" do
+          before { subject.batting_order = 9 }
+
+          it { is_expected.to be_valid }
+        end
+
+        context "for 10th batting_order" do
+          before { subject.batting_order = 10 }
+
+          it { is_expected.not_to be_valid }
+        end
+      end
+    end
   end
 
   describe "#defense" do

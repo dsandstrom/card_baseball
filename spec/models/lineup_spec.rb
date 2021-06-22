@@ -185,7 +185,7 @@ RSpec.describe Lineup, type: :model do
   end
 
   describe "#remove_dh_spot" do
-    let(:lineup) { Fabricate(:lineup) }
+    let(:lineup) { Fabricate(:dh_lineup) }
 
     before { Fabricate(:spot, lineup: lineup, batting_order: 2, position: 2) }
 

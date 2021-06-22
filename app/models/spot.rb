@@ -10,6 +10,7 @@ class Spot < ApplicationRecord
 
   validate :position_available
   validate :hitter_plays_position
+  validate :correct_batters_amount
 
   belongs_to :lineup
   belongs_to :hitter
@@ -39,5 +40,11 @@ class Spot < ApplicationRecord
       return if hitter.defense_for_position(position).present?
 
       errors.add(:hitter, "can't play position")
+    end
+
+    def correct_batters_amount
+      return unless batting_order == 9 && lineup && !lineup&.with_dh?
+
+      errors.add(:batting_order, 'not allowed to be 9 with this lineup')
     end
 end
