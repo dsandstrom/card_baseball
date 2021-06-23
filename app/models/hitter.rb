@@ -75,9 +75,26 @@ class Hitter < ApplicationRecord
   end
 
   def self.defense_key_for_position(position)
-    return unless position && POSITION_OPTIONS[position]
+    return unless position && POSITION_OPTIONS[position] &&
+                  POSITION_OPTIONS[position][:key]
 
     "#{POSITION_OPTIONS[position][:key]}_defense".to_sym
+  end
+
+  def self.bar_key_for_position(position)
+    return unless [1, 2].any? { |pos| pos == position }
+    return unless position && POSITION_OPTIONS[position] &&
+                  POSITION_OPTIONS[position][:key]
+
+    "#{POSITION_OPTIONS[position][:key]}_bar".to_sym
+  end
+
+  def self.initials_for_position(position)
+    return unless position
+    return 'DH' if position == 9
+    return unless POSITION_OPTIONS[position]
+
+    POSITION_OPTIONS[position][:initials]
   end
 
   # INSTANCE
@@ -107,6 +124,13 @@ class Hitter < ApplicationRecord
 
   def defense_for_position(position)
     key = Hitter.defense_key_for_position(position)
+    return unless key
+
+    send(key)
+  end
+
+  def bar_for_position(position)
+    key = Hitter.bar_key_for_position(position)
     return unless key
 
     send(key)

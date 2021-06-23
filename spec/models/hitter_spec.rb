@@ -120,6 +120,68 @@ RSpec.describe Hitter, type: :model do
     end
   end
 
+  describe ".initials_for_position" do
+    context "when given 0" do
+      it "returns nil" do
+        expect(Hitter.initials_for_position(0)).to eq(nil)
+      end
+    end
+
+    context "when given 1" do
+      it "returns 'P'" do
+        expect(Hitter.initials_for_position(1)).to eq("P")
+      end
+    end
+
+    context "when given 2" do
+      it "returns 'C'" do
+        expect(Hitter.initials_for_position(2)).to eq("C")
+      end
+    end
+
+    context "when given 3" do
+      it "returns '1B'" do
+        expect(Hitter.initials_for_position(3)).to eq("1B")
+      end
+    end
+
+    context "when given 4" do
+      it "returns '2B'" do
+        expect(Hitter.initials_for_position(4)).to eq("2B")
+      end
+    end
+
+    context "when given 5" do
+      it "returns '3B'" do
+        expect(Hitter.initials_for_position(5)).to eq("3B")
+      end
+    end
+
+    context "when given 6" do
+      it "returns 'SS'" do
+        expect(Hitter.initials_for_position(6)).to eq("SS")
+      end
+    end
+
+    context "when given 7" do
+      it "returns 'OF'" do
+        expect(Hitter.initials_for_position(7)).to eq("OF")
+      end
+    end
+
+    context "when given 8" do
+      it "returns 'CF'" do
+        expect(Hitter.initials_for_position(8)).to eq("CF")
+      end
+    end
+
+    context "when given 9" do
+      it "returns 'DH'" do
+        expect(Hitter.initials_for_position(9)).to eq("DH")
+      end
+    end
+  end
+
   # INSTANCE
 
   describe "#name" do
@@ -424,6 +486,31 @@ RSpec.describe Hitter, type: :model do
 
       it "returns [3, 7]" do
         expect(hitter.positions).to eq([3, 7])
+      end
+    end
+  end
+
+  describe "#bar_for_position" do
+    let(:hitter) do
+      Fabricate(:hitter, catcher_defense: 1, catcher_bar: 2, pitcher_bar: 3,
+                         first_base_defense: 4)
+    end
+
+    context "for position 1" do
+      it "returns their pitcher_bar" do
+        expect(hitter.bar_for_position(1)).to eq(3)
+      end
+    end
+
+    context "for position 2" do
+      it "returns their catcher_bar" do
+        expect(hitter.bar_for_position(2)).to eq(2)
+      end
+    end
+
+    context "for position 3" do
+      it "returns nil" do
+        expect(hitter.bar_for_position(3)).to be_nil
       end
     end
   end
