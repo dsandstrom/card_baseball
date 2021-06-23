@@ -14,7 +14,8 @@ class SpotsController < ApplicationController
     @spot = @lineup.spots.build(spot_params)
 
     if @spot.save
-      redirect_to redirect_url, notice: 'Spot was successfully created.'
+      redirect_to redirect_url,
+                  notice: 'Batting spot was successfully set.'
     else
       render :new
     end
@@ -22,7 +23,8 @@ class SpotsController < ApplicationController
 
   def update
     if @spot.update(spot_params)
-      redirect_to redirect_url, notice: 'Spot was successfully updated.'
+      redirect_to redirect_url,
+                  notice: 'Batting spot was successfully changed.'
     else
       render :edit
     end
@@ -30,7 +32,8 @@ class SpotsController < ApplicationController
 
   def destroy
     @spot.destroy
-    redirect_to redirect_url, notice: 'Spot was successfully cleared.'
+    redirect_to redirect_url,
+                notice: 'Batting spot was successfully cleared.'
   end
 
   private
