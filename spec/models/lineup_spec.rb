@@ -277,4 +277,32 @@ RSpec.describe Lineup, type: :model do
       end
     end
   end
+
+  describe "#spots_at_position" do
+    let(:lineup) { Fabricate(:lineup) }
+
+    context "when no spots" do
+      before { Fabricate(:spot, position: 2) }
+
+      it "returns []" do
+        expect(lineup.spots_at_position(2)).to eq([])
+      end
+    end
+
+    context "when spot with position 2" do
+      it "returns it" do
+        spot = Fabricate(:spot, lineup: lineup, position: 2)
+
+        expect(lineup.spots_at_position(2)).to eq([spot])
+      end
+    end
+
+    context "when given spot id" do
+      it "returns []" do
+        spot = Fabricate(:spot, lineup: lineup, position: 2)
+
+        expect(lineup.spots_at_position(2, spot.id)).to eq([])
+      end
+    end
+  end
 end

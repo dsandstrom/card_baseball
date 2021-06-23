@@ -29,7 +29,7 @@ class Spot < ApplicationRecord
     def position_available
       return if position.blank? || lineup.blank?
 
-      count = lineup.spots.where(position: position).count
+      count = lineup.spots_at_position(position, id).count
       return if count.zero? || (count == 1 && position == 7)
 
       errors.add(:position, 'already taken in lineup')

@@ -33,6 +33,12 @@ class Lineup < ApplicationRecord
     @position_form_options ||= build_position_form_options
   end
 
+  def spots_at_position(position, current_spot_id = nil)
+    pos_spots = spots.where(position: position)
+    pos_spots = pos_spots.where.not(id: current_spot_id) if current_spot_id
+    pos_spots
+  end
+
   private
 
     def name_or_vs_present

@@ -59,6 +59,18 @@ RSpec.describe Spot, type: :model do
           it { is_expected.not_to be_valid }
         end
       end
+
+      context "when changing batting_order" do
+        let!(:spot) { Fabricate(:spot, batting_order: 2) }
+
+        it "allows it" do
+          expect do
+            spot.batting_order = 3
+            spot.save
+            spot.reload
+          end.to change(spot, :batting_order).to(3)
+        end
+      end
     end
 
     describe "#hitter_plays_position" do
