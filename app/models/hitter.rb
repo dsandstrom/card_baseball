@@ -112,6 +112,13 @@ class Hitter < ApplicationRecord
     send(key)
   end
 
+  def positions
+    @positions ||=
+      POSITION_OPTIONS.keys.keep_if do |position|
+        defense_for_position(position).present?
+      end
+  end
+
   private
 
     def build_name

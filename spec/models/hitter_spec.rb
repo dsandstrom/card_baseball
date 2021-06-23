@@ -388,4 +388,43 @@ RSpec.describe Hitter, type: :model do
       end
     end
   end
+
+  describe "#positions" do
+    let(:hitter) { Fabricate(:hitter) }
+
+    context "when no defense" do
+      it "returns []" do
+        expect(hitter.positions).to eq([])
+      end
+    end
+
+    context "when pitcher_defense" do
+      let(:hitter) do
+        Fabricate(:hitter, pitcher_defense: 1, pitcher_bar: 2,
+                           hitting_pitcher: true)
+      end
+
+      it "returns [1]" do
+        expect(hitter.positions).to eq([1])
+      end
+    end
+
+    context "when catcher_defense" do
+      let(:hitter) { Fabricate(:hitter, catcher_defense: 2) }
+
+      it "returns [2]" do
+        expect(hitter.positions).to eq([2])
+      end
+    end
+
+    context "when first_base_defense and outfield_defense" do
+      let(:hitter) do
+        Fabricate(:hitter, first_base_defense: 0, outfield_defense: -1)
+      end
+
+      it "returns [3, 7]" do
+        expect(hitter.positions).to eq([3, 7])
+      end
+    end
+  end
 end
