@@ -11,6 +11,7 @@ class Spot < ApplicationRecord
   validate :position_available
   validate :hitter_plays_position
   validate :correct_batters_amount
+  validate :hitter_on_team
 
   belongs_to :lineup
   belongs_to :hitter
@@ -46,5 +47,12 @@ class Spot < ApplicationRecord
       return unless batting_order == 9 && lineup && !lineup&.with_dh?
 
       errors.add(:batting_order, 'not allowed to be 9 with this lineup')
+    end
+
+    def hitter_on_team
+      return unless hitter && lineup&.team
+      return if hitter.team == lineup.team
+
+      errors.add(:hitter, 'no longer on team')
     end
 end

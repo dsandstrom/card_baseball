@@ -3,10 +3,12 @@
 require "rails_helper"
 
 RSpec.describe Spot, type: :model do
-  let(:lineup) { Fabricate(:lineup) }
+  let(:team) { Fabricate(:team) }
+  let(:lineup) { Fabricate(:lineup, team: team) }
   let(:hitter) { Fabricate(:hitter, catcher_defense: 5) }
 
   before do
+    Fabricate(:hitter_contract, hitter: hitter, team: team)
     @spot = Spot.new(lineup_id: lineup.id, hitter_id: hitter.id,
                      position: 2, batting_order: 1)
   end
@@ -98,7 +100,7 @@ RSpec.describe Spot, type: :model do
     end
 
     describe "#correct_batters_amount" do
-      let(:lineup) { Fabricate(:lineup) }
+      let(:lineup) { Fabricate(:lineup, team: team) }
 
       context "when no DH" do
         context "for first batting spot" do
@@ -127,7 +129,7 @@ RSpec.describe Spot, type: :model do
       end
 
       context "when DH" do
-        let(:lineup) { Fabricate(:dh_lineup) }
+        let(:lineup) { Fabricate(:dh_lineup, team: team) }
 
         context "for 8th batting_order" do
           before { subject.batting_order = 8 }
@@ -148,6 +150,19 @@ RSpec.describe Spot, type: :model do
         end
       end
     end
+
+    describe "#hitter_on_team" do
+      context "when no hitter_contract" do
+        let(:lineup) { Fabricate(:lineup) }
+
+        before do
+          subject.lineup = lineup
+          subject.hitter = hitter
+        end
+
+        it { is_expected.not_to be_valid }
+      end
+    end
   end
 
   describe "#defense" do
@@ -155,8 +170,12 @@ RSpec.describe Spot, type: :model do
       Fabricate(:hitter, first_base_defense: 1, second_base_defense: -1)
     end
 
+    before { Fabricate(:hitter_contract, hitter: hitter, team: team) }
+
     context "when no hitter" do
-      let(:spot) { Fabricate.build(:spot, hitter: nil, position: 3) }
+      let(:spot) do
+        Fabricate.build(:spot, lineup: lineup, hitter: nil, position: 3)
+      end
 
       it "returns nil" do
         expect(spot.defense).to be_nil
@@ -164,7 +183,9 @@ RSpec.describe Spot, type: :model do
     end
 
     context "when no position" do
-      let(:spot) { Fabricate.build(:spot, hitter: hitter, position: nil) }
+      let(:spot) do
+        Fabricate.build(:spot, lineup: lineup, hitter: hitter, position: nil)
+      end
 
       it "returns nil" do
         expect(spot.defense).to be_nil
@@ -172,7 +193,9 @@ RSpec.describe Spot, type: :model do
     end
 
     context "when hitter plays the position" do
-      let(:spot) { Fabricate(:spot, hitter: hitter, position: 3) }
+      let(:spot) do
+        Fabricate(:spot, lineup: lineup, hitter: hitter, position: 3)
+      end
 
       it "returns their score" do
         expect(spot.defense).to eq(1)
@@ -180,7 +203,9 @@ RSpec.describe Spot, type: :model do
     end
 
     context "when hitter doesn't play the position" do
-      let(:spot) { Fabricate.build(:spot, hitter: hitter, position: 7) }
+      let(:spot) do
+        Fabricate.build(:spot, lineup: lineup, hitter: hitter, position: 7)
+      end
 
       it "returns nil" do
         expect(spot.defense).to be_nil
