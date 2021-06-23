@@ -1,0 +1,18 @@
+<div class="bench-hitter">
+  <%= content_tag :span, bench_hitter.roster_name, class: 'hitter-name' %>
+
+  <div class="hitter-positions">
+    <% bench_hitter.positions.each do |position| %>
+      <%
+        defense =
+          format_defense_and_bar(bench_hitter.defense_for_position(position),
+                                 bench_hitter.bar_for_position(position),
+                                 class: 'hitter-defense', tag: :span)
+      %>
+
+      <span class="hitter-position">
+        <%= Hitter.initials_for_position(position) %><%= defense %>
+      </span>
+    <% end %>
+  </div>
+</div>

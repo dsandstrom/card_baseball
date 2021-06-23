@@ -20,6 +20,13 @@ module ApplicationHelper
     end
   end
 
+  def lineup_nav(team, lineup)
+    links = [['Options', edit_team_lineup_path(team, lineup)]]
+    content_tag :p, class: 'page-nav lineup-nav' do
+      safe_join(navitize(links))
+    end
+  end
+
   def left_td(value, options = {})
     options[:class] ||= 'vs-left'
     options[:class] += ' highlight' if options.delete(:highlight) == 'left'

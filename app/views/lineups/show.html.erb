@@ -1,39 +1,44 @@
 <%= lineup_breadcrumbs(@league, @team) %>
 
 <div class="page-header">
+  <%= content_tag :h1, @lineup.full_name, class: 'lineup-name' %>
+
+  <%= lineup_nav(@team, @lineup) %>
+</div>
+
+<div class="lineup-spots">
   <div class="columns">
     <div class="first-column">
-      <%= content_tag :h1, @lineup.full_name, class: 'lineup-name' %>
+      <h2>Lineup</h2>
+
+      <% 8.times do |n|  %>
+        <% batting_order = n + 1 %>
+
+        <%= render 'lineups/batting_spot_form', lineup: @lineup, team: @team,
+                                                batting_order: batting_order %>
+      <% end %>
+      <% if @lineup.with_dh? %>
+        <%= render 'lineups/batting_spot_form', lineup: @lineup, team: @team,
+                                                batting_order: 9 %>
+      <% end %>
     </div>
 
     <div class="second-column">
-      <%= link_to 'Lineup Options',
-                  edit_team_lineup_path(@team, @lineup),
-                  class: 'button' %>
+      <h2>Bench</h2>
+
+      <div class="lineup-bench">
+        <%= render partial: 'lineups/bench_hitter', collection: @lineup.bench %>
+      </div>
     </div>
   </div>
 </div>
 
-<div class="lineup-spots">
-  <% 8.times do |n|  %>
-    <% batting_order = n + 1 %>
-    <%= batting_order %>.
-    <% spot = @spots.find_or_initialize_by(batting_order: batting_order)  %>
+<hr>
 
-    <%= render 'spots/form', spot: spot, lineup: @lineup, team: @team %>
-  <% end %>
+<div class="team-hitters">
+  <h2>Hitter Stats</h2>
 
-  <% if @lineup.with_dh? %>
-    9.
-    <% spot = @spots.find_or_initialize_by(batting_order: 9)  %>
-    <%= render 'spots/form', spot: spot, lineup: @lineup, team: @team %>
-  <% end %>
-</div>
-
-<div class="hitters-bench">
-  <h2>Bench</h2>
-
-  <%= render 'hitters/hitters', hitters: @lineup.bench,
+  <%= render 'hitters/hitters', hitters: @team.hitters,
                                 show_contract: false,
                                 highlight: @lineup.vs %>
 </div>

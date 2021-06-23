@@ -1,0 +1,95 @@
+.batting-spot-form {
+  margin-bottom: 1.5rem;
+}
+
+.spot-hitter-fields {
+  display: grid;
+  grid-template-columns: 3.2rem 1fr 1fr auto;
+
+  input,
+  select {
+    margin-bottom: 0;
+  }
+
+  .actions {
+    margin: 0;
+  }
+
+  .spot-batting-order {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: .1rem 1rem;
+    border: 1px solid $border-color;
+    background-color: $border-color;
+    color: $dark-gray;
+    font-weight: bold;
+  }
+}
+
+.spot-hitter-field {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: .1rem 1rem;
+  border: 1px solid $border-color;
+}
+
+.spot-hitter-positions {
+  display: flex;
+  align-items: center;
+  margin-left: 1rem;
+
+  label {
+    min-width: 3rem;
+    margin: 0 .5rem 0 0;
+    padding: .1rem .5rem;
+    border: 1px solid $border-color;
+    border-radius: $border-radius;
+    color: $gray;
+    font-size: 1.4rem;
+    text-align: center;
+
+    &.active {
+      border-color: $active-color;
+      background-color: rgba($active-color, .1);
+      color: $active-color;
+    }
+  }
+
+  input {
+    display: none;
+  }
+}
+
+.bench-hitter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  padding: .5rem .5rem .5rem 1rem;
+  border: 1px solid $border-color;
+  border-radius: $border-radius;
+
+  .hitter-positions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .hitter-position {
+    margin-left: .5rem;
+    padding: .2rem .5rem;
+    border: 1px solid $border-color;
+    border-radius: $border-radius;
+    background-color: $off-white;
+    color: $dark-gray;
+    font-size: 1.4rem;
+    font-weight: bold;
+    text-align: center;
+  }
+
+  .defense-neutral {
+    color: $gray;
+  }
+}

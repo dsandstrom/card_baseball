@@ -1,4 +1,5 @@
 <%
+  team = lineup.team
   url =
     if spot.persisted?
       lineup_spot_path(lineup, spot)
@@ -13,7 +14,7 @@
 
   <div class="field">
     <%= form.label :hitter_id %>
-    <%= form.collection_select :hitter_id, lineup.bench, :id, :roster_name %>
+    <%= form.collection_select :hitter_id, team.hitters, :id, :roster_name %>
   </div>
 
   <div class="field">
@@ -25,3 +26,13 @@
     <%= form.submit %>
   </div>
 <% end %>
+
+<hr>
+
+<div class="hitters-bench">
+  <h2>Hitters</h2>
+
+  <%= render 'hitters/hitters', hitters: team.hitters,
+                                show_contract: false,
+                                highlight: lineup.vs %>
+</div>

@@ -77,10 +77,6 @@ tbody {
     &.left-border {
       border-left: 1px solid $light-gray;
     }
-
-    .defense-bar {
-      color: $gray;
-    }
   }
 
   tr {
@@ -105,6 +101,13 @@ tbody {
         // scss-lint:enable NestingDepth
       }
     }
+  }
+
+  .defense-positive,
+  .defense-negative,
+  .defense-neutral,
+  .defense-bar {
+    font-weight: bold;
   }
 }
 
@@ -142,18 +145,24 @@ td {
     font-size: 1.2rem;
     text-align: right;
   }
+}
 
-  &.defense-positive {
-    color: $color-success;
-    font-weight: bold;
-  }
+.defense-positive {
+  color: $color-success;
+}
 
-  &.defense-negative {
-    color: $color-warning;
-    font-weight: bold;
-  }
+.defense-negative {
+  color: $color-warning;
+}
 
-  &.defense-missing {
-    color: $light-gray;
-  }
+.defense-missing {
+  color: $light-gray;
+}
+
+.defense-neutral {
+  color: $dark-gray;
+}
+
+.defense-bar {
+  color: $gray;
 }
