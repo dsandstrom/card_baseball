@@ -97,6 +97,14 @@ class Hitter < ApplicationRecord
     POSITION_OPTIONS[position][:initials]
   end
 
+  def self.position_name(position)
+    return unless position
+    return 'Designated Hitter' if position == 9
+    return unless POSITION_OPTIONS[position]
+
+    POSITION_OPTIONS[position][:name]
+  end
+
   # INSTANCE
 
   def name

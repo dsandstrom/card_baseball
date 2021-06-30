@@ -182,6 +182,68 @@ RSpec.describe Hitter, type: :model do
     end
   end
 
+  describe ".position_name" do
+    context "when given 0" do
+      it "returns nil" do
+        expect(Hitter.position_name(0)).to eq(nil)
+      end
+    end
+
+    context "when given 1" do
+      it "returns 'P'" do
+        expect(Hitter.position_name(1)).to eq("Pitcher")
+      end
+    end
+
+    context "when given 2" do
+      it "returns 'C'" do
+        expect(Hitter.position_name(2)).to eq("Catcher")
+      end
+    end
+
+    context "when given 3" do
+      it "returns '1B'" do
+        expect(Hitter.position_name(3)).to eq("First Base")
+      end
+    end
+
+    context "when given 4" do
+      it "returns '2B'" do
+        expect(Hitter.position_name(4)).to eq("Second Base")
+      end
+    end
+
+    context "when given 5" do
+      it "returns '3B'" do
+        expect(Hitter.position_name(5)).to eq("Third Base")
+      end
+    end
+
+    context "when given 6" do
+      it "returns 'SS'" do
+        expect(Hitter.position_name(6)).to eq("Shortstop")
+      end
+    end
+
+    context "when given 7" do
+      it "returns 'OF'" do
+        expect(Hitter.position_name(7)).to eq("Outfield")
+      end
+    end
+
+    context "when given 8" do
+      it "returns 'CF'" do
+        expect(Hitter.position_name(8)).to eq("Center Field")
+      end
+    end
+
+    context "when given 9" do
+      it "returns 'DH'" do
+        expect(Hitter.position_name(9)).to eq("Designated Hitter")
+      end
+    end
+  end
+
   # INSTANCE
 
   describe "#name" do
