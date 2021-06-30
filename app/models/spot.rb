@@ -40,7 +40,7 @@ class Spot < ApplicationRecord
       return if position.blank? || hitter.blank? || position == 9
       return if hitter.defense_for_position(position).present?
 
-      errors.add(:hitter, "can't play position")
+      errors.add(:position, "can't be filled by hitter")
     end
 
     def correct_batters_amount
