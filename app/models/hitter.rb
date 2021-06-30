@@ -89,7 +89,7 @@ class Hitter < ApplicationRecord
     "#{POSITION_OPTIONS[position][:key]}_bar".to_sym
   end
 
-  def self.initials_for_position(position)
+  def self.position_initials(position)
     return unless position
     return 'DH' if position == 9
     return unless POSITION_OPTIONS[position]

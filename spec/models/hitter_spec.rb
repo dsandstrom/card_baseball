@@ -120,64 +120,64 @@ RSpec.describe Hitter, type: :model do
     end
   end
 
-  describe ".initials_for_position" do
+  describe ".position_initials" do
     context "when given 0" do
       it "returns nil" do
-        expect(Hitter.initials_for_position(0)).to eq(nil)
+        expect(Hitter.position_initials(0)).to eq(nil)
       end
     end
 
     context "when given 1" do
       it "returns 'P'" do
-        expect(Hitter.initials_for_position(1)).to eq("P")
+        expect(Hitter.position_initials(1)).to eq("P")
       end
     end
 
     context "when given 2" do
       it "returns 'C'" do
-        expect(Hitter.initials_for_position(2)).to eq("C")
+        expect(Hitter.position_initials(2)).to eq("C")
       end
     end
 
     context "when given 3" do
       it "returns '1B'" do
-        expect(Hitter.initials_for_position(3)).to eq("1B")
+        expect(Hitter.position_initials(3)).to eq("1B")
       end
     end
 
     context "when given 4" do
       it "returns '2B'" do
-        expect(Hitter.initials_for_position(4)).to eq("2B")
+        expect(Hitter.position_initials(4)).to eq("2B")
       end
     end
 
     context "when given 5" do
       it "returns '3B'" do
-        expect(Hitter.initials_for_position(5)).to eq("3B")
+        expect(Hitter.position_initials(5)).to eq("3B")
       end
     end
 
     context "when given 6" do
       it "returns 'SS'" do
-        expect(Hitter.initials_for_position(6)).to eq("SS")
+        expect(Hitter.position_initials(6)).to eq("SS")
       end
     end
 
     context "when given 7" do
       it "returns 'OF'" do
-        expect(Hitter.initials_for_position(7)).to eq("OF")
+        expect(Hitter.position_initials(7)).to eq("OF")
       end
     end
 
     context "when given 8" do
       it "returns 'CF'" do
-        expect(Hitter.initials_for_position(8)).to eq("CF")
+        expect(Hitter.position_initials(8)).to eq("CF")
       end
     end
 
     context "when given 9" do
       it "returns 'DH'" do
-        expect(Hitter.initials_for_position(9)).to eq("DH")
+        expect(Hitter.position_initials(9)).to eq("DH")
       end
     end
   end
