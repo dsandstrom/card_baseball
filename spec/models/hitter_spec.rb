@@ -511,6 +511,12 @@ RSpec.describe Hitter, type: :model do
         expect(hitter.position_defense(8)).to be_nil
       end
     end
+
+    context "when position is 9" do
+      it "returns 0" do
+        expect(hitter.position_defense(9)).to eq(0)
+      end
+    end
   end
 
   describe "#positions" do

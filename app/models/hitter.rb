@@ -131,6 +131,8 @@ class Hitter < ApplicationRecord
   end
 
   def position_defense(position)
+    return 0 if position == 9
+
     key = Hitter.defense_key_for_position(position)
     return unless key
 
