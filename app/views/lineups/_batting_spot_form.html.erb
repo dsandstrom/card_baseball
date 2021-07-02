@@ -56,6 +56,15 @@
           <% end %>
         <% end %>
 
+        <% if lineup.with_dh? %>
+          <%= form.label "batting_order_#{batting_order}_position_9",
+                         title: 'Designated Hitter' do %>
+            DH
+            <%= form.radio_button :position, 9,
+                                  id: "spot_batting_order_#{batting_order}_position_9" %>
+          <% end %>
+        <% end %>
+
         <% if spot.persisted? %>
           <%= link_to "&rArr;".html_safe, lineup_spot_path(lineup, spot),
                       method: :delete, class: 'destroy-link',
