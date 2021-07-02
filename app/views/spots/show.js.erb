@@ -1,5 +1,3 @@
-<%= render 'spots/form', team: @team, lineup: @lineup, spot: @spot %>
-
 <% if @old_spot %>
   var form = document.getElementById("spot_batting_order_<%= @old_spot.batting_order %>_form");
   if (form) {
@@ -20,3 +18,5 @@
     bench.innerHTML = "<%= j render('lineups/bench_hitter', bench_hitter: @bench_hitter) %>" + bench.innerHTML;
   }
 <% end %>
+
+<%= render 'spots/form', team: @team, lineup: @lineup, spot: @spot %>
