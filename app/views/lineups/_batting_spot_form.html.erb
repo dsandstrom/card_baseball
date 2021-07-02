@@ -43,7 +43,7 @@
         <% Hitter::POSITION_OPTIONS.each do |position, options| %>
           <% next if position == 1 %>
 
-          <% if hitter.defense_for_position(position) %>
+          <% if hitter.position_defense(position) %>
             <%= form.label "batting_order_#{batting_order}_position_#{position}",
                            title: options[:name] do %>
               <%= options[:initials] %>

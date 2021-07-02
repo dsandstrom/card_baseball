@@ -495,20 +495,20 @@ RSpec.describe Hitter, type: :model do
     end
   end
 
-  describe "#defense_for_position" do
+  describe "#position_defense" do
     let(:hitter) do
       Fabricate(:hitter, first_base_defense: 1, second_base_defense: -1)
     end
 
     context "when hitter plays the position" do
       it "returns their score" do
-        expect(hitter.defense_for_position(4)).to eq(-1)
+        expect(hitter.position_defense(4)).to eq(-1)
       end
     end
 
     context "when hitter doesn't play the position" do
       it "returns nil" do
-        expect(hitter.defense_for_position(8)).to be_nil
+        expect(hitter.position_defense(8)).to be_nil
       end
     end
   end

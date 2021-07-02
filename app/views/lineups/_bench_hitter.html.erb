@@ -6,7 +6,7 @@
     <% bench_hitter.positions.each do |position| %>
       <%
         defense =
-          format_defense_and_bar(bench_hitter.defense_for_position(position),
+          format_defense_and_bar(bench_hitter.position_defense(position),
                                  bench_hitter.bar_for_position(position),
                                  class: 'hitter-defense', tag: :span)
       %>

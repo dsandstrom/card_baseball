@@ -18,7 +18,7 @@ class Spot < ApplicationRecord
 
   # hitter's def score
   def defense
-    @defense ||= hitter.defense_for_position(position) if hitter && position
+    @defense ||= hitter.position_defense(position) if hitter && position
   end
 
   def position_initials
@@ -38,7 +38,7 @@ class Spot < ApplicationRecord
 
     def hitter_plays_position
       return if position.blank? || hitter.blank? || position == 9
-      return if hitter.defense_for_position(position).present?
+      return if hitter.position_defense(position).present?
 
       errors.add(:position, "can't be filled by hitter")
     end

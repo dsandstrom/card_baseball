@@ -130,7 +130,7 @@ class Hitter < ApplicationRecord
     @primary_position_initials ||= build_primary_position_initials
   end
 
-  def defense_for_position(position)
+  def position_defense(position)
     key = Hitter.defense_key_for_position(position)
     return unless key
 
@@ -147,7 +147,7 @@ class Hitter < ApplicationRecord
   def positions
     @positions ||=
       POSITION_OPTIONS.keys.keep_if do |position|
-        defense_for_position(position).present?
+        position_defense(position).present?
       end
   end
 
