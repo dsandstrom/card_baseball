@@ -1,0 +1,13 @@
+var hitter = document.getElementById("bench_hitter_<%= @spot.hitter_id %>");
+if (hitter) {
+  console.log(hitter.parentNode);
+  hitter.parentNode.removeChild(hitter);
+}
+
+var form = document.getElementById("spot_batting_order_<%= spot.batting_order %>_form");
+if (form) {
+  form.outerHTML = "<%= j render('lineups/batting_spot_form', lineup: lineup, team: team, spot: spot) %>";
+}
+
+var event = new Event('custom:reload-forms');
+document.dispatchEvent(event);

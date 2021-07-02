@@ -1,4 +1,6 @@
-class RadioButtonLabel {
+import Rails from '@rails/ujs'
+
+class SubmittingRadioButtonLabel {
   constructor(elem) {
     this.elem = elem;
     this.radio = this.elem.querySelector('input');
@@ -19,11 +21,20 @@ class RadioButtonLabel {
   }
 }
 
-class RadioButtons {
+class SubmittingRadioButtons {
   constructor(elem) {
+    if (elem.classList.contains('submitting-radio-buttons')) {
+      return;
+    } else {
+      elem.classList.add('submitting-radio-buttons');
+    }
+
+    this.form = elem.closest('form');
+    if (!this.form) return;
+
     this.labels = [];
     for (var label of elem.querySelectorAll('label')) {
-      this.labels.push(new RadioButtonLabel(label));
+      this.labels.push(new SubmittingRadioButtonLabel(label));
     }
     if (!this.labels.length) return;
 
@@ -36,24 +47,22 @@ class RadioButtons {
       if (!radio) return;
 
       radio.addEventListener('change', () => {
-        this.toggleDisabledClasses();
+        Rails.fire(this.form, 'submit');
+        return;
       });
-    }
-  }
-
-  toggleDisabledClasses() {
-    for (var label of this.labels) {
-      label.toggleDisabledClass();
     }
   }
 }
 
-const radioButtonClasses = [];
+const enableSubmittingRadioButtons = function (event) {
+  const classes = ['spot-hitter-positions'];
 
-document.addEventListener('turbolinks:load', function() {
-  for (let klass of radioButtonClasses) {
+  for (let klass of classes) {
     document.querySelectorAll('.' + klass).forEach((radioButtons) => {
-      new RadioButtons(radioButtons);
+      new SubmittingRadioButtons(radioButtons);
     });
   }
-});
+};
+
+document.addEventListener('turbolinks:load', enableSubmittingRadioButtons);
+document.addEventListener('custom:reload-forms', enableSubmittingRadioButtons);

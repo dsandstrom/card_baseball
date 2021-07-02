@@ -43,6 +43,10 @@ label {
     display: none;
   }
 
+  &:hover {
+    cursor: pointer;
+  }
+
   input {
     margin-bottom: 0;
   }

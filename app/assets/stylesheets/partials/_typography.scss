@@ -46,7 +46,6 @@ h1 {
 }
 
 h2 {
-  margin-top: 2rem;
   font-size: 3.2rem;
 }
 
@@ -100,6 +99,12 @@ a {
     &:hover {
       color: $color-secondary;
     }
+  }
+
+  &.disabled {
+    opacity: .5;
+    color: $gray;
+    pointer-events: none;
   }
 }
 

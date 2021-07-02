@@ -1,0 +1,12 @@
+var form = document.getElementById("spot_batting_order_<%= @spot.batting_order %>_form");
+if (form) {
+  form.outerHTML = "<%= j render('lineups/batting_spot_form', lineup: @lineup, team: @team, spot: @spot) %>";
+}
+
+var bench = document.querySelector('.lineup-bench');
+if (bench) {
+  bench.innerHTML = "<%= j render('lineups/bench_hitter', bench_hitter: @bench_hitter) %>" + bench.innerHTML;
+}
+
+var event = new Event('custom:reload-forms');
+document.dispatchEvent(event);

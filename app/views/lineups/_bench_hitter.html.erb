@@ -1,4 +1,5 @@
-<div class="bench-hitter">
+<div id="bench_hitter_<%= bench_hitter.id %>" class="draggable bench-hitter"
+     data-id="<%= bench_hitter.id %>">
   <%= content_tag :span, bench_hitter.roster_name, class: 'hitter-name' %>
 
   <div class="hitter-positions">
