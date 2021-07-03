@@ -28,7 +28,7 @@ class Lineup < ApplicationRecord
   end
 
   def bench
-    team.hitters.where.not(id: hitters.map(&:id))
+    @bench ||= team.hitters.where.not(id: hitters.map(&:id))
   end
 
   def position_form_options
@@ -47,17 +47,11 @@ class Lineup < ApplicationRecord
   end
 
   def defense
-    spot_defenses = spots.map(&:defense).compact
-    return 0 unless spot_defenses&.any?
-
-    spot_defenses.inject(:+)
+    @defense ||= build_defense
   end
 
   def catcher_bar
-    catcher_spot = spots_at_position(2).first
-    return 0 unless catcher_spot
-
-    catcher_spot.hitter.catcher_bar
+    @catcher_bar ||= build_catcher_bar
   end
 
   private
@@ -94,5 +88,17 @@ class Lineup < ApplicationRecord
       return options unless with_dh
 
       options << ['DH', 9]
+    end
+
+    def build_defense
+      spot_defenses = spots.map(&:defense).compact
+      return 0 unless spot_defenses&.any?
+
+      spot_defenses.inject(:+)
+    end
+
+    def build_catcher_bar
+      catcher_spot = spots_at_position(2).first
+      catcher_spot&.hitter&.catcher_bar || 0
     end
 end

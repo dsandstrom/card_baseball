@@ -490,8 +490,18 @@ RSpec.describe Lineup, type: :model do
     context "when catcher spot" do
       before { Fabricate(:spot, lineup: lineup, hitter: hitter, position: 2) }
 
-      it "returns the hitter's catcher_bar" do
-        expect(lineup.catcher_bar).to eq(2)
+      context "with a good catcher" do
+        it "returns the hitter's catcher_bar" do
+          expect(lineup.catcher_bar).to eq(2)
+        end
+      end
+
+      context "with a bad catcher" do
+        before { hitter.update(catcher_bar: nil) }
+
+        it "returns 0" do
+          expect(lineup.catcher_bar).to eq(0)
+        end
       end
     end
   end
