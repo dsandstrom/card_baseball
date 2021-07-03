@@ -3,7 +3,6 @@
 # TODO: after update, delete dh spot if with_dh changes to false
 # TODO: allow locking/unlocking
 # TODO: add defense_score (X if invalid lineup)
-# TODO: add complete? to signify if lineup positions all filled out
 
 class Lineup < ApplicationRecord
   VS_OPTIONS = %w[left right].freeze
@@ -40,6 +39,11 @@ class Lineup < ApplicationRecord
     pos_spots = spots.where(position: position)
     pos_spots = pos_spots.where.not(id: current_spot_id) if current_spot_id
     pos_spots
+  end
+
+  def complete?
+    complete_count = with_dh? ? 9 : 8
+    spots.count == complete_count
   end
 
   private

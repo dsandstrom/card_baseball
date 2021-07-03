@@ -305,4 +305,79 @@ RSpec.describe Lineup, type: :model do
       end
     end
   end
+
+  describe "#complete?" do
+    context "when no DH" do
+      let(:lineup) { Fabricate(:lineup, with_dh: false) }
+
+      context "and no spots" do
+        it "returns false" do
+          expect(lineup.complete?).to eq(false)
+        end
+      end
+
+      context "and 7 spots" do
+        before do
+          (1..7).each do |batting_order|
+            Fabricate(:spot, lineup: lineup, batting_order: batting_order,
+                             position: (batting_order + 1))
+          end
+        end
+
+        it "returns false" do
+          expect(lineup.complete?).to eq(false)
+        end
+      end
+
+      context "and 8 spots" do
+        before do
+          (1..8).each do |batting_order|
+            Fabricate(:spot, lineup: lineup, batting_order: batting_order,
+                             position: (batting_order + 1))
+          end
+        end
+
+        it "returns true" do
+          expect(lineup.complete?).to eq(true)
+        end
+      end
+    end
+
+    context "when DH" do
+      let(:lineup) { Fabricate(:lineup, with_dh: true) }
+
+      context "and no spots" do
+        it "returns false" do
+          expect(lineup.complete?).to eq(false)
+        end
+      end
+
+      context "and 8 spots" do
+        before do
+          (1..8).each do |batting_order|
+            Fabricate(:spot, lineup: lineup, batting_order: batting_order,
+                             position: (batting_order + 1))
+          end
+        end
+
+        it "returns false" do
+          expect(lineup.complete?).to eq(false)
+        end
+      end
+
+      context "and 9 spots" do
+        before do
+          (1..8).each do |batting_order|
+            Fabricate(:spot, lineup: lineup, batting_order: batting_order,
+                             position: (batting_order + 1))
+          end
+          Fabricate(:spot, lineup: lineup, batting_order: 9, position: 7)
+        end
+
+        it "returns true" do
+          expect(lineup.complete?).to eq(true)
+        end
+      end
+    end
+  end
 end
