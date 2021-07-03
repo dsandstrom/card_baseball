@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 # TODO: allow locking/unlocking
+# TODO: when no dh, add blank spot that can be manually filled out for pitcher
 
 class Lineup < ApplicationRecord
   VS_OPTIONS = %w[left right].freeze
