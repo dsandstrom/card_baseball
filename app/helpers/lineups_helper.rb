@@ -12,12 +12,8 @@ module LineupsHelper
   private
 
     def lineup_defense_class_adder(defense)
-      if defense.blank?
-        'defense-missing'
-      elsif defense.negative?
-        'defense-negative'
-      elsif defense.zero?
-        'defense-zero'
+      if defense.blank? || defense <= 0
+        'defense-insufficient'
       elsif defense < 40
         'defense-low'
       elsif defense < 50
