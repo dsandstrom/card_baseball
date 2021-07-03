@@ -3,6 +3,20 @@
   .second-column {
     overflow: visible;
   }
+
+  .lineup-defense-bar {
+    color: $dark-gray;
+  }
+
+  .lineup-defense {
+    font-size: 2.5rem;
+    line-height: 1.1;
+  }
+
+  .lineup-bar {
+    font-size: 1.8rem;
+    line-height: 1.1;
+  }
 }
 
 .batting-spot-form {
@@ -192,13 +206,16 @@
   }
 }
 
-.lineup-defense {
-  padding: .4rem .5rem;
+.lineup-bench {
+  position: relative;
+  z-index: 1;
   border: 1px solid $border-color;
   border-radius: $border-radius;
+  background-color: $off-white;
+}
+
+.lineup-defense {
   color: $gray;
-  font-size: 2.5rem;
-  line-height: 1;
 
   .defense-low {
     color: $red;
@@ -213,10 +230,15 @@
   }
 }
 
-.lineup-bench {
-  position: relative;
-  z-index: 1;
-  border: 1px solid $border-color;
-  border-radius: $border-radius;
-  background-color: $off-white;
+.lineups {
+  .card-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+  }
+
+  .lineup-defense {
+    margin: 0 0 0 1rem;
+    font-size: 2rem;
+  }
 }

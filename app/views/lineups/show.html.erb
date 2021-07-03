@@ -9,10 +9,11 @@
 <div class="lineup-spots">
   <div class="columns">
     <div class="first-column">
-      <%= content_tag :h2, 'Lineup', class: 'lineup-heading' %>
+      <div class="column-heading">
+        <%= content_tag :h2, 'Lineup', class: 'lineup-heading' %>
 
-      <%= content_tag :p, format_lineup_defense(@lineup.defense),
-                          class: 'lineup-defense' %>
+        <p class="lineup-defense-bar"><%= content_tag :span, format_lineup_defense(@lineup.defense), class: 'lineup-defense' %>/<%= content_tag :span, @lineup.catcher_bar, class: 'lineup-bar' %></p>
+      </div>
 
       <% 8.times do |n|  %>
         <% batting_order = n + 1 %>
