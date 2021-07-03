@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# TODO: after update, delete dh spot if with_dh changes to false
 # TODO: allow locking/unlocking
 
 class Lineup < ApplicationRecord
@@ -16,6 +15,8 @@ class Lineup < ApplicationRecord
   belongs_to :team
   has_many :spots, -> { order('batting_order asc') }, dependent: :destroy
   has_many :hitters, through: :spots
+
+  after_update :fix_dh_spot
 
   def full_name
     @full_name ||= build_full_name
@@ -53,6 +54,10 @@ class Lineup < ApplicationRecord
   end
 
   private
+
+    def fix_dh_spot
+      remove_dh_spot unless with_dh?
+    end
 
     def name_or_vs_present
       return if name.present? || vs.present?
