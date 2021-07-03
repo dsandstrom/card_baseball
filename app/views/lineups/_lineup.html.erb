@@ -3,6 +3,11 @@
 <section id="lineup_<%= lineup.id %>" class="lineup card">
   <header class="card-header">
     <h2 class="lineup-name"><%= link_to lineup.full_name, team_lineup_path(team, lineup) %></h2>
+
+    <p class="lineup-tags">
+      <%= lineup_tags(lineup) %>
+    </p>
+
     <p class="lineup-defense">
       <%= format_lineup_defense(lineup.defense) %>/<%= content_tag :span, lineup.catcher_bar, class: 'lineup-bar' %>
     </p>

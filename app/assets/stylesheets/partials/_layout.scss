@@ -453,3 +453,23 @@ body {
     margin: 0 0 0 1rem;
   }
 }
+
+.tag {
+  padding: .2rem .5rem;
+  border: 2px solid $border-color;
+  border-radius: 2 * $border-radius;
+  background-color: $white;
+  line-height: 1;
+
+  &.tag-complete {
+    border-color: $color-success;
+    background-color: $white;
+    color: $color-success;
+  }
+
+  &.tag-incomplete {
+    border-color: $color-warning;
+    background-color: $white;
+    color: $color-warning;
+  }
+}
