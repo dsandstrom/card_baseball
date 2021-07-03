@@ -11,6 +11,9 @@
     <div class="first-column">
       <%= content_tag :h2, 'Lineup', class: 'lineup-heading' %>
 
+      <%= content_tag :p, format_lineup_defense(@lineup.defense),
+                          class: 'lineup-defense' %>
+
       <% 8.times do |n|  %>
         <% batting_order = n + 1 %>
 

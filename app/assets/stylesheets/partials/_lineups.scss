@@ -192,6 +192,32 @@
   }
 }
 
+.lineup-defense {
+  padding: .4rem .5rem;
+  border: 1px solid $border-color;
+  border-radius: $border-radius;
+  font-size: 2.5rem;
+  line-height: 1;
+
+  .defense-missing,
+  .defense-negative,
+  .defense-zero {
+    color: $gray;
+  }
+
+  .defense-low {
+    color: $red;
+  }
+
+  .defense-close {
+    color: $yellow;
+  }
+
+  .defense-sufficient {
+    color: $green;
+  }
+}
+
 .lineup-bench {
   position: relative;
   z-index: 1;
