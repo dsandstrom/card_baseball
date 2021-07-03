@@ -331,10 +331,11 @@ RSpec.describe Lineup, type: :model do
 
       context "and 8 spots" do
         before do
-          (1..8).each do |batting_order|
+          (1..7).each do |batting_order|
             Fabricate(:spot, lineup: lineup, batting_order: batting_order,
                              position: (batting_order + 1))
           end
+          Fabricate(:spot, lineup: lineup, batting_order: 8, position: 7)
         end
 
         it "returns true" do
@@ -377,6 +378,55 @@ RSpec.describe Lineup, type: :model do
         it "returns true" do
           expect(lineup.complete?).to eq(true)
         end
+      end
+    end
+  end
+
+  describe "#defense" do
+    context "when no spots" do
+      let(:lineup) { Fabricate(:lineup) }
+
+      it "returns 0" do
+        expect(lineup.defense).to eq(0)
+      end
+    end
+
+    context "when 2 valid spots" do
+      let(:lineup) { Fabricate(:lineup, team: team) }
+      let(:second_base_hitter) { Fabricate(:hitter, second_base_defense: 5) }
+      let(:third_base_hitter) { Fabricate(:hitter, third_base_defense: -1) }
+
+      before do
+        Fabricate(:hitter_contract, hitter: second_base_hitter, team: team)
+        Fabricate(:hitter_contract, hitter: third_base_hitter, team: team)
+        Fabricate(:spot, lineup: lineup, batting_order: 2, position: 4,
+                         hitter: second_base_hitter)
+        Fabricate(:spot, lineup: lineup, batting_order: 3, position: 5,
+                         hitter: third_base_hitter)
+      end
+
+      it "returns a sum of their defenses" do
+        expect(lineup.defense).to eq(4)
+      end
+    end
+
+    context "when a spot is missing defense" do
+      let(:lineup) { Fabricate(:lineup, team: team) }
+      let(:second_base_hitter) { Fabricate(:hitter, second_base_defense: 5) }
+      let(:third_base_hitter) { Fabricate(:hitter, third_base_defense: -1) }
+
+      before do
+        Fabricate(:hitter_contract, hitter: second_base_hitter, team: team)
+        Fabricate(:hitter_contract, hitter: third_base_hitter, team: team)
+        Fabricate(:spot, lineup: lineup, batting_order: 2, position: 4,
+                         hitter: second_base_hitter)
+        Fabricate(:spot, lineup: lineup, batting_order: 3, position: 5,
+                         hitter: third_base_hitter)
+        third_base_hitter.update_column :third_base_defense, nil
+      end
+
+      it "returns the valid defense" do
+        expect(lineup.defense).to eq(5)
       end
     end
   end
