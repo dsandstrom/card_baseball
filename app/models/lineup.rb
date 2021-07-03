@@ -53,6 +53,13 @@ class Lineup < ApplicationRecord
     spot_defenses.inject(:+)
   end
 
+  def catcher_bar
+    catcher_spot = spots_at_position(2).first
+    return 0 unless catcher_spot
+
+    catcher_spot.hitter.catcher_bar
+  end
+
   private
 
     def fix_dh_spot

@@ -474,4 +474,25 @@ RSpec.describe Lineup, type: :model do
       end
     end
   end
+
+  describe "#catcher_bar" do
+    let(:lineup) { Fabricate(:lineup, team: team) }
+    let(:hitter) { Fabricate(:hitter, catcher_defense: 4, catcher_bar: 2) }
+
+    before { Fabricate(:hitter_contract, team: team, hitter: hitter) }
+
+    context "when no catcher spot" do
+      it "returns 0" do
+        expect(lineup.catcher_bar).to eq(0)
+      end
+    end
+
+    context "when catcher spot" do
+      before { Fabricate(:spot, lineup: lineup, hitter: hitter, position: 2) }
+
+      it "returns the hitter's catcher_bar" do
+        expect(lineup.catcher_bar).to eq(2)
+      end
+    end
+  end
 end
