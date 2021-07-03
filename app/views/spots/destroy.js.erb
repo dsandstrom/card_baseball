@@ -8,10 +8,7 @@ if (bench) {
   bench.innerHTML = "<%= j render('lineups/bench_hitter', bench_hitter: @bench_hitter) %>" + bench.innerHTML;
 }
 
-var defense = document.querySelector('.lineup-defense');
-if (defense) {
-  defense.innerHTML = "<%= j format_lineup_defense(@lineup.defense) %>";
-}
+<%= render 'lineups/defense', team: @team, lineup: @lineup %>
 
 var event = new Event('custom:reload-forms');
 document.dispatchEvent(event);

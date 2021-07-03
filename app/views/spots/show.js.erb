@@ -19,9 +19,6 @@
   }
 <% end %>
 
-var defense = document.querySelector('.lineup-defense');
-if (defense) {
-  defense.innerHTML = "<%= j format_lineup_defense(@lineup.defense) %>";
-}
+<%= render 'lineups/defense', team: @team, lineup: @lineup %>
 
 <%= render 'spots/form', team: @team, lineup: @lineup, spot: @spot %>

@@ -1,0 +1,9 @@
+var defense = document.querySelector('.lineup-defense');
+if (defense) {
+  defense.innerHTML = "<%= j format_lineup_defense(lineup.defense) %>";
+}
+
+var bar = document.querySelector('.lineup-bar');
+if (bar) {
+  bar.innerHTML = "<%= j lineup.catcher_bar %>";
+}
