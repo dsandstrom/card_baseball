@@ -22,7 +22,7 @@ class Spot < ApplicationRecord
   end
 
   def position_initials
-    @position_initials ||= Hitter::POSITION_OPTIONS[position][:initials]
+    @position_initials ||= Hitter.position_initials(position)
   end
 
   private

@@ -212,4 +212,83 @@ RSpec.describe Spot, type: :model do
       end
     end
   end
+
+  describe "#position_initials" do
+    context "when position is nil" do
+      it "returns nil" do
+        subject.position = nil
+        expect(subject.position_initials).to eq(nil)
+      end
+    end
+
+    context "when position is 0" do
+      it "returns nil" do
+        subject.position = 0
+        expect(subject.position_initials).to eq(nil)
+      end
+    end
+
+    context "when position is 1" do
+      it "returns 'P'" do
+        subject.position = 1
+        expect(subject.position_initials).to eq("P")
+      end
+    end
+
+    context "when position is 2" do
+      it "returns 'C'" do
+        subject.position = 2
+        expect(subject.position_initials).to eq("C")
+      end
+    end
+
+    context "when position is 3" do
+      it "returns '1B'" do
+        subject.position = 3
+        expect(subject.position_initials).to eq("1B")
+      end
+    end
+
+    context "when position is 4" do
+      it "returns '2B'" do
+        subject.position = 4
+        expect(subject.position_initials).to eq("2B")
+      end
+    end
+
+    context "when position is 5" do
+      it "returns '3B'" do
+        subject.position = 5
+        expect(subject.position_initials).to eq("3B")
+      end
+    end
+
+    context "when position is 6" do
+      it "returns 'SS'" do
+        subject.position = 6
+        expect(subject.position_initials).to eq("SS")
+      end
+    end
+
+    context "when position is 7" do
+      it "returns 'OF'" do
+        subject.position = 7
+        expect(subject.position_initials).to eq("OF")
+      end
+    end
+
+    context "when position is 8" do
+      it "returns 'CF'" do
+        subject.position = 8
+        expect(subject.position_initials).to eq("CF")
+      end
+    end
+
+    context "when position is 9" do
+      it "returns 'DH'" do
+        subject.position = 9
+        expect(subject.position_initials).to eq("DH")
+      end
+    end
+  end
 end
