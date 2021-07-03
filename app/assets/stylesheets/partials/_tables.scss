@@ -6,45 +6,6 @@ table {
   .roster-name {
     white-space: nowrap;
   }
-
-  // sticky thead and first column
-  // https://css-tricks.com/a-table-with-both-a-sticky-header-and-a-sticky-first-column/
-  &.full-width {
-    width: 100%;
-
-    thead {
-      position: sticky;
-      z-index: 3;
-      top: 0;
-      left: 0;
-
-      th {
-        // scss-lint:disable NestingDepth
-        &:nth-child(2) {
-          position: sticky;
-          z-index: 4;
-          top: 0;
-          left: 0;
-          border-right: 1px solid $black;
-          background-color: $color-quaternary;
-        }
-        // scss-lint:enable NestingDepth
-      }
-    }
-
-    tbody td {
-      position: relative;
-      z-index: 1;
-
-      &:nth-child(2) {
-        position: sticky;
-        z-index: 2;
-        top: 0;
-        left: 0;
-        border-right: 1px solid $light-gray;
-      }
-    }
-  }
 }
 
 thead {
@@ -157,6 +118,41 @@ td {
     color: $gray;
     font-size: 1.2rem;
     text-align: right;
+  }
+}
+
+// sticky thead and first column
+// https://css-tricks.com/a-table-with-both-a-sticky-header-and-a-sticky-first-column/
+.hitters {
+  width: 100%;
+
+  thead {
+    position: sticky;
+    z-index: 3;
+    top: 0;
+    left: 0;
+
+    tr:nth-child(2) th:nth-child(2) {
+      position: sticky;
+      z-index: 4;
+      top: 0;
+      left: 0;
+      border-right: 1px solid $black;
+      background-color: $color-quaternary;
+    }
+  }
+
+  tbody td {
+    position: relative;
+    z-index: 1;
+
+    &:nth-child(2) {
+      position: sticky;
+      z-index: 2;
+      top: 0;
+      left: 0;
+      border-right: 1px solid $light-gray;
+    }
   }
 }
 
