@@ -1,0 +1,15 @@
+name: "Stylelint"
+
+on: [push, pull_request]
+
+jobs:
+  linters:
+    name: stylelint
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions-hub/stylelint@master
+        env:
+          CONFIG_PATH: "./stylelint.config.js"
+          PATTERN: "*.scss"
