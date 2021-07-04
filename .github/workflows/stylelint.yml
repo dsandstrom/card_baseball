@@ -14,4 +14,7 @@ jobs:
 
     - name: NPM Install
       uses: actions/setup-node@v2
-      run: npm install
+      with:
+        node-version: '14'
+        cache: 'npm'
+    - run: npm install
