@@ -11,5 +11,4 @@ jobs:
       - uses: actions/checkout@v1
       - uses: actions-hub/stylelint@master
         env:
-          CONFIG_PATH: "stylelint.config.js"
           PATTERN: "app/assets/stylesheets/**/*.scss"
