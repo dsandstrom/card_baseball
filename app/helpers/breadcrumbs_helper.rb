@@ -13,11 +13,11 @@ module BreadcrumbsHelper
 
   def league_breadcrumbs(league)
     breadcrumbs([['Home', root_path],
-                 [league.full_name, league_path(league)]])
+                 [league.name, league_path(league)]])
   end
 
   def league_team_breadcrumbs(league, team, extra = [])
-    pages = [['Home', root_path], [league.full_name, league_path(league)],
+    pages = [['Home', root_path], [league.name, league_path(league)],
              [team.name, league_team_path(league, team)]]
     extra.each { |e| pages << e } if extra.any?
     breadcrumbs(pages)

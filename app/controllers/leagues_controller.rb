@@ -22,7 +22,7 @@ class LeaguesController < ApplicationController
 
     if @league.save
       redirect_to @league,
-                  notice: "#{@league.full_name} was successfully created."
+                  notice: "#{@league.name} was successfully created."
     else
       render :new, status: :unprocessable_entity
     end
@@ -31,14 +31,14 @@ class LeaguesController < ApplicationController
   def update
     if @league.update(league_params)
       redirect_to @league,
-                  notice: "#{@league.full_name} was successfully updated."
+                  notice: "#{@league.name} was successfully updated."
     else
       render :edit, status: :unprocessable_entity
     end
   end
 
   def destroy
-    name = @league.full_name
+    name = @league.name
     @league.destroy
     redirect_to leagues_url, notice: "#{name} was successfully destroyed."
   end

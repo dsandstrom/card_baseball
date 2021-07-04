@@ -1,11 +1,11 @@
 <%
   teams = league.teams
-  confirm = "Are you sure you want to remove #{league.full_name}?"
+  confirm = "Are you sure you want to remove #{league.name}?"
 %>
 
 <section id="league_<%= league.id %>" class="league card">
   <header class="card-header">
-    <h2><%= link_to league.full_name, league %></h2>
+    <h2><%= link_to league.name, league %></h2>
   </header>
 
   <main class="card-main">

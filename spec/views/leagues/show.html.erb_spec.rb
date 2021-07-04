@@ -12,7 +12,7 @@ RSpec.describe "leagues/show", type: :view do
 
   it "renders league's name" do
     render
-    assert_select ".league-name", "#{league.name} League"
+    assert_select ".league-name", league.name
   end
 
   it "renders new team link" do
