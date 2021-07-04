@@ -20,8 +20,8 @@ input[type='url'],
 input:not([type]),
 textarea,
 select {
-  border-color: $gray;
   border-radius: $border-radius;
+  border-color: $gray;
 
   &:disabled {
     border-color: $light-gray;
