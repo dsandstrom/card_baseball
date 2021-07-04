@@ -24,7 +24,7 @@ jobs:
 
     - name: Lint
       run: |
-        yarn stylelint app/assets/stylesheets/**/*.scss --custom-formatter=node_modules/stylelint-sarif-formatter --config ./stylelint.config.js --output-file tmp/stylelint.sarif >/dev/null
+        yarn stylelint app/assets/stylesheets/**/*.scss --custom-formatter=node_modules/stylelint-sarif-formatter --config ./stylelint.config.js --output-file tmp/stylelint.sarif > /dev/null 2>&1
 
     - name: Upload Sarif output
       uses: github/codeql-action/upload-sarif@v1
