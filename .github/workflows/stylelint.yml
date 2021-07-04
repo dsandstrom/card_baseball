@@ -6,10 +6,13 @@ jobs:
   linters:
     name: stylelint
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
 
     steps:
-      - uses: actions/checkout@v1
-      - uses: actions-hub/stylelint@master
-        env:
-          CONFIG_PATH: './'
-          PATTERN: 'app/assets/stylesheets/**/*.scss'
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: NPM Install
+    - uses: actions/setup-node@v2
+      run: npm install
