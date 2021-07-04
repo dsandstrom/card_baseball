@@ -24,4 +24,4 @@ jobs:
 
     - name: Lint
       run: |
-        yarn stylelint app/assets/stylesheets/**/*.scss --config ./stylelint.config.js
+        yarn run stylelint app/assets/stylesheets/**/*.scss --config ./stylelint.config.js
