@@ -48,6 +48,7 @@ body {
     }
 
     // scss-lint:disable QualifyingElement
+    // stylelint-disable selector-no-qualifying-type
     input[type='text'] {
       background-color: $light-gray;
 
@@ -56,6 +57,7 @@ body {
       }
     }
     // scss-lint:enable QualifyingElement
+    // stylelint-enable selector-no-qualifying-type
   }
 }
 
