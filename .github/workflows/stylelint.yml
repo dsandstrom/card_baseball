@@ -17,8 +17,17 @@ jobs:
       with:
         node-version: '14'
         cache: 'yarn'
+
     - name: Install Yarn
-      run: yarn install
+      run: |
+        yarn add stylelint-sarif-formatter
+        yarn install
+
     - name: Lint
       run: |
-        npx stylelint app/assets/stylesheets/**/*.scss --config ./stylelint.config.js
+        yarn stylelint app/assets/stylesheets/**/*.scss --custom-formatter=node_modules/stylelint-sarif-formatter --config ./stylelint.config.js --output-file stylelint.sarif
+
+    - name: Upload Sarif output
+      uses: github/codeql-action/upload-sarif@v1
+      with:
+        sarif_file: stylelint.sarif
