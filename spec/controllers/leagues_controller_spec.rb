@@ -48,7 +48,7 @@ RSpec.describe LeaguesController, type: :controller do
 
       it "redirects to the League list" do
         post :create, params: { league: valid_attributes }
-        expect(response).to redirect_to(League.last)
+        expect(response).to redirect_to(:leagues)
       end
     end
 

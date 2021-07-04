@@ -21,7 +21,7 @@ class LeaguesController < ApplicationController
     @league = League.new(league_params)
 
     if @league.save
-      redirect_to @league,
+      redirect_to leagues_url,
                   notice: "#{@league.name} was successfully created."
     else
       render :new, status: :unprocessable_entity
