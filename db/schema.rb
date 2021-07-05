@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_05_001329) do
+ActiveRecord::Schema.define(version: 2021_07_05_045648) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -76,6 +76,43 @@ ActiveRecord::Schema.define(version: 2021_07_05_001329) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["team_id"], name: "index_lineups_on_team_id"
+  end
+
+  create_table "players", force: :cascade do |t|
+    t.string "first_name"
+    t.string "nick_name"
+    t.string "last_name", null: false
+    t.string "roster_name", null: false
+    t.string "bats", null: false
+    t.string "bunt_grade", default: "B"
+    t.integer "speed", default: 0
+    t.integer "hitting_durability"
+    t.integer "hitting_rating", default: 0
+    t.integer "left_hitting_rating", default: 0
+    t.integer "right_hitting_rating", default: 0
+    t.integer "left_on_base_percentage", default: 0
+    t.integer "right_on_base_percentage", default: 0
+    t.integer "left_slugging", default: 0
+    t.integer "right_slugging", default: 0
+    t.integer "left_homerun", default: 0
+    t.integer "right_homerun", default: 0
+    t.boolean "hitting_pitcher", default: false
+    t.integer "primary_position", null: false
+    t.integer "bar_1", default: 0
+    t.integer "bar_2", default: 0
+    t.integer "defense_1"
+    t.integer "defense_2"
+    t.integer "defense_3"
+    t.integer "defense_4"
+    t.integer "defense_5"
+    t.integer "defense_6"
+    t.integer "defense_7"
+    t.integer "defense_8"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["last_name"], name: "index_players_on_last_name"
+    t.index ["primary_position"], name: "index_players_on_primary_position"
+    t.index ["roster_name"], name: "index_players_on_roster_name", unique: true
   end
 
   create_table "spots", force: :cascade do |t|
