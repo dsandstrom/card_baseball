@@ -13,6 +13,10 @@ RSpec.describe League, type: :model do
 
   it { is_expected.to validate_presence_of(:name) }
   it { is_expected.to validate_uniqueness_of(:name).case_insensitive }
+  it do
+    is_expected.to validate_inclusion_of(:row_order_position)
+      .in_array(%w[down up])
+  end
 
   it { is_expected.to have_many(:teams) }
 
