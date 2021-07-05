@@ -4,10 +4,12 @@ require "rails_helper"
 
 RSpec.describe "hitter_contracts/edit", type: :view do
   let(:hitter) { Fabricate(:hitter) }
-  let(:team) { Fabricate(:team) }
+  let(:league) { Fabricate(:league) }
+  let(:team) { Fabricate(:team, league: league) }
 
   before do
     @hitter = assign(:hitter, hitter)
+    @leagues = [league]
   end
 
   context "when hitter doesn't have a contract" do

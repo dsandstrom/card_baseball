@@ -4,8 +4,8 @@
 
   <div class="field">
     <%= form.label :team_id %>
-    <%= form.grouped_collection_select :team_id, League.all, :teams,
-                                       :full_name, :id, :name,
+    <%= form.grouped_collection_select :team_id, leagues, :teams,
+                                       :name, :id, :name,
                                        include_blank: 'unassigned' %>
   </div>
 

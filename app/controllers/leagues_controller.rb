@@ -4,7 +4,7 @@ class LeaguesController < ApplicationController
   before_action :set_league, only: %i[show edit update destroy]
 
   def index
-    @leagues = League.all.preload(:teams).order(name: :asc)
+    @leagues = League.rank(:row_order).preload(:teams)
   end
 
   def show
