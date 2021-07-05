@@ -10,6 +10,10 @@ Rails.application.routes.draw do
 
   resources :leagues do
     resources :teams, except: :index
+
+    member do
+      patch 'sort' => 'sort_leagues#update', as: :sort
+    end
   end
 
   resources :teams, only: nil do

@@ -1,0 +1,12 @@
+<%= form_with(model: league, url: sort_league_path(league), method: :patch) do |form| %>
+  <%= form_errors(league) %>
+
+  <div class="field">
+    <%= form.label :row_order_position %>
+    <%= form.select :row_order_position, League::SORT_OPTIONS %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

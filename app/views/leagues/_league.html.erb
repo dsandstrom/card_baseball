@@ -4,8 +4,19 @@
 %>
 
 <section id="league_<%= league.id %>" class="league card">
-  <header class="card-header">
+  <header class="card-header column-heading">
     <h2><%= link_to league.name, league %></h2>
+
+    <p>
+      <% unless league.first? %>
+        <%= link_to "&uArr;".html_safe, sort_league_path(league, league: { row_order_position: 'up' }),
+                   method: :patch, class: 'button button-secondary button-clear button-small' %>
+      <% end %>
+      <% unless league.last? %>
+        <%= link_to "&dArr;".html_safe, sort_league_path(league, league: { row_order_position: 'down' }),
+                    method: :patch, class: 'button button-secondary button-clear button-small' %>
+      <% end %>
+    </p>
   </header>
 
   <main class="card-main">
@@ -26,6 +37,7 @@
     <%= link_to 'Settings', edit_league_path(league) %>
     <%= link_to 'Remove', league,
                 method: :delete,
+                class: 'destroy-link',
                 data: { confirm: confirm } %>
   </footer>
 </section>

@@ -35,6 +35,8 @@ en:
       lineup:
         vs: "vs"
         with_dh: "with DH"
+      league:
+        row_order_position: 'Direction'
   helpers:
     page_entries_info:
       one_page:
