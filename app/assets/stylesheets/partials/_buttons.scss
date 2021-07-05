@@ -1,3 +1,5 @@
+$small-button-height: 2.5rem;
+
 .button {
   &.button-warning {
     &:not(.button-clear) {
@@ -114,6 +116,14 @@
   &.button-icon {
     padding-right: 1.25rem;
     padding-left: 1.25rem;
+  }
+
+  &.button-small {
+    min-width: 3rem;
+    height: $small-button-height;
+    padding: .05rem .5rem;
+    font-size: .9rem;
+    line-height: $small-button-height;
   }
 }
 
