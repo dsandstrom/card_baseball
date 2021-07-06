@@ -1,0 +1,14 @@
+<div class="page-header">
+  <div class="columns">
+    <div class="first-column">
+      <%= content_tag :h1, 'All Players' %>
+    </div>
+
+    <div class="second-column">
+      <%= link_to 'Add Player', new_player_path,
+                  class: 'button button-success' %>
+    </div>
+  </div>
+</div>
+
+<%= render 'players/players', players: @players %>

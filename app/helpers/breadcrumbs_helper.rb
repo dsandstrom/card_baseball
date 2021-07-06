@@ -35,6 +35,12 @@ module BreadcrumbsHelper
     breadcrumbs(pages)
   end
 
+  def player_breadcrumbs(player = nil)
+    pages = [['Home', root_path], ['All Players', players_path]]
+    pages << [player.name, player_path(player)] if player
+    breadcrumbs(pages)
+  end
+
   private
 
     def project_breadcrumb_item(project)

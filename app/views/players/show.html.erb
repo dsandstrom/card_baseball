@@ -1,0 +1,154 @@
+<%= player_breadcrumbs %>
+
+<%= content_tag :h1, @player.name, class: 'player-name' %>
+
+<p>
+  <%= link_to 'Settings', edit_player_path(@player) %>
+  <%= divider %>
+  <%= link_to 'Remove', @player,
+              method: :delete,
+              data: { confirm: "Are you sure you want to remove #{@player.name}?" } %>
+</p>
+
+<p>
+  <strong>Contract:</strong>
+  <% if @contract %>
+    <%= render @contract %>
+  <% else %>
+    No contract
+  <% end %>
+
+  <%= divider %>
+  <%#= link_to 'change', player_contract_path(@player) %>
+</p>
+
+<p>
+  <strong>Roster name:</strong>
+  <%= @player.roster_name %>
+</p>
+
+<p>
+  <strong>Bats:</strong>
+  <%= @player.bats %>
+</p>
+
+<p>
+  <strong>Bunt Grade:</strong>
+  <%= @player.bunt_grade %>
+</p>
+
+<p>
+  <strong>Speed:</strong>
+  <%= @player.speed %>
+</p>
+
+<p>
+  <strong>Offensive Durability:</strong>
+  <%= @player.offensive_durability %>
+</p>
+
+<p>
+  <strong>Primary Position:</strong>
+  <%= @player.primary_position %>
+</p>
+
+<p>
+  <strong>Hitting Pitcher:</strong>
+  <%= @player.hitting_pitcher? %>
+</p>
+
+<p>
+  <strong>Offensive rating:</strong>
+  <%= @player.offensive_rating %>
+</p>
+
+<p>
+  <strong>Left Hitting rating:</strong>
+  <%= @player.left_hitting %>
+</p>
+
+<p>
+  <strong>Right Hitting rating:</strong>
+  <%= @player.right_hitting %>
+</p>
+
+<p>
+  <strong>Left on base percentage:</strong>
+  <%= @player.left_on_base_percentage %>
+</p>
+
+<p>
+  <strong>Left slugging:</strong>
+  <%= @player.left_slugging %>
+</p>
+
+<p>
+  <strong>Left homerun:</strong>
+  <%= @player.left_homerun %>
+</p>
+
+<p>
+  <strong>Right on base percentage:</strong>
+  <%= @player.right_on_base_percentage %>
+</p>
+
+<p>
+  <strong>Right slugging:</strong>
+  <%= @player.right_slugging %>
+</p>
+
+<p>
+  <strong>Right homerun:</strong>
+  <%= @player.right_homerun %>
+</p>
+
+<p>
+  <strong>Catcher defense:</strong>
+  <%= @player.defense2 %>
+</p>
+
+<p>
+  <strong>First base defense:</strong>
+  <%= @player.defense3 %>
+</p>
+
+<p>
+  <strong>Second base defense:</strong>
+  <%= @player.defense4 %>
+</p>
+
+<p>
+  <strong>Third base defense:</strong>
+  <%= @player.defense5 %>
+</p>
+
+<p>
+  <strong>Shortstop defense:</strong>
+  <%= @player.defense6 %>
+</p>
+
+<p>
+  <strong>Outfield defense:</strong>
+  <%= @player.defense7 %>
+_defense %>
+</p>
+
+<p>
+  <strong>Center field defense:</strong>
+  <%= @player.defense8 %>
+</p>
+
+<p>
+  <strong>Pitcher defense:</strong>
+  <%= @player.defense1 %>
+</p>
+
+<p>
+  <strong>Catcher bar:</strong>
+  <%= @player.bar2 %>
+</p>
+
+<p>
+  <strong>Pitcher bar:</strong>
+  <%= @player.bar1 %>
+</p>

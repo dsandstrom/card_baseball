@@ -8,6 +8,13 @@ Rails.application.routes.draw do
     delete 'contract' => 'hitter_contracts#destroy'
   end
 
+  resources :players do
+    get 'contract' => 'contracts#edit', as: :contract
+    post 'contract' => 'contracts#update'
+    patch 'contract' => 'contracts#update'
+    delete 'contract' => 'contracts#destroy'
+  end
+
   resources :leagues do
     resources :teams, except: :index
 
