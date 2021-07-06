@@ -84,33 +84,39 @@ ActiveRecord::Schema.define(version: 2021_07_05_045648) do
     t.string "last_name", null: false
     t.string "roster_name", null: false
     t.string "bats", null: false
-    t.string "bunt_grade", default: "B"
     t.integer "speed", default: 0
-    t.integer "hitting_durability"
-    t.integer "hitting_rating", default: 0
-    t.integer "left_hitting_rating", default: 0
-    t.integer "right_hitting_rating", default: 0
+    t.string "bunt_grade", default: "B"
+    t.integer "primary_position", null: false
+    t.integer "offensive_rating"
+    t.integer "left_hitting", default: 0
+    t.integer "right_hitting", default: 0
     t.integer "left_on_base_percentage", default: 0
     t.integer "right_on_base_percentage", default: 0
     t.integer "left_slugging", default: 0
     t.integer "right_slugging", default: 0
     t.integer "left_homerun", default: 0
     t.integer "right_homerun", default: 0
+    t.integer "offensive_durability"
+    t.integer "pitcher_rating"
+    t.string "pitcher_type"
+    t.integer "starting_pitching"
+    t.integer "relief_pitching"
+    t.integer "pitching_durability"
     t.boolean "hitting_pitcher", default: false
-    t.integer "primary_position", null: false
-    t.integer "bar_1", default: 0
-    t.integer "bar_2", default: 0
-    t.integer "defense_1"
-    t.integer "defense_2"
-    t.integer "defense_3"
-    t.integer "defense_4"
-    t.integer "defense_5"
-    t.integer "defense_6"
-    t.integer "defense_7"
-    t.integer "defense_8"
+    t.integer "bar1", default: 0
+    t.integer "bar2", default: 0
+    t.integer "defense1"
+    t.integer "defense2"
+    t.integer "defense3"
+    t.integer "defense4"
+    t.integer "defense5"
+    t.integer "defense6"
+    t.integer "defense7"
+    t.integer "defense8"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["last_name"], name: "index_players_on_last_name"
+    t.index ["pitcher_type"], name: "index_players_on_pitcher_type"
     t.index ["primary_position"], name: "index_players_on_primary_position"
     t.index ["roster_name"], name: "index_players_on_roster_name", unique: true
   end
