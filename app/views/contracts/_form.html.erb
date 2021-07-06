@@ -1,0 +1,20 @@
+<%= form_with(model: contract,
+              url: player_contract_path(player)) do |form| %>
+  <%= form_errors(contract) %>
+
+  <div class="field">
+    <%= form.label :team_id %>
+    <%= form.grouped_collection_select :team_id, leagues, :teams,
+                                       :name, :id, :name,
+                                       include_blank: 'unassigned' %>
+  </div>
+
+  <div class="field">
+    <%= form.label :length %>
+    <%= form.select :length, Contract::LENGTH_OPTIONS %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

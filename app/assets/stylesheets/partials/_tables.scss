@@ -123,7 +123,8 @@ td {
 
 // sticky thead and first column
 // https://css-tricks.com/a-table-with-both-a-sticky-header-and-a-sticky-first-column/
-.hitters {
+.hitters,
+.players {
   width: 100%;
 
   thead {
