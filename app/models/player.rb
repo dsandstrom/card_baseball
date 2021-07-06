@@ -53,6 +53,11 @@ class Player < ApplicationRecord
   validates :bar1, inclusion: { in: BAR_RANGE }, allow_nil: true
   validates :bar2, inclusion: { in: BAR_RANGE }, allow_nil: true
 
+  has_one :contract
+  has_one :team, through: :contract
+  # has_many :spots, dependent: :destroy
+  # has_many :lineups, through: :spots
+
   # CLASS
 
   def self.position_form_options
