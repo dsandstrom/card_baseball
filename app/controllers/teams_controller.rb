@@ -11,7 +11,9 @@ class TeamsController < ApplicationController
   end
 
   def show
-    @hitters = @team.hitters.order(overall_rating: :desc)
+    # TODO: show all players, with just positions
+    # TODO: show hitter details on another page, add pitcher rotations page
+    @hitters = @team.hitters
   end
 
   def new
