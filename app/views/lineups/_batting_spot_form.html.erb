@@ -40,7 +40,7 @@
                       class: 'spot-hitter-name' %>
 
       <%= content_tag :div, class: radio_button_class do %>
-        <% Hitter::POSITION_OPTIONS.each do |position, options| %>
+        <% Player::POSITION_MAP.each do |position, options| %>
           <% next if position == 1 %>
 
           <% if hitter.position_defense(position) %>

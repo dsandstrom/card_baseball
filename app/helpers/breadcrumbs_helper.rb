@@ -30,7 +30,7 @@ module BreadcrumbsHelper
   end
 
   def hitter_breadcrumbs(hitter = nil)
-    pages = [['Home', root_path], ['All Hitters', hitters_path]]
+    pages = [['Home', root_path], ['All Players', players_path]]
     pages << [hitter.name, hitter_path(hitter)] if hitter
     breadcrumbs(pages)
   end

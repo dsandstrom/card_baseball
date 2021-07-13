@@ -8,7 +8,7 @@ RSpec.describe "teams/show", type: :view do
   let(:hitter) { Fabricate(:hitter) }
 
   before(:each) do
-    Fabricate(:hitter_contract, hitter: hitter, team: team)
+    Fabricate(:contract, player: hitter, team: team)
 
     @league = assign(:league, league)
     @team = assign(:team, team)
