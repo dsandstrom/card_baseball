@@ -12,12 +12,17 @@
 
 <% if pages %>
   <div class="page-links">
-    <%= paginate @players %>
+    <%= paginate players %>
   </div>
 <% end %>
 
 <table class="players">
   <thead>
+    <% if pages %>
+      <tr>
+        <th colspan=20><%= page_entries_info players %></th>
+      </tr>
+    <% end %>
     <tr>
       <th></th>
       <th class="align-left">Name</th>
