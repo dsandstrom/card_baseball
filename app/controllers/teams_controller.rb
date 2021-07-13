@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 # TODO: add move team controller or action
+# TODO: add pitcher rotations page
 
 class TeamsController < ApplicationController
   before_action :set_league, except: :index
@@ -11,9 +12,7 @@ class TeamsController < ApplicationController
   end
 
   def show
-    # TODO: show all players, with just positions
-    # TODO: show hitter details on another page, add pitcher rotations page
-    @hitters = @team.hitters
+    @players = @team.players.order(last_name: :asc, roster_name: :asc)
   end
 
   def new

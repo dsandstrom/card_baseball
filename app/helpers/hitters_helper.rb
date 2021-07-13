@@ -32,6 +32,21 @@ module HittersHelper
     end
   end
 
+  def player_positions(player)
+    positions = player.positions.map do |position|
+      defense =
+        format_defense_and_bar(player.position_defense(position),
+                               player.bar_for_position(position),
+                               class: 'player-position-defense', tag: :span)
+
+      content_tag :span, class: 'player-position' do
+        safe_join([Player.position_initials(position), defense])
+      end
+    end
+
+    safe_join(positions)
+  end
+
   private
 
     def merge_class(options, new_class)

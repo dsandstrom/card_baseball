@@ -158,6 +158,14 @@ td {
   }
 }
 
+.players {
+  .player-primary-position {
+    color: $dark-gray;
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+}
+
 .defense-positive {
   color: $color-success;
 }

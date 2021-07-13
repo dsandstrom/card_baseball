@@ -1,0 +1,18 @@
+<%
+  player = contract.player
+  team = contract.team
+  show_team = true if show_team.nil?
+%>
+
+<% if team %>
+  <% if show_team %>
+    <% unless current_page?(league_team_path(team.league, team)) %>
+      <%= link_to team.name, league_team_path(team.league, team) %>
+    <% end %>
+  <% end %>
+<% else %>
+  <%= content_tag :span, 'Free Agent', class: 'no-wrap' %>
+<% end %>
+
+<%= content_tag :span, pluralize(contract.length, 'year'),
+                class: 'no-wrap' %>

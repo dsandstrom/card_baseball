@@ -2,18 +2,7 @@
      data-id="<%= bench_hitter.id %>">
   <%= content_tag :span, bench_hitter.roster_name, class: 'hitter-name' %>
 
-  <div class="hitter-positions">
-    <% bench_hitter.positions.each do |position| %>
-      <%
-        defense =
-          format_defense_and_bar(bench_hitter.position_defense(position),
-                                 bench_hitter.bar_for_position(position),
-                                 class: 'hitter-defense', tag: :span)
-      %>
-
-      <span class="hitter-position">
-        <%= Player.position_initials(position) %><%= defense %>
-      </span>
-    <% end %>
+  <div class="player-positions">
+    <%= player_positions(bench_hitter) %>
   </div>
 </div>

@@ -7,29 +7,14 @@
   <% if table_index.present? %>
     <%= content_tag :td, table_index, class: 'table-index' %>
   <% end %>
-  <td><%= link_to player.roster_name, player, class: 'player-name' %></td>
-  <td><%= player.bats %></td>
-  <td><%= player.speed %></td>
-  <td><%= player.bunt_grade %></td>
-  <td><%= player.primary_position_initials %></td>
+  <td>
+    <%= link_to player.roster_name, player, class: 'player-name' %>
+    <span class="player-primary-position">
+      <%= player.primary_position_initials %>
+    </span>
+  </td>
   <td><%= player.offensive_rating %></td>
-  <td><%= player.offensive_durability %></td>
-  <%= left_td player.left_hitting, highlight: highlight, class: 'left-border' %></td>
-  <%= left_td player.left_on_base_percentage, highlight: highlight %></td>
-  <%= left_td player.left_slugging, highlight: highlight %></td>
-  <%= left_td player.left_homerun, highlight: highlight %></td>
-  <%= right_td player.right_hitting, class: 'left-border', highlight: highlight %>
-  <%= right_td player.right_on_base_percentage, highlight: highlight %>
-  <%= right_td player.right_slugging, highlight: highlight %>
-  <%= right_td player.right_homerun, highlight: highlight %>
-  <%= defense_td(player.defense2, player.bar2, class: 'left-border') %>
-  <%= defense_td(player.defense3) %>
-  <%= defense_td(player.defense4) %>
-  <%= defense_td(player.defense5) %>
-  <%= defense_td(player.defense6) %>
-  <%= defense_td(player.defense7) %>
-  <%= defense_td(player.defense8) %>
-  <%= defense_td(player.defense1, player.bar1) %>
+  <td class="left-border player-positions"><%= player_positions(player) %></td>
   <% if show_contract %>
     <td class="left-border"><%= render 'players/contract', player: player %></td>
   <% end %>

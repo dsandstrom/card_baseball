@@ -19,49 +19,10 @@
 <table class="players">
   <thead>
     <tr>
-      <th colspan="8">
-        <% if pages %>
-          <%= page_entries_info players %>
-        <% else %>
-          Players
-        <% end %>
-      </th>
-      <th colspan="4" class="vs-left<%= ' highlight' if highlight == 'left' %>">vs Lefties</th>
-      <th colspan="4" class="vs-right<%= ' highlight' if highlight == 'right' %>">vs Righties</th>
-      <th colspan="8" class="defense">Defense</th>
-      <% if show_contract %>
-        <th class="left-border"></th>
-      <% end %>
-    </tr>
-    <tr>
       <th></th>
       <th class="align-left">Name</th>
-      <th>Bat</th>
-      <th>Spd</th>
-      <th>Bnt</th>
-      <th>Pos</th>
-      <th>Rtg</th>
-      <th>Dur</th>
-      <th class="left-border">Hit</th>
-      <th>OBP</th>
-      <th>Slg</th>
-      <th>HR</th>
-      <th class="left-border">Hit</th>
-      <th>OBP</th>
-      <th>Slg</th>
-      <th>HR</th>
-      <th class="left-border no-wrap">
-        C<span class="defense-bar">/Bar</span>
-      </th>
-      <th>1B</th>
-      <th>2B</th>
-      <th>3B</th>
-      <th>SS</th>
-      <th>OF</th>
-      <th>CF</th>
-      <th class=" no-wrap">
-        P<span class="defense-bar">/Bar</span>
-      </th>
+      <th>Offense</th>
+      <th>Defense</th>
       <% if show_contract %>
         <th class="left-border">Contract</th>
       <% end %>
