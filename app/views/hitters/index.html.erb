@@ -1,14 +1,20 @@
-<%= league_team_breadcrumbs(@league, @team) %>
+<% if @team %>
+  <%= league_team_breadcrumbs(@league, @team) %>
+<% end %>
 
 <div class="page-header">
   <div class="columns">
     <div class="first-column">
-      <%= content_tag :h1, 'Hitters' %>
+      <% if @team %>
+        <%= content_tag :h1, 'Hitters' %>
+      <% else %>
+        <%= content_tag :h1, 'All Hitters' %>
+      <% end %>
     </div>
   </div>
 
-  <%= team_nav(@team) %>
+  <%= team_nav(@team) if @team %>
 </div>
 
 <%= render 'hitters/hitters', hitters: @hitters,
-                              show_team: false %>
+                              show_team: @team.nil? %>

@@ -12,7 +12,7 @@ class PlayersController < ApplicationController
   before_action :set_player, only: %i[show edit update destroy]
 
   def index
-    @players = Player.all.order(offensive_rating: :desc)
+    @players = Player.all.order(last_name: :asc, roster_name: :asc)
                      .page(params[:page])
   end
 

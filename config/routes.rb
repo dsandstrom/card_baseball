@@ -16,6 +16,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :hitters, only: :index
+
   resources :teams, only: nil do
     resources :lineups
     resources :hitters, only: :index
