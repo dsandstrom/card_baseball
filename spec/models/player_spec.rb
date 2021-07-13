@@ -47,8 +47,12 @@ RSpec.describe Player, type: :model do
   it do
     is_expected.to validate_inclusion_of(:offensive_durability).in_range(0..99)
   end
+  it do
+    is_expected.to validate_inclusion_of(:pitching_durability).in_range(0..99)
+  end
   it { is_expected.to validate_presence_of(:offensive_rating) }
   it { is_expected.to validate_inclusion_of(:offensive_rating).in_range(0..99) }
+  it { is_expected.to validate_inclusion_of(:pitcher_rating).in_range(0..99) }
   it { is_expected.to validate_presence_of(:left_hitting) }
   it { is_expected.to validate_inclusion_of(:left_hitting).in_range(0..99) }
   it { is_expected.to validate_presence_of(:right_hitting) }
@@ -81,6 +85,11 @@ RSpec.describe Player, type: :model do
   it { is_expected.to validate_inclusion_of(:defense8).in_range(-20..20) }
   it { is_expected.to validate_inclusion_of(:bar1).in_range(0..5) }
   it { is_expected.to validate_inclusion_of(:bar2).in_range(0..5) }
+  it { is_expected.to validate_inclusion_of(:pitcher_type).in_array(%w[R S]) }
+  it do
+    is_expected.to validate_inclusion_of(:starting_pitching).in_range(0..99)
+  end
+  it { is_expected.to validate_inclusion_of(:relief_pitching).in_range(0..99) }
 
   it { is_expected.to have_one(:contract) }
   it { is_expected.to have_one(:team) }

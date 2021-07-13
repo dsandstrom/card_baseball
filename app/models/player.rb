@@ -19,6 +19,10 @@ class Player < ApplicationRecord
     8 => { initials: 'CF', name: 'Center Field', key: :center_field },
     9 => { initials: 'DH', name: 'Designated Hitter', key: :dh }
   }.freeze
+  PITCHING_TYPES = {
+    'R' => { name: 'Reliver', key: :relief },
+    'S' => { name: 'Starter', key: :starting }
+  }.freeze
 
   validates :first_name, length: { maximum: 200 }
   validates :nick_name, length: { maximum: 200 }
@@ -31,7 +35,10 @@ class Player < ApplicationRecord
   validates :primary_position, presence: true, inclusion: { in: POSITION_RANGE }
   validates :offensive_durability, inclusion: { in: RATING_RANGE },
                                    allow_nil: true
+  validates :pitching_durability, inclusion: { in: RATING_RANGE },
+                                  allow_nil: true
   validates :offensive_rating, presence: true, inclusion: { in: RATING_RANGE }
+  validates :pitcher_rating, inclusion: { in: RATING_RANGE }, allow_nil: true
   validates :left_hitting, presence: true, inclusion: { in: RATING_RANGE }
   validates :right_hitting, presence: true, inclusion: { in: RATING_RANGE }
   validates :left_on_base_percentage, presence: true,
@@ -52,6 +59,10 @@ class Player < ApplicationRecord
   validates :defense8, inclusion: { in: DEFENSE_RANGE }, allow_nil: true
   validates :bar1, inclusion: { in: BAR_RANGE }, allow_nil: true
   validates :bar2, inclusion: { in: BAR_RANGE }, allow_nil: true
+  validates :pitcher_type, inclusion: { in: PITCHING_TYPES.keys },
+                           allow_nil: true
+  validates :starting_pitching, inclusion: { in: RATING_RANGE }, allow_nil: true
+  validates :relief_pitching, inclusion: { in: RATING_RANGE }, allow_nil: true
 
   has_one :contract
   has_one :team, through: :contract
