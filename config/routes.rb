@@ -17,10 +17,12 @@ Rails.application.routes.draw do
   end
 
   resources :hitters, only: :index
+  resources :pitchers, only: :index
 
   resources :teams, only: nil do
     resources :lineups
     resources :hitters, only: :index
+    resources :pitchers, only: :index
   end
 
   resources :lineups, only: nil do
