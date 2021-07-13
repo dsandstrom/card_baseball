@@ -1,14 +1,13 @@
+<%= league_team_breadcrumbs(@league, @team) %>
+
 <div class="page-header">
   <div class="columns">
     <div class="first-column">
-      <%= content_tag :h1, 'All Hitters' %>
-    </div>
-
-    <div class="second-column">
-      <%= link_to 'Add Hitter', new_hitter_path,
-                  class: 'button button-success' %>
+      <%= content_tag :h1, 'Hitters' %>
     </div>
   </div>
+
+  <%= team_nav(@team) %>
 </div>
 
 <%= render 'hitters/hitters', hitters: @hitters %>

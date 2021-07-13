@@ -14,19 +14,6 @@ module ApplicationHelper
     content_tag :span, '|', class: 'divider'
   end
 
-  def team_nav(team)
-    content_tag :p, class: 'page-nav team-nav' do
-      safe_join(navitize(team_nav_links(team)))
-    end
-  end
-
-  def lineup_nav(team, lineup)
-    links = [['Options', edit_team_lineup_path(team, lineup)]]
-    content_tag :p, class: 'page-nav lineup-nav' do
-      safe_join(navitize(links))
-    end
-  end
-
   def left_td(value, options = {})
     options[:class] ||= 'vs-left'
     options[:class] += ' highlight' if options.delete(:highlight) == 'left'
@@ -57,9 +44,5 @@ module ApplicationHelper
         end
         link_to value, url, options
       end
-    end
-
-    def team_nav_links(team)
-      [['Lineups', team_lineups_path(team)]]
     end
 end

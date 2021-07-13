@@ -23,6 +23,10 @@ class Lineup < ApplicationRecord
     @full_name ||= build_full_name
   end
 
+  def short_name
+    @short_name ||= build_short_name
+  end
+
   def remove_dh_spot
     spots.where('spots.batting_order = ? OR spots.position = ?', 9, 9)
          .destroy_all
@@ -68,6 +72,20 @@ class Lineup < ApplicationRecord
     end
 
     def build_full_name
+      return unless name.present? || vs.present?
+
+      temp = "#{name} Lineup "
+      case vs
+      when 'left'
+        temp += 'vs Lefty '
+      when 'right'
+        temp += 'vs Righty '
+      end
+      temp += '(DH)' if with_dh?
+      temp.squish
+    end
+
+    def build_short_name
       return unless name.present? || vs.present?
 
       temp = "#{name} "

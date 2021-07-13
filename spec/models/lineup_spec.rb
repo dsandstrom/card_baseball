@@ -139,7 +139,7 @@ RSpec.describe Lineup, type: :model do
       end
 
       it "returns name only" do
-        expect(subject.full_name).to eq("Something")
+        expect(subject.full_name).to eq("Something Lineup")
       end
     end
 
@@ -151,7 +151,7 @@ RSpec.describe Lineup, type: :model do
       end
 
       it "returns name and DH" do
-        expect(subject.full_name).to eq("Something (DH)")
+        expect(subject.full_name).to eq("Something Lineup (DH)")
       end
     end
 
@@ -162,8 +162,8 @@ RSpec.describe Lineup, type: :model do
         subject.with_dh = false
       end
 
-      it "returns 'vs Lefty'" do
-        expect(subject.full_name).to eq("vs Lefty")
+      it "returns 'Lineup vs Lefty'" do
+        expect(subject.full_name).to eq("Lineup vs Lefty")
       end
     end
 
@@ -174,8 +174,8 @@ RSpec.describe Lineup, type: :model do
         subject.with_dh = true
       end
 
-      it "returns 'vs Lefty (DH)'" do
-        expect(subject.full_name).to eq("vs Lefty (DH)")
+      it "returns 'Lineup vs Lefty (DH)'" do
+        expect(subject.full_name).to eq("Lineup vs Lefty (DH)")
       end
     end
 
@@ -187,7 +187,7 @@ RSpec.describe Lineup, type: :model do
       end
 
       it "returns name and vs" do
-        expect(subject.full_name).to eq("Main vs Lefty")
+        expect(subject.full_name).to eq("Main Lineup vs Lefty")
       end
     end
 
@@ -199,7 +199,7 @@ RSpec.describe Lineup, type: :model do
       end
 
       it "returns name and vs" do
-        expect(subject.full_name).to eq("Main vs Righty")
+        expect(subject.full_name).to eq("Main Lineup vs Righty")
       end
     end
 
@@ -211,7 +211,7 @@ RSpec.describe Lineup, type: :model do
       end
 
       it "returns name, vs, DH" do
-        expect(subject.full_name).to eq("Main vs Lefty (DH)")
+        expect(subject.full_name).to eq("Main Lineup vs Lefty (DH)")
       end
     end
 
@@ -223,7 +223,117 @@ RSpec.describe Lineup, type: :model do
       end
 
       it "returns name, vs, DH" do
-        expect(subject.full_name).to eq("Main vs Righty (DH)")
+        expect(subject.full_name).to eq("Main Lineup vs Righty (DH)")
+      end
+    end
+  end
+
+  describe "#short_name" do
+    context "when name, vs, with_dh are blank" do
+      before do
+        subject.name = ""
+        subject.vs = ""
+        subject.with_dh = false
+      end
+
+      it "returns nil" do
+        expect(subject.short_name).to be_nil
+      end
+    end
+
+    context "when name is something" do
+      before do
+        subject.name = "Something"
+        subject.vs = ""
+        subject.with_dh = false
+      end
+
+      it "returns name only" do
+        expect(subject.short_name).to eq("Something")
+      end
+    end
+
+    context "when name is something with DH" do
+      before do
+        subject.name = "Something"
+        subject.vs = ""
+        subject.with_dh = true
+      end
+
+      it "returns name and DH" do
+        expect(subject.short_name).to eq("Something (DH)")
+      end
+    end
+
+    context "when vs is something" do
+      before do
+        subject.name = ""
+        subject.vs = "left"
+        subject.with_dh = false
+      end
+
+      it "returns 'vs Lefty'" do
+        expect(subject.short_name).to eq("vs Lefty")
+      end
+    end
+
+    context "when vs is something with DH" do
+      before do
+        subject.name = ""
+        subject.vs = "left"
+        subject.with_dh = true
+      end
+
+      it "returns 'vs Lefty (DH)'" do
+        expect(subject.short_name).to eq("vs Lefty (DH)")
+      end
+    end
+
+    context "when name is something and vs is left" do
+      before do
+        subject.name = "Main"
+        subject.vs = "left"
+        subject.with_dh = false
+      end
+
+      it "returns name and vs" do
+        expect(subject.short_name).to eq("Main vs Lefty")
+      end
+    end
+
+    context "when name is something and vs is right" do
+      before do
+        subject.name = "Main"
+        subject.vs = "right"
+        subject.with_dh = false
+      end
+
+      it "returns name and vs" do
+        expect(subject.short_name).to eq("Main vs Righty")
+      end
+    end
+
+    context "when name is something and vs is left with DH" do
+      before do
+        subject.name = "Main"
+        subject.vs = "left"
+        subject.with_dh = true
+      end
+
+      it "returns name, vs, DH" do
+        expect(subject.short_name).to eq("Main vs Lefty (DH)")
+      end
+    end
+
+    context "when name is something and vs is right with DH" do
+      before do
+        subject.name = "Main"
+        subject.vs = "right"
+        subject.with_dh = true
+      end
+
+      it "returns name, vs, DH" do
+        expect(subject.short_name).to eq("Main vs Righty (DH)")
       end
     end
   end

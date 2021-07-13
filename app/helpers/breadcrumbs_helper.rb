@@ -25,7 +25,7 @@ module BreadcrumbsHelper
 
   def lineup_breadcrumbs(league, team, lineup = nil)
     pages = [['Lineups', team_lineups_path(team)]]
-    pages << [lineup.full_name, team_lineup_path(team, lineup)] if lineup
+    pages << [lineup.short_name, team_lineup_path(team, lineup)] if lineup
     league_team_breadcrumbs(league, team, pages)
   end
 

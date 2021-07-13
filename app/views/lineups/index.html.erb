@@ -1,8 +1,20 @@
 <%= league_team_breadcrumbs(@league, @team) %>
 
-<h1>Lineups</h1>
+<div class="page-header">
+  <div class="columns">
+    <div class="first-column">
+      <%= content_tag :h1, 'Lineups' %>
+    </div>
+
+    <div class="second-column">
+      <%= link_to 'Add Lineup', new_team_lineup_path(@team),
+                  class: 'button button-success' %>
+    </div>
+  </div>
+
+  <%= team_nav(@team) %>
+</div>
 
 <div class="lineups cards">
   <%= render @lineups, team: @team %>
-  <%= render 'new', team: @team %>
 </div>

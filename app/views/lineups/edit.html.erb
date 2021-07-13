@@ -1,5 +1,14 @@
 <%= lineup_breadcrumbs(@league, @team, @lineup) %>
 
-<h1>Lineup Options</h1>
+<div class="page-header">
+  <div class="columns">
+    <div class="first-column">
+      <h1>Lineup Options</h1>
+    </div>
+  </div>
+
+  <%= team_nav(@team) %>
+</div>
+
 
 <%= render 'form', lineup: @lineup, team: @team %>
