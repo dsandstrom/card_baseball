@@ -7,6 +7,7 @@
       0
     end
   show_contract = true if show_contract.nil?
+  show_team = true if show_team.nil?
   highlight ||= nil
 %>
 
@@ -71,9 +72,12 @@
   <tbody class="hitters">
     <% if hitters.any? %>
       <% hitters.each_with_index do |hitter, table_index| %>
-        <%= render hitter, table_index: (table_index + page_index + 1),
-                           show_contract: show_contract,
-                           highlight: highlight %>
+        <%= render 'hitters/hitter',
+                   hitter: hitter,
+                   table_index: (table_index + page_index + 1),
+                   show_contract: show_contract,
+                   show_team: show_team,
+                   highlight: highlight %>
       <% end %>
     <% else %>
       <tr>

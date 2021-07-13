@@ -12,25 +12,25 @@
   <td><%= hitter.speed %></td>
   <td><%= hitter.bunt_grade %></td>
   <td><%= hitter.primary_position_initials %></td>
-  <td><%= hitter.overall_rating %></td>
-  <td><%= hitter.durability %></td>
-  <%= left_td hitter.left_rating, highlight: highlight, class: 'left-border' %></td>
+  <td><%= hitter.offensive_rating %></td>
+  <td><%= hitter.offensive_durability %></td>
+  <%= left_td hitter.left_hitting, highlight: highlight, class: 'left-border' %></td>
   <%= left_td hitter.left_on_base_percentage, highlight: highlight %></td>
   <%= left_td hitter.left_slugging, highlight: highlight %></td>
-  <%= left_td hitter.left_homeruns, highlight: highlight %></td>
-  <%= right_td hitter.right_rating, class: 'left-border', highlight: highlight %>
+  <%= left_td hitter.left_homerun, highlight: highlight %></td>
+  <%= right_td hitter.right_hitting, class: 'left-border', highlight: highlight %>
   <%= right_td hitter.right_on_base_percentage, highlight: highlight %>
   <%= right_td hitter.right_slugging, highlight: highlight %>
-  <%= right_td hitter.right_homeruns, highlight: highlight %>
-  <%= defense_td(hitter.catcher_defense, hitter.catcher_bar, class: 'left-border') %>
-  <%= defense_td(hitter.first_base_defense) %>
-  <%= defense_td(hitter.second_base_defense) %>
-  <%= defense_td(hitter.third_base_defense) %>
-  <%= defense_td(hitter.shortstop_defense) %>
-  <%= defense_td(hitter.outfield_defense) %>
-  <%= defense_td(hitter.center_field_defense) %>
-  <%= defense_td(hitter.pitcher_defense, hitter.pitcher_bar) %>
+  <%= right_td hitter.right_homerun, highlight: highlight %>
+  <%= defense_td(hitter.defense2, hitter.bar2, class: 'left-border') %>
+  <%= defense_td(hitter.defense3) %>
+  <%= defense_td(hitter.defense4) %>
+  <%= defense_td(hitter.defense5) %>
+  <%= defense_td(hitter.defense6) %>
+  <%= defense_td(hitter.defense7) %>
+  <%= defense_td(hitter.defense8) %>
+  <%= defense_td(hitter.defense1, hitter.bar1) %>
   <% if show_contract %>
-    <td class="left-border"><%= render 'hitters/contract', hitter: hitter %></td>
+    <td class="left-border"><%= render 'players/contract', player: hitter, show_team: show_team %></td>
   <% end %>
 </tr>
