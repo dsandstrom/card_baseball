@@ -15,6 +15,10 @@
   <%= team_nav(@team) %>
 </div>
 
-<div class="lineups cards">
-  <%= render @lineups, team: @team %>
-</div>
+<% if @lineups.any? %>
+  <div class="lineups cards">
+    <%= render @lineups, team: @team %>
+  </div>
+<% else %>
+  <p><%= link_to 'Add Lineup', new_team_lineup_path(@team) %></p>
+<% end %>
