@@ -9,11 +9,7 @@ class Team < ApplicationRecord
   has_many :players, through: :contracts
   has_many :lineups, dependent: :destroy
 
-  # TODO: add Player.hitters
   def hitters
-    query = (2..8).map do |position|
-      "players.defense#{position} IS NOT NULL"
-    end.join(' OR ')
-    players.where(query).order(offensive_rating: :desc)
+    players.hitters.order(offensive_rating: :desc)
   end
 end

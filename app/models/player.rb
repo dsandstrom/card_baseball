@@ -92,6 +92,13 @@ class Player < ApplicationRecord
     "bar#{position}".to_sym
   end
 
+  def self.hitters
+    query = (2..8).map do |position|
+      "players.defense#{position} IS NOT NULL"
+    end.join(' OR ')
+    Player.where(query)
+  end
+
   # INSTANCE
 
   def name

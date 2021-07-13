@@ -44,6 +44,8 @@ RSpec.describe Team, type: :model do
     end
 
     context "when no players" do
+      before { Fabricate(:contract, player: first_base) }
+
       it "returns []" do
         expect(team.hitters).to eq([])
       end
@@ -55,7 +57,7 @@ RSpec.describe Team, type: :model do
         Fabricate(:contract, team: team, player: pitcher)
       end
 
-      it "returns []" do
+      it "returns them" do
         expect(team.hitters).to eq([first_base])
       end
     end
@@ -63,7 +65,7 @@ RSpec.describe Team, type: :model do
     context "when an outfielder" do
       before { Fabricate(:contract, team: team, player: outfield) }
 
-      it "returns []" do
+      it "returns them" do
         expect(team.hitters).to eq([outfield])
       end
     end
@@ -71,7 +73,7 @@ RSpec.describe Team, type: :model do
     context "when a hitting_pitcher" do
       before { Fabricate(:contract, team: team, player: hitting_pitcher) }
 
-      it "returns []" do
+      it "returns them" do
         expect(team.hitters).to eq([hitting_pitcher])
       end
     end
@@ -82,7 +84,7 @@ RSpec.describe Team, type: :model do
         Fabricate(:contract, team: team, player: outfield)
       end
 
-      it "returns []" do
+      it "orders by offensive_rating" do
         expect(team.hitters).to eq([outfield, first_base])
       end
     end
