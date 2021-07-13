@@ -55,8 +55,8 @@ class Player < ApplicationRecord
 
   has_one :contract
   has_one :team, through: :contract
-  # has_many :spots, dependent: :destroy
-  # has_many :lineups, through: :spots
+  has_many :spots, foreign_key: :hitter_id, dependent: :destroy
+  has_many :lineups, through: :spots
 
   # CLASS
 
