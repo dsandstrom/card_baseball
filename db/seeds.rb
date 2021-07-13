@@ -18,21 +18,41 @@ class Seeds
       attrs = hitter_attrs(position)
       player = Player.new(attrs)
       player.set_roster_name
-      player.save
+      player.save!
 
       add_contract(player, team)
     end
   end
 
-  def add_players_to_teams
+  def add_pitchers(team: nil, quanity: 2, type: nil)
+    quanity.times do
+      attrs = pitcher_attrs(type)
+      player = Player.new(attrs)
+      player.set_roster_name
+      player.save!
+
+      add_contract(player, team)
+    end
+  end
+
+  def add_hitters_to_teams
     Team.all.each do |team|
-      next if team.players.count >= 15
+      next if team.hitters.count >= 15
 
       (2..8).each do |position|
         add_hitters(team: team, quanity: 2, position: position)
       end
 
       add_hitters(team: team, quanity: 1, position: 7)
+    end
+  end
+
+  def add_pitchers_to_teams
+    Team.all.each do |team|
+      next if team.pitchers.count >= 10
+
+      add_pitchers(team: team, quanity: 5, type: 'S')
+      add_pitchers(team: team, quanity: 6, type: 'R')
     end
   end
 
@@ -48,13 +68,22 @@ class Seeds
 
     def hitter_attrs(position)
       attrs = {}
-      attrs = hitter_basic_attrs(attrs)
+      attrs = player_attrs(attrs)
       attrs = hitter_rating_attrs(attrs)
       attrs = hitter_batting_attrs(attrs)
       hitter_defense_attrs(attrs, position)
     end
 
-    def hitter_basic_attrs(attrs)
+    def pitcher_attrs(type)
+      attrs = {}
+      attrs = player_attrs(attrs)
+      attrs = hitter_rating_attrs(attrs)
+      attrs = hitter_batting_attrs(attrs)
+      attrs = pitcher_rating_attrs(attrs, type)
+      pitcher_defense_attrs(attrs)
+    end
+
+    def player_attrs(attrs)
       attrs[:first_name] = Faker::Name.male_first_name
       attrs[:nick_name] = Faker::Name.middle_name if rand(10).zero?
       attrs[:last_name] = Faker::Name.last_name
@@ -82,10 +111,33 @@ class Seeds
       attrs
     end
 
+    def pitcher_rating_attrs(attrs, type = nil)
+      type ||= Player::PITCHING_TYPES.keys.sample
+
+      attrs[:pitcher_type] = type
+      attrs[:pitcher_rating] = rand(Player::RATING_RANGE)
+      attrs["#{Player::PITCHING_TYPES[type][:key]}_pitching"] =
+        rand(Player::RATING_RANGE)
+      attrs[:pitching_durability] = rand(Player::RATING_RANGE)
+
+      if type == 'S' && rand(4).zero?
+        attrs[:relief_pitching] = rand(Player::RATING_RANGE)
+      end
+
+      attrs
+    end
+
     def hitter_defense_attrs(attrs, position)
       position ||= rand(Player::POSITION_RANGE)
       attrs = hitter_primary_defense(attrs, position)
-      hitter_secondary_defense(attrs, position)
+      player_secondary_defense(attrs, position)
+    end
+
+    def pitcher_defense_attrs(attrs)
+      attrs = pitcher_primary_defense(attrs)
+      return attrs unless rand(10).zero?
+
+      player_secondary_defense(attrs, 1)
     end
 
     def hitter_primary_defense(attrs, position)
@@ -95,13 +147,21 @@ class Seeds
       when 1
         attrs[:bar1] = rand(Player::BAR_RANGE)
         attrs[:hitting_pitcher] = true
+        attrs = pitcher_rating_attrs(attrs)
       when 2
         attrs[:bar2] = rand(Player::BAR_RANGE)
       end
       attrs
     end
 
-    def hitter_secondary_defense(attrs, position)
+    def pitcher_primary_defense(attrs)
+      attrs[:primary_position] = 1
+      attrs[defense_key(1)] = rand(Player::DEFENSE_RANGE).abs
+      attrs[:bar1] = rand(Player::BAR_RANGE)
+      attrs
+    end
+
+    def player_secondary_defense(attrs, position)
       2.times do
         secondary_position = rand(2..8)
         next if secondary_position == position
@@ -120,5 +180,7 @@ end
 
 seeds = Seeds.new
 seeds.add_teams if Team.all.none?
-seeds.add_players_to_teams
+seeds.add_hitters_to_teams
 seeds.add_hitters(quanity: 10)
+seeds.add_pitchers_to_teams
+seeds.add_pitchers(quanity: 10)
