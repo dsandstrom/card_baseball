@@ -2,7 +2,7 @@
 
 # TODO: validate throws presence when pitcher
 
-class Player < ApplicationRecord
+class Player < ApplicationRecord # rubocop:disable Metrics/ClassLength
   BATS_OPTIONS = %w[R L B].freeze
   THROWS_OPTIONS = %w[L R].freeze
   BUNT_GRADE_OPTIONS = %w[A B].freeze

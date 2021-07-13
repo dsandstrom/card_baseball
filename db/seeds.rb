@@ -112,19 +112,20 @@ class Seeds
     end
 
     def pitcher_rating_attrs(attrs, type = nil)
+      attrs[:throws] = Player::THROWS_OPTIONS.sample
+      attrs[:pitcher_rating] = rand(Player::RATING_RANGE)
+      attrs[:pitching_durability] = rand(Player::RATING_RANGE)
+      pitcher_type_rating_attrs(attrs, type)
+    end
+
+    def pitcher_type_rating_attrs(attrs, type = nil)
       type ||= Player::PITCHING_TYPES.keys.sample
 
       attrs[:pitcher_type] = type
-      attrs[:throws] = Player::THROWS_OPTIONS.sample
-      attrs[:pitcher_rating] = rand(Player::RATING_RANGE)
-      attrs["#{Player::PITCHING_TYPES[type][:key]}_pitching"] =
-        rand(Player::RATING_RANGE)
-      attrs[:pitching_durability] = rand(Player::RATING_RANGE)
-
+      attrs[pitching_key(type)] = rand(Player::RATING_RANGE)
       if type == 'S' && rand(4).zero?
-        attrs[:relief_pitching] = rand(Player::RATING_RANGE)
+        attrs[pitching_key('R')] = rand(Player::RATING_RANGE)
       end
-
       attrs
     end
 
@@ -144,6 +145,10 @@ class Seeds
     def hitter_primary_defense(attrs, position)
       attrs[:primary_position] = position
       attrs[defense_key(position)] = rand(Player::DEFENSE_RANGE).abs
+      hitter_bar(attrs, position)
+    end
+
+    def hitter_bar(attrs, position)
       case position
       when 1
         attrs[:bar1] = rand(Player::BAR_RANGE)
@@ -176,6 +181,10 @@ class Seeds
 
     def defense_key(position)
       Player.defense_key_for_position(position)
+    end
+
+    def pitching_key(type)
+      "#{Player::PITCHING_TYPES[type][:key]}_pitching".to_sym
     end
 end
 
