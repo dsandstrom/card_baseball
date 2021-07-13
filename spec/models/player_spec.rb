@@ -223,6 +223,103 @@ RSpec.describe Player, type: :model do
     end
   end
 
+  describe ".hitters" do
+    let(:first_base) do
+      Fabricate(:player, defense3: 1, defense7: -1, primary_position: 3,
+                         offensive_rating: 80)
+    end
+    let(:outfield) do
+      Fabricate(:player, defense7: -2, primary_position: 3,
+                         offensive_rating: 90)
+    end
+    let(:pitcher) do
+      Fabricate(:player, defense1: 1, bar1: 2, primary_position: 1,
+                         hitting_pitcher: false)
+    end
+    let(:hitting_pitcher) do
+      Fabricate(:player, defense1: 2, defense3: 1, primary_position: 1,
+                         hitting_pitcher: true)
+    end
+
+    context "when no players" do
+      it "returns []" do
+        expect(Player.hitters).to eq([])
+      end
+    end
+
+    context "when a first baseman and pitcher" do
+      before do
+        first_base
+        pitcher
+      end
+
+      it "returns first_base" do
+        expect(Player.hitters).to eq([first_base])
+      end
+    end
+
+    context "when an outfielder" do
+      before { outfield }
+
+      it "returns outfield" do
+        expect(Player.hitters).to eq([outfield])
+      end
+    end
+
+    context "when a hitting_pitcher" do
+      before { hitting_pitcher }
+
+      it "returns hitting_pitcher" do
+        expect(Player.hitters).to eq([hitting_pitcher])
+      end
+    end
+  end
+
+  describe ".pitchers" do
+    let(:first_base) do
+      Fabricate(:player, defense3: 1, defense7: -1, primary_position: 3,
+                         offensive_rating: 80)
+    end
+    let(:outfield) do
+      Fabricate(:player, defense7: -2, primary_position: 3,
+                         offensive_rating: 90)
+    end
+    let(:pitcher) do
+      Fabricate(:player, defense1: 0, bar1: 2, primary_position: 1,
+                         hitting_pitcher: false)
+    end
+    let(:hitting_pitcher) do
+      Fabricate(:player, defense1: 2, defense3: 1, primary_position: 1,
+                         hitting_pitcher: true)
+    end
+
+    context "when no players" do
+      it "returns []" do
+        expect(Player.pitchers).to eq([])
+      end
+    end
+
+    context "when a first baseman, outfielder and pitcher" do
+      before do
+        first_base
+        outfield
+        pitcher
+      end
+
+      it "returns pitcher" do
+        expect(Player.pitchers).to eq([pitcher])
+      end
+    end
+
+    context "when a hitting_pitcher" do
+      before { hitting_pitcher }
+
+      it "returns them" do
+        expect(Player.pitchers).to eq([hitting_pitcher])
+      end
+    end
+  end
+
   # INSTANCE
 
   describe "#name" do
@@ -648,58 +745,6 @@ RSpec.describe Player, type: :model do
     context "for position 3" do
       it "returns nil" do
         expect(player.bar_for_position(3)).to be_nil
-      end
-    end
-  end
-
-  describe ".hitters" do
-    let(:first_base) do
-      Fabricate(:player, defense3: 1, defense7: -1, primary_position: 3,
-                         offensive_rating: 80)
-    end
-    let(:outfield) do
-      Fabricate(:player, defense7: -2, primary_position: 3,
-                         offensive_rating: 90)
-    end
-    let(:pitcher) do
-      Fabricate(:player, defense1: 1, bar1: 2, primary_position: 1,
-                         hitting_pitcher: false)
-    end
-    let(:hitting_pitcher) do
-      Fabricate(:player, defense1: 2, defense3: 1, primary_position: 1,
-                         hitting_pitcher: true)
-    end
-
-    context "when no players" do
-      it "returns []" do
-        expect(Player.hitters).to eq([])
-      end
-    end
-
-    context "when a first baseman and pitcher" do
-      before do
-        first_base
-        pitcher
-      end
-
-      it "returns them" do
-        expect(Player.hitters).to eq([first_base])
-      end
-    end
-
-    context "when an outfielder" do
-      before { outfield }
-
-      it "returns them" do
-        expect(Player.hitters).to eq([outfield])
-      end
-    end
-
-    context "when a hitting_pitcher" do
-      before { hitting_pitcher }
-
-      it "returns them" do
-        expect(Player.hitters).to eq([hitting_pitcher])
       end
     end
   end

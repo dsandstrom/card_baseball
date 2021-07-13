@@ -99,6 +99,10 @@ class Player < ApplicationRecord
     Player.where(query)
   end
 
+  def self.pitchers
+    Player.where('players.defense1 IS NOT NULL')
+  end
+
   # INSTANCE
 
   def name
