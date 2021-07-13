@@ -84,11 +84,11 @@ class Lineup < ApplicationRecord
     def build_position_form_options
       options =
         [2, 3, 4, 5, 6, 7, 8].map do |position|
-          [Hitter::POSITION_OPTIONS[position][:initials], position]
+          [Player::POSITION_MAP[position][:initials], position]
         end
       return options unless with_dh
 
-      options << ['DH', 9]
+      options << [Player::POSITION_MAP[9][:initials], 9]
     end
 
     def build_defense
@@ -100,6 +100,6 @@ class Lineup < ApplicationRecord
 
     def build_catcher_bar
       catcher_spot = spots_at_position(2).first
-      catcher_spot&.hitter&.catcher_bar || 0
+      catcher_spot&.hitter&.bar2 || 0
     end
 end

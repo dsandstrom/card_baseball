@@ -35,10 +35,12 @@ RSpec.describe Team, type: :model do
                          offensive_rating: 90)
     end
     let(:pitcher) do
-      Fabricate(:player, defense1: 1, bar1: 2, hitting_pitcher: false)
+      Fabricate(:player, defense1: 1, bar1: 2, primary_position: 1,
+                         hitting_pitcher: false)
     end
     let(:hitting_pitcher) do
-      Fabricate(:player, defense1: 2, defense3: 1, hitting_pitcher: true)
+      Fabricate(:player, defense1: 2, defense3: 1, primary_position: 1,
+                         hitting_pitcher: true)
     end
 
     context "when no players" do

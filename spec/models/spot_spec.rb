@@ -5,10 +5,10 @@ require "rails_helper"
 RSpec.describe Spot, type: :model do
   let(:team) { Fabricate(:team) }
   let(:lineup) { Fabricate(:lineup, team: team) }
-  let(:hitter) { Fabricate(:hitter, catcher_defense: 5) }
+  let(:hitter) { Fabricate(:hitter, primary_position: 2, defense2: 5) }
 
   before do
-    Fabricate(:hitter_contract, hitter: hitter, team: team)
+    Fabricate(:contract, player: hitter, team: team)
     @spot = Spot.new(lineup_id: lineup.id, hitter_id: hitter.id,
                      position: 2, batting_order: 1)
   end
@@ -49,13 +49,13 @@ RSpec.describe Spot, type: :model do
         context "and position is 7" do
           before do
             subject.position = 7
-            hitter.update(outfield_defense: -3)
+            hitter.update(defense7: -3)
           end
 
           it { is_expected.to be_valid }
         end
 
-        context "and position is 3" do
+        context "and position is 2" do
           before { subject.position = 2 }
 
           it { is_expected.not_to be_valid }
@@ -80,13 +80,13 @@ RSpec.describe Spot, type: :model do
         before { subject.position = 4 }
 
         context "and hitter has a defense score" do
-          before { hitter.update(second_base_defense: 1) }
+          before { hitter.update(defense4: 1) }
 
           it { is_expected.to be_valid }
         end
 
         context "and hitter doesn't have a defense score" do
-          before { hitter.update(second_base_defense: nil) }
+          before { hitter.update(defense4: nil) }
 
           it { is_expected.not_to be_valid }
         end
@@ -152,7 +152,7 @@ RSpec.describe Spot, type: :model do
     end
 
     describe "#hitter_on_team" do
-      context "when no hitter_contract" do
+      context "when no contract" do
         let(:lineup) { Fabricate(:lineup) }
 
         before do
@@ -167,10 +167,10 @@ RSpec.describe Spot, type: :model do
 
   describe "#defense" do
     let(:hitter) do
-      Fabricate(:hitter, first_base_defense: 1, second_base_defense: -1)
+      Fabricate(:hitter, primary_position: 3, defense3: 1, defense4: -1)
     end
 
-    before { Fabricate(:hitter_contract, hitter: hitter, team: team) }
+    before { Fabricate(:contract, player: hitter, team: team) }
 
     context "when no hitter" do
       let(:spot) do

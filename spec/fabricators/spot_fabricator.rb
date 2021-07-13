@@ -10,7 +10,7 @@ Fabricator(:spot) do
   hitter do |attrs|
     hitter =
       if attrs[:position]
-        key = Hitter.defense_key_for_position(attrs[:position])
+        key = Player.defense_key_for_position(attrs[:position])
         if key
           Fabricate(:hitter, key => rand(0..10))
         else
@@ -19,7 +19,7 @@ Fabricator(:spot) do
       else
         Fabricate(:hitter)
       end
-    Fabricate(:hitter_contract, hitter: hitter, team: attrs[:lineup].team)
+    Fabricate(:contract, player: hitter, team: attrs[:lineup].team)
     hitter
   end
 end

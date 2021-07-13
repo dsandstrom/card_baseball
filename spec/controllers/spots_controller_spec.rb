@@ -5,7 +5,7 @@ require "rails_helper"
 RSpec.describe SpotsController, type: :controller do
   let(:team) { Fabricate(:team) }
   let(:hitter) do
-    Fabricate(:hitter, catcher_defense: 5, first_base_defense: 1)
+    Fabricate(:hitter, defense2: 5, defense3: 1)
   end
   let(:lineup) { Fabricate(:lineup, team: team) }
   let(:spot) do
@@ -13,7 +13,7 @@ RSpec.describe SpotsController, type: :controller do
                      position: 2)
   end
 
-  before { Fabricate(:hitter_contract, hitter: hitter, team: team) }
+  before { Fabricate(:contract, player: hitter, team: team) }
 
   let(:valid_attributes) do
     { hitter_id: hitter.to_param, position: 2, batting_order: 2 }
@@ -282,11 +282,11 @@ RSpec.describe SpotsController, type: :controller do
       context "when switching hitters" do
         context "from the bench" do
           context "when hitter plays spot's position" do
-            let(:bench_hitter) { Fabricate(:hitter, catcher_defense: -1) }
+            let(:bench_hitter) { Fabricate(:hitter, defense2: -1) }
             let(:update_attributes) { { hitter_id: bench_hitter.to_param } }
 
             before do
-              Fabricate(:hitter_contract, hitter: bench_hitter, team: team)
+              Fabricate(:contract, player: bench_hitter, team: team)
             end
 
             it "updates the requested Spot" do
@@ -318,11 +318,11 @@ RSpec.describe SpotsController, type: :controller do
           end
 
           context "when hitter doesn't play spot's position" do
-            let(:bench_hitter) { Fabricate(:hitter, first_base_defense: 9) }
+            let(:bench_hitter) { Fabricate(:hitter, defense3: 9) }
             let(:update_attributes) { { hitter_id: bench_hitter.to_param } }
 
             before do
-              Fabricate(:hitter_contract, hitter: bench_hitter, team: team)
+              Fabricate(:contract, player: bench_hitter, team: team)
             end
 
             it "updates the requested Spot" do
@@ -347,11 +347,11 @@ RSpec.describe SpotsController, type: :controller do
 
         context "from another spot in the requested lineup" do
           let(:new_hitter) do
-            Fabricate(:hitter, catcher_defense: 10, first_base_defense: 0)
+            Fabricate(:hitter, defense2: 10, defense3: 0)
           end
 
           before do
-            Fabricate(:hitter_contract, hitter: new_hitter, team: team)
+            Fabricate(:contract, player: new_hitter, team: team)
           end
 
           let!(:old_spot) do

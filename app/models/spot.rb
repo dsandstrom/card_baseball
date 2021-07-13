@@ -14,7 +14,7 @@ class Spot < ApplicationRecord
   validate :hitter_on_team
 
   belongs_to :lineup
-  belongs_to :hitter
+  belongs_to :hitter, class_name: 'Player'
 
   # hitter's def score
   def defense
@@ -22,7 +22,7 @@ class Spot < ApplicationRecord
   end
 
   def position_initials
-    @position_initials ||= Hitter.position_initials(position)
+    @position_initials ||= Player.position_initials(position)
   end
 
   private
