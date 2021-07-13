@@ -38,6 +38,7 @@ RSpec.describe Player, type: :model do
   it { is_expected.to validate_uniqueness_of(:roster_name).case_insensitive }
   it { is_expected.to validate_presence_of(:bats) }
   it { is_expected.to validate_inclusion_of(:bats).in_array(%w[R L B]) }
+  it { is_expected.to validate_inclusion_of(:throws).in_array(%w[L R]) }
   it { is_expected.to validate_presence_of(:bunt_grade) }
   it { is_expected.to validate_inclusion_of(:bunt_grade).in_array(%w[A B]) }
   it { is_expected.to validate_presence_of(:speed) }

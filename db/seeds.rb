@@ -115,6 +115,7 @@ class Seeds
       type ||= Player::PITCHING_TYPES.keys.sample
 
       attrs[:pitcher_type] = type
+      attrs[:throws] = Player::THROWS_OPTIONS.sample
       attrs[:pitcher_rating] = rand(Player::RATING_RANGE)
       attrs["#{Player::PITCHING_TYPES[type][:key]}_pitching"] =
         rand(Player::RATING_RANGE)
