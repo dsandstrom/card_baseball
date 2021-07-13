@@ -9,7 +9,13 @@ class Team < ApplicationRecord
   has_many :players, through: :contracts
   has_many :lineups, dependent: :destroy
 
+  # CLASS
+
   def hitters
     players.hitters.order(offensive_rating: :desc)
+  end
+
+  def pitchers
+    players.pitchers.order(pitcher_rating: :desc)
   end
 end
