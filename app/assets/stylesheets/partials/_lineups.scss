@@ -63,8 +63,8 @@
     border-radius: $border-radius 0 0 $border-radius;
     background-color: $off-white;
     color: $dark-gray;
+    font-family: $code-font;
     font-size: 1.4rem;
-    font-weight: bold;
   }
 
   .spot-defense {
@@ -253,5 +253,53 @@
     .lineup-defense {
       font-size: 2rem;
     }
+  }
+
+  .spot {
+    display: grid;
+    grid-template-columns: auto 5fr 1fr;
+    align-items: stretch;
+    column-gap: .5rem;
+    border-bottom: 1px solid $border-color;
+  }
+
+  .spot-batting-order {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: .2rem .5rem;
+    color: $gray;
+    font-family: $code-font;
+    font-size: 1.2rem;
+  }
+
+  .spot-hitter-and-position {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: .2rem .5rem .2rem 0;
+  }
+
+  .spot-hitter {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+  }
+
+  .spot-position {
+    margin-left: .5rem;
+    color: $dark-gray;
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+
+  .spot-defense {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: .4rem .5rem;
+    border-left: 1px solid $border-color;
+    background-color: $off-white;
+    font-size: 1.8rem;
   }
 }

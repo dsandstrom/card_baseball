@@ -1,5 +1,5 @@
 <%
-  hitters = team.hitters.order(overall_rating: :desc).limit(10)
+  hitters = team.hitters.limit(10)
   confirm = "Are you sure you want to remove #{team.name}?"
 %>
 

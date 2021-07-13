@@ -13,7 +13,7 @@
     </p>
   </header>
 
-  <main class="card-main">
+  <main class="card-items">
     <div class="lineup-spots">
       <% (1..8).each do |batting_order| %>
         <% spot = lineup.spots.find_by(batting_order: batting_order)  %>
@@ -21,7 +21,12 @@
           <%= render spot %>
         <% else %>
           <div class="empty spot">
-            <%= content_tag :span, batting_order %>
+            <%= content_tag :span, batting_order,
+                            class: 'spot-batting-order' %>
+            <%= content_tag :span, '',
+                            class: 'spot-hitter' %>
+            <%= content_tag :span, 'X',
+                            class: 'spot-defense defense-missing' %>
           </div>
         <% end %>
       <% end %>
@@ -29,8 +34,8 @@
   </main>
 
   <footer class="card-footer">
-    <%= link_to 'Edit', edit_team_lineup_path(team, lineup) %>
-    <%= link_to 'Destroy', team_lineup_path(team, lineup),
+    <%= link_to 'Options', edit_team_lineup_path(team, lineup) %>
+    <%= link_to 'Remove', team_lineup_path(team, lineup),
                 method: :delete,
                 data: { confirm: confirm } %>
   </footer>

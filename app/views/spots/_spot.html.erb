@@ -3,10 +3,14 @@
 <div class="spot">
   <%= content_tag :span, spot.batting_order,
                   class: 'spot-batting-order' %>
-  <%= content_tag :span, hitter.roster_name,
-                  class: 'spot-hitter' %>
-  <%= content_tag :span, spot.position_initials,
-                  class: 'spot-position' %>
+  <span class="spot-hitter-and-position">
+    <span class="spot-hitter">
+      <%= content_tag :span, hitter.roster_name,
+                      class: 'spot-hitter-name' %>
+      <%= content_tag :span, spot.position_initials,
+                      class: 'spot-position' %>
+    </span>
+  </span>
   <%= content_tag :span, format_defense(spot.defense),
                   class: 'spot-defense' %>
 </div>
