@@ -1,0 +1,66 @@
+<%
+  pages = pitchers.respond_to?(:entry_name)
+  page_index =
+    if pages
+      pitchers.limit_value * (pitchers.current_page - 1)
+    else
+      0
+    end
+  show_contract = true if show_contract.nil?
+  show_team = true if show_team.nil?
+  highlight ||= nil
+%>
+
+<% if pages %>
+  <div class="page-links">
+    <%= paginate @pitchers %>
+  </div>
+<% end %>
+
+<table class="pitchers">
+  <thead>
+    <% if pages %>
+      <tr>
+        <th colspan=20><%= page_entries_info pitchers %></th>
+      </tr>
+    <% end %>
+    <tr>
+      <th></th>
+      <th class="align-left">Name</th>
+      <th>Type</th>
+      <th>Rtg</th>
+      <th>Start</th>
+      <th>Relief</th>
+      <th>Dur</th>
+      <th class="no-wrap">
+        Def<span class="defense-bar">/Bar</span>
+      </th>
+      <% if show_contract %>
+        <th class="left-border">Contract</th>
+      <% end %>
+    </tr>
+  </thead>
+
+  <tbody class="pitchers">
+    <% if pitchers.any? %>
+      <% pitchers.each_with_index do |pitcher, table_index| %>
+        <%= render 'pitchers/pitcher',
+                   pitcher: pitcher,
+                   table_index: (table_index + page_index + 1),
+                   show_contract: show_contract,
+                   show_team: show_team,
+                   highlight: highlight %>
+      <% end %>
+    <% else %>
+      <tr>
+        <td colspan="30">No pitchers yet</td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<% if pages %>
+  <div class="page-links">
+    <%= paginate @pitchers %>
+  </div>
+<% end %>

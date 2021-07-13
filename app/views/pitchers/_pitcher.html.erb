@@ -1,0 +1,20 @@
+<%
+  table_index ||= nil
+  highlight ||= nil
+%>
+
+<tr class="pitcher" id="pitcher_<%= pitcher.id %>">
+  <% if table_index.present? %>
+    <%= content_tag :td, table_index, class: 'table-index' %>
+  <% end %>
+  <td><%= link_to pitcher.roster_name, pitcher, class: 'pitcher-name' %></td>
+  <td><%= pitcher.pitcher_type %></td>
+  <td><%= pitcher.pitcher_rating %></td>
+  <td><%= pitcher.starting_pitching %></td>
+  <td><%= pitcher.relief_pitching %></td>
+  <td><%= pitcher.pitching_durability %></td>
+  <%= defense_td(pitcher.defense1, pitcher.bar1) %>
+  <% if show_contract %>
+    <td class="left-border"><%= render 'players/contract', player: pitcher, show_team: show_team %></td>
+  <% end %>
+</tr>
