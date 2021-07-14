@@ -6,7 +6,7 @@ RSpec.describe TeamsController, type: :controller do
   let(:league) { Fabricate(:league) }
   let(:team) { Fabricate(:team, league: league) }
 
-  let(:valid_attributes) { { name: "Name" } }
+  let(:valid_attributes) { { name: "Name", identifier: "ID" } }
   let(:invalid_attributes) { { name: "" } }
 
   describe "GET #show" do

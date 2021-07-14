@@ -2,6 +2,7 @@
 
 class Team < ApplicationRecord
   validates :name, presence: true, uniqueness: { case_sensitive: false }
+  validates :identifier, presence: true, uniqueness: { case_sensitive: false }
   validates :league_id, presence: true
 
   belongs_to :league

@@ -11,8 +11,13 @@
   <%= form_errors(team) %>
 
   <div class="field">
-    <%= form.label :name %>
+    <%= required_field_label form, :name %>
     <%= form.text_field :name, autofocus: !team.persisted? %>
+  </div>
+
+  <div class="field">
+    <%= required_field_label form, :identifier %>
+    <%= form.text_field :identifier %>
   </div>
 
   <div class="field">

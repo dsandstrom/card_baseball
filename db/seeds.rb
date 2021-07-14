@@ -8,7 +8,9 @@ class Seeds
       league = League.create!(name: Faker::Compass.unique.direction.titleize)
 
       team_quantity.times do
-        league.teams.create!(name: Faker::Team.unique.creature.titleize)
+        name = Faker::Team.unique.creature.titleize
+        identifier = Faker::Team.unique.mascot.gsub(/[\s.,]/, '')[0..2].upcase
+        league.teams.create!(name: name, identifier: identifier)
       end
     end
   end
