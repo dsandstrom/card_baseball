@@ -7,9 +7,9 @@ class Player < ApplicationRecord # rubocop:disable Metrics/ClassLength
   THROWS_OPTIONS = %w[L R].freeze
   BUNT_GRADE_OPTIONS = %w[A B].freeze
   POSITION_RANGE = 1..8
-  SPEED_RANGE = 0..5
-  BAR_RANGE = 0..5
-  RATING_RANGE = 0..99
+  SPEED_RANGE = 0..6
+  BAR_RANGE = -5..5
+  RATING_RANGE = 0..130
   DEFENSE_RANGE = -20..20
   POSITION_MAP = {
     1 => { initials: 'P', name: 'Pitcher', key: :pitcher },

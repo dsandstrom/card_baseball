@@ -42,40 +42,42 @@ RSpec.describe Player, type: :model do
   it { is_expected.to validate_presence_of(:bunt_grade) }
   it { is_expected.to validate_inclusion_of(:bunt_grade).in_array(%w[A B]) }
   it { is_expected.to validate_presence_of(:speed) }
-  it { is_expected.to validate_inclusion_of(:speed).in_range(0..5) }
+  it { is_expected.to validate_inclusion_of(:speed).in_range(0..6) }
   it { is_expected.to validate_presence_of(:primary_position) }
   it { is_expected.to validate_inclusion_of(:primary_position).in_range(1..8) }
   it do
-    is_expected.to validate_inclusion_of(:offensive_durability).in_range(0..99)
+    is_expected.to validate_inclusion_of(:offensive_durability).in_range(0..130)
   end
   it do
-    is_expected.to validate_inclusion_of(:pitching_durability).in_range(0..99)
+    is_expected.to validate_inclusion_of(:pitching_durability).in_range(0..130)
   end
   it { is_expected.to validate_presence_of(:offensive_rating) }
-  it { is_expected.to validate_inclusion_of(:offensive_rating).in_range(0..99) }
-  it { is_expected.to validate_inclusion_of(:pitcher_rating).in_range(0..99) }
+  it do
+    is_expected.to validate_inclusion_of(:offensive_rating).in_range(0..130)
+  end
+  it { is_expected.to validate_inclusion_of(:pitcher_rating).in_range(0..130) }
   it { is_expected.to validate_presence_of(:left_hitting) }
-  it { is_expected.to validate_inclusion_of(:left_hitting).in_range(0..99) }
+  it { is_expected.to validate_inclusion_of(:left_hitting).in_range(0..130) }
   it { is_expected.to validate_presence_of(:right_hitting) }
-  it { is_expected.to validate_inclusion_of(:right_hitting).in_range(0..99) }
+  it { is_expected.to validate_inclusion_of(:right_hitting).in_range(0..130) }
   it { is_expected.to validate_presence_of(:left_on_base_percentage) }
   it do
     is_expected.to validate_inclusion_of(:left_on_base_percentage)
-      .in_range(0..99)
+      .in_range(0..130)
   end
   it { is_expected.to validate_presence_of(:right_on_base_percentage) }
   it do
     is_expected.to validate_inclusion_of(:right_on_base_percentage)
-      .in_range(0..99)
+      .in_range(0..130)
   end
   it { is_expected.to validate_presence_of(:left_slugging) }
-  it { is_expected.to validate_inclusion_of(:left_slugging).in_range(0..99) }
+  it { is_expected.to validate_inclusion_of(:left_slugging).in_range(0..130) }
   it { is_expected.to validate_presence_of(:right_slugging) }
-  it { is_expected.to validate_inclusion_of(:right_slugging).in_range(0..99) }
+  it { is_expected.to validate_inclusion_of(:right_slugging).in_range(0..130) }
   it { is_expected.to validate_presence_of(:left_homerun) }
-  it { is_expected.to validate_inclusion_of(:left_homerun).in_range(0..99) }
+  it { is_expected.to validate_inclusion_of(:left_homerun).in_range(0..130) }
   it { is_expected.to validate_presence_of(:right_homerun) }
-  it { is_expected.to validate_inclusion_of(:right_homerun).in_range(0..99) }
+  it { is_expected.to validate_inclusion_of(:right_homerun).in_range(0..130) }
   it { is_expected.to validate_inclusion_of(:defense1).in_range(-20..20) }
   it { is_expected.to validate_inclusion_of(:defense2).in_range(-20..20) }
   it { is_expected.to validate_inclusion_of(:defense3).in_range(-20..20) }
@@ -84,13 +86,13 @@ RSpec.describe Player, type: :model do
   it { is_expected.to validate_inclusion_of(:defense6).in_range(-20..20) }
   it { is_expected.to validate_inclusion_of(:defense7).in_range(-20..20) }
   it { is_expected.to validate_inclusion_of(:defense8).in_range(-20..20) }
-  it { is_expected.to validate_inclusion_of(:bar1).in_range(0..5) }
-  it { is_expected.to validate_inclusion_of(:bar2).in_range(0..5) }
+  it { is_expected.to validate_inclusion_of(:bar1).in_range(-5..5) }
+  it { is_expected.to validate_inclusion_of(:bar2).in_range(-5..5) }
   it { is_expected.to validate_inclusion_of(:pitcher_type).in_array(%w[R S]) }
   it do
-    is_expected.to validate_inclusion_of(:starting_pitching).in_range(0..99)
+    is_expected.to validate_inclusion_of(:starting_pitching).in_range(0..130)
   end
-  it { is_expected.to validate_inclusion_of(:relief_pitching).in_range(0..99) }
+  it { is_expected.to validate_inclusion_of(:relief_pitching).in_range(0..130) }
 
   it { is_expected.to have_one(:contract) }
   it { is_expected.to have_one(:team) }
