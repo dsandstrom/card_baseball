@@ -298,10 +298,12 @@ RSpec.describe Player, type: :model do
     end
     let(:pitcher) do
       Fabricate(:player, defense1: 0, bar1: 2, primary_position: 1,
+                         pitcher_type: "S", throws: "R", pitcher_rating: 70,
                          hitting_pitcher: false)
     end
     let(:hitting_pitcher) do
       Fabricate(:player, defense1: 2, defense3: 1, primary_position: 1,
+                         pitcher_type: "S", throws: "R", pitcher_rating: 80,
                          hitting_pitcher: true)
     end
 

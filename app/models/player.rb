@@ -115,7 +115,9 @@ class Player < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def self.pitchers
-    Player.where('players.defense1 IS NOT NULL')
+    query = 'players.pitcher_rating IS NOT NULL'\
+            ' AND players.defense1 IS NOT NULL'
+    Player.where(query)
   end
 
   # INSTANCE
