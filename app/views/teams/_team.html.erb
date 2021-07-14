@@ -1,5 +1,6 @@
 <%
   hitters = team.hitters.limit(10)
+  pitchers = team.pitchers.limit(10)
   confirm = "Are you sure you want to remove #{team.name}?"
 %>
 
@@ -12,16 +13,28 @@
     <div class="team-hitters">
     </div>
 
-    <% if hitters.any? %>
-      <ul class="team-hitters card-link-list">
-        <% hitters.each do |hitter| %>
-          <li><%= link_to hitter.roster_name, hitter %></li>
-        <% end %>
-      </ul>
+    <% if hitters.any? || pitchers.any? %>
+      <% if hitters.any? %>
+        <ul class="team-hitters card-link-list">
+          <% hitters.each do |hitter| %>
+            <li><%= link_to hitter.roster_name, hitter %></li>
+          <% end %>
+        </ul>
+      <% else %>
+        <p><em>No hitters yet</em></p>
+      <% end %>
+
+      <% if pitchers.any? %>
+        <ul class="team-pitchers card-link-list">
+          <% pitchers.each do |pitcher| %>
+            <li><%= link_to pitcher.roster_name, pitcher %></li>
+          <% end %>
+        </ul>
+      <% else %>
+        <p><em>No pitchers yet</em></p>
+      <% end %>
     <% else %>
-      <p>
-        <em>No hitters yet</em>
-      </p>
+      <p><em>No players yet</em></p>
     <% end %>
   </main>
 
