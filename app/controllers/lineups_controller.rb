@@ -5,7 +5,7 @@ class LineupsController < ApplicationController
   before_action :set_lineup, only: %i[show edit update destroy]
 
   def index
-    @lineups = @team.lineups
+    @lineups = @team.lineups.order(name: :asc, vs: :asc, with_dh: :asc)
   end
 
   def show
