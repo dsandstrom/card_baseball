@@ -21,6 +21,9 @@ module CardBaseball
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
 
+    # autoload classes directory
+    config.autoload_paths << File.join(Rails.root, 'classes')
+
     config.generators do |g|
       g.test_framework :rspec, fixture: false
       g.assets false
