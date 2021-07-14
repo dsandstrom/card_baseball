@@ -37,6 +37,17 @@ en:
         with_dh: "with DH"
       league:
         row_order_position: 'Direction'
+      player:
+        defense1: 'Pitcher Defense'
+        defense2: 'Catcher Defense'
+        defense3: 'First Base Defense'
+        defense4: 'Second Base Defense'
+        defense5: 'Third Base Defense'
+        defense6: 'Shortstop Defense'
+        defense7: 'Outfield Defense'
+        defense8: 'Center Field Defense'
+        bar1: 'Pitcher Bar'
+        bar2: 'Catcher Bar'
   helpers:
     page_entries_info:
       one_page:
