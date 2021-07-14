@@ -41,7 +41,7 @@
 
       <%= content_tag :div, class: radio_button_class do %>
         <% Player::POSITION_MAP.each do |position, options| %>
-          <% next if position == 1 %>
+          <% next if [1, 9].include?(position) %>
 
           <% if hitter.position_defense(position) %>
             <%= form.label "batting_order_#{batting_order}_position_#{position}",
