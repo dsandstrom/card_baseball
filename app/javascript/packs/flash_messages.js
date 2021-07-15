@@ -24,7 +24,7 @@ class FlashMessage {
       window.clearTimeout(this.timeout);
 
       this.elem.addEventListener('mouseleave', () => {
-        this.timeout = window.setTimeout(this.close, 5000);
+        this.timeout = window.setTimeout(this.close, 3000);
       });
     });
   }
