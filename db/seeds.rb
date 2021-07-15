@@ -75,6 +75,12 @@ class Seeds
     end
   end
 
+  def add_admin
+    User.create!(name: 'Bob Admin',
+                 email: 'admin@example.net', admin_role: true,
+                 password: 'password', password_confirmation: 'password')
+  end
+
   private
 
     def hitter_attrs(position)
@@ -207,3 +213,4 @@ seeds.add_pitchers(quanity: 10) if Player.pitchers.none?
 seeds.add_pitchers_to_teams
 
 seeds.add_users(5) if User.none?
+seeds.add_admin if User.admins.none?
