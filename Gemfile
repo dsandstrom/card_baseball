@@ -30,6 +30,11 @@ gem 'turbolinks', '~> 5'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false
 
+# user authorization
+gem 'cancancan', '~> 3.3'
+# user authentication
+gem 'devise', '~> 4.8'
+
 # Pagination
 # https://github.com/kaminari/kaminari
 gem 'kaminari', '~> 1.2'
