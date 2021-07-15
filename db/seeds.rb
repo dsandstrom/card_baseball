@@ -66,6 +66,15 @@ class Seeds
     contract.save!
   end
 
+  def add_users(quanity = 1)
+    quanity.times do
+      name = Faker::Name.unique.name
+      User.create!(name: name,
+                   email: Faker::Internet.unique.safe_email(name: name),
+                   password: 'password', password_confirmation: 'password')
+    end
+  end
+
   private
 
     def hitter_attrs(position)
@@ -192,7 +201,9 @@ end
 
 seeds = Seeds.new
 seeds.add_teams if Team.all.none?
+seeds.add_hitters(quanity: 10) if Player.hitters.none?
 seeds.add_hitters_to_teams
-seeds.add_hitters(quanity: 10)
+seeds.add_pitchers(quanity: 10) if Player.pitchers.none?
 seeds.add_pitchers_to_teams
-seeds.add_pitchers(quanity: 10)
+
+seeds.add_users(5) if User.none?
