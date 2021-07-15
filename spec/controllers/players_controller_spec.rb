@@ -4,6 +4,7 @@ require "rails_helper"
 
 RSpec.describe PlayersController, type: :controller do
   let(:player) { Fabricate(:player) }
+  let(:user) { Fabricate(:user) }
 
   let(:valid_attributes) do
     { last_name: "Last", primary_position: 4, bats: "R", bunt_grade: "A",
@@ -16,109 +17,137 @@ RSpec.describe PlayersController, type: :controller do
   let(:invalid_attributes) { { last_name: "" } }
 
   describe "GET #index" do
-    before { Fabricate(:player) }
+    context "for a user" do
+      before { sign_in(user) }
 
-    it "returns a success response" do
-      get :index
-      expect(response).to be_successful
+      before { Fabricate(:player) }
+
+      it "returns a success response" do
+        get :index
+        expect(response).to be_successful
+      end
     end
   end
 
   describe "GET #show" do
-    it "returns a success response" do
-      get :show, params: { id: player.to_param }
-      expect(response).to be_successful
+    context "for a user" do
+      before { sign_in(user) }
+
+      it "returns a success response" do
+        get :show, params: { id: player.to_param }
+        expect(response).to be_successful
+      end
     end
   end
 
   describe "GET #new" do
-    it "returns a success response" do
-      get :new
-      expect(response).to be_successful
+    context "for a user" do
+      before { sign_in(user) }
+
+      it "returns a success response" do
+        get :new
+        expect(response).to be_successful
+      end
     end
   end
 
   describe "GET #edit" do
-    it "returns a success response" do
-      get :edit, params: { id: player.to_param }
-      expect(response).to be_successful
+    context "for a user" do
+      before { sign_in(user) }
+
+      it "returns a success response" do
+        get :edit, params: { id: player.to_param }
+        expect(response).to be_successful
+      end
     end
   end
 
   describe "POST #create" do
-    context "when valid params" do
-      it "creates a new Player" do
-        expect do
+    context "for a user" do
+      before { sign_in(user) }
+
+      context "when valid params" do
+        it "creates a new Player" do
+          expect do
+            post :create, params: { player: valid_attributes }
+          end.to change(Player, :count).by(1)
+        end
+
+        it "redirects to the Player list" do
           post :create, params: { player: valid_attributes }
-        end.to change(Player, :count).by(1)
+          expect(response).to redirect_to(Player.last)
+        end
       end
 
-      it "redirects to the Player list" do
-        post :create, params: { player: valid_attributes }
-        expect(response).to redirect_to(Player.last)
-      end
-    end
+      context "when invalid params" do
+        it "doesn't create a new Player" do
+          expect do
+            post :create, params: { player: invalid_attributes }
+          end.not_to change(Player, :count)
+        end
 
-    context "when invalid params" do
-      it "doesn't create a new Player" do
-        expect do
+        it "renders new" do
           post :create, params: { player: invalid_attributes }
-        end.not_to change(Player, :count)
-      end
-
-      it "renders new" do
-        post :create, params: { player: invalid_attributes }
-        expect(response).to have_http_status(:unprocessable_entity)
+          expect(response).to have_http_status(:unprocessable_entity)
+        end
       end
     end
   end
 
   describe "PUT #update" do
-    context "when valid params" do
-      it "updates the requested Player" do
-        expect do
+    context "for a user" do
+      before { sign_in(user) }
+
+      context "when valid params" do
+        it "updates the requested Player" do
+          expect do
+            put :update, params: { id: player.to_param,
+                                   player: valid_attributes }
+            player.reload
+          end.to change(player, :last_name)
+        end
+
+        it "redirects to the Player" do
           put :update, params: { id: player.to_param,
                                  player: valid_attributes }
-          player.reload
-        end.to change(player, :last_name)
+          expect(response).to redirect_to(player)
+        end
       end
 
-      it "redirects to the Player" do
-        put :update, params: { id: player.to_param,
-                               player: valid_attributes }
-        expect(response).to redirect_to(player)
-      end
-    end
+      context "when invalid params" do
+        it "doesn't create a new Player" do
+          expect do
+            put :update, params: { id: player.to_param,
+                                   player: invalid_attributes }
+            player.reload
+          end.not_to change(player, :last_name)
+        end
 
-    context "when invalid params" do
-      it "doesn't create a new Player" do
-        expect do
+        it "renders edit" do
           put :update, params: { id: player.to_param,
                                  player: invalid_attributes }
-          player.reload
-        end.not_to change(player, :last_name)
-      end
-
-      it "renders edit" do
-        put :update, params: { id: player.to_param,
-                               player: invalid_attributes }
-        expect(response).to have_http_status(:unprocessable_entity)
+          expect(response).to have_http_status(:unprocessable_entity)
+        end
       end
     end
   end
 
   describe "DELETE #destroy" do
-    before { player }
+    context "for a user" do
+      before { sign_in(user) }
 
-    it "destroys the requested Player" do
-      expect do
+      before { player }
+
+      it "destroys the requested Player" do
+        expect do
+          delete :destroy, params: { id: player.to_param }
+        end.to change(Player, :count).by(-1)
+      end
+
+      it "redirects to the Player list" do
         delete :destroy, params: { id: player.to_param }
-      end.to change(Player, :count).by(-1)
-    end
-
-    it "redirects to the Player list" do
-      delete :destroy, params: { id: player.to_param }
-      expect(response).to redirect_to(:players)
+        expect(response).to redirect_to(:players)
+      end
     end
   end
 end

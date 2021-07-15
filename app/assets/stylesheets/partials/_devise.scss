@@ -24,6 +24,7 @@
   }
 
   // scss-lint:disable QualifyingElement
+  // stylelint-disable-next-line selector-no-qualifying-type
   input[type='text']:focus {
     background-color: $white;
   }
