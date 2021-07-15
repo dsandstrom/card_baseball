@@ -10,4 +10,16 @@ class User < ApplicationRecord
   validates :email, presence: true, uniqueness: { case_sensitive: false }
 
   has_many :teams
+
+  # CLASS
+
+  def self.admins
+    where(admin_role: true)
+  end
+
+  # INSTANCE
+
+  def admin?
+    @admin ||= admin_role == true
+  end
 end
