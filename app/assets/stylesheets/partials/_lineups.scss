@@ -260,7 +260,10 @@
     grid-template-columns: auto 5fr 1fr;
     align-items: stretch;
     column-gap: .5rem;
-    border-bottom: 1px solid $border-color;
+
+    &:not(:last-child) {
+      border-bottom: 1px solid $border-color;
+    }
   }
 
   .spot-batting-order {
