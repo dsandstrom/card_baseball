@@ -10,15 +10,19 @@ class Ability
 
     self.user = input_user
     if user.admin?
+      can :manage, Contract
       can :manage, League
       can :manage, Team
       can :manage, User
+      can :manage, Player
       cannot :destroy, User, id: user_id
     else
       can :read, User
       can :update, User, id: user_id
       can :read, League
       can :read, Team
+      can :read, Contract
+      can :read, Player
       can :update, Team, user_id: user_id
     end
   end
