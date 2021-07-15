@@ -6,6 +6,7 @@ class Team < ApplicationRecord
   validates :league_id, presence: true
 
   belongs_to :league
+  belongs_to :user, optional: true
   has_many :contracts, dependent: :nullify
   has_many :players, through: :contracts
   has_many :lineups, dependent: :destroy

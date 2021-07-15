@@ -24,6 +24,7 @@ RSpec.describe Team, type: :model do
   end
 
   it { is_expected.to belong_to(:league) }
+  it { is_expected.to belong_to(:user).optional }
   it { is_expected.to have_many(:contracts) }
   it { is_expected.to have_many(:players) }
   it { is_expected.to have_many(:lineups) }
