@@ -19,15 +19,13 @@
 
       <%= render 'form',
                  minimum_password_length: @minimum_password_length %>
-
-      <%= render 'cancel_account', user: @user %>
     </div>
 
     <div class="second-column">
       <div class="devise-links">
         <h3>Helpful Links</h3>
         <%= content_tag :p, link_to('Change Name',
-                                    edit_user_path(@user)) %>
+                                    'edit_user_path(@user)') %>
       </div>
     </div>
   </div>

@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  devise_for :users
   resources :players do
     get 'contract' => 'contracts#edit', as: :contract
     post 'contract' => 'contracts#update'
@@ -28,6 +27,14 @@ Rails.application.routes.draw do
 
   resources :lineups, only: nil do
     resources :spots, except: %i[index show]
+  end
+
+  # https://github.com/heartcombo/devise/wiki/
+  # How-To:-Allow-users-to-edit-their-password
+  devise_for :users, path: 'auth', skip: :registrations
+  devise_scope :user do
+    get 'auth/edit' => 'users/registrations#edit', as: :edit_user_registration
+    put 'auth' => 'users/registrations#update', as: :user_registration
   end
 
   root to: 'leagues#index'

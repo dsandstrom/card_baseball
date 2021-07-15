@@ -13,6 +13,14 @@
         <%= menu_link 'Hitters', hitters_path %>
         <%= menu_link 'Pitchers', pitchers_path %>
       </div>
+
+      <div class="user-name">
+        <%= link_to current_user.name, '#' %>
+      </div>
+
+      <div class="log-out-link">
+        <%= log_out_link %>
+      </div>
     <% end %>
   </div>
 </header>
