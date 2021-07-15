@@ -58,12 +58,12 @@ module Users
       # Authenticates the current scope and gets the current resource from the
       # session.
       # runs on edit, update, destroy
-      def authenticate_scope!
-        super
-        # authorize! params[:action].to_sym, resource
-      end
+      # def authenticate_scope!
+      #   super
+      #   authorize! params[:action].to_sym, resource
+      # end
 
-      def after_update_path_for(resource)
+      def after_update_path_for(_resource)
         if sign_in_after_change_password?
           root_path
         else
