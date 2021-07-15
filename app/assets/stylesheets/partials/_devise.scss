@@ -1,0 +1,31 @@
+.devise-links,
+.filters-wrapper {
+  padding: 1rem;
+  border: 1px solid $light-gray;
+  border-radius: $border-radius;
+  background-color: $off-white;
+
+  p {
+    margin-bottom: .5rem;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  h2,
+  h3 {
+    margin: 0 0 1rem;
+    color: $color-quinary;
+  }
+
+  form {
+    margin: 0 0 .5rem;
+  }
+
+  // scss-lint:disable QualifyingElement
+  input[type='text']:focus {
+    background-color: $white;
+  }
+  // scss-lint:enable QualifyingElement
+}

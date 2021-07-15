@@ -1,0 +1,23 @@
+<h1>Card Baseball Invitation</h1>
+
+<% if @user.password? %>
+  <p>
+    Welcome <strong><%= @user.name %></strong>, you've signed up
+    for <strong>Card Baseball</strong>.
+  </p>
+<% else %>
+  <p>
+    Hello <strong><%= @user.name %></strong>, you've been invited to
+    particate in <strong>Card Baseball</strong>.
+  </p>
+
+  <p>
+    If you'd like to set up an account by adding a secure password,
+    please follow the link below:
+  </p>
+<% end %>
+
+<p>
+  <%= link_to 'Confirm my account',
+              confirmation_url(@resource, confirmation_token: @token) %>
+</p>

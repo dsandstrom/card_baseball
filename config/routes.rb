@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  devise_for :users
   resources :players do
     get 'contract' => 'contracts#edit', as: :contract
     post 'contract' => 'contracts#update'

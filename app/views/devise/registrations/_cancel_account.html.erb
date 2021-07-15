@@ -1,0 +1,18 @@
+<% return unless can?(:cancel, user) %>
+
+<% confirm = 'Are you sure you want to cancel your account?' %>
+
+<div class="user-edit-links">
+  <h3>Cancel Account</h3>
+
+  <p>
+    Disable your access to the site.
+    Please note that your issues, tasks, and comments will
+    still be visible to other users.
+  </p>
+
+  <%= button_to "Cancel my account",
+                user_employee_type_path(user),
+                method: :delete, data: { confirm: confirm },
+                class: 'button button-outline button-warning' %>
+</div>

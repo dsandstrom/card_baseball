@@ -6,11 +6,13 @@
       </p>
     </div>
 
-    <div class="menu">
-      <%= menu_link 'Leagues', root_path %>
-      <%= menu_link 'Players', players_path %>
-      <%= menu_link 'Hitters', hitters_path %>
-      <%= menu_link 'Pitchers', pitchers_path %>
-    </div>
+    <% if user_signed_in? %>
+      <div class="menu">
+        <%= menu_link 'Leagues', root_path %>
+        <%= menu_link 'Players', players_path %>
+        <%= menu_link 'Hitters', hitters_path %>
+        <%= menu_link 'Pitchers', pitchers_path %>
+      </div>
+    <% end %>
   </div>
 </header>

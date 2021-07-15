@@ -1,0 +1,46 @@
+<div class="page-header">
+  <div class="columns">
+    <div class="first-column">
+      <h1>Add Secure Password</h1>
+    </div>
+  </div>
+</div>
+
+
+<div class="columns">
+  <div class="first-column">
+    <%= form_for(resource, as: resource_name,
+                           url: password_path(resource_name),
+                           html: { method: :put, name: 'user_form',
+                                   class: 'user-password-form',
+                                   novalidate: 'novalidate' }) do |form| %>
+      <%= form_errors(form.object) %>
+      <%= form.hidden_field :reset_password_token %>
+
+      <div class="field">
+        <div class="field-label-and-message">
+          <%= form.label :password, "Password" %>
+          <%= content_tag :span, "#{@minimum_password_length} characters minimum",
+                          class: 'field-message' %>
+        </div>
+        <%= form.password_field :password, autofocus: true,
+                                           autocomplete: "new-password" %>
+      </div>
+
+      <div class="field">
+        <%= required_field_label form, :password_confirmation,
+                                       "Confirm Password" %>
+        <%= form.password_field :password_confirmation,
+                                autocomplete: "new-password" %>
+      </div>
+
+      <div class="actions">
+        <%= form.submit "Set my password" %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="second-column">
+    <%= render 'devise/shared/links' %>
+  </div>
+</div>
