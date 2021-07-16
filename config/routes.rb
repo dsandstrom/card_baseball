@@ -39,5 +39,7 @@ Rails.application.routes.draw do
     put 'auth' => 'users/registrations#update', as: :user_registration
   end
 
+  get '/unauthorized' => 'static#unauthorized', as: :unauthorized
+
   root to: 'leagues#index'
 end
