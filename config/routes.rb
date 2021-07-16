@@ -29,6 +29,8 @@ Rails.application.routes.draw do
     resources :spots, except: %i[index show]
   end
 
+  resources :users
+
   # https://github.com/heartcombo/devise/wiki/
   # How-To:-Allow-users-to-edit-their-password
   devise_for :users, path: 'auth', skip: :registrations

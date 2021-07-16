@@ -1,0 +1,11 @@
+<%= user_breadcrumbs @user %>
+
+<div class="page-header">
+  <div class="columns">
+    <div class="first-column">
+      <%= content_tag :h1, 'User Settings' %>
+    </div>
+  </div>
+</div>
+
+<%= render 'form', user: @user %>

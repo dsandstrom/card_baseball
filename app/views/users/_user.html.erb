@@ -1,0 +1,16 @@
+<% confirm = "Are you sure you want to remove #{user.name}?" %>
+
+<tr id="user_<%= user.id %>" class="user">
+  <td class="user-name">
+    <%= link_to user.name, user %>
+    <%= user_tags(user) %>
+  </td>
+  <td><%= user.email %></td>
+  <td><%= render 'users/teams', user: user %></td>
+  <td><%= link_to 'Edit', edit_user_path(user) %></td>
+  <td>
+    <%= link_to 'Remove', user,
+                method: :delete,
+                data: { confirm: confirm } %>
+  </td>
+</tr>

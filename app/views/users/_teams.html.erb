@@ -1,0 +1,7 @@
+<% teams = user.teams  %>
+
+<% if teams.any? %>
+  <%= render partial: 'users/team', collection: teams, user: user %>
+<% else %>
+  No team
+<% end %>

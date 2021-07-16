@@ -1,0 +1,43 @@
+<%
+  priority_zones = [
+    'Pacific Time (US & Canada)',
+    'Mountain Time (US & Canada)',
+    'Central Time (US & Canada)',
+    'Eastern Time (US & Canada)'
+  ].map { |zone| ActiveSupport::TimeZone[zone] }
+  default_zone = 'Pacific Time (US & Canada)'
+%>
+
+<%= form_with(model: user) do |form| %>
+  <%= form_errors user %>
+
+  <div class="field">
+    <%= required_field_label form, :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= required_field_label form, :email %>
+    <%= form.email_field :email %>
+  </div>
+
+  <div class="field">
+    <%= form.label :city %>
+    <%= form.text_field :city %>
+  </div>
+
+  <div class="field">
+    <%= form.label :time_zone %>
+    <%= form.time_zone_select :time_zone, priority_zones,
+                              default: default_zone %>
+  </div>
+
+  <div class="field">
+    <%= form.label :admin_role %>
+    <%= form.check_box :admin_role %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

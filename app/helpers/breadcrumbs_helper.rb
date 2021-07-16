@@ -41,6 +41,12 @@ module BreadcrumbsHelper
     breadcrumbs(pages)
   end
 
+  def user_breadcrumbs(user = nil)
+    pages = [['Users', users_path]]
+    pages << [user.name, user] if user
+    breadcrumbs(pages)
+  end
+
   private
 
     def project_breadcrumb_item(project)

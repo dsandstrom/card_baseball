@@ -1,0 +1,27 @@
+<%= user_breadcrumbs %>
+
+<div class="page-header">
+  <div class="columns">
+    <div class="first-column heading-and-tags">
+      <%= content_tag :h1, @user.name, class: 'user-name' %>
+      <%= user_tags(@user) %>
+    </div>
+
+    <div class="second-column">
+      <%= link_to 'User Settings', edit_user_path(@user),
+                  class: 'button' %>
+    </div>
+  </div>
+
+  <div class="columns">
+    <div class="first-column">
+      <%= content_tag :p, @user.email, class: 'user-email' %>
+    </div>
+  </div>
+</div>
+
+<% if @teams.any? %>
+  <div class="teams cards">
+    <%= render @teams %>
+  </div>
+<% end %>
