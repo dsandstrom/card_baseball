@@ -19,10 +19,7 @@
     </div>
 
     <div class="second-column">
-      <p>
-        <%= content_tag :span, @user.city, class: 'user-city'  %>
-        (<%= content_tag :span, "#{@user.simple_time_zone}", class: 'user-time-zone' %>)
-      </p>
+      <%= content_tag :p, @user.location, class: 'user-location'  %>
     </div>
   </div>
 </div>

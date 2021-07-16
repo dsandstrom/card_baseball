@@ -17,8 +17,7 @@ RSpec.describe "users/show", type: :view do
 
     assert_select ".user-name", user.name
     assert_select ".user-email", user.email
-    assert_select ".user-city", user.city
-    assert_select ".user-time-zone", user.simple_time_zone
+    assert_select ".user-location", user.location
   end
 
   it "renders edit link" do
