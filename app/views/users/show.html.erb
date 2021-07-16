@@ -7,21 +7,25 @@
       <%= user_tags(@user) %>
     </div>
 
-    <div class="second-column">
-      <%= link_to 'User Settings', edit_user_path(@user),
-                  class: 'button' %>
-    </div>
+    <% if can?(:edit, @user) %>
+      <div class="second-column">
+        <%= link_to 'User Settings', edit_user_path(@user),
+                    class: 'button' %>
+      </div>
+    <% end %>
   </div>
 
-  <div class="columns">
-    <div class="first-column">
-      <%= content_tag :p, @user.email, class: 'user-email' %>
-    </div>
+  <% unless current_user == @user %>
+    <div class="columns">
+      <div class="first-column">
+        <%= content_tag :p, @user.email, class: 'user-email' %>
+      </div>
 
-    <div class="second-column">
-      <%= content_tag :p, @user.location, class: 'user-location'  %>
+      <div class="second-column">
+        <%= content_tag :p, @user.location, class: 'user-location'  %>
+      </div>
     </div>
-  </div>
+  <% end %>
 </div>
 
 <% if @teams.any? %>

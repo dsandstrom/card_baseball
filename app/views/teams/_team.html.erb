@@ -7,7 +7,10 @@
 
 <section id="team_<%= team.id %>" class="team card">
   <header class="card-header">
-    <h2><%= link_to team.name, league_team_path(league, team) %></h2>
+    <h2>
+      <%= link_to_if can?(:read, team), team.name,
+                     league_team_path(league, team) %>
+    </h2>
   </header>
 
   <main class="card-main">
@@ -17,8 +20,11 @@
     <% if hitters.any? || pitchers.any? %>
       <% if hitters.any? %>
         <ul class="team-hitters card-link-list">
+          <li>Hitters:</li>
           <% hitters.each do |hitter| %>
-            <li><%= link_to hitter.roster_name, hitter %></li>
+            <li>
+              <%= link_to_if can?(:read, hitter), hitter.roster_name, hitter %>
+            </li>
           <% end %>
         </ul>
       <% else %>
@@ -27,8 +33,11 @@
 
       <% if pitchers.any? %>
         <ul class="team-pitchers card-link-list">
+          <li>Pitchers:</li>
           <% pitchers.each do |pitcher| %>
-            <li><%= link_to pitcher.roster_name, pitcher %></li>
+            <li>
+              <%= link_to_if can?(:read, pitcher), pitcher.roster_name, pitcher %>
+            </li>
           <% end %>
         </ul>
       <% else %>
@@ -39,10 +48,16 @@
     <% end %>
   </main>
 
-  <footer class="card-footer">
-    <%= link_to 'Settings', edit_league_team_path(league, team) %>
-    <%= link_to 'Remove', league_team_path(league, team),
-                method: :delete,
-                data: { confirm: confirm } %>
-  </footer>
+  <% if can?(:edit, team) || can?(:destroy, :team) %>
+    <footer class="card-footer">
+      <% if can?(:edit, team) %>
+        <%= link_to 'Settings', edit_league_team_path(league, team) %>
+      <% end %>
+      <% if can?(:destroy, team) %>
+        <%= link_to 'Remove', league_team_path(league, team),
+                    method: :delete, class: 'destroy-link',
+                    data: { confirm: confirm } %>
+      <% end %>
+    </footer>
+  <% end %>
 </section>
