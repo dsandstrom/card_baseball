@@ -2,16 +2,18 @@
 
 <tr id="user_<%= user.id %>" class="user">
   <td class="user-name">
-    <%= link_to user.name, user, class: 'user-name' %>
+    <%= link_to_if can?(:read, user), user.name, user, class: 'user-name' %>
     <%= user_tags(user) %>
   </td>
   <%= content_tag :td, user.email, class: 'user-email' %>
   <td class="user-teams"><%= user_teams(user) %></td>
   <%= content_tag :td, user.location, class: 'user-location' %>
-  <td><%= link_to 'Edit', edit_user_path(user) %></td>
+  <td><%= link_to('Edit', edit_user_path(user)) if can?(:edit, user) %></td>
   <td>
-    <%= link_to 'Remove', user,
-                method: :delete,
-                data: { confirm: confirm } %>
+    <% if can?(:destroy, user) %>
+        <%= link_to 'Remove', user,
+                    method: :delete,
+                    data: { confirm: confirm } %>
+    <% end %>
   </td>
 </tr>

@@ -42,7 +42,7 @@ module ApplicationHelper
         if current_page?(url)
           options[:class] = "#{options[:class]} current-page"
         end
-        link_to value, url, options
+        url ? link_to(value, url, options) : content_tag(:span, value, options)
       end
     end
 end

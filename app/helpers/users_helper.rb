@@ -14,8 +14,8 @@ module UsersHelper
 
   def user_teams(user)
     team_links = user.teams.map do |team|
-      [team.name, league_team_path(team.league, team),
-       { id: "user_team_#{team.id}", class: 'user-team' }]
+      url = league_team_path(team.league, team) if can?(:read, team)
+      [team.name, url, { id: "user_team_#{team.id}", class: 'user-team' }]
     end
     safe_join(navitize(team_links), ', ')
   end
