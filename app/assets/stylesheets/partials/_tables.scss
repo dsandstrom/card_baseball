@@ -58,6 +58,7 @@ tbody {
 
     &:first-child {
       border-left: 1px solid $light-gray;
+      text-align: left;
     }
 
     &:last-child {
