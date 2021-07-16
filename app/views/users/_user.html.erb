@@ -6,7 +6,7 @@
     <%= user_tags(user) %>
   </td>
   <%= content_tag :td, user.email, class: 'user-email' %>
-  <td class="user-teams"><%= render 'users/teams', user: user %></td>
+  <td class="user-teams"><%= user_teams(user) %></td>
   <%= content_tag :td, user.location, class: 'user-location' %>
   <td><%= link_to 'Edit', edit_user_path(user) %></td>
   <td>

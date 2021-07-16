@@ -1,3 +1,5 @@
+<% user = @team.user  %>
+
 <%= league_breadcrumbs(@league) %>
 
 <div class="page-header">
@@ -24,6 +26,13 @@
 
   <%= team_nav(@team) %>
 </div>
+
+<dl class="user-info">
+  <% if user %>
+    <dt>Owner</dt>
+    <dd><%= link_to user.name, user, class: 'team-user' %></dd>
+  <% end %>
+</dl>
 
 <h2>Roster</h2>
 

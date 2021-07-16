@@ -11,4 +11,12 @@ module UsersHelper
 
     content_tag(:span, 'Admin', class: 'tag user-tag')
   end
+
+  def user_teams(user)
+    team_links = user.teams.map do |team|
+      [team.name, league_team_path(team.league, team),
+       { id: "user_team_#{team.id}", class: 'user-team' }]
+    end
+    safe_join(navitize(team_links), ', ')
+  end
 end
