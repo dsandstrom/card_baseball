@@ -17,6 +17,13 @@
     <div class="first-column">
       <%= content_tag :p, @user.email, class: 'user-email' %>
     </div>
+
+    <div class="second-column">
+      <p>
+        <%= content_tag :span, @user.city, class: 'user-city'  %>
+        (<%= content_tag :span, "#{@user.simple_time_zone}", class: 'user-time-zone' %>)
+      </p>
+    </div>
   </div>
 </div>
 
