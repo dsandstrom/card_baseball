@@ -29,4 +29,20 @@ class User < ApplicationRecord
   def simple_time_zone
     @simple_time_zone ||= time_zone&.gsub(/\s\(US & Canada\)/, '')
   end
+
+  def location
+    @location ||= build_location
+  end
+
+  private
+
+    def build_location
+      if city && simple_time_zone
+        "#{city} (#{simple_time_zone})"
+      elsif city
+        city
+      else
+        simple_time_zone
+      end
+    end
 end
