@@ -8,6 +8,9 @@ class User < ApplicationRecord
 
   validates :name, presence: true
   validates :email, presence: true, uniqueness: { case_sensitive: false }
+  validates :time_zone,
+            presence: true,
+            inclusion: { in: ActiveSupport::TimeZone.all.map(&:name) }
 
   has_many :teams
 
