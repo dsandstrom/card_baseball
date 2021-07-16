@@ -25,4 +25,8 @@ class User < ApplicationRecord
   def admin?
     @admin ||= admin_role == true
   end
+
+  def simple_time_zone
+    @simple_time_zone ||= time_zone&.gsub(/\s\(US & Canada\)/, '')
+  end
 end

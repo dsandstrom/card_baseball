@@ -49,4 +49,30 @@ RSpec.describe User, type: :model do
       end
     end
   end
+
+  describe "#simple_time_zone" do
+    context "when time_zone is nil" do
+      before { subject.time_zone = nil }
+
+      it "returns nil" do
+        expect(subject.simple_time_zone).to be_nil
+      end
+    end
+
+    context "when time_zone is 'UTC'" do
+      before { subject.time_zone = "UTC" }
+
+      it "returns nil" do
+        expect(subject.simple_time_zone).to eq("UTC")
+      end
+    end
+
+    context "when time_zone is 'Pacific Time (US & Canada)'" do
+      before { subject.time_zone = "Pacific Time (US & Canada)" }
+
+      it "returns nil" do
+        expect(subject.simple_time_zone).to eq("Pacific Time")
+      end
+    end
+  end
 end
