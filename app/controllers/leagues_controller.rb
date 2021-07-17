@@ -1,25 +1,21 @@
 # frozen_string_literal: true
 
 class LeaguesController < ApplicationController
-  before_action :set_league, only: %i[show edit update destroy]
+  load_and_authorize_resource
 
   def index
-    @leagues = League.rank(:row_order).preload(:teams)
+    @leagues = @leagues.rank(:row_order).preload(:teams)
   end
 
   def show
     @teams = @league.teams.order(name: :asc)
   end
 
-  def new
-    @league = League.new
-  end
+  def new; end
 
   def edit; end
 
   def create
-    @league = League.new(league_params)
-
     if @league.save
       redirect_to leagues_url,
                   notice: "#{@league.name} was successfully created."
@@ -44,10 +40,6 @@ class LeaguesController < ApplicationController
   end
 
   private
-
-    def set_league
-      @league = League.find(params[:id])
-    end
 
     def league_params
       params.require(:league).permit(:name)
