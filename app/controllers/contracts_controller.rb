@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class ContractsController < ApplicationController
-  before_action :set_player
+  load_and_authorize_resource :player
   before_action :set_contract
   before_action :set_leagues, only: :edit
 
@@ -32,12 +32,21 @@ class ContractsController < ApplicationController
       @player = Player.find(params[:player_id])
     end
 
-    def set_leagues
-      @leagues = League.rank(:row_order).preload(:teams)
+    def authorize_resource(resource)
+      if resource.persisted?
+        authorize! :update, resource
+      else
+        authorize! :create, resource
+      end
     end
 
     def set_contract
       @contract = @player.contract || @player.build_contract
+      authorize_resource @contract
+    end
+
+    def set_leagues
+      @leagues = League.rank(:row_order).preload(:teams)
     end
 
     def contract_params
