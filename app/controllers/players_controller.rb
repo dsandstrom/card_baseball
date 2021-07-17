@@ -1,5 +1,9 @@
 # frozen_string_literal: true
 
+# TODO: allow users to "sticky" players (session)
+# keeps them at the top so they can compare to other players
+# TODO: allow users to "watch" players when thinking about trades (database)
+
 class PlayersController < ApplicationController
   ALLOWED_ATTRS =
     %i[first_name nick_name last_name roster_name bats bunt_grade speed
@@ -9,25 +13,22 @@ class PlayersController < ApplicationController
        defense1 defense2 defense3 defense4 defense5 defense6 defense7 defense8
        bar1 bar2].freeze
 
-  before_action :set_player, only: %i[show edit update destroy]
+  load_and_authorize_resource
 
   def index
-    @players = Player.all.order(last_name: :asc, roster_name: :asc)
-                     .page(params[:page])
+    @players = @players.order(last_name: :asc, roster_name: :asc)
+                       .page(params[:page])
   end
 
   def show
     @contract = @player.contract
   end
 
-  def new
-    @player = Player.new
-  end
+  def new; end
 
   def edit; end
 
   def create
-    @player = Player.new(player_params)
     @player.set_roster_name
 
     if @player.save
@@ -54,10 +55,6 @@ class PlayersController < ApplicationController
   end
 
   private
-
-    def set_player
-      @player = Player.find(params[:id])
-    end
 
     def player_params
       params.require(:player).permit(ALLOWED_ATTRS)
