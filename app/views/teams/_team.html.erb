@@ -19,29 +19,29 @@
 
     <% if hitters.any? || pitchers.any? %>
       <% if hitters.any? %>
-        <h3 class='list-title'>Hitters</h3>
+        <dl class="team-hitters card-link-list">
+          <dt>Hitters</dt>
 
-        <ul class="team-hitters card-link-list">
-          <% hitters.each do |hitter| %>
-            <li>
+          <dd>
+            <% hitters.each do |hitter| %>
               <%= link_to_if can?(:read, hitter), hitter.roster_name, hitter %>
-            </li>
-          <% end %>
-        </ul>
+            <% end %>
+          </dd>
+        </dl>
       <% else %>
         <p><em>No hitters yet</em></p>
       <% end %>
 
       <% if pitchers.any? %>
-        <h3 class='list-title'>Pitchers</h3>
+        <dl class="team-pitchers card-link-list">
+          <dt>Pitchers</dt>
 
-        <ul class="team-pitchers card-link-list">
-          <% pitchers.each do |pitcher| %>
-            <li>
+          <dd>
+            <% pitchers.each do |pitcher| %>
               <%= link_to_if can?(:read, pitcher), pitcher.roster_name, pitcher %>
-            </li>
-          <% end %>
-        </ul>
+            <% end %>
+          </dd>
+        </dl>
       <% else %>
         <p><em>No pitchers yet</em></p>
       <% end %>

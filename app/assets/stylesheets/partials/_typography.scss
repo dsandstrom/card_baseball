@@ -130,9 +130,15 @@ code {
   color: $light-gray;
 }
 
+dl {
+  margin-bottom: 1.5rem;
+}
+
 dt {
-  margin: 1rem 0 0;
-  font-weight: bold;
+  margin: 0 0 .2rem;
+  color: $gray;
+  font-size: 85%;
+  letter-spacing: 1px;
   line-height: 1.3;
 }
 
