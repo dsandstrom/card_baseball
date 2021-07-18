@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class SortLeaguesController < ApplicationController
-  before_action :set_league
+  load_and_authorize_resource :league, parent: false
 
   def update
     if @league.update(league_params)
@@ -12,10 +12,6 @@ class SortLeaguesController < ApplicationController
   end
 
   private
-
-    def set_league
-      @league = League.find(params[:id])
-    end
 
     def league_params
       params.require(:league).permit(:row_order_position)
