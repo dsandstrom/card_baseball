@@ -21,6 +21,8 @@
 
   <main class="card-main">
     <% if teams.any? %>
+      <h3 class='list-title'>Teams</h3>
+
       <ul class="league-teams card-link-list">
         <% teams.order(name: :asc).each do |team| %>
           <li><%= link_to team.name, league_team_path(league, team) %></li>

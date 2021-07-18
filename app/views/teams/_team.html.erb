@@ -19,8 +19,9 @@
 
     <% if hitters.any? || pitchers.any? %>
       <% if hitters.any? %>
+        <h3 class='list-title'>Hitters</h3>
+
         <ul class="team-hitters card-link-list">
-          <li>Hitters:</li>
           <% hitters.each do |hitter| %>
             <li>
               <%= link_to_if can?(:read, hitter), hitter.roster_name, hitter %>
@@ -32,8 +33,9 @@
       <% end %>
 
       <% if pitchers.any? %>
+        <h3 class='list-title'>Pitchers</h3>
+
         <ul class="team-pitchers card-link-list">
-          <li>Pitchers:</li>
           <% pitchers.each do |pitcher| %>
             <li>
               <%= link_to_if can?(:read, pitcher), pitcher.roster_name, pitcher %>
