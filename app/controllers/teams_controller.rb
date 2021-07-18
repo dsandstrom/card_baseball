@@ -4,26 +4,18 @@
 # TODO: add pitcher rotations page
 
 class TeamsController < ApplicationController
-  before_action :set_league, except: :index
-  before_action :set_team, only: %i[show edit update destroy]
-
-  def index
-    @teams = Team.all
-  end
+  load_and_authorize_resource :league
+  load_and_authorize_resource through: :league
 
   def show
     @players = @team.players.order(last_name: :asc, roster_name: :asc)
   end
 
-  def new
-    @team = @league.teams.build
-  end
+  def new; end
 
   def edit; end
 
   def create
-    @team = @league.teams.build(team_params)
-
     if @team.save
       redirect_to @league, notice: 'Team was successfully created.'
     else
@@ -46,14 +38,6 @@ class TeamsController < ApplicationController
   end
 
   private
-
-    def set_league
-      @league = League.find(params[:league_id])
-    end
-
-    def set_team
-      @team = @league.teams.find(params[:id])
-    end
 
     def team_params
       params.require(:team).permit(:name, :identifier, :logo, :user_id)
