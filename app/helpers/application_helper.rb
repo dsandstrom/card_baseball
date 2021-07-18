@@ -26,12 +26,16 @@ module ApplicationHelper
     content_tag :td, value, options
   end
 
-  def new_lineup(team)
-    team.lineups.build
+  def new_lineup
+    @new_lineup ||= @team ? @team.lineups.build : Lineup.new
   end
 
   def new_spot
     @new_spot ||= @lineup ? @lineup.spots.build : Spot.new
+  end
+
+  def new_league
+    @new_league ||= League.new
   end
 
   def current_user_id

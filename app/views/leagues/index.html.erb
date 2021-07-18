@@ -4,10 +4,12 @@
       <%= content_tag :h1, 'Leagues & Teams' %>
     </div>
 
-    <div class="second-column">
-      <%= link_to 'Add League', new_league_path,
-                  class: 'button button-success' %>
-    </div>
+    <% if can?(:create, new_league) %>
+      <div class="second-column">
+        <%= link_to 'Add League', new_league_path,
+                    class: 'button button-success' %>
+      </div>
+    <% end %>
   </div>
 </div>
 
