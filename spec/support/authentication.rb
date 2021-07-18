@@ -4,13 +4,13 @@ module TestHelpers
   module Authentication
     # set the current_user
     def enable_can(view, user)
-      # without_partial_double_verification do
-      #   allow(view).to receive(:can?) do |action, record|
-      #     ability = Ability.new(user)
-      #     ability.can?(action, record)
-      #   end
-      #   allow(view).to receive(:current_user) { user }
-      # end
+      without_partial_double_verification do
+        allow(view).to receive(:can?) do |action, record|
+          ability = Ability.new(user)
+          ability.can?(action, record)
+        end
+        allow(view).to receive(:current_user) { user }
+      end
     end
 
     # setup a guest user for devise

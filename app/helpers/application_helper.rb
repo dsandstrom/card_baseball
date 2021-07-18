@@ -26,6 +26,14 @@ module ApplicationHelper
     content_tag :td, value, options
   end
 
+  def new_lineup(team)
+    team.lineups.build
+  end
+
+  def current_user_id
+    @current_user_id ||= current_user&.id
+  end
+
   private
 
     def enable_page_title(title)

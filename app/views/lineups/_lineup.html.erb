@@ -1,4 +1,4 @@
-<% confirm = "Are you sure you want to remove #{lineup.full_name}?"  %>
+<% confirm = "Are you sure you want to remove the #{lineup.full_name}?" %>
 
 <section id="lineup_<%= lineup.id %>" class="lineup card">
   <header class="card-header">
@@ -33,10 +33,16 @@
     </div>
   </main>
 
-  <footer class="card-footer">
-    <%= link_to 'Options', edit_team_lineup_path(team, lineup) %>
-    <%= link_to 'Remove', team_lineup_path(team, lineup),
-                method: :delete,
-                data: { confirm: confirm } %>
-  </footer>
+  <% if can?(:edit, lineup) || can?(:destroy, lineup) %>
+    <footer class="card-footer">
+      <% if can?(:edit, lineup) %>
+        <%= link_to 'Options', edit_team_lineup_path(team, lineup) %>
+      <% end %>
+      <% if can?(:destroy, lineup) %>
+        <%= link_to 'Remove', team_lineup_path(team, lineup),
+                    method: :delete, class: 'destroy-link',
+                    data: { confirm: confirm } %>
+      <% end %>
+    </footer>
+  <% end %>
 </section>

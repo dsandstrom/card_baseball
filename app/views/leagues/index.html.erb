@@ -1,6 +1,16 @@
-<h1>Leagues & Teams</h1>
+<div class="page-header">
+  <div class="columns">
+    <div class="first-column">
+      <%= content_tag :h1, 'Leagues & Teams' %>
+    </div>
+
+    <div class="second-column">
+      <%= link_to 'Add League', new_league_path,
+                  class: 'button button-success' %>
+    </div>
+  </div>
+</div>
 
 <div class="leagues cards">
   <%= render @leagues %>
-  <%= render 'new' %>
 </div>

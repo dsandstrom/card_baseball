@@ -6,10 +6,12 @@
       <%= content_tag :h1, 'Lineups' %>
     </div>
 
-    <div class="second-column">
-      <%= link_to 'Add Lineup', new_team_lineup_path(@team),
-                  class: 'button button-success' %>
-    </div>
+    <% if can?(:edit, @team) %>
+      <div class="second-column">
+        <%= link_to 'Add Lineup', new_team_lineup_path(@team),
+                    class: 'button button-success' %>
+      </div>
+    <% end %>
   </div>
 
   <%= team_nav(@team) %>
@@ -20,5 +22,5 @@
     <%= render @lineups, team: @team %>
   </div>
 <% else %>
-  <p><%= link_to 'Add Lineup', new_team_lineup_path(@team) %></p>
+  <p><em>None yet</em></p>
 <% end %>
