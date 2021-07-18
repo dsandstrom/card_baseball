@@ -6,14 +6,21 @@
       <%= content_tag :h1, @league.name, class: 'league-name' %>
     </div>
 
-    <div class="second-column">
-      <%= link_to 'League Settings', edit_league_path(@league),
-                  class: 'button' %>
-    </div>
+    <% if can?(:edit, @league) || can?(:create, new_team) %>
+      <div class="second-column">
+        <% if can?(:edit, @league) %>
+          <%= link_to 'League Settings', edit_league_path(@league),
+                      class: 'button' %>
+        <% end %>
+        <% if can?(:create, new_team) %>
+          <%= link_to 'Add Team', new_league_team_path(@league),
+                      class: 'button button-success' %>
+        <% end %>
+      </div>
+    <% end %>
   </div>
 </div>
 
 <div class="teams cards">
   <%= render @teams, league: @league %>
-  <%= render 'teams/new', league: @league %>
 </div>

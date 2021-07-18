@@ -30,6 +30,10 @@ module ApplicationHelper
     @new_lineup ||= @team ? @team.lineups.build : Lineup.new
   end
 
+  def new_team
+    @new_team ||= @league ? @league.teams.build : Team.new
+  end
+
   def new_spot
     @new_spot ||= @lineup ? @lineup.spots.build : Spot.new
   end
