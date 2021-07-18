@@ -42,6 +42,10 @@ module ApplicationHelper
     @new_league ||= League.new
   end
 
+  def new_player
+    @new_player ||= Player.new
+  end
+
   def current_user_id
     @current_user_id ||= current_user&.id
   end

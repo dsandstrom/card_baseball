@@ -4,10 +4,12 @@
       <%= content_tag :h1, 'All Players' %>
     </div>
 
-    <div class="second-column">
-      <%= link_to 'Add Player', new_player_path,
-                  class: 'button button-success' %>
-    </div>
+    <% if can?(:create, new_player) %>
+      <div class="second-column">
+        <%= link_to 'Add Player', new_player_path,
+                    class: 'button button-success' %>
+      </div>
+    <% end %>
   </div>
 </div>
 
