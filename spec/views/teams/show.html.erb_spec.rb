@@ -3,34 +3,143 @@
 require "rails_helper"
 
 RSpec.describe "teams/show", type: :view do
+  let(:admin) { Fabricate(:admin) }
+  let(:user) { Fabricate(:user) }
+  let(:team_user) { Fabricate(:user) }
   let(:league) { Fabricate(:league) }
   let(:team) { Fabricate(:team, league: league) }
   let(:player) { Fabricate(:player) }
 
-  before(:each) do
-    Fabricate(:contract, player: player, team: team)
+  context "for an admin" do
+    before { enable_can(view, admin) }
 
-    @league = assign(:league, league)
-    @team = assign(:team, team)
-    @players = assign(:players, @team.players)
+    before(:each) do
+      Fabricate(:contract, player: player, team: team)
+      @league = assign(:league, league)
+      @players = assign(:players, team.players)
+    end
+
+    context "when team has no user" do
+      let(:team) { Fabricate(:team, league: league, user: nil) }
+
+      before(:each) do
+        @team = assign(:team, team)
+      end
+
+      it "renders team's name" do
+        render
+
+        assert_select ".team-name", team.name
+      end
+
+      it "renders league link" do
+        render
+
+        expect(rendered).to have_link(nil, href: league_path(league))
+      end
+
+      it "renders team links" do
+        render
+
+        expect(rendered).to have_link(nil, href: team_hitters_path(team))
+        expect(rendered).to have_link(nil, href: team_pitchers_path(team))
+        expect(rendered).to have_link(nil, href: team_lineups_path(team))
+      end
+
+      it "renders edit team link" do
+        render
+
+        expect(rendered)
+          .to have_link(nil, href: edit_league_team_path(league, team))
+      end
+    end
+
+    context "when team has a user" do
+      let(:team) { Fabricate(:team, league: league, user: team_user) }
+
+      before { assign(:team, team) }
+
+      it "renders team user" do
+        render
+
+        assert_select ".team-user", team_user.name
+      end
+    end
   end
 
-  it "renders team's name" do
-    render
+  context "for a user" do
+    before { enable_can(view, user) }
 
-    assert_select ".team-name", team.name
-  end
+    before(:each) do
+      Fabricate(:contract, player: player, team: team)
+      @league = assign(:league, league)
+      @players = assign(:players, team.players)
+    end
 
-  it "renders team links" do
-    render
+    context "when team belongs to a different user" do
+      let(:team) { Fabricate(:team, league: league, user: team_user) }
 
-    expect(rendered)
-      .to have_link(nil, href: edit_league_team_path(league, team))
-  end
+      before { assign(:team, team) }
 
-  it "renders league links" do
-    render
+      it "renders team's name" do
+        render
 
-    expect(rendered).to have_link(nil, href: league_path(league))
+        assert_select ".team-name", team.name
+      end
+
+      it "renders team user" do
+        render
+
+        assert_select ".team-user", team_user.name
+      end
+
+      it "renders league link" do
+        render
+
+        expect(rendered).to have_link(nil, href: league_path(league))
+      end
+
+      it "renders team links" do
+        render
+
+        expect(rendered).to have_link(nil, href: team_hitters_path(team))
+        expect(rendered).to have_link(nil, href: team_pitchers_path(team))
+        expect(rendered).to have_link(nil, href: team_lineups_path(team))
+      end
+
+      it "doesn't render edit team link" do
+        render
+
+        expect(rendered)
+          .not_to have_link(nil, href: edit_league_team_path(league, team))
+      end
+    end
+
+    context "when team belongs to the user" do
+      let(:team) { Fabricate(:team, league: league, user: user) }
+
+      before(:each) do
+        @team = assign(:team, team)
+      end
+
+      it "renders team's name" do
+        render
+
+        assert_select ".team-name", team.name
+      end
+
+      it "renders team user" do
+        render
+
+        assert_select ".team-user", user.name
+      end
+
+      it "renders edit team link" do
+        render
+
+        expect(rendered)
+          .to have_link(nil, href: edit_league_team_path(league, team))
+      end
+    end
   end
 end

@@ -17,22 +17,24 @@
       </div>
     </div>
 
-    <div class="second-column">
-      <%= link_to 'Team Settings',
-                  edit_league_team_path(@league, @team),
-                  class: 'button' %>
-    </div>
+    <% if can?(:edit, @team) %>
+      <div class="second-column">
+        <%= link_to 'Team Settings',
+                    edit_league_team_path(@league, @team),
+                    class: 'button' %>
+      </div>
+    <% end %>
   </div>
 
   <%= team_nav(@team) %>
 </div>
 
-<dl class="user-info">
-  <% if user %>
+<% if user %>
+  <dl class="user-info">
     <dt>Owner</dt>
     <dd><%= link_to user.name, user, class: 'team-user' %></dd>
-  <% end %>
-</dl>
+  </dl>
+<% end %>
 
 <h2>Roster</h2>
 
