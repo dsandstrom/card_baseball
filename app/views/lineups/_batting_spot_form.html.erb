@@ -65,6 +65,7 @@
           <% end %>
         <% end %>
 
+        <%# TODO: when not persisted, allow to click to move back to bench %>
         <% if spot.persisted? %>
           <%= link_to "&rArr;".html_safe, lineup_spot_path(lineup, spot),
                       method: :delete, class: 'destroy-link',
