@@ -882,8 +882,8 @@ RSpec.describe SpotsController, type: :controller do
               end
 
               let!(:old_spot) do
-                Fabricate(:spot, lineup: lineup, hitter: new_hitter, position: 3,
-                                 batting_order: 7)
+                Fabricate(:spot, lineup: lineup, hitter: new_hitter,
+                                 position: 3, batting_order: 7)
               end
 
               let(:update_attributes) { { hitter_id: new_hitter.to_param } }
