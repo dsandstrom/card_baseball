@@ -1,11 +1,12 @@
 # frozen_string_literal: true
 
 class LineupsController < ApplicationController
-  before_action :set_team
-  before_action :set_lineup, only: %i[show edit update destroy]
+  load_and_authorize_resource :team
+  load_and_authorize_resource through: :team
+  before_action :set_league
 
   def index
-    @lineups = @team.lineups.order(name: :asc, vs: :asc, with_dh: :asc)
+    @lineups = @lineups.order(name: :asc, vs: :asc, with_dh: :asc)
   end
 
   def show
@@ -14,15 +15,11 @@ class LineupsController < ApplicationController
     @bench = @lineup.bench
   end
 
-  def new
-    @lineup = @team.lineups.build
-  end
+  def new; end
 
   def edit; end
 
   def create
-    @lineup = @team.lineups.build(lineup_params)
-
     if @lineup.save
       redirect_to team_lineup_url(@team, @lineup),
                   notice: 'Lineup was successfully added.'
@@ -48,13 +45,8 @@ class LineupsController < ApplicationController
 
   private
 
-    def set_team
-      @team = Team.find(params[:team_id])
+    def set_league
       @league = @team.league
-    end
-
-    def set_lineup
-      @lineup = @team.lineups.find(params[:id])
     end
 
     def lineup_params

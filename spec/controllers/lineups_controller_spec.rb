@@ -5,14 +5,15 @@ require "rails_helper"
 RSpec.describe LineupsController, type: :controller do
   let(:team) { Fabricate(:team) }
   let(:lineup) { Fabricate(:lineup, team: team) }
+  let(:admin) { Fabricate(:admin) }
   let(:user) { Fabricate(:user) }
 
   let(:valid_attributes) { { name: "Name" } }
   let(:invalid_attributes) { { name: "" } }
 
   describe "GET #index" do
-    context "for a user" do
-      before { sign_in(user) }
+    context "for an admin" do
+      before { sign_in(admin) }
 
       before { Fabricate(:lineup, team: team) }
 
@@ -21,44 +22,134 @@ RSpec.describe LineupsController, type: :controller do
         expect(response).to be_successful
       end
     end
+
+    context "for a user" do
+      before { sign_in(user) }
+
+      before { Fabricate(:lineup, team: team) }
+
+      context "when their team" do
+        let(:team) { Fabricate(:team, user_id: user.id) }
+
+        it "returns a success response" do
+          get :index, params: { team_id: team.to_param }
+          expect(response).to be_successful
+        end
+      end
+
+      context "when not their team" do
+        let(:team) { Fabricate(:team) }
+
+        it "returns a success response" do
+          get :index, params: { team_id: team.to_param }
+          expect(response).to be_successful
+        end
+      end
+    end
   end
 
   describe "GET #show" do
-    context "for a user" do
-      before { sign_in(user) }
+    context "for an admin" do
+      before { sign_in(admin) }
 
       it "returns a success response" do
         get :show, params: { team_id: team.to_param, id: lineup.to_param }
         expect(response).to be_successful
       end
     end
+
+    context "for a user" do
+      before { sign_in(user) }
+
+      context "when their team" do
+        let(:team) { Fabricate(:team, user_id: user.id) }
+
+        it "returns a success response" do
+          get :show, params: { team_id: team.to_param, id: lineup.to_param }
+          expect(response).to be_successful
+        end
+      end
+
+      context "when not their team" do
+        let(:team) { Fabricate(:team) }
+
+        it "returns a success response" do
+          get :show, params: { team_id: team.to_param, id: lineup.to_param }
+          expect(response).to be_successful
+        end
+      end
+    end
   end
 
   describe "GET #new" do
-    context "for a user" do
-      before { sign_in(user) }
+    context "for an admin" do
+      before { sign_in(admin) }
 
       it "returns a success response" do
         get :new, params: { team_id: team.to_param }
         expect(response).to be_successful
       end
     end
+
+    context "for an user" do
+      before { sign_in(user) }
+
+      context "when their team" do
+        let(:team) { Fabricate(:team, user_id: user.id) }
+
+        it "returns a success response" do
+          get :new, params: { team_id: team.to_param }
+          expect(response).to be_successful
+        end
+      end
+
+      context "when not their team" do
+        let(:team) { Fabricate(:team) }
+
+        it "redirects to unauthorized" do
+          get :new, params: { team_id: team.to_param }
+          expect_to_be_unauthorized(response)
+        end
+      end
+    end
   end
 
   describe "GET #edit" do
-    context "for a user" do
-      before { sign_in(user) }
+    context "for an admin" do
+      before { sign_in(admin) }
 
       it "returns a success response" do
         get :edit, params: { team_id: team.to_param, id: lineup.to_param }
         expect(response).to be_successful
       end
     end
+
+    context "for a user" do
+      before { sign_in(user) }
+
+      context "when their team" do
+        let(:team) { Fabricate(:team, user_id: user.id) }
+
+        it "returns a success response" do
+          get :edit, params: { team_id: team.to_param, id: lineup.to_param }
+          expect(response).to be_successful
+        end
+      end
+
+      context "when not their team" do
+        let(:team) { Fabricate(:team) }
+
+        it "redirects to unauthorized" do
+          get :edit, params: { team_id: team.to_param, id: lineup.to_param }
+          expect_to_be_unauthorized(response)
+        end
+      end
+    end
   end
 
   describe "POST #create" do
-    context "for a user" do
-      before { sign_in(user) }
+    context "for an admin" do
+      before { sign_in(admin) }
 
       context "when valid params" do
         it "creates a new Lineup" do
@@ -90,11 +181,66 @@ RSpec.describe LineupsController, type: :controller do
         end
       end
     end
+
+    context "for a user" do
+      before { sign_in(user) }
+
+      context "when their team" do
+        let(:team) { Fabricate(:team, user_id: user.id) }
+
+        context "when valid params" do
+          it "creates a new Lineup" do
+            expect do
+              post :create, params: { team_id: team.to_param,
+                                      lineup: valid_attributes }
+            end.to change(Lineup, :count).by(1)
+          end
+
+          it "redirects to the Lineup list" do
+            post :create, params: { team_id: team.to_param,
+                                    lineup: valid_attributes }
+            expect(response).to redirect_to(team_lineup_url(team, Lineup.last))
+          end
+        end
+
+        context "when invalid params" do
+          it "doesn't create a new Lineup" do
+            expect do
+              post :create, params: { team_id: team.to_param,
+                                      lineup: invalid_attributes }
+            end.not_to change(Lineup, :count)
+          end
+
+          it "renders new" do
+            post :create, params: { team_id: team.to_param,
+                                    lineup: invalid_attributes }
+            expect(response).to be_successful
+          end
+        end
+      end
+
+      context "when not their team" do
+        let(:team) { Fabricate(:team) }
+
+        it "doesn't create a new Lineup" do
+          expect do
+            post :create, params: { team_id: team.to_param,
+                                    lineup: valid_attributes }
+          end.not_to change(Lineup, :count)
+        end
+
+        it "redirects to unauthorized" do
+          post :create, params: { team_id: team.to_param,
+                                  lineup: valid_attributes }
+          expect_to_be_unauthorized(response)
+        end
+      end
+    end
   end
 
   describe "PUT #update" do
-    context "for a user" do
-      before { sign_in(user) }
+    context "for an admin" do
+      before { sign_in(admin) }
 
       context "when valid params" do
         it "updates the requested Lineup" do
@@ -128,13 +274,77 @@ RSpec.describe LineupsController, type: :controller do
         end
       end
     end
+
+    context "for a user" do
+      before { sign_in(user) }
+
+      context "when their team" do
+        let(:team) { Fabricate(:team, user_id: user.id) }
+
+        context "when valid params" do
+          it "updates the requested Lineup" do
+            expect do
+              put :update, params: { team_id: team.to_param,
+                                     id: lineup.to_param,
+                                     lineup: valid_attributes }
+              lineup.reload
+            end.to change(lineup, :name)
+          end
+
+          it "redirects to the Lineup" do
+            put :update, params: { team_id: team.to_param,
+                                   id: lineup.to_param,
+                                   lineup: valid_attributes }
+            expect(response).to redirect_to(team_lineup_url(team, lineup))
+          end
+        end
+
+        context "when invalid params" do
+          it "doesn't create a new Lineup" do
+            expect do
+              put :update, params: { team_id: team.to_param,
+                                     id: lineup.to_param,
+                                     lineup: invalid_attributes }
+              lineup.reload
+            end.not_to change(lineup, :name)
+          end
+
+          it "renders edit" do
+            put :update, params: { team_id: team.to_param,
+                                   id: lineup.to_param,
+                                   lineup: invalid_attributes }
+            expect(response).to be_successful
+          end
+        end
+      end
+
+      context "when not their team" do
+        let(:team) { Fabricate(:team) }
+
+        it "doesn't create a new Lineup" do
+          expect do
+            put :update, params: { team_id: team.to_param,
+                                   id: lineup.to_param,
+                                   lineup: invalid_attributes }
+            lineup.reload
+          end.not_to change(lineup, :name)
+        end
+
+        it "redirects to unauthorized" do
+          put :update, params: { team_id: team.to_param,
+                                 id: lineup.to_param,
+                                 lineup: invalid_attributes }
+          expect_to_be_unauthorized(response)
+        end
+      end
+    end
   end
 
   describe "DELETE #destroy" do
     before { lineup }
 
-    context "for a user" do
-      before { sign_in(user) }
+    context "for an admin" do
+      before { sign_in(admin) }
 
       it "destroys the requested Lineup" do
         expect do
@@ -146,6 +356,46 @@ RSpec.describe LineupsController, type: :controller do
       it "redirects to the Lineup list" do
         delete :destroy, params: { team_id: team.to_param, id: lineup.to_param }
         expect(response).to redirect_to(team_lineups_url(team))
+      end
+    end
+
+    context "for a user" do
+      before { sign_in(user) }
+
+      context "when their team" do
+        let(:team) { Fabricate(:team, user_id: user.id) }
+
+        it "destroys the requested Lineup" do
+          expect do
+            delete :destroy,
+                   params: { team_id: team.to_param,
+                             id: lineup.to_param }
+          end.to change(Lineup, :count).by(-1)
+        end
+
+        it "redirects to the Lineup list" do
+          delete :destroy, params: { team_id: team.to_param,
+                                     id: lineup.to_param }
+          expect(response).to redirect_to(team_lineups_url(team))
+        end
+      end
+
+      context "when not their team" do
+        let(:team) { Fabricate(:team) }
+
+        it "destroys the requested Lineup" do
+          expect do
+            delete :destroy,
+                   params: { team_id: team.to_param,
+                             id: lineup.to_param }
+          end.not_to change(Lineup, :count)
+        end
+
+        it "redirects to unauthorized" do
+          delete :destroy, params: { team_id: team.to_param,
+                                     id: lineup.to_param }
+          expect_to_be_unauthorized(response)
+        end
       end
     end
   end
