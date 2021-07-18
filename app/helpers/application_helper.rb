@@ -30,6 +30,10 @@ module ApplicationHelper
     team.lineups.build
   end
 
+  def new_spot
+    @new_spot ||= @lineup ? @lineup.spots.build : Spot.new
+  end
+
   def current_user_id
     @current_user_id ||= current_user&.id
   end

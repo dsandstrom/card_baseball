@@ -1,8 +1,13 @@
-<div id="bench_hitter_<%= bench_hitter.id %>" class="draggable bench-hitter"
-     data-id="<%= bench_hitter.id %>">
-  <%= content_tag :span, bench_hitter.roster_name, class: 'hitter-name' %>
+<%
+  klass = 'bench-hitter'
+  if can?(:create, new_spot)
+    klass += ' draggable'
+  end
+%>
 
-  <div class="player-positions">
-    <%= player_positions(bench_hitter) %>
-  </div>
-</div>
+<%= content_tag :div, id: "bench_hitter_#{ bench_hitter.id }",
+                      class: klass, data: { id: bench_hitter.id } do %>
+  <%= content_tag :span, bench_hitter.roster_name, class: 'hitter-name' %>
+  <%= content_tag :div, player_positions(bench_hitter),
+                  class: 'player-positions' %>
+<% end %>

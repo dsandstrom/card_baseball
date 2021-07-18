@@ -5,7 +5,7 @@ import Rails from '@rails/ujs'
 
 var startPos = null;
 
-interact('.bench-hitter')
+interact('.draggable.bench-hitter')
   .draggable({
     inertia: true,
     autoScroll: false,
