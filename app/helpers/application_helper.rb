@@ -46,6 +46,10 @@ module ApplicationHelper
     @new_player ||= Player.new
   end
 
+  def new_user
+    @new_user ||= User.new
+  end
+
   def current_user_id
     @current_user_id ||= current_user&.id
   end
