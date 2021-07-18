@@ -678,7 +678,7 @@ RSpec.describe Player, type: :model do
 
   describe "#position_defense" do
     let(:player) do
-      Fabricate(:player, defense3: 1, defense4: -1)
+      Fabricate(:player, primary_position: 3, defense3: 1, defense4: -1)
     end
 
     context "when player plays the position" do
@@ -701,9 +701,11 @@ RSpec.describe Player, type: :model do
   end
 
   describe "#positions" do
-    let(:player) { Fabricate(:player) }
+    let(:player) { Fabricate(:player, primary_position: 3) }
 
     context "when no defense" do
+      before { player.update defense3: nil }
+
       it "returns []" do
         expect(player.positions).to eq([])
       end
@@ -711,7 +713,8 @@ RSpec.describe Player, type: :model do
 
     context "when defense1" do
       let(:player) do
-        Fabricate(:player, defense1: 1, bar1: 2, hitting_pitcher: true)
+        Fabricate(:player, primary_position: 1, defense1: 1, bar1: 2,
+                           hitting_pitcher: true)
       end
 
       it "returns [1]" do
@@ -720,7 +723,7 @@ RSpec.describe Player, type: :model do
     end
 
     context "when defense2" do
-      let(:player) { Fabricate(:player, defense2: 2) }
+      let(:player) { Fabricate(:player, primary_position: 2, defense2: 2) }
 
       it "returns [2]" do
         expect(player.positions).to eq([2])
@@ -729,7 +732,7 @@ RSpec.describe Player, type: :model do
 
     context "when defense3 and defense7" do
       let(:player) do
-        Fabricate(:player, defense3: 0, defense7: -1)
+        Fabricate(:player, primary_position: 3, defense3: 0, defense7: -1)
       end
 
       it "returns [3, 7]" do
@@ -740,7 +743,7 @@ RSpec.describe Player, type: :model do
 
   describe "#bar_for_position" do
     let(:player) do
-      Fabricate(:player, defense2: 1, bar2: 2, bar1: 3,
+      Fabricate(:player, primary_position: 2, defense2: 1, bar2: 2, bar1: 3,
                          defense3: 4)
     end
 

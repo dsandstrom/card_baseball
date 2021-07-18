@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-# TODO: set defense from primary_position
-
 Fabricator(:player) do
   last_name { sequence(:players) { |n| "Player Last Name #{n + 1}" } }
   roster_name { |attrs| attrs[:last_name] }
@@ -10,9 +8,12 @@ Fabricator(:player) do
   offensive_rating { rand(Player::RATING_RANGE) }
 
   after_build do |hitter|
-    return unless hitter.primary_position
+    next unless hitter.primary_position
 
-    hitter.send("defense#{primary_position}=", rand(Player::DEFENSE_RANGE).abs)
+    primary_defense = "defense#{hitter.primary_position}"
+    next if hitter.send(primary_defense).present?
+
+    hitter.send("#{primary_defense}=", rand(Player::DEFENSE_RANGE).abs)
   end
 end
 
