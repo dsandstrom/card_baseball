@@ -10,11 +10,9 @@ module LineupsHelper
   end
 
   def lineup_tags(lineup)
-    if lineup.complete?
-      content_tag(:span, 'Complete', class: 'tag tag-complete')
-    else
-      content_tag(:span, 'Incomplete', class: 'tag tag-incomplete')
-    end
+    return if lineup.complete?
+
+    content_tag(:span, 'Incomplete', class: 'tag tag-incomplete')
   end
 
   private
