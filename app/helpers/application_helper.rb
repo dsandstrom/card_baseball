@@ -50,6 +50,15 @@ module ApplicationHelper
     @new_user ||= User.new
   end
 
+  def new_contract
+    @new_contract ||=
+      if @player
+        @player.contract || @player.build_contract
+      else
+        Contract.new
+      end
+  end
+
   def current_user_id
     @current_user_id ||= current_user&.id
   end
