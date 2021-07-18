@@ -22,8 +22,4 @@ class HittersController < ApplicationController
       authorize! :read, @team
       @league = @team.league
     end
-
-    def authorize_player
-      authorize! :read, Player
-    end
 end

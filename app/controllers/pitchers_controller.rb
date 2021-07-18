@@ -2,6 +2,7 @@
 
 class PitchersController < ApplicationController
   before_action :set_team
+  before_action :authorize_player
 
   def index
     @pitchers =
@@ -18,6 +19,7 @@ class PitchersController < ApplicationController
       return unless params[:team_id]
 
       @team = Team.find(params[:team_id])
+      authorize! :read, @team
       @league = @team.league
     end
 end
