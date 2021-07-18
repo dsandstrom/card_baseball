@@ -1,17 +1,15 @@
 # frozen_string_literal: true
 
 class SpotsController < ApplicationController
-  before_action :set_lineup
-  before_action :set_spot, only: %i[show edit update destroy]
+  load_and_authorize_resource :lineup
+  load_and_authorize_resource through: :lineup
+  before_action :set_team
 
-  def new
-    @spot = @lineup.spots.build
-  end
+  def new; end
 
   def edit; end
 
   def create
-    @spot = @lineup.spots.build(spot_params)
     move_from_another_spot
 
     respond_to do |format|
@@ -43,14 +41,9 @@ class SpotsController < ApplicationController
 
   private
 
-    def set_lineup
-      @lineup = Lineup.find(params[:lineup_id])
+    def set_team
       @team = @lineup.team
       @league = @team.league
-    end
-
-    def set_spot
-      @spot = @lineup.spots.find(params[:id])
     end
 
     def spot_params
