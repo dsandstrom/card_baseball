@@ -6,7 +6,9 @@ RSpec.describe SpotsController, type: :controller do
   let(:team) { Fabricate(:team) }
   let(:admin) { Fabricate(:admin) }
   let(:user) { Fabricate(:user) }
-  let(:hitter) { Fabricate(:hitter, defense2: 5, defense3: 1) }
+  let(:hitter) do
+    Fabricate(:hitter, primary_position: 2, defense2: 5, defense3: 1)
+  end
   let(:lineup) { Fabricate(:lineup, team: team) }
   let(:spot) do
     Fabricate(:spot, lineup: lineup, hitter: hitter, batting_order: 4,
@@ -556,7 +558,9 @@ RSpec.describe SpotsController, type: :controller do
         context "when switching hitters" do
           context "from the bench" do
             context "when hitter plays spot's position" do
-              let(:bench_hitter) { Fabricate(:hitter, defense2: -1) }
+              let(:bench_hitter) do
+                Fabricate(:hitter, primary_position: 2, defense2: -1)
+              end
               let(:update_attributes) { { hitter_id: bench_hitter.to_param } }
 
               before do
@@ -592,7 +596,9 @@ RSpec.describe SpotsController, type: :controller do
             end
 
             context "when hitter doesn't play spot's position" do
-              let(:bench_hitter) { Fabricate(:hitter, defense3: 9) }
+              let(:bench_hitter) do
+                Fabricate(:hitter, primary_position: 3, defense3: 9)
+              end
               let(:update_attributes) { { hitter_id: bench_hitter.to_param } }
 
               before do
@@ -621,7 +627,7 @@ RSpec.describe SpotsController, type: :controller do
 
           context "from another spot in the requested lineup" do
             let(:new_hitter) do
-              Fabricate(:hitter, defense2: 10, defense3: 0)
+              Fabricate(:hitter, primary_position: 2, defense2: 10, defense3: 0)
             end
 
             before do
@@ -809,7 +815,9 @@ RSpec.describe SpotsController, type: :controller do
           context "when switching hitters" do
             context "from the bench" do
               context "when hitter plays spot's position" do
-                let(:bench_hitter) { Fabricate(:hitter, defense2: -1) }
+                let(:bench_hitter) do
+                  Fabricate(:hitter, primary_position: 2, defense2: -1)
+                end
                 let(:update_attributes) { { hitter_id: bench_hitter.to_param } }
 
                 before do
@@ -876,7 +884,8 @@ RSpec.describe SpotsController, type: :controller do
 
             context "from another spot in the requested lineup" do
               let(:new_hitter) do
-                Fabricate(:hitter, defense2: 10, defense3: 0)
+                Fabricate(:hitter, primary_position: 2, defense2: 10,
+                                   defense3: 0)
               end
 
               before do
