@@ -10,6 +10,10 @@ module ApplicationHelper
     end
   end
 
+  def icon(name)
+    content_tag :i, nil, class: "icon-#{name}"
+  end
+
   def divider
     content_tag :span, '|', class: 'divider'
   end
