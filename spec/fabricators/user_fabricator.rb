@@ -5,6 +5,7 @@ Fabricator(:user) do
   email { sequence(:users) { |n| "user-email-#{n + 1}@example.com" } }
   password { '12345679' }
   password_confirmation { '12345679' }
+  confirmed_at { Time.now }
   admin_role false
 end
 

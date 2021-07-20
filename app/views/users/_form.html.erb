@@ -13,12 +13,12 @@
 
   <div class="field">
     <%= required_field_label form, :name %>
-    <%= form.text_field :name %>
+    <%= form.text_field :name, autocomplete: 'off' %>
   </div>
 
   <div class="field">
     <%= required_field_label form, :email %>
-    <%= form.email_field :email %>
+    <%= form.text_field :email, autocomplete: 'off' %>
   </div>
 
   <div class="field">
@@ -32,10 +32,12 @@
                               default: default_zone %>
   </div>
 
-  <div class="field">
-    <%= form.label :admin_role %>
-    <%= form.check_box :admin_role %>
-  </div>
+  <% if current_user.admin? && current_user != @user %>
+    <div class="field">
+      <%= form.label :admin_role %>
+      <%= form.check_box :admin_role %>
+    </div>
+  <% end %>
 
   <div class="actions">
     <%= form.submit %>

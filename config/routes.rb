@@ -33,7 +33,10 @@ Rails.application.routes.draw do
 
   # https://github.com/heartcombo/devise/wiki/
   # How-To:-Allow-users-to-edit-their-password
-  devise_for :users, path: 'auth', skip: :registrations
+  # devise_for :users, path: 'auth', skip: :registrations
+  devise_for :users,
+             path: 'auth', skip: :registrations,
+             controllers: { confirmations: 'users/confirmations' }
   devise_scope :user do
     get 'auth/edit' => 'users/registrations#edit', as: :edit_user_registration
     put 'auth' => 'users/registrations#update', as: :user_registration

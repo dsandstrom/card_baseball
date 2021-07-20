@@ -14,7 +14,9 @@ class UsersController < ApplicationController
     @teams = @user.teams
   end
 
-  def new; end
+  def new
+    @user.time_zone = 'Pacific Time (US & Canada)'
+  end
 
   def edit; end
 
@@ -42,10 +44,9 @@ class UsersController < ApplicationController
   private
 
     def user_params
-      if current_user.admin?
+      if current_user.admin? && current_user != @user
         params.require(:user)
-              .permit(:name, :email, :admin_role, :city, :time_zone, :password,
-                      :password_confirmation)
+              .permit(:name, :email, :city, :time_zone, :admin_role)
       else
         params.require(:user).permit(:name, :email, :city, :time_zone)
       end

@@ -2,9 +2,9 @@
 
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
-  # :registerable, :confirmable, :lockable, :timeoutable,  and :omniauthable
-  devise :database_authenticatable, :recoverable, :rememberable, :trackable,
-         :validatable
+  # :registerable, :lockable, :timeoutable,  and :omniauthable
+  devise :confirmable, :database_authenticatable, :recoverable, :rememberable,
+         :trackable, :validatable
 
   validates :name, presence: true
   validates :email, presence: true, uniqueness: { case_sensitive: false }
@@ -33,6 +33,23 @@ class User < ApplicationRecord
   def location
     @location ||= build_location
   end
+
+  def password?
+    @password_ = encrypted_password.present? if @password_.nil?
+    @password_
+  end
+
+  protected
+
+    # https://github.com/heartcombo/devise/wiki/How-To:-Email-only-sign-up
+    # override to be able to create without a password
+    # or to allow sign in with github only
+    def password_required?
+      if @password_required_.nil?
+        @password_required_ = confirmed? ? super : false
+      end
+      @password_required_
+    end
 
   private
 
