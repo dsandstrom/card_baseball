@@ -12,16 +12,16 @@
         <%= menu_link 'Players', players_path %>
         <%= menu_link 'Hitters', hitters_path %>
         <%= menu_link 'Pitchers', pitchers_path %>
-        <%= menu_link 'Users', users_path %>
       </div>
 
       <div class="user-name">
-        <%= link_to current_user.name, user_path(current_user) %>
+        <%= link_to current_user.name,
+                    user_path(current_user),
+                    class: 'dropdown-link user-dropdown-link',
+                    title: 'User Menu' %>
       </div>
 
-      <div class="log-out-link">
-        <%= log_out_link %>
-      </div>
+      <%= user_dropdown(current_user) %>
     <% end %>
   </div>
 </header>
