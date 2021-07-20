@@ -1,5 +1,11 @@
 <%= breadcrumbs([['Home', root_path]]) %>
 
-<h1>New League</h1>
+<div class="page-header">
+  <div class="columns">
+    <div class="first-column">
+      <%= content_tag :h1, 'Add League' %>
+    </div>
+  </div>
+</div>
 
 <%= render 'form', league: @league %>

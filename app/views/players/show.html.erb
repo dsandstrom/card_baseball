@@ -1,20 +1,28 @@
 <%= player_breadcrumbs %>
 
-<%= content_tag :h1, @player.name, class: 'player-name' %>
+<div class="page-header">
+  <div class="columns">
+    <div class="first-column">
+      <%= content_tag :h1, @player.name, class: 'player-name' %>
+    </div>
 
-<% if can?(:edit, @player) || can?(:destroy, @player) %>
-  <p>
-    <% if can?(:edit, @player) %>
-      <%= link_to 'Settings', edit_player_path(@player) %>
+    <% if can?(:edit, @player) || can?(:destroy, @player) %>
+      <div class="second-column">
+        <p>
+          <% if can?(:edit, @player) %>
+            <%= link_to 'Player Settings', edit_player_path(@player), class: 'button' %>
+          <% end %>
+          <% if can?(:destroy, @player) %>
+            <%= link_to 'Remove', @player,
+                        method: :delete,
+                        data: { confirm: "Are you sure you want to remove #{@player.name}?" },
+                        class: 'button button-warning' %>
+          <% end %>
+        </p>
+      </div>
     <% end %>
-    <%= divider %>
-    <% if can?(:destroy, @player) %>
-      <%= link_to 'Remove', @player,
-                  method: :delete,
-                  data: { confirm: "Are you sure you want to remove #{@player.name}?" } %>
-    <% end %>
-  </p>
-<% end %>
+  </div>
+</div>
 
 <p>
   <strong>Contract:</strong>
