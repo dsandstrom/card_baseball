@@ -852,7 +852,7 @@ RSpec.describe SpotsController, type: :controller do
                   Fabricate(:contract, player: bench_hitter, team: team)
                 end
 
-                it "updates the requested Spot" do
+                it "doesn't update the requested Spot" do
                   expect do
                     put :update, params: { lineup_id: lineup.to_param,
                                            id: spot.to_param,
