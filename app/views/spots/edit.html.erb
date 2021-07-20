@@ -1,5 +1,11 @@
 <%= lineup_breadcrumbs(@league, @team, @lineup) %>
 
-<h1>Editing Spot</h1>
+<div class="page-header">
+  <div class="columns">
+    <div class="first-column">
+      <%= content_tag :h1, 'Edit Spot' %>
+    </div>
+  </div>
+</div>
 
 <%= render 'form', spot: @spot, lineup: @lineup %>

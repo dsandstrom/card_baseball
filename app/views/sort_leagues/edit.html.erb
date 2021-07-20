@@ -1,5 +1,11 @@
 <%= league_breadcrumbs(@league) %>
 
-<h1>Sort League</h1>
+<div class="page-header">
+  <div class="columns">
+    <div class="first-column">
+      <%= content_tag :h1, 'Sort League' %>
+    </div>
+  </div>
+</div>
 
 <%= render 'form', league: @league %>

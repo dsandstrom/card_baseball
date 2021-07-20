@@ -1,5 +1,11 @@
 <%= league_breadcrumbs(@league) %>
 
-<%= content_tag :h1, "New Team" %>
+<div class="page-header">
+  <div class="columns">
+    <div class="first-column">
+      <%= content_tag :h1, 'Add Team' %>
+    </div>
+  </div>
+</div>
 
 <%= render 'form', league: @league, team: @team %>

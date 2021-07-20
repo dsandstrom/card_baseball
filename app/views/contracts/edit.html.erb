@@ -1,6 +1,12 @@
 <%= player_breadcrumbs(@player) %>
 
-<h1>Contract</h1>
+<div class="page-header">
+  <div class="columns">
+    <div class="first-column">
+      <%= content_tag :h1, 'Contract' %>
+    </div>
+  </div>
+</div>
 
 <%= render 'form', player: @player,
                    contract: @contract,
