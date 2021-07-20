@@ -1,6 +1,4 @@
-<%#= user_header(@user) %>
-
-<h2>Advanced Settings</h2>
+<%= user_breadcrumbs @user %>
 
 <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
   <div>
@@ -13,10 +11,16 @@
                                 new_confirmation_path(resource_name)) %>
   </div>
 <% else %>
+  <div class="page-header">
+    <div class="columns">
+      <div class="first-column">
+        <%= content_tag :h1, 'Change Password' %>
+      </div>
+    </div>
+  </div>
+
   <div class="columns">
     <div class="first-column">
-      <h3>Change My Password</h3>
-
       <%= render 'form',
                  minimum_password_length: @minimum_password_length %>
     </div>
@@ -24,11 +28,9 @@
     <div class="second-column">
       <div class="devise-links">
         <h3>Helpful Links</h3>
-        <%= content_tag :p, link_to('Change Name',
-                                    'edit_user_path(@user)') %>
+        <%= content_tag :p, link_to('Change Name or Email',
+                                    edit_user_path(@user)) %>
       </div>
     </div>
   </div>
-
-  <%= content_tag :p, link_to('Back', :back) %>
 <% end %>
