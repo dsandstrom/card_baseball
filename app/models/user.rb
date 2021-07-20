@@ -54,10 +54,12 @@ class User < ApplicationRecord
   private
 
     def build_location
-      if city && simple_time_zone
-        "#{city} (#{simple_time_zone})"
-      elsif city
-        city
+      if city.present?
+        if simple_time_zone
+          "#{city} (#{simple_time_zone})"
+        else
+          city
+        end
       else
         simple_time_zone
       end

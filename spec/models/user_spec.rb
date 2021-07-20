@@ -78,7 +78,7 @@ RSpec.describe User, type: :model do
 
   describe "#location" do
     before do
-      subject.city = nil
+      subject.city = ""
       subject.time_zone = nil
     end
 
@@ -89,10 +89,12 @@ RSpec.describe User, type: :model do
     end
 
     context "when time_zone only" do
-      before { subject.time_zone = "Pacific Time (US & Canada)" }
+      before do
+        subject.time_zone = "Pacific Time (US & Canada)"
+      end
 
       it "returns simple_time_zone" do
-        expect(subject.location).to eq(subject.simple_time_zone)
+        expect(subject.location).to eq("Pacific Time")
       end
     end
 
