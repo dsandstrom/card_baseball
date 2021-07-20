@@ -845,7 +845,9 @@ RSpec.describe SpotsController, type: :controller do
               end
 
               context "when hitter doesn't play spot's position" do
-                let(:bench_hitter) { Fabricate(:hitter, defense3: 9) }
+                let(:bench_hitter) do
+                  Fabricate(:hitter, primary_position: 3, defense3: 9)
+                end
                 let(:update_attributes) { { hitter_id: bench_hitter.to_param } }
 
                 before do
