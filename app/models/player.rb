@@ -124,7 +124,8 @@ class Player < ApplicationRecord # rubocop:disable Metrics/ClassLength
     players = all
     players = players.filter_by_name(filters[:query])
     players = players.filter_by_free_agency(filters[:free_agent])
-    players.filter_by_positions(filters)
+    players = players.filter_by_positions(filters)
+    players.order(last_name: :asc, roster_name: :asc)
   end
 
   def self.filter_by_name(name)
