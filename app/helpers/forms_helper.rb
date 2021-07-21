@@ -25,6 +25,11 @@ module FormsHelper
     end
   end
 
+  def searching?
+    @searching_ = params[:order].present? if @searching_.nil?
+    @searching_
+  end
+
   private
 
     def form_errors_messages(obj)
