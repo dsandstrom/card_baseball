@@ -11,9 +11,7 @@
 %>
 
 <% if pages %>
-  <div class="page-links">
-    <%= paginate players %>
-  </div>
+  <%= content_tag :div, paginate(players), class: 'page-links' %>
 <% end %>
 
 <table class="players">
@@ -42,7 +40,7 @@
                            show_contract: show_contract,
                            highlight: highlight %>
       <% end %>
-    <% else %>
+    <% elsif !searching? %>
       <tr>
         <td colspan="30">No players yet</td>
       </tr>
