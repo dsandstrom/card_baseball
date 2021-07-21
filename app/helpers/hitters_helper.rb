@@ -32,8 +32,10 @@ module HittersHelper
     end
   end
 
-  def player_positions(player)
+  def player_positions(player, skip: [])
     positions = player.positions.map do |position|
+      next if skip.any? && skip.include?(position)
+
       defense =
         format_defense_and_bar(player.position_defense(position),
                                player.bar_for_position(position),
