@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
+  FILTER_OPTIONS = %i[order query free_agent position1 position2 position3
+                      position4 position5 position6 position7 position8].freeze
+
   before_action :authenticate_user!
   check_authorization unless: :devise_controller?
 
@@ -18,5 +21,16 @@ class ApplicationController < ActionController::Base
 
     def authorize_player
       authorize! :read, Player
+    end
+
+    def build_filters
+      filters = {}
+      FILTER_OPTIONS.each do |param|
+        filters[param] = params[param]
+      end
+      if filters[:query].present?
+        filters[:query] = filters[:query].truncate(80, omission: '')
+      end
+      filters
     end
 end

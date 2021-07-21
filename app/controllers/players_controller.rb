@@ -17,8 +17,7 @@ class PlayersController < ApplicationController
   load_and_authorize_resource
 
   def index
-    @players = @players.order(last_name: :asc, roster_name: :asc)
-                       .page(params[:page])
+    @players = @players.filter_by(build_filters).page(params[:page])
   end
 
   def show
