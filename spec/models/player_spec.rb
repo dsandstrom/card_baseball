@@ -901,7 +901,7 @@ RSpec.describe Player, type: :model do
     end
   end
 
-  describe "#bar_for_position" do
+  describe "#position_bar" do
     let(:player) do
       Fabricate(:player, primary_position: 2, defense2: 1, bar2: 2, bar1: 3,
                          defense3: 4)
@@ -909,19 +909,19 @@ RSpec.describe Player, type: :model do
 
     context "for position 1" do
       it "returns their bar1" do
-        expect(player.bar_for_position(1)).to eq(3)
+        expect(player.position_bar(1)).to eq(3)
       end
     end
 
     context "for position 2" do
       it "returns their bar2" do
-        expect(player.bar_for_position(2)).to eq(2)
+        expect(player.position_bar(2)).to eq(2)
       end
     end
 
     context "for position 3" do
       it "returns nil" do
-        expect(player.bar_for_position(3)).to be_nil
+        expect(player.position_bar(3)).to be_nil
       end
     end
   end

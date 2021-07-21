@@ -191,7 +191,7 @@ class Player < ApplicationRecord # rubocop:disable Metrics/ClassLength
     send(key)
   end
 
-  def bar_for_position(position)
+  def position_bar(position)
     key = Player.bar_key_for_position(position)
     return unless key
 
