@@ -4,7 +4,7 @@ class SubmittingRadioButtonLabel {
   constructor(elem) {
     this.elem = elem;
     this.radio = this.elem.querySelector('input');
-    this.elem.classList.add('roller-radio-button-label');
+    this.elem.classList.add('radio-button-label');
     this.toggleDisabledClass();
   }
 

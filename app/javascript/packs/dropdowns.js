@@ -81,7 +81,6 @@ var dropdowns = [];
 
 document.addEventListener('turbolinks:load', function() {
   for (var elem of document.querySelectorAll('.dropdown-menu')) {
-    console.log(elem);
     dropdowns.push(new Dropdown(elem));
   }
 })
