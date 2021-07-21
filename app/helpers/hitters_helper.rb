@@ -33,20 +33,13 @@ module HittersHelper
   end
 
   def player_positions(player, skip: [])
-    positions = player.positions.map do |position|
+    position_tags = player.positions.filter_map do |position|
       next if skip.any? && skip.include?(position)
 
-      defense =
-        format_defense_and_bar(player.position_defense(position),
-                               player.bar_for_position(position),
-                               class: 'player-position-defense', tag: :span)
-
-      content_tag :span, class: 'player-position' do
-        safe_join([Player.position_initials(position), defense])
-      end
+      player_position_tag(player, position)
     end
 
-    safe_join(positions)
+    safe_join(position_tags)
   end
 
   private
@@ -55,5 +48,16 @@ module HittersHelper
       options[:class] ||= ''
       options[:class] += " #{new_class}" if new_class.present?
       options
+    end
+
+    def player_position_tag(player, position)
+      defense = player.position_defense(position)
+      bar = player.position_bar(position)
+      options = { class: 'player-position-defense', tag: :span }
+      defence_and_bar = format_defense_and_bar(defense, bar, options)
+
+      content_tag :span, class: 'player-position' do
+        safe_join([Player.position_initials(position), defence_and_bar])
+      end
     end
 end
