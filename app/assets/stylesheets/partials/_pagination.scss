@@ -1,5 +1,9 @@
 .page-links {
   margin-bottom: 1.5rem;
+
+  &:empty {
+    display: none;
+  }
 }
 
 .pagination {

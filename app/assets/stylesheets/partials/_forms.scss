@@ -30,6 +30,17 @@ select {
   }
 }
 
+input[type='email'],
+input[type='number'],
+input[type='password'],
+input[type='search'],
+input[type='tel'],
+input[type='text'],
+input[type='url'],
+textarea {
+  background-color: $white;
+}
+
 button,
 input[type='button'],
 input[type='reset'],
