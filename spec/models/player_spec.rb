@@ -3,6 +3,8 @@
 require "rails_helper"
 
 RSpec.describe Player, type: :model do
+  let(:team) { Fabricate(:team) }
+
   before do
     @player = Player.new(
       first_name: "Tony",
@@ -330,6 +332,164 @@ RSpec.describe Player, type: :model do
 
       it "returns them" do
         expect(Player.pitchers).to eq([hitting_pitcher])
+      end
+    end
+  end
+
+  describe ".filter_by" do
+    context "when no players" do
+      it "returns []" do
+        expect(Player.filter_by).to eq([])
+      end
+    end
+
+    context "when no filters" do
+      let!(:player) { Fabricate(:player) }
+
+      it "returns all players" do
+        expect(Player.filter_by).to eq([player])
+      end
+    end
+
+    context "when query filter" do
+      let!(:first_player) do
+        Fabricate(:player, first_name: "Al", nick_name: "Pha",
+                           last_name: "Beta")
+      end
+      let!(:second_player) do
+        Fabricate(:player, first_name: "Gam", nick_name: "Ma",
+                           last_name: "Detla")
+      end
+
+      it "returns all players that match by their first_name" do
+        expect(Player.filter_by(query: "Al")).to eq([first_player])
+      end
+
+      it "returns all players that match by their nick_name" do
+        expect(Player.filter_by(query: "ma")).to eq([second_player])
+      end
+
+      it "returns all players that match by their last_name" do
+        expect(Player.filter_by(query: "Eta")).to eq([first_player])
+      end
+    end
+
+    context "when free_agent filter" do
+      let!(:first_player) { Fabricate(:player) }
+      let!(:second_player) { Fabricate(:player) }
+      let!(:third_player) { Fabricate(:player) }
+
+      before do
+        Fabricate(:contract, player: first_player, team: team)
+        Fabricate(:contract, player: second_player)
+      end
+
+      it "returns all players that have no contract or no team" do
+        expect(Player.filter_by(free_agent: "true"))
+          .to contain_exactly(second_player, third_player)
+      end
+    end
+
+    context "when position1 filter" do
+      let!(:first_player) { Fabricate(:player, primary_position: 1) }
+      let!(:second_player) { Fabricate(:player, primary_position: 2) }
+
+      it "returns all players that play position" do
+        expect(Player.filter_by(position1: "true")).to eq([first_player])
+      end
+    end
+
+    context "when position2 filter" do
+      let!(:first_player) { Fabricate(:player, primary_position: 2) }
+      let!(:second_player) { Fabricate(:player, primary_position: 3) }
+
+      it "returns all players that play position" do
+        expect(Player.filter_by(position2: "true")).to eq([first_player])
+      end
+    end
+
+    context "when position3 filter" do
+      let!(:first_player) { Fabricate(:player, primary_position: 3) }
+      let!(:second_player) { Fabricate(:player, primary_position: 2) }
+
+      it "returns all players that play position" do
+        expect(Player.filter_by(position3: "true")).to eq([first_player])
+      end
+    end
+
+    context "when position4 filter" do
+      let!(:first_player) { Fabricate(:player, primary_position: 4) }
+      let!(:second_player) { Fabricate(:player, primary_position: 2) }
+
+      it "returns all players that play position" do
+        expect(Player.filter_by(position4: "true")).to eq([first_player])
+      end
+    end
+
+    context "when position5 filter" do
+      let!(:first_player) { Fabricate(:player, primary_position: 5) }
+      let!(:second_player) { Fabricate(:player, primary_position: 2) }
+
+      it "returns all players that play position" do
+        expect(Player.filter_by(position5: "true")).to eq([first_player])
+      end
+    end
+
+    context "when position6 filter" do
+      let!(:first_player) { Fabricate(:player, primary_position: 6) }
+      let!(:second_player) { Fabricate(:player, primary_position: 2) }
+
+      it "returns all players that play position" do
+        expect(Player.filter_by(position6: "true")).to eq([first_player])
+      end
+    end
+
+    context "when position7 filter" do
+      let!(:first_player) { Fabricate(:player, primary_position: 7) }
+      let!(:second_player) { Fabricate(:player, primary_position: 2) }
+
+      it "returns all players that play position" do
+        expect(Player.filter_by(position7: "true")).to eq([first_player])
+      end
+    end
+
+    context "when position8 filter" do
+      let!(:first_player) { Fabricate(:player, primary_position: 8) }
+      let!(:second_player) { Fabricate(:player, primary_position: 2) }
+
+      it "returns all players that play position" do
+        expect(Player.filter_by(position8: "true")).to eq([first_player])
+      end
+    end
+
+    context "when position5 and position6 filters" do
+      let!(:first_player) do
+        Fabricate(:player, primary_position: 5, defense3: 1)
+      end
+      let!(:second_player) { Fabricate(:player, primary_position: 6) }
+      let!(:third_player) { Fabricate(:player, primary_position: 7) }
+
+      it "returns all players that play either position" do
+        expect(Player.filter_by(position5: "true", position6: "true"))
+          .to contain_exactly(first_player, second_player)
+      end
+    end
+
+    context "when query and free_agent filters" do
+      let!(:first_player) do
+        Fabricate(:player, first_name: "Al", last_name: "Pha")
+      end
+      let!(:second_player) do
+        Fabricate(:player, first_name: "Al", last_name: "Pho")
+      end
+
+      before do
+        Fabricate(:contract, player: first_player, team: team)
+      end
+
+      it "returns players that match all filters" do
+        expect(Player.filter_by(free_agent: "true", query: "al"))
+          .to eq([second_player])
       end
     end
   end

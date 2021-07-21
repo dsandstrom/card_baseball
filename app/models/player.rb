@@ -120,6 +120,42 @@ class Player < ApplicationRecord # rubocop:disable Metrics/ClassLength
     Player.where(query)
   end
 
+  def self.filter_by(filters = {})
+    players = all
+    players = players.filter_by_name(filters[:query])
+    players = players.filter_by_free_agency(filters[:free_agent])
+    players.filter_by_positions(filters)
+  end
+
+  def self.filter_by_name(name)
+    return all if name.blank?
+
+    query = %w[first_name nick_name last_name].map do |c|
+      "players.#{c} ILIKE :name"
+    end.join(' OR ')
+    where(query, name: "%#{name}%")
+  end
+
+  def self.filter_by_free_agency(free_agent)
+    return all unless free_agent == 'true'
+
+    query = 'contracts.team_id IS NULL'
+    left_outer_joins(:contract).where(query)
+  end
+
+  def self.filter_by_positions(filters)
+    query_parts = []
+    POSITION_RANGE.each do |position|
+      key = "position#{position}".to_sym
+      next unless filters[key] == 'true'
+
+      query_parts << "players.defense#{position} IS NOT NULL"
+    end
+    return all if query_parts.none?
+
+    where(query_parts.join(' OR '))
+  end
+
   # INSTANCE
 
   def name
