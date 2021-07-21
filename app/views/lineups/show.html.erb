@@ -26,28 +26,24 @@
         <p class="lineup-defense-bar"><%= content_tag :span, format_lineup_defense(@lineup.defense), class: 'lineup-defense' %>/<%= content_tag :span, @lineup.catcher_bar, class: 'lineup-bar' %></p>
       </div>
 
-      <div class="lineup-spots">
-        <% 8.times do |n|  %>
-          <% batting_order = n + 1 %>
+      <% if can?(:create, new_spot) %>
+        <div class="lineup-spots">
+          <% 8.times do |n|  %>
+            <% batting_order = n + 1 %>
 
-          <% if can?(:create, new_spot) %>
             <%= render 'lineups/batting_spot_form', lineup: @lineup, team: @team,
                                                     batting_order: batting_order %>
-          <% else %>
-            <%= render 'lineups/batting_spot', lineup: @lineup, team: @team,
-                                               batting_order: batting_order %>
           <% end %>
-        <% end %>
-        <% if @lineup.with_dh? %>
-          <% if can?(:create, new_spot) %>
+          <% if @lineup.with_dh? %>
             <%= render 'lineups/batting_spot_form', lineup: @lineup, team: @team,
                                                     batting_order: 9 %>
-          <% else %>
-            <%= render 'lineups/batting_spot', lineup: @lineup, team: @team,
-                                               batting_order: 9 %>
           <% end %>
-        <% end %>
-      </div>
+        </div>
+      <% else %>
+        <div class="lineups">
+          <%= render @lineup, team: @team, header: false %>
+        </div>
+      <% end %>
     </div>
 
     <div class="second-column">
