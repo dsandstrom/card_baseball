@@ -12,6 +12,7 @@
         <%= menu_link 'Players', players_path %>
         <%= menu_link 'Hitters', hitters_path %>
         <%= menu_link 'Pitchers', pitchers_path %>
+        <%= menu_link('Users', users_path) if current_user.admin? %>
       </div>
 
       <div class="user-name">
