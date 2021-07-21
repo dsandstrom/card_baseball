@@ -15,7 +15,10 @@
   </td>
   <td><%= player.offensive_rating %></td>
   <td class="left-border"><%= player.pitcher_rating %></td>
-  <td class="left-border player-positions"><%= player_positions(player) %></td>
+  <td class="left-border">
+    <%= content_tag :div, player_positions(player),
+                    class: 'player-positions' %>
+  </td>
   <% if show_contract %>
     <td class="left-border"><%= render 'players/contract', player: player %></td>
   <% end %>
