@@ -1,0 +1,52 @@
+<%
+path ||= request.path
+return unless path
+%>
+
+<div class="filters-wrapper">
+  <div class="heading-and-link">
+    <h3>Filters</h3>
+
+    <% if searching? %>
+      <%= link_to 'reset', path %>
+    <% end %>
+  </div>
+
+  <%= form_tag path, method: :get, class: "players-filter-form" do %>
+    <%= hidden_field_tag :order, 'name' %>
+
+    <div class="field">
+      <%= label_tag :query, 'Name', class: 'hide' %>
+      <%= text_field_tag :query, params[:query],
+                         placeholder: 'Search Players' %>
+    </div>
+
+    <%# TODO: add 'clear' or 'all' check box option %>
+    <div class="field">
+      <%= label_tag :position %>
+      <div class="players-position-filters check-box-buttons">
+        <% Player::POSITION_MAP.each do |position, options| %>
+          <% next if position == 9 %>
+
+          <% id = "position#{position}" %>
+          <%= label_tag id, class: 'players-position-filter' do %>
+            <%= check_box_tag id, 'true', params[id] == 'true' %>
+            <%= options[:initials] %>
+          <% end %>
+        <% end %>
+
+      </div>
+    </div>
+
+    <div class="field">
+      <%= label_tag :free_agent do %>
+        <%= check_box_tag :free_agent, 'true', params[:free_agent] == 'true' %>
+        Free Agent
+      <% end %>
+    </div>
+
+    <div class="actions">
+      <%= submit_tag 'Filter' %>
+    </div>
+  <% end %>
+</div>

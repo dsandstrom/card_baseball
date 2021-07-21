@@ -13,4 +13,12 @@
   </div>
 </div>
 
-<%= render 'players/players', players: @players %>
+<div class="columns">
+  <div class="first-column">
+    <%= render 'players/players', players: @players %>
+  </div>
+
+  <div class="second-column">
+    <%= render 'players/filter_form', players: @players %>
+  </div>
+</div>
