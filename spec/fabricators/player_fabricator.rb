@@ -38,6 +38,21 @@ Fabricator(:pitcher, from: :player) do
   last_name { sequence(:players) { |n| "Pitcher Last Name #{n + 1}" } }
   roster_name { |attrs| attrs[:last_name] }
   primary_position 1
+  throws { Player::THROWS_OPTIONS.sample }
+  bar1 { rand(-1..4) }
+  pitcher_rating { rand(Player::RATING_RANGE) }
+  pitching_durability { rand(Player::RATING_RANGE) }
+  pitcher_type { Player::PITCHING_TYPES.keys.sample }
+  starting_pitching { rand(Player::RATING_RANGE) }
+  relief_pitching { rand(Player::RATING_RANGE) }
+end
+
+Fabricator(:hitting_pitcher, from: :hitter) do
+  # last_name { sequence(:players) { |n| "Pitcher Last Name #{n + 1}" } }
+  # roster_name { |attrs| attrs[:last_name] }
+  primary_position 1
+  throws { Player::THROWS_OPTIONS.sample }
+  hitting_pitcher true
   bar1 { rand(-1..4) }
   pitcher_rating { rand(Player::RATING_RANGE) }
   pitching_durability { rand(Player::RATING_RANGE) }
