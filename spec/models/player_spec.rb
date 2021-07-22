@@ -925,4 +925,122 @@ RSpec.describe Player, type: :model do
       end
     end
   end
+
+  describe "#verbose_pitcher_type" do
+    context "when pitcher_type is nil" do
+      before { subject.pitcher_type = nil }
+
+      it "returns nil" do
+        expect(subject.verbose_pitcher_type).to eq(nil)
+      end
+    end
+
+    context "when pitcher_type is 'S'" do
+      before { subject.pitcher_type = "S" }
+
+      it "returns nil" do
+        expect(subject.verbose_pitcher_type).to eq("Starter")
+      end
+    end
+
+    context "when pitcher_type is 'R'" do
+      before { subject.pitcher_type = "R" }
+
+      it "returns nil" do
+        expect(subject.verbose_pitcher_type).to eq("Reliever")
+      end
+    end
+
+    context "when pitcher_type is something else" do
+      before { subject.pitcher_type = "something else" }
+
+      it "returns nil" do
+        expect(subject.verbose_pitcher_type).to eq(nil)
+      end
+    end
+  end
+
+  describe "#verbose_throws" do
+    context "when throws is nil" do
+      before { subject.throws = nil }
+
+      it "returns nil" do
+        expect(subject.verbose_throws).to eq(nil)
+      end
+    end
+
+    context "when throws is 'L'" do
+      before { subject.throws = "L" }
+
+      it "returns nil" do
+        expect(subject.verbose_throws).to eq("Left")
+      end
+    end
+
+    context "when throws is 'R'" do
+      before { subject.throws = "R" }
+
+      it "returns nil" do
+        expect(subject.verbose_throws).to eq("Right")
+      end
+    end
+
+    context "when throws is something else" do
+      before { subject.throws = "something else" }
+
+      it "returns nil" do
+        expect(subject.verbose_throws).to eq(nil)
+      end
+    end
+  end
+
+  describe "#verbose_bats" do
+    context "when bats is nil" do
+      before { subject.bats = nil }
+
+      it "returns nil" do
+        expect(subject.verbose_bats).to eq(nil)
+      end
+    end
+
+    context "when bats is 'L'" do
+      before { subject.bats = "L" }
+
+      it "returns nil" do
+        expect(subject.verbose_bats).to eq("Left")
+      end
+    end
+
+    context "when bats is 'R'" do
+      before { subject.bats = "R" }
+
+      it "returns nil" do
+        expect(subject.verbose_bats).to eq("Right")
+      end
+    end
+
+    context "when bats is 'B'" do
+      before { subject.bats = "B" }
+
+      it "returns nil" do
+        expect(subject.verbose_bats).to eq("Switch")
+      end
+    end
+
+    context "when bats is 'S'" do
+      before { subject.bats = "S" }
+
+      it "returns nil" do
+        expect(subject.verbose_bats).to eq("Switch")
+      end
+    end
+
+    context "when bats is something else" do
+      before { subject.bats = "something else" }
+
+      it "returns nil" do
+        expect(subject.verbose_throws).to eq(nil)
+      end
+    end
+  end
 end

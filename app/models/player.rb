@@ -23,7 +23,7 @@ class Player < ApplicationRecord # rubocop:disable Metrics/ClassLength
     9 => { initials: 'DH', name: 'Designated Hitter', key: :dh }
   }.freeze
   PITCHING_TYPES = {
-    'R' => { name: 'Reliver', key: :relief },
+    'R' => { name: 'Reliever', key: :relief },
     'S' => { name: 'Starter', key: :starting }
   }.freeze
 
@@ -200,6 +200,35 @@ class Player < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def positions
     @positions ||= build_positions
+  end
+
+  def verbose_pitcher_type
+    @verbose_pitcher_type ||=
+      if PITCHING_TYPES[pitcher_type].present?
+        PITCHING_TYPES[pitcher_type][:name]
+      end
+  end
+
+  def verbose_throws
+    @verbose_throws ||=
+      case throws
+      when 'L'
+        'Left'
+      when 'R'
+        'Right'
+      end
+  end
+
+  def verbose_bats
+    @verbose_bats ||=
+      case bats
+      when 'L'
+        'Left'
+      when 'R'
+        'Right'
+      when 'B', 'S'
+        'Switch'
+      end
   end
 
   private
