@@ -32,7 +32,7 @@
     <div class="first-column">
       <dl class="player-info">
         <%= content_tag :dt, 'Position'.pluralize(@player.positions.size) %>
-        <%= content_tag :dd, player_positions(@player), class: 'player-positions' %>
+        <%= content_tag :dd, player_positions(@player, full: true), class: 'player-positions' %>
       </dl>
     </div>
 
