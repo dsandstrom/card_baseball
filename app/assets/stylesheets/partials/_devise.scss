@@ -1,6 +1,5 @@
 .devise-links,
 .filters-wrapper {
-  margin-bottom: 1.5rem;
   padding: 1rem;
   border: 1px solid $light-gray;
   border-radius: $border-radius;
@@ -31,4 +30,8 @@
     background-color: $white;
   }
   // scss-lint:enable QualifyingElement
+}
+
+.filters-wrapper {
+  margin-bottom: 1.5rem;
 }
