@@ -184,26 +184,6 @@
   }
 }
 
-.player-position {
-  color: $dark-gray;
-  font-weight: bold;
-}
-
-.players {
-  .player-positions {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .player-position {
-    &:not(:last-child) {
-      margin-right: 1rem;
-    }
-  }
-}
-
 .bench-hitter {
   display: flex;
   position: relative;

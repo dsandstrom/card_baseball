@@ -1,0 +1,39 @@
+.page-header {
+  .player-primary-position {
+    margin-left: 1rem;
+    color: $gray;
+    font-weight: bold;
+  }
+}
+
+.player-info {
+  dd {
+    font-weight: bold;
+  }
+}
+
+.player-position {
+  font-weight: bold;
+
+  .player-position-defense {
+    font-weight: normal;
+  }
+}
+
+.player-positions {
+  display: flex;
+  align-items: center;
+
+  .player-position {
+    &:not(:last-child) {
+      margin-right: 1rem;
+    }
+  }
+}
+
+.players {
+  .player-positions {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}

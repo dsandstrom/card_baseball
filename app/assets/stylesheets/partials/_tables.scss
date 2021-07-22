@@ -8,8 +8,184 @@ table {
   }
 }
 
-thead {
+td,
+th {
+  padding: .5rem 1rem;
+
+  &.align-left {
+    text-align: left;
+  }
+
+  &:first-child {
+    padding-left: 0;
+    border-right: 1px solid $border-color;
+    font-weight: bold;
+    text-align: left;
+  }
+
+  &:not(:first-child) {
+    text-align: center;
+  }
+}
+
+tbody {
+  tr:not(:last-child) td {
+    border-bottom: 1px solid $border-color;
+  }
+}
+
+th {
+  border-bottom: 1px solid $border-color;
+  color: $color-quaternary;
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-transform: uppercase;
+
+  &:first-child {
+    text-align: left;
+  }
+
+  .defense-bar {
+    color: $gray;
+  }
+}
+
+td {
+  &:first-child {
+    font-size: 1.4rem;
+  }
+}
+
+// sticky thead and first column
+// https://css-tricks.com/a-table-with-both-a-sticky-header-and-a-sticky-first-column/
+.hitters,
+.pitchers,
+.players {
+  width: 100%;
+
+  thead {
+    position: sticky;
+    z-index: 3;
+    top: 0;
+    left: 0;
+
+    // scss-lint:disable NestingDepth SelectorDepth
+    tr {
+      background-color: $off-white;
+
+      // stylelint-disable selector-max-compound-selectors
+      &:nth-child(2) {
+        th {
+          // stylelint-disable-next-line max-nesting-depth
+          &:nth-child(2) { // scss-lint:disable SelectorDepth
+            position: sticky;
+            z-index: 4;
+            top: 0;
+            left: 0;
+            border-right: 1px solid $black;
+            background-color: $color-quaternary;
+          }
+        }
+      }
+
+      &:last-child {
+        background-color: $color-quaternary;
+
+        th {
+          color: $off-white;
+        }
+
+        .left-border {
+          border-left: 1px solid $dark-gray;
+        }
+      }
+      // stylelint-enable selector-max-compound-selectors
+    }
+  }
+
+  td,
   th {
+    padding: .25rem .5rem;
+  }
+
+  tbody {
+    tr {
+      &:nth-child(2n + 1) {
+        // scss-lint:disable NestingDepth SelectorDepth
+        // stylelint-disable selector-max-compound-selectors
+        td {
+          background-color: $off-white;
+
+          // scss-lint:disable NestingDepth
+          // stylelint-disable-next-line max-nesting-depth
+          &.highlight {
+            background-color: rgba($color-quinary, .2);
+          }
+          // scss-lint:enable NestingDepth
+        }
+        // stylelint-enable selector-max-compound-selectors
+      }
+    }
+
+    td {
+      position: relative;
+      z-index: 1;
+
+      &:nth-child(2) {
+        position: sticky;
+        z-index: 2;
+        top: 0;
+        left: 0;
+        border-right: 1px solid $light-gray;
+        font-weight: bold;
+      }
+    }
+  }
+
+  td {
+    border-bottom: 1px solid $light-gray;
+    background-color: $background-color;
+    font-size: 1.4rem;
+    text-align: center;
+
+    &.table-index {
+      color: $gray;
+      font-family: $code-font;
+      font-size: 1.2rem;
+      font-weight: normal;
+    }
+
+    &:first-child {
+      padding: .5rem;
+      border: 1px solid $light-gray;
+      border-width: 0 0 1px 1px;
+      text-align: center;
+    }
+
+    &:nth-child(2) {
+      text-align: left;
+    }
+
+    &.left-border {
+      border-left: 1px solid $light-gray;
+    }
+
+    &.highlight {
+      background-color: rgba($color-quinary, .15);
+    }
+
+    &:last-child {
+      border-right: 1px solid $light-gray;
+    }
+  }
+
+  th {
+    font-weight: normal;
+
+    &:first-child {
+      border-width: 0 0 1px 1px;
+    }
+
     &.vs-left,
     &.vs-right {
       &.highlight {
@@ -22,141 +198,6 @@ thead {
     &.defense {
       border-left: 1px solid $light-gray;
       background-color: $light-gray;
-    }
-
-    .defense-bar {
-      color: $gray;
-    }
-  }
-
-  tr {
-    background-color: $off-white;
-
-    &:last-child {
-      background-color: $color-quaternary;
-      color: $off-white;
-
-      .left-border {
-        border-left: 1px solid $dark-gray;
-      }
-    }
-  }
-}
-
-tbody {
-  td {
-    border-bottom: 1px solid $light-gray;
-    background-color: $background-color;
-
-    &.left-border {
-      border-left: 1px solid $light-gray;
-    }
-
-    &.highlight {
-      background-color: rgba($color-quinary, .15);
-    }
-
-    &:first-child {
-      border-left: 1px solid $light-gray;
-      text-align: left;
-    }
-
-    &:last-child {
-      border-right: 1px solid $light-gray;
-    }
-  }
-
-  tr {
-    &:nth-child(2n + 1) {
-      td {
-        background-color: $off-white;
-
-        // scss-lint:disable NestingDepth
-        &.highlight {
-          background-color: rgba($color-quinary, .2);
-        }
-        // scss-lint:enable NestingDepth
-      }
-    }
-  }
-
-  .defense-positive,
-  .defense-negative,
-  .defense-neutral,
-  .defense-bar {
-    font-weight: bold;
-  }
-}
-
-td,
-th {
-  padding: .5rem;
-
-  &.align-left {
-    text-align: left;
-  }
-}
-
-th {
-  font-size: 1.2rem;
-  font-weight: normal;
-  text-transform: uppercase;
-
-  &:first-child {
-    text-align: left;
-  }
-}
-
-td {
-  font-size: 1.4rem;
-  text-align: center;
-
-  &:nth-child(2) {
-    text-align: left;
-  }
-
-  &.table-index {
-    width: 3rem;
-    color: $gray;
-    font-family: $code-font;
-    font-size: 1.2rem;
-    text-align: right;
-  }
-}
-
-// sticky thead and first column
-// https://css-tricks.com/a-table-with-both-a-sticky-header-and-a-sticky-first-column/
-.hitters,
-.players {
-  width: 100%;
-
-  thead {
-    position: sticky;
-    z-index: 3;
-    top: 0;
-    left: 0;
-
-    // stylelint-disable-next-line selector-max-compound-selectors
-    tr:nth-child(2) th:nth-child(2) { // scss-lint:disable SelectorDepth
-      position: sticky;
-      z-index: 4;
-      top: 0;
-      left: 0;
-      border-right: 1px solid $black;
-      background-color: $color-quaternary;
-    }
-  }
-
-  tbody td {
-    position: relative;
-    z-index: 1;
-
-    &:nth-child(2) {
-      position: sticky;
-      z-index: 2;
-      top: 0;
-      left: 0;
-      border-right: 1px solid $light-gray;
     }
   }
 }
