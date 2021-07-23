@@ -493,6 +493,133 @@ RSpec.describe Player, type: :model do
       end
     end
 
+    describe "when bats filter" do
+      let!(:left_player) { Fabricate(:player, bats: "L") }
+      let!(:right_player) { Fabricate(:player, bats: "R") }
+      let!(:switch_player) { Fabricate(:player, bats: "B") }
+
+      context "is blank" do
+        it "returns L, R, B" do
+          expect(Player.filter_by)
+            .to contain_exactly(left_player, right_player, switch_player)
+        end
+      end
+
+      context "is 'L'" do
+        it "returns L" do
+          expect(Player.filter_by(bats: "L")).to eq([left_player])
+        end
+      end
+
+      context "is 'R'" do
+        it "returns R" do
+          expect(Player.filter_by(bats: "R")).to eq([right_player])
+        end
+      end
+
+      context "is 'B'" do
+        it "returns B" do
+          expect(Player.filter_by(bats: "B")).to eq([switch_player])
+        end
+      end
+
+      context "is 'all'" do
+        it "returns L, R, B" do
+          expect(Player.filter_by(bats: "all"))
+            .to contain_exactly(left_player, right_player, switch_player)
+        end
+      end
+    end
+
+    describe "when bunt_grade filter" do
+      let!(:a_player) { Fabricate(:player, bunt_grade: "A") }
+      let!(:b_player) { Fabricate(:player, bunt_grade: "B") }
+
+      context "is blank" do
+        it "returns A & B players" do
+          expect(Player.filter_by).to contain_exactly(a_player, b_player)
+        end
+      end
+
+      context "is 'A'" do
+        it "returns A players" do
+          expect(Player.filter_by(bunt_grade: "A")).to eq([a_player])
+        end
+      end
+
+      context "is 'B'" do
+        it "returns all" do
+          expect(Player.filter_by(bunt_grade: "B"))
+            .to contain_exactly(a_player, b_player)
+        end
+      end
+
+      context "is 'all'" do
+        it "returns A & B players" do
+          expect(Player.filter_by(bunt_grade: "all"))
+            .to contain_exactly(a_player, b_player)
+        end
+      end
+    end
+
+    describe "when speed filter" do
+      let!(:player1) { Fabricate(:player, speed: 1) }
+      let!(:player2) { Fabricate(:player, speed: 2) }
+      let!(:player3) { Fabricate(:player, speed: 3) }
+      let!(:player4) { Fabricate(:player, speed: 4) }
+      let!(:player5) { Fabricate(:player, speed: 5) }
+      let!(:player6) { Fabricate(:player, speed: 6) }
+
+      context "is blank" do
+        it "returns all players" do
+          expect(Player.filter_by)
+            .to contain_exactly(player1, player2, player3, player4, player5,
+                                player6)
+        end
+      end
+
+      context "is '2'" do
+        it "returns players faster than 2" do
+          expect(Player.filter_by(speed: "2"))
+            .to contain_exactly(player3, player4, player5, player6)
+        end
+      end
+
+      context "is '3'" do
+        it "returns players faster than 3" do
+          expect(Player.filter_by(speed: "3"))
+            .to contain_exactly(player4, player5, player6)
+        end
+      end
+
+      context "is '4'" do
+        it "returns players faster than 4" do
+          expect(Player.filter_by(speed: "4"))
+            .to contain_exactly(player5, player6)
+        end
+      end
+
+      context "is '5'" do
+        it "returns players faster than 5" do
+          expect(Player.filter_by(speed: "5")).to eq([player6])
+        end
+      end
+
+      context "is '6'" do
+        it "returns players faster than 6" do
+          expect(Player.filter_by(speed: "6")).to eq([])
+        end
+      end
+
+      context "is 'all'" do
+        it "returns A & B players" do
+          expect(Player.filter_by(speed: "all"))
+            .to contain_exactly(player1, player2, player3, player4, player5,
+                                player6)
+        end
+      end
+    end
+
     describe "when order filter" do
       context "is blank" do
         let!(:first_player) do

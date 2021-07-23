@@ -22,6 +22,15 @@ class Player < ApplicationRecord # rubocop:disable Metrics/ClassLength
     8 => { initials: 'CF', name: 'Center Field', key: :center_field },
     9 => { initials: 'DH', name: 'Designated Hitter', key: :dh }
   }.freeze
+  THROWS_MAP = {
+    'L' => { name: 'Left' },
+    'R' => { name: 'Right' }
+  }.freeze
+  BATS_MAP = {
+    'L' => { name: 'Left' },
+    'R' => { name: 'Right' },
+    'B' => { name: 'Switch' }
+  }.freeze
   PITCHING_TYPES = {
     'R' => { name: 'Reliever', key: :relief },
     'S' => { name: 'Starter', key: :starting }
@@ -125,6 +134,9 @@ class Player < ApplicationRecord # rubocop:disable Metrics/ClassLength
     players = players.filter_by_name(filters[:query])
     players = players.filter_by_free_agency(filters[:free_agent])
     players = players.filter_by_positions(filters)
+    players = players.filter_by_bats(filters[:bats])
+    players = players.filter_by_bunt_grade(filters[:bunt_grade])
+    players = players.filter_by_speed(filters[:speed])
     players.order(build_order_param(filters[:order]))
   end
 
@@ -155,6 +167,29 @@ class Player < ApplicationRecord # rubocop:disable Metrics/ClassLength
     return all if query_parts.none?
 
     where(query_parts.join(' OR '))
+  end
+
+  def self.filter_by_bats(bats)
+    return all if bats.blank?
+    return all unless BATS_MAP.keys.include?(bats)
+
+    where('players.bats = ?', bats)
+  end
+
+  def self.filter_by_bunt_grade(bunt_grade)
+    return all if bunt_grade.blank?
+    return all unless bunt_grade == 'A'
+
+    where('players.bunt_grade = ?', bunt_grade)
+  end
+
+  def self.filter_by_speed(speed)
+    return all if speed.blank?
+
+    speed = speed.to_i
+    return all unless [1, 2, 3, 4, 5, 6].include?(speed)
+
+    where('players.speed > ?', speed)
   end
 
   # used by .filter_by
