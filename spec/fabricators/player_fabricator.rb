@@ -3,7 +3,7 @@
 Fabricator(:player) do
   last_name { sequence(:players) { |n| "Player Last Name #{n + 1}" } }
   primary_position { rand(Player::POSITION_RANGE) }
-  bats { Player::BATS_OPTIONS.sample }
+  bats { Player::BATS_MAP.keys.sample }
   offensive_rating { rand(Player::RATING_RANGE) }
 
   after_build do |player|
@@ -36,7 +36,7 @@ end
 Fabricator(:pitcher, from: :player) do
   last_name { sequence(:players) { |n| "Pitcher Last Name #{n + 1}" } }
   primary_position 1
-  throws { Player::THROWS_OPTIONS.sample }
+  throws { Player::THROWS_MAP.keys.sample }
   bar1 { rand(-1..4) }
   pitcher_rating { rand(Player::RATING_RANGE) }
   pitching_durability { rand(Player::RATING_RANGE) }
@@ -47,7 +47,7 @@ end
 
 Fabricator(:hitting_pitcher, from: :hitter) do
   primary_position 1
-  throws { Player::THROWS_OPTIONS.sample }
+  throws { Player::THROWS_MAP.keys.sample }
   hitting_pitcher true
   bar1 { rand(-1..4) }
   pitcher_rating { rand(Player::RATING_RANGE) }

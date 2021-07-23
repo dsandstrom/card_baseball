@@ -104,7 +104,7 @@ class Seeds
       attrs[:first_name] = Faker::Name.male_first_name
       attrs[:nick_name] = Faker::Name.middle_name if rand(10).zero?
       attrs[:last_name] = Faker::Name.last_name
-      attrs[:bats] = Player::BATS_OPTIONS.sample
+      attrs[:bats] = Player::BATS_MAP.keys.sample
       attrs[:bunt_grade] = Player::BUNT_GRADE_OPTIONS.sample
       attrs[:speed] = rand(Player::SPEED_RANGE)
       attrs
@@ -129,7 +129,7 @@ class Seeds
     end
 
     def pitcher_rating_attrs(attrs, type = nil)
-      attrs[:throws] = Player::THROWS_OPTIONS.sample
+      attrs[:throws] = Player::THROWS_MAP.keys.sample
       attrs[:pitcher_rating] = rand(Player::RATING_RANGE)
       attrs[:pitching_durability] = rand(Player::RATING_RANGE)
       pitcher_type_rating_attrs(attrs, type)

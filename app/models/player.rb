@@ -3,8 +3,6 @@
 # TODO: validate throws presence when pitcher
 
 class Player < ApplicationRecord # rubocop:disable Metrics/ClassLength
-  BATS_OPTIONS = %w[R L B].freeze
-  THROWS_OPTIONS = %w[L R].freeze
   BUNT_GRADE_OPTIONS = %w[A B].freeze
   POSITION_RANGE = 1..8
   SPEED_RANGE = 0..6
@@ -41,8 +39,8 @@ class Player < ApplicationRecord # rubocop:disable Metrics/ClassLength
   validates :last_name, presence: true, length: { maximum: 200 }
   validates :roster_name, presence: true, length: { maximum: 200 },
                           uniqueness: { case_sensitive: false }
-  validates :bats, presence: true, inclusion: { in: BATS_OPTIONS }
-  validates :throws, inclusion: { in: THROWS_OPTIONS }, allow_nil: true
+  validates :bats, presence: true, inclusion: { in: BATS_MAP.keys }
+  validates :throws, inclusion: { in: THROWS_MAP.keys }, allow_nil: true
   validates :bunt_grade, presence: true, inclusion: { in: BUNT_GRADE_OPTIONS }
   validates :speed, presence: true, inclusion: { in: SPEED_RANGE }
   validates :primary_position, presence: true, inclusion: { in: POSITION_RANGE }
