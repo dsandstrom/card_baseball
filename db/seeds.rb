@@ -136,7 +136,7 @@ class Seeds
     end
 
     def pitcher_type_rating_attrs(attrs, type = nil)
-      type ||= Player::PITCHING_TYPES.keys.sample
+      type ||= Player::PITCHER_TYPES.keys.sample
 
       attrs[:pitcher_type] = type
       attrs[pitching_key(type)] = rand(Player::RATING_RANGE)
@@ -201,7 +201,7 @@ class Seeds
     end
 
     def pitching_key(type)
-      "#{Player::PITCHING_TYPES[type][:key]}_pitching".to_sym
+      "#{Player::PITCHER_TYPES[type][:key]}_pitching".to_sym
     end
 end
 

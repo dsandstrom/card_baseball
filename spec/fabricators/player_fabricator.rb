@@ -40,7 +40,7 @@ Fabricator(:pitcher, from: :player) do
   bar1 { rand(-1..4) }
   pitcher_rating { rand(Player::RATING_RANGE) }
   pitching_durability { rand(Player::RATING_RANGE) }
-  pitcher_type { Player::PITCHING_TYPES.keys.sample }
+  pitcher_type { Player::PITCHER_TYPES.keys.sample }
   starting_pitching { rand(Player::RATING_RANGE) }
   relief_pitching { rand(Player::RATING_RANGE) }
 end
@@ -52,7 +52,7 @@ Fabricator(:hitting_pitcher, from: :hitter) do
   bar1 { rand(-1..4) }
   pitcher_rating { rand(Player::RATING_RANGE) }
   pitching_durability { rand(Player::RATING_RANGE) }
-  pitcher_type { Player::PITCHING_TYPES.keys.sample }
+  pitcher_type { Player::PITCHER_TYPES.keys.sample }
   starting_pitching { rand(Player::RATING_RANGE) }
   relief_pitching { rand(Player::RATING_RANGE) }
 end

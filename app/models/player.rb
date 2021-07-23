@@ -29,7 +29,7 @@ class Player < ApplicationRecord # rubocop:disable Metrics/ClassLength
     'R' => { name: 'Right' },
     'B' => { name: 'Switch' }
   }.freeze
-  PITCHING_TYPES = {
+  PITCHER_TYPES = {
     'R' => { name: 'Reliever', key: :relief },
     'S' => { name: 'Starter', key: :starting }
   }.freeze
@@ -70,7 +70,7 @@ class Player < ApplicationRecord # rubocop:disable Metrics/ClassLength
   validates :defense8, inclusion: { in: DEFENSE_RANGE }, allow_nil: true
   validates :bar1, inclusion: { in: BAR_RANGE }, allow_nil: true
   validates :bar2, inclusion: { in: BAR_RANGE }, allow_nil: true
-  validates :pitcher_type, inclusion: { in: PITCHING_TYPES.keys },
+  validates :pitcher_type, inclusion: { in: PITCHER_TYPES.keys },
                            allow_nil: true
   validates :starting_pitching, inclusion: { in: RATING_RANGE }, allow_nil: true
   validates :relief_pitching, inclusion: { in: RATING_RANGE }, allow_nil: true
@@ -132,10 +132,20 @@ class Player < ApplicationRecord # rubocop:disable Metrics/ClassLength
     players = players.filter_by_name(filters[:query])
     players = players.filter_by_free_agency(filters[:free_agent])
     players = players.filter_by_positions(filters)
-    players = players.filter_by_bats(filters[:bats])
-    players = players.filter_by_bunt_grade(filters[:bunt_grade])
-    players = players.filter_by_speed(filters[:speed])
+    players = players.filter_hitters(filters)
+    players = players.filter_pitchers(filters)
     players.order(build_order_param(filters[:order]))
+  end
+
+  def self.filter_hitters(filters)
+    players = all.filter_by_bats(filters[:bats])
+    players = players.filter_by_bunt_grade(filters[:bunt_grade])
+    players.filter_by_speed(filters[:speed])
+  end
+
+  def self.filter_pitchers(filters)
+    players = all.filter_by_pitcher_type(filters[:pitcher_type])
+    players.filter_by_throws(filters[:throws])
   end
 
   def self.filter_by_name(name)
@@ -188,6 +198,20 @@ class Player < ApplicationRecord # rubocop:disable Metrics/ClassLength
     return all unless [1, 2, 3, 4, 5, 6].include?(speed)
 
     where('players.speed > ?', speed)
+  end
+
+  def self.filter_by_pitcher_type(pitcher_type)
+    return all if pitcher_type.blank?
+    return all unless PITCHER_TYPES.keys.include?(pitcher_type)
+
+    where('players.pitcher_type = ?', pitcher_type)
+  end
+
+  def self.filter_by_throws(throws)
+    return all if throws.blank?
+    return all unless THROWS_MAP.keys.include?(throws)
+
+    where('players.throws = ?', throws)
   end
 
   # used by .filter_by
@@ -251,8 +275,8 @@ class Player < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def verbose_pitcher_type
     @verbose_pitcher_type ||=
-      if PITCHING_TYPES[pitcher_type].present?
-        PITCHING_TYPES[pitcher_type][:name]
+      if PITCHER_TYPES[pitcher_type].present?
+        PITCHER_TYPES[pitcher_type][:name]
       end
   end
 

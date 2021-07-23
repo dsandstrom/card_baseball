@@ -620,6 +620,67 @@ RSpec.describe Player, type: :model do
       end
     end
 
+    describe "when throws filter" do
+      let!(:left_player) { Fabricate(:player, throws: "L", bats: "R") }
+      let!(:right_player) { Fabricate(:player, throws: "R", bats: "B") }
+
+      context "is blank" do
+        it "returns L & R Players" do
+          expect(Player.filter_by).to contain_exactly(left_player, right_player)
+        end
+      end
+
+      context "is 'L'" do
+        it "returns L" do
+          expect(Player.filter_by(throws: "L")).to eq([left_player])
+        end
+      end
+
+      context "is 'R'" do
+        it "returns R" do
+          expect(Player.filter_by(throws: "R")).to eq([right_player])
+        end
+      end
+
+      context "is 'all'" do
+        it "returns L, R, B" do
+          expect(Player.filter_by(throws: "all"))
+            .to contain_exactly(left_player, right_player)
+        end
+      end
+    end
+
+    describe "when pitcher_type filter" do
+      let!(:starter_player) { Fabricate(:player, pitcher_type: "S") }
+      let!(:reliever_player) { Fabricate(:player, pitcher_type: "R") }
+
+      context "is blank" do
+        it "returns S & R Players" do
+          expect(Player.filter_by)
+            .to contain_exactly(starter_player, reliever_player)
+        end
+      end
+
+      context "is 'L'" do
+        it "returns L" do
+          expect(Player.filter_by(pitcher_type: "S")).to eq([starter_player])
+        end
+      end
+
+      context "is 'R'" do
+        it "returns R" do
+          expect(Player.filter_by(pitcher_type: "R")).to eq([reliever_player])
+        end
+      end
+
+      context "is 'all'" do
+        it "returns L, R, B" do
+          expect(Player.filter_by(pitcher_type: "all"))
+            .to contain_exactly(starter_player, reliever_player)
+        end
+      end
+    end
+
     describe "when order filter" do
       context "is blank" do
         let!(:first_player) do
