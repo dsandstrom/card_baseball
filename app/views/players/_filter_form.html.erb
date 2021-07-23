@@ -23,13 +23,11 @@ return unless path
     <div class="field">
       <%= label_tag :position %>
       <div class="players-position-filters check-box-buttons">
-        <% Player::POSITION_MAP.each do |position, options| %>
-          <% next if position == 9 %>
-
+        <% [2, 3, 4, 5, 6, 7, 8, 1].each do |position| %>
           <% id = "position#{position}" %>
           <%= label_tag id, class: 'players-position-filter' do %>
             <%= check_box_tag id, 'true', params[id] == 'true' %>
-            <%= options[:initials] %>
+            <%= Player.position_initials(position) %>
           <% end %>
         <% end %>
 
