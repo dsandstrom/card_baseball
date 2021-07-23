@@ -2,24 +2,23 @@
 
 Fabricator(:player) do
   last_name { sequence(:players) { |n| "Player Last Name #{n + 1}" } }
-  roster_name { |attrs| attrs[:last_name] }
   primary_position { rand(Player::POSITION_RANGE) }
   bats { Player::BATS_OPTIONS.sample }
   offensive_rating { rand(Player::RATING_RANGE) }
 
-  after_build do |hitter|
-    next unless hitter.primary_position
+  after_build do |player|
+    player.set_roster_name
+    next unless player.primary_position
 
-    primary_defense = "defense#{hitter.primary_position}"
-    next if hitter.send(primary_defense).present?
+    primary_defense = "defense#{player.primary_position}"
+    next if player.send(primary_defense).present?
 
-    hitter.send("#{primary_defense}=", rand(Player::DEFENSE_RANGE).abs)
+    player.send("#{primary_defense}=", rand(Player::DEFENSE_RANGE).abs)
   end
 end
 
 Fabricator(:hitter, from: :player) do
   last_name { sequence(:players) { |n| "Hitter Last Name #{n + 1}" } }
-  roster_name { |attrs| attrs[:last_name] }
   primary_position { rand(2..8) }
   bunt_grade { Player::BUNT_GRADE_OPTIONS.sample }
   speed { rand(Player::SPEED_RANGE) }
@@ -36,7 +35,6 @@ end
 
 Fabricator(:pitcher, from: :player) do
   last_name { sequence(:players) { |n| "Pitcher Last Name #{n + 1}" } }
-  roster_name { |attrs| attrs[:last_name] }
   primary_position 1
   throws { Player::THROWS_OPTIONS.sample }
   bar1 { rand(-1..4) }
@@ -48,8 +46,6 @@ Fabricator(:pitcher, from: :player) do
 end
 
 Fabricator(:hitting_pitcher, from: :hitter) do
-  # last_name { sequence(:players) { |n| "Pitcher Last Name #{n + 1}" } }
-  # roster_name { |attrs| attrs[:last_name] }
   primary_position 1
   throws { Player::THROWS_OPTIONS.sample }
   hitting_pitcher true

@@ -492,6 +492,87 @@ RSpec.describe Player, type: :model do
           .to eq([second_player])
       end
     end
+
+    describe "when order filter" do
+      context "is blank" do
+        let!(:first_player) do
+          Fabricate(:player, first_name: "Bob", last_name: "Beta",
+                             offensive_rating: 90, pitcher_rating: 90)
+        end
+        let!(:second_player) do
+          Fabricate(:player, first_name: "Bob", last_name: "Alpha",
+                             offensive_rating: 85, pitcher_rating: 85)
+        end
+
+        it "orders by last_name" do
+          expect(Player.filter_by).to eq([second_player, first_player])
+        end
+      end
+
+      context "is 'name'" do
+        let!(:first_player) do
+          Fabricate(:player, first_name: "Beta", last_name: "Alpha",
+                             offensive_rating: 90, pitcher_rating: 90)
+        end
+        let!(:second_player) do
+          Fabricate(:player, first_name: "Alpha", last_name: "Alpha",
+                             offensive_rating: 85, pitcher_rating: 85)
+        end
+
+        it "orders by last_name, first_name" do
+          expect(Player.filter_by(order: "name"))
+            .to eq([second_player, first_player])
+        end
+      end
+
+      context "is 'offense'" do
+        let!(:first_player) do
+          Fabricate(:player, first_name: "Beta", last_name: "Alpha",
+                             offensive_rating: 90, pitcher_rating: 90)
+        end
+        let!(:second_player) do
+          Fabricate(:player, first_name: "Alpha", last_name: "Alpha",
+                             offensive_rating: 95, pitcher_rating: 85)
+        end
+
+        it "orders by offensive_rating" do
+          expect(Player.filter_by(order: "offense"))
+            .to eq([second_player, first_player])
+        end
+      end
+
+      context "is 'pitching'" do
+        let!(:first_player) do
+          Fabricate(:player, first_name: "Beta", last_name: "Alpha",
+                             offensive_rating: 90, pitcher_rating: 90)
+        end
+        let!(:second_player) do
+          Fabricate(:player, first_name: "Alpha", last_name: "Alpha",
+                             offensive_rating: 85, pitcher_rating: 95)
+        end
+
+        it "orders by pitcher_rating" do
+          expect(Player.filter_by(order: "pitching"))
+            .to eq([second_player, first_player])
+        end
+      end
+
+      context "is something else" do
+        let!(:first_player) do
+          Fabricate(:player, first_name: "Bob", last_name: "Beta",
+                             offensive_rating: 90, pitcher_rating: 90)
+        end
+        let!(:second_player) do
+          Fabricate(:player, first_name: "Bob", last_name: "Alpha",
+                             offensive_rating: 85, pitcher_rating: 85)
+        end
+
+        it "orders by last_name" do
+          expect(Player.filter_by(order: "something else"))
+            .to eq([second_player, first_player])
+        end
+      end
+    end
   end
 
   # INSTANCE
@@ -561,98 +642,9 @@ RSpec.describe Player, type: :model do
   end
 
   describe "#set_roster_name" do
-    let(:player) { Fabricate.build(:player, roster_name: nil) }
+    let(:player) { Fabricate.build(:player) }
 
-    context "when roster_name is set" do
-      before do
-        player.last_name = "Something Else"
-        player.roster_name = "Something"
-      end
-
-      it "doesn't change it" do
-        expect do
-          player.set_roster_name
-        end.not_to change(player, :roster_name)
-        expect(player).to be_valid
-      end
-    end
-
-    context "when last_name is blank" do
-      before do
-        player.last_name = ""
-      end
-
-      it "doesn't change it" do
-        expect do
-          player.set_roster_name
-        end.not_to change(player, :roster_name)
-        expect(player).not_to be_valid
-      end
-    end
-
-    context "when roster_name is blank" do
-      before do
-        player.first_name = "Trevor"
-        player.last_name = "Hoffman"
-      end
-
-      it "changes it the last_name" do
-        expect do
-          player.set_roster_name
-        end.to change(player, :roster_name).to("Hoffman")
-        expect(player).to be_valid
-      end
-    end
-
-    context "when last_name is already taken" do
-      before do
-        Fabricate(:player, roster_name: "Hoffman")
-        player.first_name = "Trevor"
-        player.last_name = "Hoffman"
-      end
-
-      it "adds first name initial" do
-        expect do
-          player.set_roster_name
-        end.to change(player, :roster_name).to("T.Hoffman")
-        expect(player).to be_valid
-      end
-    end
-
-    context "when first_name initial is already taken" do
-      before do
-        Fabricate(:player, roster_name: "Hoffman")
-        Fabricate(:player, roster_name: "T.Hoffman")
-        player.first_name = "Trevor"
-        player.last_name = "Hoffman"
-      end
-
-      it "adds first name initial" do
-        expect do
-          player.set_roster_name
-        end.to change(player, :roster_name).to("Tr.Hoffman")
-        expect(player).to be_valid
-      end
-    end
-
-    context "when last_name is already taken and no first name" do
-      before do
-        Fabricate(:player, roster_name: "Hoffman")
-        player.first_name = nil
-        player.last_name = "Hoffman"
-      end
-
-      it "adds first name initial" do
-        expect do
-          player.set_roster_name
-        end.to change(player, :roster_name).to("Hoffman")
-        expect(player).not_to be_valid
-      end
-    end
-  end
-
-  describe "#set_roster_name" do
-    let(:player) { Fabricate.build(:player, roster_name: nil) }
+    before { player.roster_name = nil }
 
     context "when roster_name is set" do
       before do

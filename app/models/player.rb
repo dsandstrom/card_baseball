@@ -125,7 +125,7 @@ class Player < ApplicationRecord # rubocop:disable Metrics/ClassLength
     players = players.filter_by_name(filters[:query])
     players = players.filter_by_free_agency(filters[:free_agent])
     players = players.filter_by_positions(filters)
-    players.order(last_name: :asc, roster_name: :asc)
+    players.order(build_order_param(filters[:order]))
   end
 
   def self.filter_by_name(name)
@@ -155,6 +155,20 @@ class Player < ApplicationRecord # rubocop:disable Metrics/ClassLength
     return all if query_parts.none?
 
     where(query_parts.join(' OR '))
+  end
+
+  # used by .filter_by
+  # TODO: add pitcher type radios
+  # TODO: when defense, sort by selected positions
+  def self.build_order_param(column)
+    case column
+    when 'offense'
+      'players.offensive_rating desc'
+    when 'pitching'
+      'players.pitcher_rating desc'
+    else
+      'players.last_name asc, players.first_name asc'
+    end
   end
 
   # INSTANCE
