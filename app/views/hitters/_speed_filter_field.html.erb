@@ -1,0 +1,19 @@
+<div class="field">
+  <%= label_tag :speed %>
+
+  <div class="players-position-filters check-box-buttons">
+    <%= label_tag :speed_all,
+                  class: 'radio-button-label' do %>
+      <%= radio_button_tag :speed, :all, (params[:speed].blank? || params[:speed] == 'all') %>
+      All
+    <% end %>
+
+    <% %w[2 3 4 5].each do |option| %>
+      <% id = "speed_#{option}" %>
+      <%= label_tag id, class: 'radio-button-label players-speed-filter' do %>
+        <%= radio_button_tag :speed, option, params[:speed] == option %>
+        <%= "> #{option}" %>
+      <% end %>
+    <% end %>
+  </div>
+</div>

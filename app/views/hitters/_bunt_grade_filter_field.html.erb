@@ -1,0 +1,17 @@
+<div class="field">
+  <%= label_tag :bunt_grade, 'Bunt Grade' %>
+
+  <div class="players-bunt-grade-filters check-box-buttons">
+    <%= label_tag :bunt_grade_all,
+                  class: 'radio-button-label' do %>
+      <%= radio_button_tag :bunt_grade, :all, (params[:bunt_grade].blank? || params[:bunt_grade] == 'all') %>
+      All
+    <% end %>
+
+    <% id = "bunt_grade_A" %>
+    <%= label_tag id, class: 'radio-button-label players-bunt-grade-filter' do %>
+      <%= radio_button_tag :bunt_grade, 'A', params[:bunt_grade] == 'A' %>
+      A Only
+    <% end %>
+  </div>
+</div>

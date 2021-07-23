@@ -1,0 +1,19 @@
+<div class="field">
+  <%= label_tag :bats %>
+
+  <div class="players-position-filters check-box-buttons">
+    <%= label_tag :bats_all,
+                  class: 'radio-button-label' do %>
+      <%= radio_button_tag :bats, :all, (params[:bats].blank? || params[:bats] == 'all') %>
+      Any
+    <% end %>
+
+    <% Player::BATS_MAP.each do |key, _| %>
+      <% id = "bats_#{key}" %>
+      <%= label_tag id, class: 'radio-button-label players-bats-filter' do %>
+        <%= radio_button_tag :bats, key, params[:bats] == key %>
+        <%= Player::BATS_MAP[key][:name] %>
+      <% end %>
+    <% end %>
+  </div>
+</div>

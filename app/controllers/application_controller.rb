@@ -2,7 +2,8 @@
 
 class ApplicationController < ActionController::Base
   FILTER_OPTIONS = %i[order query free_agent position1 position2 position3
-                      position4 position5 position6 position7 position8].freeze
+                      position4 position5 position6 position7 position8 bats
+                      bunt_grade speed].freeze
 
   before_action :authenticate_user!
   check_authorization unless: :devise_controller?
