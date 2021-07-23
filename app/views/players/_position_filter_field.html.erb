@@ -1,0 +1,13 @@
+<%# TODO: add 'clear' or 'all' check box option %>
+<div class="field">
+  <%= label_tag :position %>
+  <div class="players-position-filters check-box-buttons">
+    <% [2, 3, 4, 5, 6, 7, 8, 1].each do |position| %>
+      <% id = "position#{position}" %>
+      <%= label_tag id, class: 'players-position-filter' do %>
+        <%= check_box_tag id, 'true', params[id] == 'true' %>
+        <%= Player.position_initials(position) %>
+      <% end %>
+    <% end %>
+  </div>
+</div>

@@ -10,11 +10,10 @@ return unless path
     <% end %>
   </div>
 
-  <%= form_tag path, method: :get, class: "players-filter-form" do %>
+  <%= form_tag path, method: :get, class: "pitchers-filter-form" do %>
     <%= hidden_field_tag :order, 'name' %>
 
     <%= render 'players/name_filter_field' %>
-    <%= render 'players/position_filter_field' %>
     <%= render 'players/free_agent_filter_field' %>
 
     <div class="actions">
