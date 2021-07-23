@@ -1,0 +1,19 @@
+<div class="field">
+  <%= label_tag :throws %>
+
+  <div class="players-position-filters check-box-buttons">
+    <%= label_tag :throws_all,
+                  class: 'radio-button-label' do %>
+      <%= radio_button_tag :throws, :all, (params[:throws].blank? || params[:throws] == 'all') %>
+      Any
+    <% end %>
+
+    <% Player::THROWS_MAP.each do |key, options| %>
+      <% id = "throws_#{key}" %>
+      <%= label_tag id, class: 'radio-button-label players-throws-filter' do %>
+        <%= radio_button_tag :throws, key, params[:throws] == key %>
+        <%= options[:name] %>
+      <% end %>
+    <% end %>
+  </div>
+</div>

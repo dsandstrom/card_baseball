@@ -1,0 +1,19 @@
+<div class="field">
+  <%= label_tag :pitcher_type, 'Type' %>
+
+  <div class="players-position-filters check-box-buttons">
+    <%= label_tag :pitcher_type_all,
+                  class: 'radio-button-label' do %>
+      <%= radio_button_tag :pitcher_type, :all, (params[:pitcher_type].blank? || params[:pitcher_type] == 'all') %>
+      Any
+    <% end %>
+
+    <% %w[S R].each do |key| %>
+      <% id = "pitcher_type_#{key}" %>
+      <%= label_tag id, class: 'radio-button-label players-pitcher_type-filter' do %>
+        <%= radio_button_tag :pitcher_type, key, params[:pitcher_type] == key %>
+        <%= Player::PITCHER_TYPES[key][:name] %>
+      <% end %>
+    <% end %>
+  </div>
+</div>

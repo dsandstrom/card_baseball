@@ -8,11 +8,11 @@
       Any
     <% end %>
 
-    <% Player::BATS_MAP.each do |key, _| %>
+    <% Player::BATS_MAP.each do |key, options| %>
       <% id = "bats_#{key}" %>
       <%= label_tag id, class: 'radio-button-label players-bats-filter' do %>
         <%= radio_button_tag :bats, key, params[:bats] == key %>
-        <%= Player::BATS_MAP[key][:name] %>
+        <%= options[:name] %>
       <% end %>
     <% end %>
   </div>
