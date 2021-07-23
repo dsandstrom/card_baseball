@@ -1125,7 +1125,7 @@ RSpec.describe Player, type: :model do
     context "when bats is 'L'" do
       before { subject.bats = "L" }
 
-      it "returns nil" do
+      it "returns Left" do
         expect(subject.verbose_bats).to eq("Left")
       end
     end
@@ -1133,7 +1133,7 @@ RSpec.describe Player, type: :model do
     context "when bats is 'R'" do
       before { subject.bats = "R" }
 
-      it "returns nil" do
+      it "returns Right" do
         expect(subject.verbose_bats).to eq("Right")
       end
     end
@@ -1141,15 +1141,7 @@ RSpec.describe Player, type: :model do
     context "when bats is 'B'" do
       before { subject.bats = "B" }
 
-      it "returns nil" do
-        expect(subject.verbose_bats).to eq("Switch")
-      end
-    end
-
-    context "when bats is 'S'" do
-      before { subject.bats = "S" }
-
-      it "returns nil" do
+      it "returns Switch" do
         expect(subject.verbose_bats).to eq("Switch")
       end
     end
