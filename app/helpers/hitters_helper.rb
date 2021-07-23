@@ -33,8 +33,9 @@ module HittersHelper
   end
 
   def player_positions(player, options = {})
+    skip = options.delete(:skip)
     position_tags = player.positions.filter_map do |position|
-      next if options.delete(:skip)&.include?(position)
+      next if skip&.include?(position)
 
       player_position_tag(player, position, options)
     end
@@ -53,11 +54,11 @@ module HittersHelper
     def player_position_tag(player, position, options = {})
       defense = player.position_defense(position)
       bar = player.position_bar(position)
-      word = player_position_word(position, options.delete(:full))
+      word = player_position_word(position, options[:full])
 
-      options = { class: 'player-position-defense', tag: :span }
+      tag_options = { class: 'player-position-defense', tag: :span }
       content_tag :span, class: 'player-position' do
-        safe_join([word, format_defense_and_bar(defense, bar, options)])
+        safe_join([word, format_defense_and_bar(defense, bar, tag_options)])
       end
     end
 
