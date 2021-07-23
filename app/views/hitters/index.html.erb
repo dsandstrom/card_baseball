@@ -16,5 +16,7 @@
   <%= team_nav(@team) if @team %>
 </div>
 
+<%= render 'players/filter_form', players: @hitters %>
+
 <%= render 'hitters/hitters', hitters: @hitters,
                               show_team: @team.nil? %>

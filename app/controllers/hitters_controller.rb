@@ -9,7 +9,7 @@ class HittersController < ApplicationController
       if @team
         @team.hitters
       else
-        Player.hitters.order(offensive_rating: :desc).page(params[:page])
+        Player.hitters.filter_by(build_filters).page(params[:page])
       end
   end
 

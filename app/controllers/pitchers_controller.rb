@@ -9,7 +9,7 @@ class PitchersController < ApplicationController
       if @team
         @team.pitchers
       else
-        Player.pitchers.order(pitcher_rating: :desc).page(params[:page])
+        Player.pitchers.filter_by(build_filters).page(params[:page])
       end
   end
 
