@@ -37,18 +37,20 @@
     </div>
 
     <div class="second-column">
-      <p>
-        <% if @contract %>
-          <%= render @contract %>
-        <% else %>
-          No contract
-        <% end %>
+      <dl class="player-contract">
+        <dt>Contract</dt>
+        <dd>
+          <% if @contract %>
+            <%= render @contract %>
+          <% else %>
+            Available
+          <% end %>
+        </dd>
 
         <% if can?(:create, new_contract) %>
-          <%= divider %>
-          <%= link_to 'change', player_contract_path(@player) %>
+          <dd><%= link_to 'change', player_contract_path(@player) %></dd>
         <% end %>
-      </p>
+      </dl>
     </div>
   </div>
 </div>
