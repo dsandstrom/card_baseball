@@ -5,7 +5,17 @@ class SpotsController < ApplicationController
   load_and_authorize_resource through: :lineup
   before_action :set_team
 
-  def new; end
+  def new
+    respond_to do |format|
+      format.html { render :new }
+      format.js do
+        @spot.batting_order = params.delete(:batting_order)
+        bench_hitter_id = params.delete(:bench_hitter_id)
+        @bench_hitter = Player.find(bench_hitter_id) if bench_hitter_id
+        render :destroy
+      end
+    end
+  end
 
   def edit; end
 

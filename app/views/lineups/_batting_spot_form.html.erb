@@ -65,15 +65,14 @@
           <% end %>
         <% end %>
 
-        <%# TODO: when not persisted, allow to click to move back to bench %>
         <% if spot.persisted? %>
           <%= link_to "&rArr;".html_safe, lineup_spot_path(lineup, spot),
                       method: :delete, class: 'destroy-link',
-                      title: 'Bench', data: { remote: true } %>
+                      title: 'Move to Bench', data: { remote: true } %>
         <% else %>
-          <%= link_to "&rArr;".html_safe, '#',
-                      method: :delete, class: 'disabled destroy-link',
-                      title: 'Bench' %>
+          <%= link_to "&rArr;".html_safe,
+                      new_lineup_spot_path(lineup, batting_order: batting_order, bench_hitter_id: hitter&.id),
+                      class: 'destroy-link', title: 'Cancel', remote: true %>
         <% end %>
       <% end %>
     </div>
