@@ -8,12 +8,18 @@
       All
     <% end %>
 
-    <% %w[2 3 4 5].each do |option| %>
+    <% %w[1 2 3 4].each do |option| %>
       <% id = "speed_#{option}" %>
       <%= label_tag id, class: 'radio-button-label players-speed-filter' do %>
         <%= radio_button_tag :speed, option, params[:speed] == option %>
         <%= "> #{option}" %>
       <% end %>
+    <% end %>
+
+    <% id = "speed_5" %>
+    <%= label_tag id, class: 'radio-button-label players-speed-filter' do %>
+      <%= radio_button_tag :speed, 5, params[:speed] == '5' %>
+      Rickey
     <% end %>
   </div>
 </div>
