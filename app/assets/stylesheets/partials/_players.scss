@@ -37,3 +37,23 @@
     justify-content: center;
   }
 }
+
+.filter-toggle-link {
+  &.toggle-on {
+    display: none;
+  }
+
+  &.toggle-off {
+    display: inline-block;
+  }
+}
+
+.filters-wrapper {
+  &.inactive {
+    display: none;
+  }
+
+  &.active {
+    display: block;
+  }
+}
