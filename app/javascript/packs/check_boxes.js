@@ -1,7 +1,6 @@
 class CheckBoxLabel {
   constructor(elem) {
     this.elem = elem;
-    console.log(elem);
     this.checkBox = this.elem.querySelector('input');
     this.elem.classList.add('radio-button-label');
     this.toggleDisabledClass();
