@@ -215,7 +215,6 @@ class Player < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   # used by .filter_by
-  # TODO: add pitcher type radios
   # TODO: when defense, sort by selected positions
   def self.build_order_param(column)
     case column

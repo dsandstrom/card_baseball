@@ -2,6 +2,7 @@
 
 # TODO: allow locking/unlocking
 # TODO: when no dh, add blank spot that can be manually filled out for pitcher
+# TODO: allow pitcher from rotation/bullpen to be moved to spot 9th spot
 
 class Lineup < ApplicationRecord
   VS_OPTIONS = %w[left right].freeze

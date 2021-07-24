@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-# TODO: allow admin to create user (invite without password)
-# TODO: add user dropdown
-
 class UsersController < ApplicationController
   load_and_authorize_resource
 

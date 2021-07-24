@@ -3,7 +3,6 @@
 # TODO: allow users to "sticky" players (session)
 # keeps them at the top so they can compare to other players
 # TODO: allow users to "watch" players when thinking about trades (database)
-# TODO: allow seaching/filtering
 
 class PlayersController < ApplicationController
   ALLOWED_ATTRS =
