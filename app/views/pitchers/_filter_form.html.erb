@@ -11,12 +11,16 @@ return unless path
   </div>
 
   <%= form_tag path, method: :get, class: "pitchers-filter-form" do %>
+    <%= hidden_field_tag :order, 'pitching' %>
+
     <%= render 'players/name_filter_field' %>
 
     <%= render 'pitchers/pitcher_type_filter_field' %>
     <%= render 'pitchers/throws_filter_field' %>
 
-    <%= render 'players/free_agent_filter_field' %>
+    <% if @team.nil? %>
+      <%= render 'players/free_agent_filter_field' %>
+    <% end %>
 
     <div class="actions">
       <%= submit_tag 'Filter' %>

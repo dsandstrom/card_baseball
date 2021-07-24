@@ -11,6 +11,8 @@ return unless path
   </div>
 
   <%= form_tag path, method: :get, class: "hitters-filter-form" do %>
+    <%= hidden_field_tag :order, 'offense' %>
+
     <%= render 'players/name_filter_field' %>
     <%= render 'players/position_filter_field' %>
 
@@ -18,7 +20,9 @@ return unless path
     <%= render 'hitters/bunt_grade_filter_field' %>
     <%= render 'hitters/speed_filter_field' %>
 
-    <%= render 'players/free_agent_filter_field' %>
+    <% if @team.nil? %>
+      <%= render 'players/free_agent_filter_field' %>
+    <% end %>
 
     <div class="actions">
       <%= submit_tag 'Filter' %>

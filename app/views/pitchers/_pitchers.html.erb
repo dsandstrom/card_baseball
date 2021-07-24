@@ -13,13 +13,13 @@
 
 <% if pages %>
   <div class="page-links">
-    <%= paginate @pitchers %>
+    <%= paginate pitchers %>
   </div>
 <% end %>
 
 <table class="pitchers">
   <thead>
-    <% if pages %>
+    <% if pitchers.any? && pages %>
       <tr>
         <th colspan=20><%= page_entries_info pitchers %></th>
       </tr>
@@ -52,6 +52,10 @@
                    show_team: show_team,
                    highlight: highlight %>
       <% end %>
+    <% elsif searching? %>
+      <tr>
+        <td colspan="30">No pitchers found</td>
+      </tr>
     <% else %>
       <tr>
         <td colspan="30">No pitchers yet</td>
@@ -62,6 +66,6 @@
 
 <% if pages %>
   <div class="page-links">
-    <%= paginate @pitchers %>
+    <%= paginate pitchers %>
   </div>
 <% end %>

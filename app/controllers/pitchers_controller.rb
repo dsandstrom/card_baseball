@@ -7,7 +7,7 @@ class PitchersController < ApplicationController
   def index
     @pitchers =
       if @team
-        @team.pitchers
+        @team.pitchers.filter_by(build_filters)
       else
         params[:order] = 'pitching'
         Player.pitchers.filter_by(build_filters).page(params[:page])

@@ -13,7 +13,7 @@
 
 <% if pages %>
   <div class="page-links">
-    <%= paginate @hitters %>
+    <%= paginate hitters %>
   </div>
 <% end %>
 
@@ -21,10 +21,12 @@
   <thead>
     <tr>
       <th colspan="8">
-        <% if pages %>
-          <%= page_entries_info hitters %>
-        <% else %>
-          Hitters
+        <% if hitters.any? %>
+          <% if pages %>
+            <%= page_entries_info hitters %>
+          <% else %>
+            Hitters
+          <% end %>
         <% end %>
       </th>
       <th colspan="4" class="vs-left<%= ' highlight' if highlight == 'left' %>">vs Lefties</th>
@@ -79,6 +81,10 @@
                    show_team: show_team,
                    highlight: highlight %>
       <% end %>
+    <% elsif searching? %>
+      <tr>
+        <td colspan="30">No hitters found</td>
+      </tr>
     <% else %>
       <tr>
         <td colspan="30">No hitters yet</td>
@@ -89,6 +95,6 @@
 
 <% if pages %>
   <div class="page-links">
-    <%= paginate @hitters %>
+    <%= paginate hitters %>
   </div>
 <% end %>
