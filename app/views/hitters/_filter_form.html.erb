@@ -3,13 +3,15 @@ path ||= request.path
 return unless path
 %>
 
-<div class="filters-wrapper">
-  <div class="heading-and-link">
-    <% if searching? %>
-      <%= link_to 'reset', path %>
-    <% end %>
-  </div>
+<% if searching? %>
+  <% if params[:order] != 'reset' %>
+    <p class="link-wrapper"><%= link_to 'Reset Filters', "#{path}?order=reset" %></p>
+  <% end %>
+<% else %>
+  <p class="link-wrapper"><%= link_to 'Search/Filter Hitters', 'javascript:void(0)', class: 'toggle-link filter-toggle-link', data: { target: 'hitter-filters' } %></p>
+<% end %>
 
+<div id="hitter-filters" class="filters-wrapper<%= ' inactive' unless searching? %>">
   <%= form_tag path, method: :get, class: "hitters-filter-form" do %>
     <%= hidden_field_tag :order, 'offense' %>
 

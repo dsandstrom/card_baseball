@@ -24,8 +24,8 @@ class ApplicationController < ActionController::Base
       authorize! :read, Player
     end
 
-    def build_filters
-      filters = {}
+    def build_filters(defaults = {})
+      filters = defaults
       FILTER_OPTIONS.each do |param|
         filters[param] = params[param]
       end

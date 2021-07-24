@@ -9,8 +9,8 @@ class HittersController < ApplicationController
       if @team
         @team.hitters.filter_by(build_filters)
       else
-        params[:order] = 'offense'
-        Player.hitters.filter_by(build_filters).page(params[:page])
+        Player.hitters.filter_by(build_filters(order: 'offense'))
+              .page(params[:page])
       end
   end
 
