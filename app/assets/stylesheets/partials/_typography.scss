@@ -140,6 +140,10 @@ dt {
   font-size: 85%;
   letter-spacing: 1px;
   line-height: 1.3;
+
+  &:first-child {
+    margin-top: 0;
+  }
 }
 
 dd {
