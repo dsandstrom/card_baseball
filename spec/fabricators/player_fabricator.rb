@@ -55,4 +55,15 @@ Fabricator(:hitting_pitcher, from: :hitter) do
   pitcher_type { Player::PITCHER_TYPES.keys.sample }
   starting_pitching { rand(Player::RATING_RANGE) }
   relief_pitching { rand(Player::RATING_RANGE) }
+  defense7 { rand(Player::DEFENSE_RANGE) }
+end
+
+Fabricator(:starting_pitcher, from: :pitcher) do
+  pitcher_type 'S'
+  starting_pitching { rand(Player::RATING_RANGE) }
+end
+
+Fabricator(:relief_pitcher, from: :pitcher) do
+  pitcher_type 'R'
+  relief_pitching { rand(Player::RATING_RANGE) }
 end
