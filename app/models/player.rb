@@ -287,6 +287,22 @@ class Player < ApplicationRecord # rubocop:disable Metrics/ClassLength
     @verbose_bats ||= BATS_MAP[bats][:name] if BATS_MAP[bats]
   end
 
+  def starting_pitcher?
+    @starting_pitcher ||= positions.include?(1) && starting_pitching.present?
+  end
+
+  def relief_pitcher?
+    @relief_pitcher ||= positions.include?(1) && relief_pitching.present?
+  end
+
+  def infielder?
+    @infielder ||= [3, 4, 5, 6].any? { |pos| positions.include?(pos) }
+  end
+
+  def outfielder?
+    @outfielder ||= [7, 8].any? { |pos| positions.include?(pos) }
+  end
+
   private
 
     def build_name

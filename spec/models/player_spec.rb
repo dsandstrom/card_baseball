@@ -1215,4 +1215,150 @@ RSpec.describe Player, type: :model do
       end
     end
   end
+
+  describe "#starting_pitcher?" do
+    context "for a relief pitcher" do
+      before do
+        subject.primary_position = 1
+        subject.defense1 = 4
+        subject.relief_pitching = 67
+      end
+
+      it "returns false" do
+        expect(subject.starting_pitcher?).to eq(false)
+      end
+    end
+
+    context "for a starting pitcher" do
+      before do
+        subject.primary_position = 1
+        subject.defense1 = 4
+        subject.starting_pitching = 67
+      end
+
+      it "returns true" do
+        expect(subject.starting_pitcher?).to eq(true)
+      end
+    end
+
+    context "for a shortstop" do
+      before do
+        subject.primary_position = 6
+        subject.defense6 = 9
+      end
+
+      it "returns false" do
+        expect(subject.starting_pitcher?).to eq(false)
+      end
+    end
+  end
+
+  describe "#relief_pitcher?" do
+    context "for a relief pitcher" do
+      before do
+        subject.primary_position = 1
+        subject.defense1 = 4
+        subject.relief_pitching = 67
+      end
+
+      it "returns true" do
+        expect(subject.relief_pitcher?).to eq(true)
+      end
+    end
+
+    context "for a starting pitcher" do
+      before do
+        subject.primary_position = 1
+        subject.defense1 = 4
+        subject.starting_pitching = 67
+      end
+
+      it "returns false" do
+        expect(subject.relief_pitcher?).to eq(false)
+      end
+    end
+
+    context "for a shortstop" do
+      before do
+        subject.primary_position = 6
+        subject.defense6 = 9
+      end
+
+      it "returns false" do
+        expect(subject.relief_pitcher?).to eq(false)
+      end
+    end
+  end
+
+  describe "#infielder?" do
+    context "for a pitcher" do
+      before do
+        subject.primary_position = 1
+        subject.defense1 = 4
+        subject.starting_pitching = 67
+      end
+
+      it "returns false" do
+        expect(subject.infielder?).to eq(false)
+      end
+    end
+
+    context "for a shortstop" do
+      before do
+        subject.primary_position = 6
+        subject.defense6 = 9
+      end
+
+      it "returns true" do
+        expect(subject.infielder?).to eq(true)
+      end
+    end
+
+    context "for a center fielder" do
+      before do
+        subject.primary_position = 8
+        subject.defense8 = 9
+      end
+
+      it "returns false" do
+        expect(subject.infielder?).to eq(false)
+      end
+    end
+  end
+
+  describe "#outfielder?" do
+    context "for a pitcher" do
+      before do
+        subject.primary_position = 1
+        subject.defense1 = 4
+        subject.starting_pitching = 67
+      end
+
+      it "returns false" do
+        expect(subject.outfielder?).to eq(false)
+      end
+    end
+
+    context "for a shortstop" do
+      before do
+        subject.primary_position = 6
+        subject.defense6 = 9
+      end
+
+      it "returns false" do
+        expect(subject.outfielder?).to eq(false)
+      end
+    end
+
+    context "for a center fielder" do
+      before do
+        subject.primary_position = 8
+        subject.defense8 = 9
+      end
+
+      it "returns true" do
+        expect(subject.outfielder?).to eq(true)
+      end
+    end
+  end
 end
