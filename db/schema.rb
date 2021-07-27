@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_20_010119) do
+ActiveRecord::Schema.define(version: 2021_07_27_003038) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -83,6 +83,17 @@ ActiveRecord::Schema.define(version: 2021_07_20_010119) do
     t.index ["pitcher_type"], name: "index_players_on_pitcher_type"
     t.index ["primary_position"], name: "index_players_on_primary_position"
     t.index ["roster_name"], name: "index_players_on_roster_name", unique: true
+  end
+
+  create_table "rosters", force: :cascade do |t|
+    t.integer "team_id", null: false
+    t.integer "player_id", null: false
+    t.integer "level", null: false
+    t.integer "position"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["level"], name: "index_rosters_on_level"
+    t.index ["team_id"], name: "index_rosters_on_team_id"
   end
 
   create_table "spots", force: :cascade do |t|
