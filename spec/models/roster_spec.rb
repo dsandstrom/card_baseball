@@ -373,5 +373,44 @@ RSpec.describe Roster, type: :model do
         end
       end
     end
+
+    describe "#players_at_level4" do
+      context "for a new roster" do
+        let(:roster) do
+          Fabricate.build(:roster, team: team, player: player, level: 4,
+                                   position: 3)
+        end
+
+        context "when already 25 at level 4" do
+          before { 25.times { Fabricate(:roster, team: team, level: 4) } }
+
+          it "should be valid" do
+            expect(roster).to be_valid
+          end
+        end
+
+        context "when already 26 at level 4" do
+          before { 26.times { Fabricate(:roster, team: team, level: 4) } }
+
+          it "should not be valid" do
+            expect(roster).not_to be_valid
+          end
+        end
+      end
+
+      context "for a persisted roster" do
+        let!(:roster) do
+          Fabricate(:roster, team: team, player: player, level: 4, position: 3)
+        end
+
+        context "when already 25 at level 4" do
+          before { 25.times { Fabricate(:roster, team: team, level: 4) } }
+
+          it "should be valid" do
+            expect(roster).to be_valid
+          end
+        end
+      end
+    end
   end
 end

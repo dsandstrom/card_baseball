@@ -3,6 +3,7 @@
 # TODO: validate max 26 at level 4
 
 class Roster < ApplicationRecord
+  MAX_LEVEL4 = 26
   LEVEL_MAP = {
     1 => { name: 'A' },
     2 => { name: 'AA' },
@@ -27,6 +28,7 @@ class Roster < ApplicationRecord
 
   validate :player_on_team
   validate :player_plays_position
+  validate :players_at_level4
 
   private
 
@@ -42,6 +44,18 @@ class Roster < ApplicationRecord
       return if valid_position_for_player?
 
       errors.add(:player, "doesn't play position")
+    end
+
+    def players_at_level4
+      return unless team
+
+      max = MAX_LEVEL4.dup
+      max += 1 if persisted?
+      return if team.rosters.where(level: 4).count < max
+
+      message = 'Team already has the maximum amount of players at '\
+                 "#{LEVEL_MAP[4][:name]} level"
+      errors.add(:player, message)
     end
 
     def valid_position_for_player?
