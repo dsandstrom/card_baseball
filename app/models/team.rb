@@ -10,6 +10,7 @@ class Team < ApplicationRecord
   has_many :contracts, dependent: :nullify
   has_many :players, through: :contracts
   has_many :lineups, dependent: :destroy
+  has_many :rosters, dependent: :destroy
 
   # CLASS
 
