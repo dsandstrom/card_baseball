@@ -23,19 +23,23 @@ class Ability
     end
 
     def admin_abilities
-      [Contract, League, Lineup, Player, Spot, Team, User].each do |class_name|
+      [Contract, League, Lineup, Player, Roster, Spot, Team,
+       User].each do |class_name|
         can :manage, class_name
       end
       cannot :destroy, User, id: user_id
     end
 
     def user_abilities
-      [Contract, League, Lineup, Player, Spot, Team, User].each do |class_name|
+      [Contract, League, Lineup, Player, Roster, Spot, Team,
+       User].each do |class_name|
         can :read, class_name
       end
-      can :update, User, id: user_id
-      can :update, Team, user_id: user_id
-      can :manage, Lineup, team: { user_id: user_id }
+      [Lineup, Roster].each do |class_name|
+        can :manage, class_name, team: { user_id: user_id }
+      end
       can :manage, Spot, lineup: { team: { user_id: user_id } }
+      can :update, Team, user_id: user_id
+      can :update, User, id: user_id
     end
 end
