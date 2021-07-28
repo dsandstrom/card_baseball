@@ -23,6 +23,7 @@ Rails.application.routes.draw do
     resources :lineups
     resources :hitters, only: :index
     resources :pitchers, only: :index
+    resources :rosters, except: :show
   end
 
   resources :lineups, only: nil do
