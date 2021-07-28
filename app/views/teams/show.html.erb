@@ -29,14 +29,20 @@
   <%= team_nav(@team) %>
 </div>
 
-<% if user %>
+<% if user && user.id != current_user_id %>
   <dl class="user-info">
     <dt>Owner</dt>
     <dd><%= link_to user.name, user, class: 'team-user' %></dd>
   </dl>
 <% end %>
 
-<h2>Roster</h2>
+<div class="heading-and-button">
+  <h2>Roster</h2>
+  <% if can?(:create, new_roster) %>
+    <%= link_to 'Edit', team_rosters_path(@team),
+                class: 'button button-clear' %>
+  <% end %>
+</div>
 
 <%= render 'players/players', players: @players,
                               show_team: false %>

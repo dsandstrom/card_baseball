@@ -63,6 +63,15 @@ module ApplicationHelper
       end
   end
 
+  def new_roster
+    @new_roster ||=
+      if @team
+        @team.rosters.build
+      else
+        Roster.new
+      end
+  end
+
   def current_user_id
     @current_user_id ||= current_user&.id
   end
