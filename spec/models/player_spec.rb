@@ -1362,4 +1362,258 @@ RSpec.describe Player, type: :model do
       end
     end
   end
+
+  describe "#plays_position?" do
+    context "when position is nil" do
+      let(:player) { Fabricate(:hitter) }
+
+      it "returns false" do
+        expect(player.plays_position?(nil)).to eq(false)
+      end
+    end
+
+    context "for a pitcher" do
+      let(:player) { Fabricate(:pitcher) }
+
+      context "when position 1" do
+        it "returns true" do
+          expect(player.plays_position?(1)).to eq(true)
+        end
+      end
+
+      context "when position 2" do
+        it "returns false" do
+          expect(player.plays_position?(2)).to eq(false)
+        end
+      end
+
+      context "when position 3" do
+        it "returns false" do
+          expect(player.plays_position?(3)).to eq(false)
+        end
+      end
+
+      context "when position 4" do
+        it "returns false" do
+          expect(player.plays_position?(4)).to eq(false)
+        end
+      end
+
+      context "when position 5" do
+        it "returns false" do
+          expect(player.plays_position?(5)).to eq(false)
+        end
+      end
+
+      context "when position 6" do
+        it "returns false" do
+          expect(player.plays_position?(6)).to eq(false)
+        end
+      end
+
+      context "when position 7" do
+        it "returns false" do
+          expect(player.plays_position?(7)).to eq(false)
+        end
+      end
+
+      context "when position 8" do
+        it "returns false" do
+          expect(player.plays_position?(8)).to eq(false)
+        end
+      end
+
+      context "when position 9" do
+        it "returns true" do
+          expect(player.plays_position?(9)).to eq(true)
+        end
+      end
+
+      context "when position 10" do
+        it "returns false" do
+          expect(player.plays_position?(10)).to eq(false)
+        end
+      end
+    end
+
+    context "for a catcher/first base" do
+      let(:player) { Fabricate(:hitter, primary_position: 2, defense3: -1) }
+
+      context "when position 1" do
+        it "returns false" do
+          expect(player.plays_position?(1)).to eq(false)
+        end
+      end
+
+      context "when position 2" do
+        it "returns true" do
+          expect(player.plays_position?(2)).to eq(true)
+        end
+      end
+
+      context "when position 3" do
+        it "returns true" do
+          expect(player.plays_position?(3)).to eq(true)
+        end
+      end
+
+      context "when position 4" do
+        it "returns false" do
+          expect(player.plays_position?(4)).to eq(false)
+        end
+      end
+
+      context "when position 5" do
+        it "returns false" do
+          expect(player.plays_position?(5)).to eq(false)
+        end
+      end
+
+      context "when position 6" do
+        it "returns false" do
+          expect(player.plays_position?(6)).to eq(false)
+        end
+      end
+
+      context "when position 7" do
+        it "returns false" do
+          expect(player.plays_position?(7)).to eq(false)
+        end
+      end
+
+      context "when position 8" do
+        it "returns false" do
+          expect(player.plays_position?(8)).to eq(false)
+        end
+      end
+
+      context "when position 9" do
+        it "returns true" do
+          expect(player.plays_position?(9)).to eq(true)
+        end
+      end
+
+      context "when position 10" do
+        it "returns false" do
+          expect(player.plays_position?(10)).to eq(false)
+        end
+      end
+    end
+
+    context "for a infielder" do
+      let(:player) { Fabricate(:hitter, primary_position: 4, defense6: 0) }
+
+      context "when position 1" do
+        it "returns false" do
+          expect(player.plays_position?(1)).to eq(false)
+        end
+      end
+
+      context "when position 2" do
+        it "returns false" do
+          expect(player.plays_position?(2)).to eq(false)
+        end
+      end
+
+      context "when position 3" do
+        it "returns false" do
+          expect(player.plays_position?(3)).to eq(false)
+        end
+      end
+
+      context "when position 4" do
+        it "returns true" do
+          expect(player.plays_position?(4)).to eq(true)
+        end
+      end
+
+      context "when position 5" do
+        it "returns false" do
+          expect(player.plays_position?(5)).to eq(false)
+        end
+      end
+
+      context "when position 6" do
+        it "returns true" do
+          expect(player.plays_position?(6)).to eq(true)
+        end
+      end
+
+      context "when position 7" do
+        it "returns false" do
+          expect(player.plays_position?(7)).to eq(false)
+        end
+      end
+
+      context "when position 8" do
+        it "returns false" do
+          expect(player.plays_position?(8)).to eq(false)
+        end
+      end
+
+      context "when position 9" do
+        it "returns true" do
+          expect(player.plays_position?(9)).to eq(true)
+        end
+      end
+    end
+
+    context "for a center fielder" do
+      let(:player) { Fabricate(:hitter, primary_position: 8) }
+
+      context "when position 1" do
+        it "returns false" do
+          expect(player.plays_position?(1)).to eq(false)
+        end
+      end
+
+      context "when position 2" do
+        it "returns false" do
+          expect(player.plays_position?(2)).to eq(false)
+        end
+      end
+
+      context "when position 3" do
+        it "returns false" do
+          expect(player.plays_position?(3)).to eq(false)
+        end
+      end
+
+      context "when position 4" do
+        it "returns false" do
+          expect(player.plays_position?(4)).to eq(false)
+        end
+      end
+
+      context "when position 5" do
+        it "returns false" do
+          expect(player.plays_position?(5)).to eq(false)
+        end
+      end
+
+      context "when position 6" do
+        it "returns false" do
+          expect(player.plays_position?(6)).to eq(false)
+        end
+      end
+
+      context "when position 7" do
+        it "returns false" do
+          expect(player.plays_position?(7)).to eq(false)
+        end
+      end
+
+      context "when position 8" do
+        it "returns true" do
+          expect(player.plays_position?(8)).to eq(true)
+        end
+      end
+
+      context "when position 9" do
+        it "returns true" do
+          expect(player.plays_position?(9)).to eq(true)
+        end
+      end
+    end
+  end
 end

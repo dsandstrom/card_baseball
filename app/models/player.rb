@@ -253,6 +253,7 @@ class Player < ApplicationRecord # rubocop:disable Metrics/ClassLength
     @primary_position_initials ||= build_primary_position_initials
   end
 
+  # QUESTION: when dh, return nil unless hitter?
   def position_defense(position)
     return 0 if position == 9
 
@@ -304,6 +305,12 @@ class Player < ApplicationRecord # rubocop:disable Metrics/ClassLength
     @outfielder ||= [7, 8].any? { |pos| positions.include?(pos) }
   end
 
+  def plays_position?(pos)
+    return false unless pos && POSITION_MAP.keys.include?(pos)
+
+    position_defense(pos).present?
+  end
+
   private
 
     def build_name
@@ -325,7 +332,7 @@ class Player < ApplicationRecord # rubocop:disable Metrics/ClassLength
     def build_positions
       temp = []
       POSITION_RANGE.each do |position|
-        temp << position if position_defense(position).present?
+        temp << position if plays_position?(position)
       end
       temp
     end
