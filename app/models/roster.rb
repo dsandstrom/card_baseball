@@ -1,9 +1,8 @@
 # frozen_string_literal: true
 
-# TODO: validate max 26 at level 4
-
 class Roster < ApplicationRecord
   MAX_LEVEL4 = 26
+
   LEVEL_MAP = {
     1 => { name: 'A' },
     2 => { name: 'AA' },
@@ -12,10 +11,10 @@ class Roster < ApplicationRecord
   }.freeze
 
   POSITION_MAP = {
-    1 => { name: 'SP' },
-    3 => { name: 'IF' },
-    7 => { name: 'OF' },
-    10 => { name: 'RP' }
+    1 => { initials: 'SP' },
+    10 => { initials: 'RP' },
+    3 => { initials: 'IF' },
+    7 => { initials: 'OF' }
   }.freeze
 
   belongs_to :team
@@ -24,11 +23,20 @@ class Roster < ApplicationRecord
   validates :team_id, presence: true
   validates :player_id, presence: true
   validates :level, presence: true, inclusion: { in: LEVEL_MAP.keys }
-  validates :position, presence: true, inclusion: { in: POSITION_MAP.keys }
+  validates :position, presence: true
 
   validate :player_on_team
   validate :player_plays_position
   validate :players_at_level4
+
+  def position_initials
+    @position_initials ||=
+      if level == 4
+        Player.position_initials(position)
+      elsif POSITION_MAP[position]
+        POSITION_MAP[position][:initials]
+      end
+  end
 
   private
 
@@ -40,7 +48,7 @@ class Roster < ApplicationRecord
     end
 
     def player_plays_position
-      return unless player && team
+      return unless player && team && position
       return if valid_position_for_player?
 
       errors.add(:player, "doesn't play position")
@@ -58,7 +66,31 @@ class Roster < ApplicationRecord
       errors.add(:player, message)
     end
 
+    # level 4, use all positions (1: SP, 10: RP)
+    # level 1-3, use 4 positions (1: SP, 10: RP, 3: IF, 7: OF)
     def valid_position_for_player?
+      value =
+        case level
+        when 4
+          valid_level4_position(position)
+        else
+          valid_level1_position(position)
+        end
+      value || false
+    end
+
+    def valid_level4_position(position)
+      case position
+      when 1
+        player.starting_pitcher?
+      when 10
+        player.relief_pitcher?
+      when 2, 3, 4, 5, 6, 7, 8
+        player.plays_position?(position)
+      end
+    end
+
+    def valid_level1_position(position)
       case position
       when 1
         player.starting_pitcher?
