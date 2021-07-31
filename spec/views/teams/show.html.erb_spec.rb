@@ -131,7 +131,7 @@ RSpec.describe "teams/show", type: :view do
       it "renders team user" do
         render
 
-        assert_select ".team-user", user.name
+        assert_select ".team-user", count: 0
       end
 
       it "renders edit team link" do
