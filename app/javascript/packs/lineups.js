@@ -1,6 +1,9 @@
 import interact from 'interactjs'
 import Rails from '@rails/ujs'
 
+// FIXME: don't allow invalid form to be dragged to another spot
+// when dragging from bench, spot not set, drag to another spot
+
 // https://github.com/taye/interact.js/issues/79
 
 var startPos = null;
