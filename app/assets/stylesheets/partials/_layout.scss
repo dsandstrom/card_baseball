@@ -169,6 +169,35 @@ body {
   }
 }
 
+.heading-and-count {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: 1.5rem;
+
+  h2 {
+    margin: 0;
+  }
+
+  .count {
+    margin: 0 0 0 1rem;
+    padding: .5rem .8rem;
+    border-radius: 5rem;
+    background-color: $dark-gray;
+    color: $off-white;
+    font-weight: bold;
+    line-height: 1;
+
+    &.incomplete {
+      background-color: $color-warning;
+    }
+
+    &.complete {
+      background-color: $color-success;
+    }
+  }
+}
+
 .app-name {
   color: $color-secondary;
   font-size: 2.5rem;
