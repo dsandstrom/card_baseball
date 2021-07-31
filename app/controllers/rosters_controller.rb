@@ -6,10 +6,7 @@ class RostersController < ApplicationController
   before_action :set_league
 
   def index
-    @rosters_level1 = @team.rosters.where(level: 1)
-    @rosters_level2 = @team.rosters.where(level: 2)
-    @rosters_level3 = @team.rosters.where(level: 3)
-    @rosters_level4 = @team.rosters.where(level: 4)
+    build_rosters
   end
 
   def new; end
@@ -48,5 +45,15 @@ class RostersController < ApplicationController
 
     def roster_params
       params.require(:roster).permit(:player_id, :level, :position)
+    end
+
+    def build_rosters
+      @level1_rosters = @team.rosters.where(level: 1)
+      @level2_rosters = @team.rosters.where(level: 2)
+      @level3_rosters = @team.rosters.where(level: 3)
+      @level4_rosters = @team.rosters.where(level: 4)
+      @players = @team.players
+      @rosterless_players = @team.players.left_outer_joins(:roster)
+                                 .where('rosters.id IS NULL')
     end
 end

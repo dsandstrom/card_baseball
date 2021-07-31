@@ -1,0 +1,34 @@
+<%
+  positions = level == 4
+  css_class =
+    if rosters.count == Roster::MAX_LEVEL4
+      'complete'
+    else
+      'incomplete'
+    end
+%>
+
+<div id="rosters_level<%= level %>" class="rosters-level">
+  <div class="heading-and-count">
+    <%= content_tag :h2, Roster::LEVEL_MAP[level][:name] %>
+    <%= content_tag :span, rosters.count,
+                    class: "count rosters-count #{css_class}" %>
+  </div>
+
+  <div class="rosters">
+    <% if can?(:create, new_roster) %>
+      <% Roster.level_positions(level).each do |pos| %>
+        <div class="roster-position-forms">
+          <%= content_tag :span, Roster.position_initials(pos, level),
+                          class: 'rosters-position' %>
+
+          <%= render 'position_form',
+                     team: team, rosters: rosters,
+                     level: level, position: pos %>
+        </div>
+      <% end %>
+    <% else %>
+      <%= render rosters, team: @team %>
+    <% end %>
+  </div>
+</div>

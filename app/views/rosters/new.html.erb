@@ -1,5 +1,9 @@
+<%= league_team_breadcrumbs(@league, @team) %>
+
 <h1>New Roster</h1>
 
-<%= render 'form', roster: @roster %>
+<%= render 'form', roster: @roster, team: @team %>
 
-<%= link_to 'Back', rosters_path %>
+<p>
+  <%= link_to 'Back', team_rosters_path %>
+</p>

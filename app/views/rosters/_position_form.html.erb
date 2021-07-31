@@ -1,0 +1,23 @@
+<%
+  # team, roster/position required
+  # TODO: add current position players at dragable fields
+  rosters = rosters.where(position: position)
+  roster = team.rosters.build(level: level, position: position)
+  url = team_rosters_url(team)
+  css_id = "roster_level_#{level}_position_#{position}"
+%>
+
+<%= form_with(model: roster, url: url,
+              id: "#{css_id}_form", class: 'roster-position-form') do |form| %>
+  <%= form.hidden_field :position,
+                        id: "#{css_id}_position", class: 'roster-position-field' %>
+  <%= form.hidden_field :level,
+                        id: "#{css_id}_level", class: 'roster-level-field' %>
+  <%= form.hidden_field :player_id,
+                        id: "#{css_id}_player_id", class: 'roster-player-field' %>
+
+  <div class="level-position-rosters">
+    <%= render partial: 'rosters/roster_field', collection: rosters,
+               as: :roster %>
+  </div>
+<% end %>

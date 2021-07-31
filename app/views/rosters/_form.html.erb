@@ -1,15 +1,35 @@
-<%= form_with(model: roster) do |form| %>
-  <% if roster.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(roster.errors.count, "error") %> prohibited this roster from being saved:</h2>
+<%
+  level_options = Roster::LEVEL_MAP.map do |key, options|
+    [options[:name], key]
+  end.reverse
+  position_options = Roster::POSITION_MAP.map do |key, options|
+    [options[:initials], key]
+  end
+  url =
+    if roster.persisted?
+      team_roster_url(team, roster)
+    else
+      team_rosters_url(team)
+    end
+%>
 
-      <ul>
-        <% roster.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
+<%= form_with(model: roster, url: url) do |form| %>
+  <%= form_errors(roster) %>
+
+  <div class="field">
+    <%= form.label :level %>
+    <%= form.select :level, level_options  %>
+  </div>
+
+  <div class="field">
+    <%= form.label :player_id %>
+    <%= form.collection_select :player_id, @team.players, :id, :name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :position %>
+    <%= form.select :position, position_options, include_blank: 'none'  %>
+  </div>
 
   <div class="actions">
     <%= form.submit %>

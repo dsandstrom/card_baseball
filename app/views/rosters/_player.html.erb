@@ -1,0 +1,31 @@
+<%
+  position ||= player.primary_position
+  show_positions = false if show_positions.nil?
+%>
+
+<div id="roster_player_<%= player.id %>" class="roster-player">
+  <div class="player-name-wrapper">
+    <%= content_tag :span, player.roster_name, class: 'player-name' %>
+
+    <% if show_positions %>
+      <%= content_tag :div, player_positions(player),
+                      class: 'player-positions' %>
+    <% end %>
+  </div>
+
+  <span class="player-ratings">
+    <% if [1, 10].include?(position) %>
+      <%= content_tag :span, format_pitching(player.starting_pitching),
+                             class: 'player-starting-pitching' %>
+      <%= content_tag :span, format_pitching(player.relief_pitching),
+                             class: 'player-relief-pitching' %>
+    <% else %>
+      <%= content_tag :span, format_hitting(player.offensive_rating),
+                             class: 'player-offensive-rating' %>
+      <%= content_tag :span, format_hitting(player.left_hitting),
+                             class: 'player-left-hitting' %>
+      <%= content_tag :span, format_hitting(player.right_hitting),
+                             class: 'player-right-hitting' %>
+    <% end %>
+  </span>
+</div>

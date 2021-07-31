@@ -1,6 +1,9 @@
-<h1>Editing Roster</h1>
+<%= league_team_breadcrumbs(@league, @team) %>
 
-<%= render 'form', roster: @roster %>
+<h1>Edit Roster</h1>
 
-<%= link_to 'Show', @roster %> |
-<%= link_to 'Back', rosters_path %>
+<%= render 'form', roster: @roster, team: @team %>
+
+<p>
+  <%= link_to 'Back', team_rosters_path %>
+</p>
