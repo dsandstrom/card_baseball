@@ -8,7 +8,8 @@
 %>
 
 <%= form_with(model: roster, url: url,
-              id: "#{css_id}_form", class: 'roster-position-form') do |form| %>
+              id: "#{css_id}_form", class: 'roster-position-form',
+              local: false) do |form| %>
   <%= form.hidden_field :position,
                         id: "#{css_id}_position", class: 'roster-position-field' %>
   <%= form.hidden_field :level,
