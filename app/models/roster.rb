@@ -29,13 +29,16 @@ class Roster < ApplicationRecord
   validate :player_plays_position
   validate :players_at_level4
 
+  def self.position_initials(position, level = 1)
+    if level == 4 && ![1, 10].include?(position)
+      Player.position_initials(position)
+    elsif POSITION_MAP[position]
+      POSITION_MAP[position][:initials]
+    end
+  end
+
   def position_initials
-    @position_initials ||=
-      if level == 4
-        Player.position_initials(position)
-      elsif POSITION_MAP[position]
-        POSITION_MAP[position][:initials]
-      end
+    @position_initials ||= Roster.position_initials(position, level)
   end
 
   private

@@ -789,6 +789,170 @@ RSpec.describe Roster, type: :model do
     end
   end
 
+  describe ".position_initials" do
+    context "when level is 1" do
+      context "when position is 1" do
+        it "returns 'SP'" do
+          expect(Roster.position_initials(1, 1)).to eq("SP")
+        end
+      end
+
+      context "when position is 2" do
+        it "returns nil" do
+          expect(Roster.position_initials(2, 1)).to eq(nil)
+        end
+      end
+
+      context "when position is 3" do
+        it "returns 'IF'" do
+          expect(Roster.position_initials(3, 1)).to eq("IF")
+        end
+      end
+
+      context "when position is 4" do
+        it "returns nil" do
+          expect(Roster.position_initials(4, 1)).to be_nil
+        end
+      end
+
+      context "when position is 5" do
+        it "returns nil" do
+          expect(Roster.position_initials(5, 1)).to be_nil
+        end
+      end
+
+      context "when position is 6" do
+        it "returns nil" do
+          expect(Roster.position_initials(6, 1)).to be_nil
+        end
+      end
+
+      context "when position is 7" do
+        it "returns nil" do
+          expect(Roster.position_initials(7, 1)).to eq("OF")
+        end
+      end
+
+      context "when position is 8" do
+        it "returns nil" do
+          expect(Roster.position_initials(8, 1)).to be_nil
+        end
+      end
+    end
+
+    context "when level is 3" do
+      context "when position is 1" do
+        it "returns 'SP'" do
+          expect(Roster.position_initials(1, 3)).to eq("SP")
+        end
+      end
+
+      context "when position is 2" do
+        it "returns nil" do
+          expect(Roster.position_initials(2, 3)).to eq(nil)
+        end
+      end
+
+      context "when position is 3" do
+        it "returns 'IF'" do
+          expect(Roster.position_initials(3, 3)).to eq("IF")
+        end
+      end
+
+      context "when position is 4" do
+        it "returns nil" do
+          expect(Roster.position_initials(4, 3)).to be_nil
+        end
+      end
+
+      context "when position is 5" do
+        it "returns nil" do
+          expect(Roster.position_initials(5, 3)).to be_nil
+        end
+      end
+
+      context "when position is 6" do
+        it "returns nil" do
+          expect(Roster.position_initials(6, 3)).to be_nil
+        end
+      end
+
+      context "when position is 7" do
+        it "returns nil" do
+          expect(Roster.position_initials(7, 3)).to eq("OF")
+        end
+      end
+
+      context "when position is 8" do
+        it "returns nil" do
+          expect(Roster.position_initials(8, 3)).to be_nil
+        end
+      end
+    end
+
+    context "when level is 4" do
+      context "when position is 1" do
+        it "returns 'SP'" do
+          expect(Roster.position_initials(1, 4)).to eq("SP")
+        end
+      end
+
+      context "when position is 2" do
+        it "returns nil" do
+          expect(Roster.position_initials(2, 4)).to eq("C")
+        end
+      end
+
+      context "when position is 3" do
+        it "returns 'IF'" do
+          expect(Roster.position_initials(3, 4)).to eq("1B")
+        end
+      end
+
+      context "when position is 4" do
+        it "returns '2B" do
+          expect(Roster.position_initials(4, 4)).to eq("2B")
+        end
+      end
+
+      context "when position is 5" do
+        it "returns '3B" do
+          expect(Roster.position_initials(5, 4)).to eq("3B")
+        end
+      end
+
+      context "when position is 6" do
+        it "returns 'SS" do
+          expect(Roster.position_initials(6, 4)).to eq("SS")
+        end
+      end
+
+      context "when position is 7" do
+        it "returns 'OF" do
+          expect(Roster.position_initials(7, 4)).to eq("OF")
+        end
+      end
+
+      context "when position is 8" do
+        it "returns 'CF" do
+          expect(Roster.position_initials(8, 4)).to eq("CF")
+        end
+      end
+
+      context "when position is 9" do
+        it "returns 'DH'" do
+          expect(Roster.position_initials(9, 4)).to eq("DH")
+        end
+      end
+
+      context "when position is 10" do
+        it "returns 'RP'" do
+          expect(Roster.position_initials(10, 4)).to eq("RP")
+        end
+      end
+    end
+  end
+
   describe "#position_initials" do
     context "when level is 1" do
       before { subject.level = 1 }
@@ -933,7 +1097,7 @@ RSpec.describe Roster, type: :model do
         before { subject.position = 1 }
 
         it "returns 'SP'" do
-          expect(subject.position_initials).to eq("P")
+          expect(subject.position_initials).to eq("SP")
         end
       end
 
@@ -998,6 +1162,14 @@ RSpec.describe Roster, type: :model do
 
         it "returns 'DH'" do
           expect(subject.position_initials).to eq("DH")
+        end
+      end
+
+      context "when position is 10" do
+        before { subject.position = 10 }
+
+        it "returns 'RP'" do
+          expect(subject.position_initials).to eq("RP")
         end
       end
     end
