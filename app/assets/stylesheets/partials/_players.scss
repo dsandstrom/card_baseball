@@ -86,6 +86,69 @@
   margin-left: 1rem;
 }
 
+.player-starting-pitching,
+.player-relief-pitching {
+  .rating-missing {
+    color: $light-gray;
+  }
+
+  .rating-0 {
+    color: $lavender;
+  }
+
+  .rating-50 {
+    color: $dark-blue;
+  }
+
+  .rating-60 {
+    color: $dark-yellow;
+  }
+
+  .rating-70 {
+    color: $yellow;
+  }
+
+  .rating-80 {
+    color: $red;
+  }
+
+  .rating-90 {
+    color: $dark-red;
+  }
+}
+
+.player-offensive-rating,
+.player-left-hitting,
+.player-right-hitting {
+  .rating-missing {
+    color: $light-gray;
+  }
+
+  .rating-0 {
+    color: $lavender;
+  }
+
+  .rating-50 {
+    color: $dark-blue;
+  }
+
+  .rating-60 {
+    color: $dark-yellow;
+  }
+
+  .rating-70 {
+    color: $yellow;
+  }
+
+  .rating-80 {
+    color: $red;
+  }
+
+  .rating-90 {
+    color: $dark-red;
+  }
+}
+
 .player-offensive-rating {
   &::before {
     content: 'Rtg';

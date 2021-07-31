@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module HittersHelper
+module PlayersHelper
   def format_defense(defense, options = {})
     tag = options.delete(:tag) || :span
     if defense.blank?
@@ -41,6 +41,30 @@ module HittersHelper
     end
 
     safe_join(position_tags)
+  end
+
+  def format_pitching(rating, options = {})
+    tag = options.delete(:tag) || :span
+    category =
+      if rating.present?
+        "#{rating / 10}0"
+      else
+        'missing'
+      end
+    rating ||= 'X'
+    content_tag(tag, rating, class: "rating-#{category}")
+  end
+
+  def format_hitting(rating, options = {})
+    tag = options.delete(:tag) || :span
+    category =
+      if rating.present?
+        "#{rating / 10}0"
+      else
+        'missing'
+      end
+    rating ||= 'X'
+    content_tag(tag, rating, class: "rating-#{category}")
   end
 
   private
