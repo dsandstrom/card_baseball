@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# TODO: add uniqueness validation (player_id)
+
 class Roster < ApplicationRecord
   MAX_LEVEL4 = 26
 

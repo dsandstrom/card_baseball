@@ -336,3 +336,9 @@
 .roster-position-form {
   margin: 0;
 }
+
+// TODO: move padding to player field
+// TODO: add gap below to drop new player
+.roster-field {
+  background-color: $white;
+}

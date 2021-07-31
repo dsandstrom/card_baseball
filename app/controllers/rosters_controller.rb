@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+# TODO: when create with a player with a roster, destroy old roster
+# TODO: when dropping roster on current form, don't create a new one
+
 class RostersController < ApplicationController
   load_and_authorize_resource :team
   load_and_authorize_resource through: :team
