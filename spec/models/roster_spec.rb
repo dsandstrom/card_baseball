@@ -789,6 +789,32 @@ RSpec.describe Roster, type: :model do
     end
   end
 
+  describe ".level_positions" do
+    context "when level is 1" do
+      it "returns a subset" do
+        expect(Roster.level_positions(1)).to eq([1, 10, 3, 7])
+      end
+    end
+
+    context "when level is 2" do
+      it "returns a subset" do
+        expect(Roster.level_positions(2)).to eq([1, 10, 3, 7])
+      end
+    end
+
+    context "when level is 3" do
+      it "returns a subset" do
+        expect(Roster.level_positions(3)).to eq([1, 10, 3, 7])
+      end
+    end
+
+    context "when level is 4" do
+      it "returns a subset" do
+        expect(Roster.level_positions(4)).to eq([2, 3, 4, 5, 6, 7, 8, 1, 10])
+      end
+    end
+  end
+
   describe ".position_initials" do
     context "when level is 1" do
       context "when position is 1" do
