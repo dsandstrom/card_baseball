@@ -1,6 +1,8 @@
 <%
   # team, roster/position required
   # TODO: add current position players at dragable fields
+  # TODO: add 'move up/down' button to change levels
+  # TODO: show other possible positions
   rosters = rosters.where(position: position)
   roster = team.rosters.build(level: level, position: position)
   url = team_rosters_url(team)
