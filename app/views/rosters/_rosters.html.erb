@@ -1,10 +1,11 @@
 <%
-  positions = level == 4
   css_class =
-    if rosters.count == Roster::MAX_LEVEL4
-      'complete'
-    else
-      'incomplete'
+    if level == 4
+      if rosters.count == Roster::MAX_LEVEL4
+        'complete'
+      else
+        'incomplete'
+      end
     end
 %>
 
