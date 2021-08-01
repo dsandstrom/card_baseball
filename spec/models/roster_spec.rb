@@ -24,6 +24,7 @@ RSpec.describe Roster, type: :model do
   it { is_expected.to validate_presence_of :position }
 
   it { is_expected.to validate_inclusion_of(:level).in_array([1, 2, 3, 4]) }
+  it { is_expected.to validate_uniqueness_of(:player_id) }
 
   it { is_expected.to belong_to(:team) }
   it { is_expected.to belong_to(:player) }

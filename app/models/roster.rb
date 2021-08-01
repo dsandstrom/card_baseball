@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-# TODO: add uniqueness validation (player_id)
-
 class Roster < ApplicationRecord
   MAX_LEVEL4 = 26
 
@@ -23,7 +21,7 @@ class Roster < ApplicationRecord
   belongs_to :player
 
   validates :team_id, presence: true
-  validates :player_id, presence: true
+  validates :player_id, presence: true, uniqueness: true
   validates :level, presence: true, inclusion: { in: LEVEL_MAP.keys }
   validates :position, presence: true
 
