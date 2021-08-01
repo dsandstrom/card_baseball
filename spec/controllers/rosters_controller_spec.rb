@@ -15,7 +15,7 @@ RSpec.describe RostersController, type: :controller do
     { player_id: player.to_param, level: "2", position: "1" }
   end
 
-  let(:invalid_attributes) { { level: "" } }
+  let(:invalid_attributes) { { player_id: player.to_param, level: "" } }
 
   describe "GET #index" do
     context "for an admin" do
@@ -145,6 +145,63 @@ RSpec.describe RostersController, type: :controller do
           post :create, params: { team_id: team.to_param,
                                   roster: invalid_attributes }
           expect(response).to be_successful
+        end
+      end
+
+      context "when player already has a roster" do
+        before do
+          Fabricate(:roster, team: team, level: 1, position: 1, player: player)
+        end
+
+        context "when valid params" do
+          it "destroys old Roster and creates a new Roster" do
+            expect do
+              post :create, params: { team_id: team.to_param,
+                                      roster: valid_attributes }
+            end.not_to change(Roster, :count)
+          end
+
+          it "redirects to the Roster list" do
+            post :create, params: { team_id: team.to_param,
+                                    roster: valid_attributes }
+            expect(response).to redirect_to(team_rosters_url(team))
+          end
+        end
+
+        context "when invalid params" do
+          it "doesn't create a new Roster" do
+            expect do
+              post :create, params: { team_id: team.to_param,
+                                      roster: invalid_attributes }
+            end.not_to change(Roster, :count)
+          end
+
+          it "renders new" do
+            post :create, params: { team_id: team.to_param,
+                                    roster: invalid_attributes }
+            expect(response).to be_successful
+          end
+        end
+      end
+
+      context "when player already has a roster for the current level" do
+        before do
+          Fabricate(:roster, team: team, player: player,
+                             level: valid_attributes[:level],
+                             position: valid_attributes[:position])
+        end
+
+        it "doesn't destroy old Roster" do
+          expect do
+            post :create, params: { team_id: team.to_param,
+                                    roster: valid_attributes }
+          end.not_to change(Roster, :count)
+        end
+
+        it "redirects to the Roster list" do
+          post :create, params: { team_id: team.to_param,
+                                  roster: valid_attributes }
+          expect(response).to redirect_to(team_rosters_url(team))
         end
       end
     end

@@ -17,7 +17,13 @@ class RostersController < ApplicationController
   def edit; end
 
   def create
-    if @roster.save
+    current_roster = Roster.where(player_id: @roster.player_id)
+                           .where('id IS NOT NULL').first
+    if @roster.valid?
+      if unique?(@roster, current_roster)
+        @roster.save
+        current_roster&.destroy
+      end
       redirect_to team_rosters_url(@team),
                   notice: 'Roster spot was successfully created.'
     else
@@ -58,5 +64,14 @@ class RostersController < ApplicationController
       @players = @team.players
       @rosterless_players = @team.players.left_outer_joins(:roster)
                                  .where('rosters.id IS NULL')
+    end
+
+    def unique?(first, second)
+      return true unless second
+
+      value = %i[level player_id team_id position].all? do |attr|
+        first.send(attr) == second.send(attr)
+      end
+      !value
     end
 end
