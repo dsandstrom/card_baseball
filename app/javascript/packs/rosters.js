@@ -134,7 +134,6 @@ function addRoster(event) {
   if (playerId && playerId.length) {
     var formPlayerField = form.querySelector('input[name="roster[player_id]"]');
     if (formPlayerField) {
-      console.log(formPlayerField);
       // FIXME: if redropping on same roster, don't send extra request
       // if (formPlayerField.value == playerId) {
       formPlayerField.value = playerId;
