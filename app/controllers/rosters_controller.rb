@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-# TODO: when create with a player with a roster, destroy old roster
-# TODO: when dropping roster on current form, don't create a new one
-
 class RostersController < ApplicationController
   load_and_authorize_resource :team
   load_and_authorize_resource through: :team
@@ -19,11 +16,7 @@ class RostersController < ApplicationController
   def create
     current_roster = Roster.where(player_id: @roster.player_id)
                            .where('id IS NOT NULL').first
-    if @roster.valid?
-      if unique?(@roster, current_roster)
-        @roster.save
-        current_roster&.destroy
-      end
+    if valid_except_player?(@roster, current_roster) && @roster.save
       redirect_to team_rosters_url(@team),
                   notice: 'Roster spot was successfully created.'
     else
@@ -66,10 +59,25 @@ class RostersController < ApplicationController
                                  .where('rosters.id IS NULL')
     end
 
+    def valid_except_player?(roster, current)
+      return true unless current
+      return true if roster.valid?
+      return false unless unique?(roster, current)
+
+      errors = roster.errors.errors
+      return false unless errors.count == 1
+
+      error = errors.first
+      return false unless error.attribute == :player_id && error.type == :taken
+
+      current.destroy
+      true
+    end
+
     def unique?(first, second)
       return true unless second
 
-      value = %i[level player_id team_id position].all? do |attr|
+      value = %i[level team_id position].all? do |attr|
         first.send(attr) == second.send(attr)
       end
       !value

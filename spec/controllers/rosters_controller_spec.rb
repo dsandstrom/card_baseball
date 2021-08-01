@@ -198,10 +198,10 @@ RSpec.describe RostersController, type: :controller do
           end.not_to change(Roster, :count)
         end
 
-        it "redirects to the Roster list" do
+        it "renders new" do
           post :create, params: { team_id: team.to_param,
                                   roster: valid_attributes }
-          expect(response).to redirect_to(team_rosters_url(team))
+          expect(response).to be_successful
         end
       end
     end
