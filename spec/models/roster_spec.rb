@@ -768,8 +768,20 @@ RSpec.describe Roster, type: :model do
         context "when already 26 at level 4" do
           before { 26.times { Fabricate(:roster, team: team, level: 4) } }
 
-          it "should not be valid" do
-            expect(roster).not_to be_valid
+          context "and level is 4" do
+            before { roster.level = 4 }
+
+            it "should not be valid" do
+              expect(roster).not_to be_valid
+            end
+          end
+
+          context "and level is 3" do
+            before { roster.level = 3 }
+
+            it "should be valid" do
+              expect(roster).to be_valid
+            end
           end
         end
       end

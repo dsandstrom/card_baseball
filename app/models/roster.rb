@@ -66,7 +66,7 @@ class Roster < ApplicationRecord
     end
 
     def players_at_level4
-      return unless team
+      return unless team && level == 4
 
       max = MAX_LEVEL4.dup
       max += 1 if persisted?
