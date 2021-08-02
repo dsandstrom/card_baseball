@@ -3,7 +3,7 @@
   position = roster.position
 %>
 
-<div id="roster_<%= roster.id %>" class="roster-field draggable"
+<div id="roster_<%= roster.id %>" class="roster-player-field draggable"
      data-id="<%= player.id %>">
   <%= render 'rosters/player', player: player, position: position %>
 </div>

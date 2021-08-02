@@ -26,7 +26,7 @@ interact('.draggable.rosterless-player')
 
 interact('.roster-position-form')
   .dropzone({
-    accept: ['.rosterless-player', '.roster-field'],
+    accept: ['.rosterless-player', '.roster-player-field'],
     listeners: {
       enter: dropEnterListener,
       leave: dropLeaveListener,
@@ -34,7 +34,7 @@ interact('.roster-position-form')
     }
   })
 
-interact('.roster-field')
+interact('.roster-player-field')
   .draggable({
     inertia: true,
     snap: {

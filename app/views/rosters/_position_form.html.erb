@@ -12,6 +12,10 @@
 <%= form_with(model: roster, url: url,
               id: "#{css_id}_form", class: 'roster-position-form',
               local: false) do |form| %>
+
+  <%= content_tag :span, Roster.position_initials(position, level),
+                  class: 'rosters-position' %>
+
   <%= form.hidden_field :position,
                         id: "#{css_id}_position", class: 'roster-position-field' %>
   <%= form.hidden_field :level,
@@ -20,7 +24,7 @@
                         id: "#{css_id}_player_id", class: 'roster-player-field' %>
 
   <div class="level-position-rosters">
-    <%= render partial: 'rosters/roster_field', collection: rosters,
+    <%= render partial: 'rosters/player_field', collection: rosters,
                as: :roster %>
   </div>
 <% end %>

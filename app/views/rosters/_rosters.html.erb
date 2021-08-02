@@ -19,14 +19,9 @@
   <div class="rosters">
     <% if can?(:create, new_roster) %>
       <% Roster.level_positions(level).each do |pos| %>
-        <div class="roster-position-forms">
-          <%= content_tag :span, Roster.position_initials(pos, level),
-                          class: 'rosters-position' %>
-
-          <%= render 'position_form',
-                     team: team, rosters: rosters,
-                     level: level, position: pos %>
-        </div>
+        <%= render 'position_form',
+                   team: team, rosters: rosters,
+                   level: level, position: pos %>
       <% end %>
     <% else %>
       <%= render rosters, team: @team %>
