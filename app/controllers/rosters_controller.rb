@@ -97,6 +97,7 @@ class RostersController < ApplicationController
 
     def create_js_response
       player = Player.find_by(id: roster_params[:player_id])
+      # TODO: verify original roster is same team before updating
       @roster = player&.roster || @team.rosters.build
       @roster.assign_attributes(roster_params)
       authorize! :create, @roster
