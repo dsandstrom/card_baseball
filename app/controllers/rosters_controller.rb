@@ -2,7 +2,7 @@
 
 class RostersController < ApplicationController
   load_and_authorize_resource :team
-  load_and_authorize_resource through: :team
+  load_and_authorize_resource through: :team, except: :create
   before_action :set_league
 
   def index
@@ -14,13 +14,13 @@ class RostersController < ApplicationController
   def edit; end
 
   def create
-    current_roster = Roster.where(player_id: @roster.player_id)
-                           .where('id IS NOT NULL').first
-    if valid_except_player?(@roster, current_roster) && @roster.save
-      redirect_to team_rosters_url(@team),
-                  notice: 'Roster spot was successfully created.'
-    else
-      render :new
+    respond_to do |format|
+      format.html do
+        create_html_response
+      end
+      format.js do
+        create_js_response
+      end
     end
   end
 
@@ -81,5 +81,30 @@ class RostersController < ApplicationController
         first.send(attr) == second.send(attr)
       end
       !value
+    end
+
+    def create_html_response
+      @roster = @team.rosters.build(roster_params)
+      authorize! :create, @roster
+
+      if @roster.save
+        redirect_to team_rosters_url(@team),
+                    notice: 'Roster spot was successfully created.'
+      else
+        render :new
+      end
+    end
+
+    def create_js_response
+      player = Player.find_by(id: roster_params[:player_id])
+      @roster = player&.roster || @team.rosters.build
+      @roster.assign_attributes(roster_params)
+      authorize! :create, @roster
+
+      if @roster.save
+        render :show
+      else
+        render :new
+      end
     end
 end
