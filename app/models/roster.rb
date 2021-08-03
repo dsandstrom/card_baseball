@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Roster < ApplicationRecord
+  include RankedModel
+
   MAX_LEVEL4 = 26
 
   LEVEL_MAP = {
@@ -28,6 +30,8 @@ class Roster < ApplicationRecord
   validate :player_on_team
   validate :player_plays_position
   validate :players_at_level4
+
+  ranks :row_order, with_same: %w[team_id level position]
 
   def self.level_positions(level)
     if level == 4
