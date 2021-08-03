@@ -18,10 +18,12 @@
       'new'
     end
   css_id = "roster_level_#{level}_position_#{position}_#{rank}"
+  css_class = 'roster-position-form'
+  css_class += ' new-roster-position-form' unless roster.persisted?
 %>
 
 <%= form_with(model: roster, url: url,
-              id: "#{css_id}_form", class: 'roster-position-form',
+              id: "#{css_id}_form", class: css_class,
               local: false) do |form| %>
   <%= form.hidden_field :position,
                         id: "#{css_id}_position", class: 'roster-position-field' %>

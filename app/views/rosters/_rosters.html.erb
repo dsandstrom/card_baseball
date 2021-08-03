@@ -17,7 +17,7 @@
   </div>
 
   <% Roster.level_positions(level).each do |position| %>
-    <div class="position-rosters">
+    <div class="position-rosters <%= css_class %>">
       <%= content_tag :span, Roster.position_initials(position, level),
                       class: 'roster-position' %>
 
@@ -32,9 +32,8 @@
         <% end %>
 
         <% if can?(:create, new_roster) %>
-          <%= render 'position_form',
-                     team: team,
-                     roster: team.rosters.build(level: level, position: position) %>
+          <% roster = team.rosters.build(level: level, position: position) %>
+          <%= render 'position_form', team: team, roster: roster %>
         <% end %>
       </div>
     </div>

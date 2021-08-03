@@ -80,6 +80,12 @@
 .position-rosters {
   grid-template-columns: 3.2rem 1fr;
   border: 1px solid $border-color;
+
+  &.complete {
+    .new-roster-position-form {
+      display: none;
+    }
+  }
 }
 
 .roster-position-form {
