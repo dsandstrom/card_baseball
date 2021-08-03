@@ -13,10 +13,23 @@ class Roster < ApplicationRecord
   }.freeze
 
   POSITION_MAP = {
-    1 => { initials: 'SP' },
-    10 => { initials: 'RP' },
-    3 => { initials: 'IF' },
-    7 => { initials: 'OF' }
+    1 => { initials: 'SP', name: 'Starting Pitcher' },
+    10 => { initials: 'RP', name: 'Relief Pitcher' },
+    3 => { initials: 'IF', name: 'Infielder' },
+    7 => { initials: 'OF', name: 'Outfielder' }
+  }.freeze
+
+  POSITION_MAP_LEVEL4 = {
+    1 => { initials: 'SP', name: 'Starting Pitcher' },
+    2 => { initials: 'C', name: 'Catcher' },
+    3 => { initials: '1B', name: 'First Baseman' },
+    4 => { initials: '2B', name: 'Second Baseman' },
+    5 => { initials: '3B', name: 'Third Baseman' },
+    6 => { initials: 'SS', name: 'Shortstop' },
+    7 => { initials: 'OF', name: 'Outfielder' },
+    8 => { initials: 'CF', name: 'Center Fielder' },
+    9 => { initials: 'DH', name: 'Designated Hitter' },
+    10 => { initials: 'RP', name: 'Relief Pitcher' }
   }.freeze
 
   belongs_to :team
@@ -49,8 +62,20 @@ class Roster < ApplicationRecord
     end
   end
 
+  def self.position_name(position, level = 1)
+    if level == 4
+      POSITION_MAP_LEVEL4[position][:name]
+    elsif POSITION_MAP[position]
+      POSITION_MAP[position][:name]
+    end
+  end
+
   def position_initials
     @position_initials ||= Roster.position_initials(position, level)
+  end
+
+  def position_name
+    @position_name ||= Roster.position_name(position, level)
   end
 
   private

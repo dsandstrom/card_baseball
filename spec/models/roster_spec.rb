@@ -802,6 +802,8 @@ RSpec.describe Roster, type: :model do
     end
   end
 
+  # CLASS
+
   describe ".level_positions" do
     context "when level is 1" do
       it "returns a subset" do
@@ -867,7 +869,7 @@ RSpec.describe Roster, type: :model do
       end
 
       context "when position is 7" do
-        it "returns nil" do
+        it "returns 'OF'" do
           expect(Roster.position_initials(7, 1)).to eq("OF")
         end
       end
@@ -917,7 +919,7 @@ RSpec.describe Roster, type: :model do
       end
 
       context "when position is 7" do
-        it "returns nil" do
+        it "returns 'OF'" do
           expect(Roster.position_initials(7, 3)).to eq("OF")
         end
       end
@@ -937,13 +939,13 @@ RSpec.describe Roster, type: :model do
       end
 
       context "when position is 2" do
-        it "returns nil" do
+        it "returns 'C'" do
           expect(Roster.position_initials(2, 4)).to eq("C")
         end
       end
 
       context "when position is 3" do
-        it "returns 'IF'" do
+        it "returns '1B'" do
           expect(Roster.position_initials(3, 4)).to eq("1B")
         end
       end
@@ -991,6 +993,172 @@ RSpec.describe Roster, type: :model do
       end
     end
   end
+
+  describe ".position_name" do
+    context "when level is 1" do
+      context "when position is 1" do
+        it "returns 'Starting Pitcher'" do
+          expect(Roster.position_name(1, 1)).to eq("Starting Pitcher")
+        end
+      end
+
+      context "when position is 2" do
+        it "returns nil" do
+          expect(Roster.position_name(2, 1)).to eq(nil)
+        end
+      end
+
+      context "when position is 3" do
+        it "returns 'Infielder'" do
+          expect(Roster.position_name(3, 1)).to eq("Infielder")
+        end
+      end
+
+      context "when position is 4" do
+        it "returns nil" do
+          expect(Roster.position_name(4, 1)).to be_nil
+        end
+      end
+
+      context "when position is 5" do
+        it "returns nil" do
+          expect(Roster.position_name(5, 1)).to be_nil
+        end
+      end
+
+      context "when position is 6" do
+        it "returns nil" do
+          expect(Roster.position_name(6, 1)).to be_nil
+        end
+      end
+
+      context "when position is 7" do
+        it "returns 'Outfielder'" do
+          expect(Roster.position_name(7, 1)).to eq("Outfielder")
+        end
+      end
+
+      context "when position is 8" do
+        it "returns nil" do
+          expect(Roster.position_name(8, 1)).to be_nil
+        end
+      end
+    end
+
+    context "when level is 3" do
+      context "when position is 1" do
+        it "returns 'Starting Pitcher'" do
+          expect(Roster.position_name(1, 3)).to eq("Starting Pitcher")
+        end
+      end
+
+      context "when position is 2" do
+        it "returns nil" do
+          expect(Roster.position_name(2, 3)).to eq(nil)
+        end
+      end
+
+      context "when position is 3" do
+        it "returns 'Infielder'" do
+          expect(Roster.position_name(3, 3)).to eq("Infielder")
+        end
+      end
+
+      context "when position is 4" do
+        it "returns nil" do
+          expect(Roster.position_name(4, 3)).to be_nil
+        end
+      end
+
+      context "when position is 5" do
+        it "returns nil" do
+          expect(Roster.position_name(5, 3)).to be_nil
+        end
+      end
+
+      context "when position is 6" do
+        it "returns nil" do
+          expect(Roster.position_name(6, 3)).to be_nil
+        end
+      end
+
+      context "when position is 7" do
+        it "returns 'Outfielder'" do
+          expect(Roster.position_name(7, 3)).to eq("Outfielder")
+        end
+      end
+
+      context "when position is 8" do
+        it "returns nil" do
+          expect(Roster.position_name(8, 3)).to be_nil
+        end
+      end
+    end
+
+    context "when level is 4" do
+      context "when position is 1" do
+        it "returns 'Starting Pitcher'" do
+          expect(Roster.position_name(1, 4)).to eq("Starting Pitcher")
+        end
+      end
+
+      context "when position is 2" do
+        it "returns 'Catcher'" do
+          expect(Roster.position_name(2, 4)).to eq("Catcher")
+        end
+      end
+
+      context "when position is 3" do
+        it "returns 'First Baseman'" do
+          expect(Roster.position_name(3, 4)).to eq("First Baseman")
+        end
+      end
+
+      context "when position is 4" do
+        it "returns 'Second Baseman" do
+          expect(Roster.position_name(4, 4)).to eq("Second Baseman")
+        end
+      end
+
+      context "when position is 5" do
+        it "returns 'Third Baseman" do
+          expect(Roster.position_name(5, 4)).to eq("Third Baseman")
+        end
+      end
+
+      context "when position is 6" do
+        it "returns 'Shortstop" do
+          expect(Roster.position_name(6, 4)).to eq("Shortstop")
+        end
+      end
+
+      context "when position is 7" do
+        it "returns 'Outfielder" do
+          expect(Roster.position_name(7, 4)).to eq("Outfielder")
+        end
+      end
+
+      context "when position is 8" do
+        it "returns 'Center Fielder" do
+          expect(Roster.position_name(8, 4)).to eq("Center Fielder")
+        end
+      end
+
+      context "when position is 9" do
+        it "returns 'Designated Hitter'" do
+          expect(Roster.position_name(9, 4)).to eq("Designated Hitter")
+        end
+      end
+
+      context "when position is 10" do
+        it "returns 'Relief Pitcher'" do
+          expect(Roster.position_name(10, 4)).to eq("Relief Pitcher")
+        end
+      end
+    end
+  end
+
+  # INSTANCE
 
   describe "#position_initials" do
     context "when level is 1" do
@@ -1047,7 +1215,7 @@ RSpec.describe Roster, type: :model do
       context "when position is 7" do
         before { subject.position = 7 }
 
-        it "returns nil" do
+        it "returns 'OF'" do
           expect(subject.position_initials).to eq("OF")
         end
       end
@@ -1115,7 +1283,7 @@ RSpec.describe Roster, type: :model do
       context "when position is 7" do
         before { subject.position = 7 }
 
-        it "returns nil" do
+        it "returns 'OF'" do
           expect(subject.position_initials).to eq("OF")
         end
       end
@@ -1209,6 +1377,228 @@ RSpec.describe Roster, type: :model do
 
         it "returns 'RP'" do
           expect(subject.position_initials).to eq("RP")
+        end
+      end
+    end
+  end
+
+  describe "#position_name" do
+    context "when level is 1" do
+      before { subject.level = 1 }
+
+      context "when position is 1" do
+        before { subject.position = 1 }
+
+        it "returns 'Starting Pitcher'" do
+          expect(subject.position_name).to eq("Starting Pitcher")
+        end
+      end
+
+      context "when position is 2" do
+        before { subject.position = 2 }
+
+        it "returns nil" do
+          expect(subject.position_name).to eq(nil)
+        end
+      end
+
+      context "when position is 3" do
+        before { subject.position = 3 }
+
+        it "returns 'Infielder'" do
+          expect(subject.position_name).to eq("Infielder")
+        end
+      end
+
+      context "when position is 4" do
+        before { subject.position = 4 }
+
+        it "returns nil" do
+          expect(subject.position_name).to be_nil
+        end
+      end
+
+      context "when position is 5" do
+        before { subject.position = 5 }
+
+        it "returns nil" do
+          expect(subject.position_name).to be_nil
+        end
+      end
+
+      context "when position is 6" do
+        before { subject.position = 6 }
+
+        it "returns nil" do
+          expect(subject.position_name).to be_nil
+        end
+      end
+
+      context "when position is 7" do
+        before { subject.position = 7 }
+
+        it "returns 'Outfielder'" do
+          expect(subject.position_name).to eq("Outfielder")
+        end
+      end
+
+      context "when position is 8" do
+        before { subject.position = 8 }
+
+        it "returns nil" do
+          expect(subject.position_name).to be_nil
+        end
+      end
+    end
+
+    context "when level is 3" do
+      before { subject.level = 3 }
+
+      context "when position is 1" do
+        before { subject.position = 1 }
+
+        it "returns 'Starting Pitcher'" do
+          expect(subject.position_name).to eq("Starting Pitcher")
+        end
+      end
+
+      context "when position is 2" do
+        before { subject.position = 2 }
+
+        it "returns nil" do
+          expect(subject.position_name).to eq(nil)
+        end
+      end
+
+      context "when position is 3" do
+        before { subject.position = 3 }
+
+        it "returns 'Infielder'" do
+          expect(subject.position_name).to eq("Infielder")
+        end
+      end
+
+      context "when position is 4" do
+        before { subject.position = 4 }
+
+        it "returns nil" do
+          expect(subject.position_name).to be_nil
+        end
+      end
+
+      context "when position is 5" do
+        before { subject.position = 5 }
+
+        it "returns nil" do
+          expect(subject.position_name).to be_nil
+        end
+      end
+
+      context "when position is 6" do
+        before { subject.position = 6 }
+
+        it "returns nil" do
+          expect(subject.position_name).to be_nil
+        end
+      end
+
+      context "when position is 7" do
+        before { subject.position = 7 }
+
+        it "returns 'Outfielder'" do
+          expect(subject.position_name).to eq("Outfielder")
+        end
+      end
+
+      context "when position is 8" do
+        before { subject.position = 8 }
+
+        it "returns nil" do
+          expect(subject.position_name).to be_nil
+        end
+      end
+    end
+
+    context "when level is 4" do
+      before { subject.level = 4 }
+
+      context "when position is 1" do
+        before { subject.position = 1 }
+
+        it "returns 'Starting Pitcher'" do
+          expect(subject.position_name).to eq("Starting Pitcher")
+        end
+      end
+
+      context "when position is 2" do
+        before { subject.position = 2 }
+
+        it "returns 'Catcher'" do
+          expect(subject.position_name).to eq("Catcher")
+        end
+      end
+
+      context "when position is 3" do
+        before { subject.position = 3 }
+
+        it "returns 'First Baseman'" do
+          expect(subject.position_name).to eq("First Baseman")
+        end
+      end
+
+      context "when position is 4" do
+        before { subject.position = 4 }
+
+        it "returns 'Second Baseman" do
+          expect(subject.position_name).to eq("Second Baseman")
+        end
+      end
+
+      context "when position is 5" do
+        before { subject.position = 5 }
+
+        it "returns 'Third Baseman" do
+          expect(subject.position_name).to eq("Third Baseman")
+        end
+      end
+
+      context "when position is 6" do
+        before { subject.position = 6 }
+
+        it "returns 'Shortstop" do
+          expect(subject.position_name).to eq("Shortstop")
+        end
+      end
+
+      context "when position is 7" do
+        before { subject.position = 7 }
+
+        it "returns 'Outfielder" do
+          expect(subject.position_name).to eq("Outfielder")
+        end
+      end
+
+      context "when position is 8" do
+        before { subject.position = 8 }
+
+        it "returns 'Center Fielder" do
+          expect(subject.position_name).to eq("Center Fielder")
+        end
+      end
+
+      context "when position is 9" do
+        before { subject.position = 9 }
+
+        it "returns 'Designated Hitter'" do
+          expect(subject.position_name).to eq("Designated Hitter")
+        end
+      end
+
+      context "when position is 10" do
+        before { subject.position = 10 }
+
+        it "returns 'Relief Pitcher'" do
+          expect(subject.position_name).to eq("Relief Pitcher")
         end
       end
     end
