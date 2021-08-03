@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_27_003038) do
+ActiveRecord::Schema.define(version: 2021_08_02_235234) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -92,6 +92,7 @@ ActiveRecord::Schema.define(version: 2021_07_27_003038) do
     t.integer "position"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "row_order"
     t.index ["level"], name: "index_rosters_on_level"
     t.index ["team_id"], name: "index_rosters_on_team_id"
   end
