@@ -3,19 +3,26 @@
   # TODO: add current position players at dragable fields
   # TODO: add 'move up/down' button to change levels
   # TODO: show other possible positions
-  rosters = rosters.where(position: position)
-  roster = team.rosters.build(level: level, position: position)
-  url = team_rosters_url(team)
-  css_id = "roster_level_#{level}_position_#{position}"
+  url =
+    if roster.persisted?
+      team_roster_url(team, roster)
+    else
+      team_rosters_url(team)
+    end
+  level = roster.level
+  position = roster.position
+  rank =
+    if roster.persisted?
+      roster.row_order_rank
+    else
+      'new'
+    end
+  css_id = "roster_level_#{level}_position_#{position}_#{rank}"
 %>
 
 <%= form_with(model: roster, url: url,
               id: "#{css_id}_form", class: 'roster-position-form',
               local: false) do |form| %>
-
-  <%= content_tag :span, Roster.position_initials(position, level),
-                  class: 'rosters-position' %>
-
   <%= form.hidden_field :position,
                         id: "#{css_id}_position", class: 'roster-position-field' %>
   <%= form.hidden_field :level,
@@ -23,8 +30,10 @@
   <%= form.hidden_field :player_id,
                         id: "#{css_id}_player_id", class: 'roster-player-field' %>
 
-  <div class="level-position-rosters">
-    <%= render partial: 'rosters/player_field', collection: rosters,
-               as: :roster %>
-  </div>
+  <% if roster.player %>
+    <%= render 'rosters/player_field', roster: roster %>
+  <% else %>
+  <%= content_tag :div, "Drop #{roster.position_name}",
+                  class: 'empty-roster-player-field' %>
+  <% end %>
 <% end %>

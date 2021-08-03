@@ -9,22 +9,34 @@
     end
 %>
 
-<div id="rosters_level<%= level %>" class="rosters-level">
+<div id="rosters_level_<%= level %>" class="rosters-level">
   <div class="heading-and-count">
     <%= content_tag :h2, Roster::LEVEL_MAP[level][:name] %>
     <%= content_tag :span, rosters.count,
                     class: "count rosters-count #{css_class}" %>
   </div>
 
-  <div class="rosters">
-    <% if can?(:create, new_roster) %>
-      <% Roster.level_positions(level).each do |pos| %>
-        <%= render 'position_form',
-                   team: team, rosters: rosters,
-                   level: level, position: pos %>
-      <% end %>
-    <% else %>
-      <%= render rosters, team: @team %>
-    <% end %>
-  </div>
+  <% Roster.level_positions(level).each do |position| %>
+    <div class="position-rosters">
+      <%= content_tag :span, Roster.position_initials(position, level),
+                      class: 'roster-position' %>
+
+      <div class="rosters">
+        <% position_rosters = rosters.where(position: position).rank(:row_order) %>
+        <% position_rosters.each do |roster| %>
+          <% if can?(:update, roster) %>
+            <%= render 'position_form', team: team, roster: roster %>
+          <% else %>
+            <%= render roster, team: @team %>
+          <% end %>
+        <% end %>
+
+        <% if can?(:create, new_roster) %>
+          <%= render 'position_form',
+                     team: team,
+                     roster: team.rosters.build(level: level, position: position) %>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
 </div>

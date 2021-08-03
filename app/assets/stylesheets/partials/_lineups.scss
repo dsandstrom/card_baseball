@@ -27,7 +27,7 @@
 }
 
 .batting-spot-form,
-.roster-position-form,
+.position-rosters,
 .rosterless-players {
   .hitter-name,
   .spot-hitter-name,
@@ -37,7 +37,7 @@
 }
 
 .batting-spot-form,
-.roster-position-form {
+.position-rosters {
   display: grid;
   margin-bottom: .5rem;
   background-color: $border-color;
@@ -52,15 +52,14 @@
   }
 
   .spot-batting-order,
-  .rosters-position {
+  .roster-position {
     display: flex;
     align-items: center;
     justify-content: center;
     padding: .1rem 1rem;
-    background-color: $off-white;
-    color: $dark-gray;
-    font-family: $code-font;
+    font-family: $heading-font;
     font-size: 1.4rem;
+    font-weight: bold;
   }
 
   .spot-batting-order {
@@ -78,12 +77,22 @@
   }
 }
 
-.roster-position-form {
+.position-rosters {
   grid-template-columns: 3.2rem 1fr;
   border: 1px solid $border-color;
+}
 
+.roster-position-form {
   &.drag-over {
-    border: 1px dashed $dark-gray;
+    .roster-player-field,
+    .empty-roster-player-field {
+      border-style: dashed;
+      border-color: $dark-gray;
+    }
+
+    .empty-roster-player-field {
+      color: $gray;
+    }
   }
 }
 
@@ -93,7 +102,8 @@
   &.drag-over {
     .empty-spot-hitter-field,
     .spot-hitter-field {
-      border: 1px dashed $dark-gray;
+      border-style: dashed;
+      border-color: $dark-gray;
 
       > * {
         opacity: .4;
@@ -112,11 +122,12 @@
 }
 
 .empty-spot-hitter-field,
+.empty-roster-player-field,
 .spot-hitter-field,
-.roster-player-field {
-  margin-bottom: 1px;
-  margin-left: 1px;
+.roster-player-field,
+.roster {
   padding: .5rem .5rem .5rem 1rem;
+  border: 1px solid $light-gray;
   background-color: $white;
 
   &:last-child {
@@ -135,6 +146,27 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+.empty-roster-player-field {
+  background-color: $off-white;
+  color: transparent;
+}
+
+.roster-player-field,
+.spot-hitter-field,
+.roster {
+  .roster-player {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &.draggable {
+    &:hover {
+      border-color: $gray;
+    }
+  }
 }
 
 .spot-hitter-positions,
@@ -312,17 +344,6 @@
     }
   }
 
-  .spot-batting-order,
-  .roster-position-order {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: .2rem .5rem;
-    color: $gray;
-    font-family: $code-font;
-    font-size: 1.2rem;
-  }
-
   .spot-hitter-and-position {
     display: flex;
     align-items: center;
@@ -351,9 +372,4 @@
     background-color: $off-white;
     font-size: 1.8rem;
   }
-}
-
-// TODO: add gap below to drop new player
-.roster-player-field {
-  background-color: $white;
 }

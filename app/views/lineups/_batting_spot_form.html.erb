@@ -35,7 +35,7 @@
     <% hitter = spot.hitter %>
 
     <%= form.hidden_field :hitter_id, id: "spot_batting_order_#{batting_order}_hitter_id" %>
-    <div class="spot-hitter-field" data-id="<%= hitter.id %>">
+    <div class="spot-hitter-field draggable" data-id="<%= hitter.id %>">
       <%= content_tag :span, hitter.roster_name,
                       class: 'spot-hitter-name' %>
 

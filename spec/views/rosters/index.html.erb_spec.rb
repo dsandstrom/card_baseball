@@ -57,68 +57,72 @@ RSpec.describe "rosters/index", type: :view do
     it "renders a level 1 rosters" do
       render
 
-      assert_select "#rosters_level1 #roster_#{level1_roster.id}"
+      assert_select "#rosters_level_1 #roster_#{level1_roster.id}"
     end
 
     it "renders a level 1 position forms" do
       render
 
-      assert_select "#roster_level_1_position_1_form"
-      assert_select "#roster_level_1_position_3_form"
-      assert_select "#roster_level_1_position_7_form"
-      assert_select "#roster_level_1_position_10_form"
+      assert_select "#roster_level_1_position_1_new_form"
+      assert_select "#roster_level_1_position_3_new_form"
+      assert_select "#roster_level_1_position_7_new_form"
+      assert_select "#roster_level_1_position_10_new_form"
+      assert_select "#roster_level_1_position_3_0_form"
     end
 
     it "renders a level 2 rosters" do
       render
 
-      assert_select "#rosters_level2 #roster_#{level2_roster.id}"
+      assert_select "#rosters_level_2 #roster_#{level2_roster.id}"
     end
 
     it "renders a level 2 position forms" do
       render
 
-      assert_select "#roster_level_2_position_1_form"
-      assert_select "#roster_level_2_position_3_form"
-      assert_select "#roster_level_2_position_7_form"
-      assert_select "#roster_level_2_position_10_form"
+      assert_select "#roster_level_2_position_1_new_form"
+      assert_select "#roster_level_2_position_3_new_form"
+      assert_select "#roster_level_2_position_7_new_form"
+      assert_select "#roster_level_2_position_10_new_form"
+      assert_select "#roster_level_2_position_7_0_form"
     end
 
     it "renders a level 3 rosters" do
       render
 
-      assert_select "#rosters_level3"
+      assert_select "#rosters_level_3"
     end
 
     it "renders a level 3 position forms" do
       render
 
-      assert_select "#roster_level_3_position_1_form"
-      assert_select "#roster_level_3_position_3_form"
-      assert_select "#roster_level_3_position_7_form"
-      assert_select "#roster_level_3_position_10_form"
+      assert_select "#roster_level_3_position_1_new_form"
+      assert_select "#roster_level_3_position_3_new_form"
+      assert_select "#roster_level_3_position_7_new_form"
+      assert_select "#roster_level_3_position_10_new_form"
     end
 
     it "renders a level 4 rosters" do
       render
 
-      assert_select "#rosters_level4 #roster_#{level4_roster1.id}"
-      assert_select "#rosters_level4 #roster_#{level4_roster2.id}"
+      assert_select "#rosters_level_4 #roster_#{level4_roster1.id}"
+      assert_select "#rosters_level_4 #roster_#{level4_roster2.id}"
     end
 
     it "renders a level 4 position forms" do
       render
 
-      assert_select "#roster_level_4_position_1_form"
-      assert_select "#roster_level_4_position_2_form"
-      assert_select "#roster_level_4_position_3_form"
-      assert_select "#roster_level_4_position_4_form"
-      assert_select "#roster_level_4_position_5_form"
-      assert_select "#roster_level_4_position_6_form"
-      assert_select "#roster_level_4_position_7_form"
-      assert_select "#roster_level_4_position_7_form"
-      assert_select "#roster_level_4_position_8_form"
-      assert_select "#roster_level_4_position_10_form"
+      assert_select "#roster_level_4_position_1_new_form"
+      assert_select "#roster_level_4_position_2_new_form"
+      assert_select "#roster_level_4_position_3_new_form"
+      assert_select "#roster_level_4_position_4_new_form"
+      assert_select "#roster_level_4_position_5_new_form"
+      assert_select "#roster_level_4_position_6_new_form"
+      assert_select "#roster_level_4_position_7_new_form"
+      assert_select "#roster_level_4_position_7_new_form"
+      assert_select "#roster_level_4_position_8_new_form"
+      assert_select "#roster_level_4_position_10_new_form"
+      assert_select "#roster_level_4_position_1_0_form"
+      assert_select "#roster_level_4_position_10_0_form"
     end
 
     it "renders rosterless" do
@@ -146,68 +150,68 @@ RSpec.describe "rosters/index", type: :view do
       it "renders a level 1 rosters" do
         render
 
-        assert_select "#rosters_level1 #roster_#{level1_roster.id}"
+        assert_select "#rosters_level_1 #roster_#{level1_roster.id}"
       end
 
       it "renders a level 1 position forms" do
         render
 
-        assert_select "#roster_level_1_position_1_form"
-        assert_select "#roster_level_1_position_3_form"
-        assert_select "#roster_level_1_position_7_form"
-        assert_select "#roster_level_1_position_10_form"
+        assert_select "#roster_level_1_position_1_new_form"
+        assert_select "#roster_level_1_position_3_new_form"
+        assert_select "#roster_level_1_position_7_new_form"
+        assert_select "#roster_level_1_position_10_new_form"
       end
 
       it "renders a level 2 rosters" do
         render
 
-        assert_select "#rosters_level2 #roster_#{level2_roster.id}"
+        assert_select "#rosters_level_2 #roster_#{level2_roster.id}"
       end
 
       it "renders a level 2 position forms" do
         render
 
-        assert_select "#roster_level_2_position_1_form"
-        assert_select "#roster_level_2_position_3_form"
-        assert_select "#roster_level_2_position_7_form"
-        assert_select "#roster_level_2_position_10_form"
+        assert_select "#roster_level_2_position_1_new_form"
+        assert_select "#roster_level_2_position_3_new_form"
+        assert_select "#roster_level_2_position_7_new_form"
+        assert_select "#roster_level_2_position_10_new_form"
       end
 
       it "renders a level 3 rosters" do
         render
 
-        assert_select "#rosters_level3"
+        assert_select "#rosters_level_3"
       end
 
       it "renders a level 3 position forms" do
         render
 
-        assert_select "#roster_level_3_position_1_form"
-        assert_select "#roster_level_3_position_3_form"
-        assert_select "#roster_level_3_position_7_form"
-        assert_select "#roster_level_3_position_10_form"
+        assert_select "#roster_level_3_position_1_new_form"
+        assert_select "#roster_level_3_position_3_new_form"
+        assert_select "#roster_level_3_position_7_new_form"
+        assert_select "#roster_level_3_position_10_new_form"
       end
 
       it "renders a level 4 rosters" do
         render
 
-        assert_select "#rosters_level4 #roster_#{level4_roster1.id}"
-        assert_select "#rosters_level4 #roster_#{level4_roster2.id}"
+        assert_select "#rosters_level_4 #roster_#{level4_roster1.id}"
+        assert_select "#rosters_level_4 #roster_#{level4_roster2.id}"
       end
 
       it "renders a level 4 position forms" do
         render
 
-        assert_select "#roster_level_4_position_1_form"
-        assert_select "#roster_level_4_position_2_form"
-        assert_select "#roster_level_4_position_3_form"
-        assert_select "#roster_level_4_position_4_form"
-        assert_select "#roster_level_4_position_5_form"
-        assert_select "#roster_level_4_position_6_form"
-        assert_select "#roster_level_4_position_7_form"
-        assert_select "#roster_level_4_position_7_form"
-        assert_select "#roster_level_4_position_8_form"
-        assert_select "#roster_level_4_position_10_form"
+        assert_select "#roster_level_4_position_1_new_form"
+        assert_select "#roster_level_4_position_2_new_form"
+        assert_select "#roster_level_4_position_3_new_form"
+        assert_select "#roster_level_4_position_4_new_form"
+        assert_select "#roster_level_4_position_5_new_form"
+        assert_select "#roster_level_4_position_6_new_form"
+        assert_select "#roster_level_4_position_7_new_form"
+        assert_select "#roster_level_4_position_7_new_form"
+        assert_select "#roster_level_4_position_8_new_form"
+        assert_select "#roster_level_4_position_10_new_form"
       end
 
       it "renders rosterless" do
@@ -230,35 +234,39 @@ RSpec.describe "rosters/index", type: :view do
       it "renders a level 1 rosters" do
         render
 
-        assert_select "#rosters_level1 #roster_#{level1_roster.id}"
+        assert_select "#rosters_level_1 #roster_#{level1_roster.id}"
       end
 
       it "doesn't render position forms" do
         render
 
-        assert_select "#roster_level_1_position_1_form", count: 0
-        assert_select "#roster_level_2_position_3_form", count: 0
-        assert_select "#roster_level_3_position_7_form", count: 0
-        assert_select "#roster_level_4_position_2_form", count: 0
+        assert_select "#roster_level_1_position_1_new_form", count: 0
+        assert_select "#roster_level_2_position_3_new_form", count: 0
+        assert_select "#roster_level_3_position_7_new_form", count: 0
+        assert_select "#roster_level_4_position_2_new_form", count: 0
+        assert_select "#roster_level_1_position_3_0_form", count: 0
+        assert_select "#roster_level_2_position_7_0_form", count: 0
+        assert_select "#roster_level_4_position_1_0_form", count: 0
+        assert_select "#roster_level_4_position_10_0_form", count: 0
       end
 
       it "renders a level 2 rosters" do
         render
 
-        assert_select "#rosters_level2 #roster_#{level2_roster.id}"
+        assert_select "#rosters_level_2 #roster_#{level2_roster.id}"
       end
 
       it "renders a level 3 rosters" do
         render
 
-        assert_select "#rosters_level3"
+        assert_select "#rosters_level_3"
       end
 
       it "renders a level 4 rosters" do
         render
 
-        assert_select "#rosters_level4 #roster_#{level4_roster1.id}"
-        assert_select "#rosters_level4 #roster_#{level4_roster2.id}"
+        assert_select "#rosters_level_4 #roster_#{level4_roster1.id}"
+        assert_select "#rosters_level_4 #roster_#{level4_roster2.id}"
       end
 
       it "renders rosterless" do
