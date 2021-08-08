@@ -88,21 +88,27 @@ class RostersController < ApplicationController
       end
     end
 
-    def create_js_response
+    def build_roster
       @player = Player.find_by(id: roster_params[:player_id])
-      # TODO: verify original roster is same team before updating
       @roster = @player&.roster || @team.rosters.build
+
       old_position = @roster.position
       old_level = @roster.level
+      # TODO: verify original roster is same team before updating
       @roster.assign_attributes(roster_params)
+
+      return if @roster.position == old_position && @roster.level == old_level
+
+      @old_position = old_position
+      @old_level = old_level
+    end
+
+    def create_js_response
+      build_roster
       authorize! :create, @roster
 
       @rosters = @team.rosters
       if @roster.save
-        unless @roster.position == old_position && @roster.level == old_level
-          @old_position = old_position
-          @old_level = old_level
-        end
         render :show
       else
         @rosterless_player = @player
