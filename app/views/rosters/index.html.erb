@@ -12,20 +12,16 @@
 
 <div class="columns rosters-wrapper">
   <div class="first-column">
-    <%= render 'rosters/rosters', team: @team, rosters: @level4_rosters,
-                                  level: 4 %>
-    <%= render 'rosters/rosters', team: @team, rosters: @level3_rosters,
-                                  level: 3 %>
-    <%= render 'rosters/rosters', team: @team, rosters: @level2_rosters,
-                                  level: 2 %>
-    <%= render 'rosters/rosters', team: @team, rosters: @level1_rosters,
-                                  level: 1 %>
+    <%= render 'rosters/rosters', team: @team, rosters: @rosters, level: 4 %>
+    <%= render 'rosters/rosters', team: @team, rosters: @rosters, level: 3 %>
+    <%= render 'rosters/rosters', team: @team, rosters: @rosters, level: 2 %>
+    <%= render 'rosters/rosters', team: @team, rosters: @rosters, level: 1 %>
   </div>
 
   <% if @rosterless_players.any? %>
     <div class="second-column">
       <h2>Pending</h2>
-      <div class="rosterless-players">
+      <div id="rosterless-players" class="rosterless-players">
         <%= render partial: 'rosters/rosterless_player',
                    collection: @rosterless_players %>
       </div>

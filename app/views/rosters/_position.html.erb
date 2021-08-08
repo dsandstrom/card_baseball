@@ -1,0 +1,22 @@
+<%# level, position, rosters, team required %>
+
+<div id="rosters_level_<%= level %>_position_<%= position %>" class="position-rosters">
+  <%= content_tag :span, Roster.position_initials(position, level),
+                  class: 'roster-position' %>
+
+  <div class="rosters">
+    <% position_rosters = rosters.where(level: level, position: position).rank(:row_order) %>
+    <% position_rosters.each do |roster| %>
+      <% if can?(:update, roster) %>
+        <%= render 'position_form', team: team, roster: roster %>
+      <% else %>
+        <%= render roster, team: @team %>
+      <% end %>
+    <% end %>
+
+    <% if can?(:create, new_roster) %>
+      <% roster = team.rosters.build(level: level, position: position) %>
+      <%= render 'position_form', team: team, roster: roster %>
+    <% end %>
+  </div>
+</div>

@@ -15,12 +15,8 @@ class RostersController < ApplicationController
 
   def create
     respond_to do |format|
-      format.html do
-        create_html_response
-      end
-      format.js do
-        create_js_response
-      end
+      format.html { create_html_response }
+      format.js { create_js_response }
     end
   end
 
@@ -50,10 +46,7 @@ class RostersController < ApplicationController
     end
 
     def build_rosters
-      @level1_rosters = @team.rosters.where(level: 1)
-      @level2_rosters = @team.rosters.where(level: 2)
-      @level3_rosters = @team.rosters.where(level: 3)
-      @level4_rosters = @team.rosters.where(level: 4)
+      @rosters = @team.rosters
       @players = @team.players
       @rosterless_players = @team.players.left_outer_joins(:roster)
                                  .where('rosters.id IS NULL')
@@ -96,15 +89,23 @@ class RostersController < ApplicationController
     end
 
     def create_js_response
-      player = Player.find_by(id: roster_params[:player_id])
+      @player = Player.find_by(id: roster_params[:player_id])
       # TODO: verify original roster is same team before updating
-      @roster = player&.roster || @team.rosters.build
+      @roster = @player&.roster || @team.rosters.build
+      old_position = @roster.position
+      old_level = @roster.level
       @roster.assign_attributes(roster_params)
       authorize! :create, @roster
 
+      @rosters = @team.rosters
       if @roster.save
+        unless @roster.position == old_position && @roster.level == old_level
+          @old_position = old_position
+          @old_level = old_level
+        end
         render :show
       else
+        @rosterless_player = @player
         render :new
       end
     end

@@ -46,10 +46,7 @@ RSpec.describe "rosters/index", type: :view do
     before { enable_can(view, admin) }
 
     before(:each) do
-      assign(:level1_rosters, team.rosters.where(level: 1))
-      assign(:level2_rosters, team.rosters.where(level: 2))
-      assign(:level3_rosters, team.rosters.where(level: 3))
-      assign(:level4_rosters, team.rosters.where(level: 4))
+      assign(:rosters, team.rosters)
       assign(:rosterless_players, [catcher])
       assign(:players, players)
     end
@@ -63,11 +60,11 @@ RSpec.describe "rosters/index", type: :view do
     it "renders a level 1 position forms" do
       render
 
-      assert_select "#roster_level_1_position_1_new_form"
-      assert_select "#roster_level_1_position_3_new_form"
-      assert_select "#roster_level_1_position_7_new_form"
-      assert_select "#roster_level_1_position_10_new_form"
-      assert_select "#roster_level_1_position_3_0_form"
+      assert_select "#roster_level_1_position_1_form"
+      assert_select "#roster_level_1_position_3_form"
+      assert_select "#roster_level_1_position_7_form"
+      assert_select "#roster_level_1_position_10_form"
+      assert_select "#roster_#{level1_roster.id}_form"
     end
 
     it "renders a level 2 rosters" do
@@ -79,11 +76,11 @@ RSpec.describe "rosters/index", type: :view do
     it "renders a level 2 position forms" do
       render
 
-      assert_select "#roster_level_2_position_1_new_form"
-      assert_select "#roster_level_2_position_3_new_form"
-      assert_select "#roster_level_2_position_7_new_form"
-      assert_select "#roster_level_2_position_10_new_form"
-      assert_select "#roster_level_2_position_7_0_form"
+      assert_select "#roster_level_2_position_1_form"
+      assert_select "#roster_level_2_position_3_form"
+      assert_select "#roster_level_2_position_7_form"
+      assert_select "#roster_level_2_position_10_form"
+      assert_select "#roster_#{level2_roster.id}_form"
     end
 
     it "renders a level 3 rosters" do
@@ -95,10 +92,10 @@ RSpec.describe "rosters/index", type: :view do
     it "renders a level 3 position forms" do
       render
 
-      assert_select "#roster_level_3_position_1_new_form"
-      assert_select "#roster_level_3_position_3_new_form"
-      assert_select "#roster_level_3_position_7_new_form"
-      assert_select "#roster_level_3_position_10_new_form"
+      assert_select "#roster_level_3_position_1_form"
+      assert_select "#roster_level_3_position_3_form"
+      assert_select "#roster_level_3_position_7_form"
+      assert_select "#roster_level_3_position_10_form"
     end
 
     it "renders a level 4 rosters" do
@@ -111,18 +108,18 @@ RSpec.describe "rosters/index", type: :view do
     it "renders a level 4 position forms" do
       render
 
-      assert_select "#roster_level_4_position_1_new_form"
-      assert_select "#roster_level_4_position_2_new_form"
-      assert_select "#roster_level_4_position_3_new_form"
-      assert_select "#roster_level_4_position_4_new_form"
-      assert_select "#roster_level_4_position_5_new_form"
-      assert_select "#roster_level_4_position_6_new_form"
-      assert_select "#roster_level_4_position_7_new_form"
-      assert_select "#roster_level_4_position_7_new_form"
-      assert_select "#roster_level_4_position_8_new_form"
-      assert_select "#roster_level_4_position_10_new_form"
-      assert_select "#roster_level_4_position_1_0_form"
-      assert_select "#roster_level_4_position_10_0_form"
+      assert_select "#roster_level_4_position_1_form"
+      assert_select "#roster_level_4_position_2_form"
+      assert_select "#roster_level_4_position_3_form"
+      assert_select "#roster_level_4_position_4_form"
+      assert_select "#roster_level_4_position_5_form"
+      assert_select "#roster_level_4_position_6_form"
+      assert_select "#roster_level_4_position_7_form"
+      assert_select "#roster_level_4_position_7_form"
+      assert_select "#roster_level_4_position_8_form"
+      assert_select "#roster_level_4_position_10_form"
+      assert_select "#roster_#{level4_roster1.id}_form"
+      assert_select "#roster_#{level4_roster2.id}_form"
     end
 
     it "renders rosterless" do
@@ -139,10 +136,7 @@ RSpec.describe "rosters/index", type: :view do
       before(:each) do
         team.update user_id: user.id
 
-        assign(:level1_rosters, team.rosters.where(level: 1))
-        assign(:level2_rosters, team.rosters.where(level: 2))
-        assign(:level3_rosters, team.rosters.where(level: 3))
-        assign(:level4_rosters, team.rosters.where(level: 4))
+        assign(:rosters, team.rosters)
         assign(:rosterless_players, [catcher])
         assign(:players, players)
       end
@@ -156,10 +150,10 @@ RSpec.describe "rosters/index", type: :view do
       it "renders a level 1 position forms" do
         render
 
-        assert_select "#roster_level_1_position_1_new_form"
-        assert_select "#roster_level_1_position_3_new_form"
-        assert_select "#roster_level_1_position_7_new_form"
-        assert_select "#roster_level_1_position_10_new_form"
+        assert_select "#roster_level_1_position_1_form"
+        assert_select "#roster_level_1_position_3_form"
+        assert_select "#roster_level_1_position_7_form"
+        assert_select "#roster_level_1_position_10_form"
       end
 
       it "renders a level 2 rosters" do
@@ -171,10 +165,10 @@ RSpec.describe "rosters/index", type: :view do
       it "renders a level 2 position forms" do
         render
 
-        assert_select "#roster_level_2_position_1_new_form"
-        assert_select "#roster_level_2_position_3_new_form"
-        assert_select "#roster_level_2_position_7_new_form"
-        assert_select "#roster_level_2_position_10_new_form"
+        assert_select "#roster_level_2_position_1_form"
+        assert_select "#roster_level_2_position_3_form"
+        assert_select "#roster_level_2_position_7_form"
+        assert_select "#roster_level_2_position_10_form"
       end
 
       it "renders a level 3 rosters" do
@@ -186,10 +180,10 @@ RSpec.describe "rosters/index", type: :view do
       it "renders a level 3 position forms" do
         render
 
-        assert_select "#roster_level_3_position_1_new_form"
-        assert_select "#roster_level_3_position_3_new_form"
-        assert_select "#roster_level_3_position_7_new_form"
-        assert_select "#roster_level_3_position_10_new_form"
+        assert_select "#roster_level_3_position_1_form"
+        assert_select "#roster_level_3_position_3_form"
+        assert_select "#roster_level_3_position_7_form"
+        assert_select "#roster_level_3_position_10_form"
       end
 
       it "renders a level 4 rosters" do
@@ -202,16 +196,16 @@ RSpec.describe "rosters/index", type: :view do
       it "renders a level 4 position forms" do
         render
 
-        assert_select "#roster_level_4_position_1_new_form"
-        assert_select "#roster_level_4_position_2_new_form"
-        assert_select "#roster_level_4_position_3_new_form"
-        assert_select "#roster_level_4_position_4_new_form"
-        assert_select "#roster_level_4_position_5_new_form"
-        assert_select "#roster_level_4_position_6_new_form"
-        assert_select "#roster_level_4_position_7_new_form"
-        assert_select "#roster_level_4_position_7_new_form"
-        assert_select "#roster_level_4_position_8_new_form"
-        assert_select "#roster_level_4_position_10_new_form"
+        assert_select "#roster_level_4_position_1_form"
+        assert_select "#roster_level_4_position_2_form"
+        assert_select "#roster_level_4_position_3_form"
+        assert_select "#roster_level_4_position_4_form"
+        assert_select "#roster_level_4_position_5_form"
+        assert_select "#roster_level_4_position_6_form"
+        assert_select "#roster_level_4_position_7_form"
+        assert_select "#roster_level_4_position_7_form"
+        assert_select "#roster_level_4_position_8_form"
+        assert_select "#roster_level_4_position_10_form"
       end
 
       it "renders rosterless" do
@@ -223,10 +217,7 @@ RSpec.describe "rosters/index", type: :view do
 
     context "when it's not their team" do
       before(:each) do
-        assign(:level1_rosters, team.rosters.where(level: 1))
-        assign(:level2_rosters, team.rosters.where(level: 2))
-        assign(:level3_rosters, team.rosters.where(level: 3))
-        assign(:level4_rosters, team.rosters.where(level: 4))
+        assign(:rosters, team.rosters)
         assign(:rosterless_players, [catcher])
         assign(:players, players)
       end
@@ -240,10 +231,10 @@ RSpec.describe "rosters/index", type: :view do
       it "doesn't render position forms" do
         render
 
-        assert_select "#roster_level_1_position_1_new_form", count: 0
-        assert_select "#roster_level_2_position_3_new_form", count: 0
-        assert_select "#roster_level_3_position_7_new_form", count: 0
-        assert_select "#roster_level_4_position_2_new_form", count: 0
+        assert_select "#roster_level_1_position_1_form", count: 0
+        assert_select "#roster_level_2_position_3_form", count: 0
+        assert_select "#roster_level_3_position_7_form", count: 0
+        assert_select "#roster_level_4_position_2_form", count: 0
         assert_select "#roster_level_1_position_3_0_form", count: 0
         assert_select "#roster_level_2_position_7_0_form", count: 0
         assert_select "#roster_level_4_position_1_0_form", count: 0

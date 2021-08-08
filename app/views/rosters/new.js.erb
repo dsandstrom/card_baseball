@@ -1,0 +1,29 @@
+<% if @roster.level.present? && @roster.position.present? %>
+  // reload invalid position
+  var position = document.getElementById('rosters_level_' + <%= @roster.level %> + '_position_' + <%= @roster.position %>);
+  if (position) {
+    position.outerHTML = "<%= j render('rosters/position', team: @team, level: @roster.level, position: @roster.position, rosters: @rosters) %>";
+  }
+<% end %>
+
+<% if @roster.persisted? %>
+  <% @roster.reload %>
+
+  <% if @roster.level.present? && @roster.position.present? %>
+    // reload valid position
+    var position = document.getElementById('rosters_level_' + <%= @roster.level %> + '_position_' + <%= @roster.position %>);
+    if (position) {
+      position.outerHTML = "<%= j render('rosters/position', team: @team, level: @roster.level, position: @roster.position, rosters: @rosters) %>";
+    }
+  <% end %>
+<% elsif @rosterless_player.present? %>
+  // remove rosterless field
+  var rosterless = document.getElementById('rosterless_player_' + <%= @rosterless_player.id %>);
+  if (rosterless) {
+    rosterless.parentNode.removeChild(rosterless);
+  }
+  var rosterlessContainer = document.getElementById('rosterless-players');
+  if (rosterlessContainer) {
+    rosterlessContainer.innerHTML = "<%= j render('rosters/rosterless_player', rosterless_player: @rosterless_player) %>" + rosterlessContainer.innerHTML;
+  }
+<% end %>
