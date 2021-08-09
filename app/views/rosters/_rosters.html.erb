@@ -1,5 +1,6 @@
 <%
   # rosters, level, position required
+  rosters = rosters.where(level: level).rank(:row_order)
   css_class =
     if level == 4
       if rosters.count == Roster::MAX_LEVEL4

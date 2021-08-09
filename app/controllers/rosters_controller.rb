@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# TODO: when max at level 4
+
 class RostersController < ApplicationController
   load_and_authorize_resource :team
   load_and_authorize_resource through: :team, except: %i[create update]
