@@ -209,86 +209,151 @@ RSpec.describe RostersController, type: :controller do
       end
 
       context "for a JS request" do
-        context "when valid params" do
-          it "creates a new Roster" do
-            expect do
-              post :create, xhr: true,
-                            params: { team_id: team.to_param,
-                                      roster: valid_attributes }
-            end.to change(Roster, :count).by(1)
+        before { invalid_attributes.merge(position: "1") }
+
+        context "when player doesn't have a roster" do
+          context "and no other players at position" do
+            let(:js_attributes) do
+              { player_id: player.to_param, level: "2", position: "1" }
+            end
+
+            context "when valid params" do
+              it "creates a new Roster" do
+                expect do
+                  post :create, xhr: true,
+                                params: { team_id: team.to_param,
+                                          roster: js_attributes }
+                end.to change(Roster, :count).by(1)
+              end
+
+              it "redirects to the Roster list" do
+                post :create, xhr: true,
+                              params: { team_id: team.to_param,
+                                        roster: js_attributes }
+                expect(response).to redirect_to(team_rosters_url(team))
+              end
+            end
+
+            context "when invalid params" do
+              it "doesn't create a new Roster" do
+                expect do
+                  post :create, xhr: true,
+                                params: { team_id: team.to_param,
+                                          roster: invalid_attributes }
+                end.not_to change(Roster, :count)
+              end
+
+              it "renders new" do
+                post :create, xhr: true,
+                              params: { team_id: team.to_param,
+                                        roster: invalid_attributes }
+                expect(response).to be_successful
+              end
+            end
           end
 
-          it "redirects to the Roster list" do
-            post :create, xhr: true,
-                          params: { team_id: team.to_param,
-                                    roster: valid_attributes }
-            expect(response).to redirect_to(team_rosters_url(team))
-          end
-        end
+          context "and 1 other player at position" do
+            let(:other_player) { Fabricate(:pitcher) }
 
-        context "when invalid params" do
-          it "doesn't create a new Roster" do
-            expect do
-              post :create, xhr: true,
-                            params: { team_id: team.to_param,
-                                      roster: invalid_attributes }
-            end.not_to change(Roster, :count)
-          end
+            before do
+              Fabricate(:roster, team: team, level: 2, position: 1,
+                                 player: other_player)
+            end
 
-          it "renders new" do
-            post :create, xhr: true,
-                          params: { team_id: team.to_param,
-                                    roster: invalid_attributes }
-            expect(response).to be_successful
+            context "with valid params" do
+              let(:js_attributes) do
+                { player_id: player.to_param, level: "2", position: "1" }
+              end
+
+              it "creates a new Roster" do
+                expect do
+                  post :create, xhr: true,
+                                params: { team_id: team.to_param,
+                                          roster: js_attributes }
+                end.to change(Roster, :count).by(1)
+              end
+
+              it "redirects to the Roster list" do
+                post :create, xhr: true,
+                              params: { team_id: team.to_param,
+                                        roster: js_attributes }
+                expect(response).to redirect_to(team_rosters_url(team))
+              end
+            end
+
+            context "when invalid params" do
+              it "doesn't create a new Roster" do
+                expect do
+                  post :create, xhr: true,
+                                params: { team_id: team.to_param,
+                                          roster: invalid_attributes }
+                end.not_to change(Roster, :count)
+              end
+
+              it "renders new" do
+                post :create, xhr: true,
+                              params: { team_id: team.to_param,
+                                        roster: invalid_attributes }
+                expect(response).to be_successful
+              end
+            end
           end
         end
 
         context "when player already has a roster" do
-          before do
-            Fabricate(:roster, team: team, level: 1, position: 1,
-                               player: player)
-          end
+          context "in a different level" do
+            before do
+              Fabricate(:roster, team: team, level: 1, position: 1,
+                                 player: player)
+            end
 
-          context "when valid params" do
-            it "destroys old Roster and creates a new Roster" do
-              expect do
+            context "when valid params" do
+              it "destroys old Roster and creates a new Roster" do
+                expect do
+                  post :create, xhr: true,
+                                params: { team_id: team.to_param,
+                                          roster: valid_attributes }
+                end.not_to change(Roster, :count)
+              end
+
+              it "redirects to the Roster list" do
                 post :create, xhr: true,
                               params: { team_id: team.to_param,
                                         roster: valid_attributes }
-              end.not_to change(Roster, :count)
+                expect(response).to redirect_to(team_rosters_url(team))
+              end
             end
 
-            it "redirects to the Roster list" do
-              post :create, xhr: true,
-                            params: { team_id: team.to_param,
-                                      roster: valid_attributes }
-              expect(response).to redirect_to(team_rosters_url(team))
-            end
-          end
+            context "when invalid params" do
+              it "doesn't create a new Roster" do
+                expect do
+                  post :create, xhr: true,
+                                params: { team_id: team.to_param,
+                                          roster: invalid_attributes }
+                end.not_to change(Roster, :count)
+              end
 
-          context "when invalid params" do
-            it "doesn't create a new Roster" do
-              expect do
+              it "renders new" do
                 post :create, xhr: true,
                               params: { team_id: team.to_param,
                                         roster: invalid_attributes }
-              end.not_to change(Roster, :count)
-            end
-
-            it "renders new" do
-              post :create, xhr: true,
-                            params: { team_id: team.to_param,
-                                      roster: invalid_attributes }
-              expect(response).to be_successful
+                expect(response).to be_successful
+              end
             end
           end
         end
 
-        context "when player already has a roster for the current level" do
-          before do
+        context "when player already has a roster for the current position" do
+          let(:other_player) { Fabricate(:pitcher) }
+          let!(:current_roster) do
             Fabricate(:roster, team: team, player: player,
                                level: valid_attributes[:level],
                                position: valid_attributes[:position])
+          end
+
+          before do
+            Fabricate(:roster, team: team, level: 2, position: 1,
+                               player: other_player, row_order_position: :last)
           end
 
           it "doesn't destroy old Roster" do
@@ -297,6 +362,15 @@ RSpec.describe RostersController, type: :controller do
                             params: { team_id: team.to_param,
                                       roster: valid_attributes }
             end.not_to change(Roster, :count)
+          end
+
+          it "updates current Roster's order" do
+            expect do
+              post :create, xhr: true,
+                            params: { team_id: team.to_param,
+                                      roster: valid_attributes }
+              current_roster.reload
+            end.to change(current_roster, :row_order)
           end
 
           it "renders new" do

@@ -97,10 +97,12 @@ class RostersController < ApplicationController
       # TODO: verify original roster is same team before updating
       @roster.assign_attributes(roster_params)
 
-      return if @roster.position == old_position && @roster.level == old_level
-
-      @old_position = old_position
-      @old_level = old_level
+      if @roster.position == old_position && @roster.level == old_level
+        @roster.row_order_position ||= :last
+      else
+        @old_position = old_position
+        @old_level = old_level
+      end
     end
 
     def create_js_response
