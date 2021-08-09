@@ -1,10 +1,14 @@
 # frozen_string_literal: true
 
-# TODO: when max at level 4
+# TODO: create form should follow cursor up/down
+# initially hide, show when hover if level allows more
+# so player can be dropped in a certain order
+# TODO: when dropping on another player, swap places
+# TODO: when max at level 4, hide create forms, lock adding
 
 class RostersController < ApplicationController
   load_and_authorize_resource :team
-  load_and_authorize_resource through: :team, except: %i[create update]
+  load_and_authorize_resource through: :team, except: :create
   before_action :set_league
 
   def index
@@ -23,19 +27,10 @@ class RostersController < ApplicationController
   end
 
   def update
-    @roster = @team.rosters.find(params[:id])
-    authorize! :update, @roster
-
     respond_to do |format|
-      format.html do
-        if @roster.update(roster_params)
-          redirect_to team_rosters_url(@team),
-                      notice: 'Roster spot was successfully updated.'
-        else
-          render :edit
-        end
-      end
+      format.html { update_html_response }
       format.js do
+        @rosters = @team.rosters
         update_js_response
       end
     end
@@ -104,17 +99,17 @@ class RostersController < ApplicationController
       @player = Player.find_by(id: roster_params[:player_id])
       @roster = @player&.roster || @team.rosters.build
 
-      old_position = @roster.position
-      old_level = @roster.level
+      @old_position = @roster.position
+      @old_level = @roster.level
       # TODO: verify original roster is same team before updating
       @roster.assign_attributes(roster_params)
 
-      if @roster.position == old_position && @roster.level == old_level
-        @roster.row_order_position ||= :last
-      else
-        @old_position = old_position
-        @old_level = old_level
-      end
+      return unless @roster.position == @old_position &&
+                    @roster.level == @old_level
+
+      @roster.row_order_position ||= :last
+      @old_position = nil
+      @old_level = nil
     end
 
     def create_js_response
@@ -130,31 +125,48 @@ class RostersController < ApplicationController
       end
     end
 
+    def update_html_response
+      if @roster.update(roster_params)
+        redirect_to team_rosters_url(@team),
+                    notice: 'Roster spot was successfully updated.'
+      else
+        render :edit
+      end
+    end
+
     def update_js_response
       @player = Player.find_by(id: roster_params[:player_id])
-      old_player_id = @roster.player_id
-      old_position = @roster.position
-      old_level = @roster.level
-      @roster.assign_attributes(roster_params)
-      authorize! :update, @roster
 
-      if @roster.player_id != old_player_id
-        old_roster = @roster
-        old_roster.player_id = old_player_id
-        old_roster.save
-        @roster = @player.roster || @team.rosters.build
-        @roster.assign_attributes(roster_params)
-        @roster.row_order_position = old_roster.row_order_rank
-      end
-
-      @rosters = @team.rosters
-      if @roster.player_id == old_player_id &&
-         @roster.position == old_position && @roster.level == old_level
-        render :edit
-      elsif @roster.save
+      if update_roster
         render :show
       else
         render :edit
       end
+    end
+
+    def update_roster
+      old_player_id = @roster.player_id
+      old_position = @roster.position
+      old_level = @roster.level
+      @roster.assign_attributes(roster_params)
+
+      swap_roster_player(old_player_id)
+
+      return false if @roster.player_id == old_player_id &&
+                      @roster.position == old_position &&
+                      @roster.level == old_level
+
+      @roster.save
+    end
+
+    def swap_roster_player(old_player_id)
+      return if @roster.player_id == old_player_id
+
+      old_roster = @roster
+      old_roster.player_id = old_player_id
+      old_roster.save
+      @roster = @player.roster || @team.rosters.build
+      @roster.assign_attributes(roster_params)
+      @roster.row_order_position = old_roster.row_order_rank
     end
 end
