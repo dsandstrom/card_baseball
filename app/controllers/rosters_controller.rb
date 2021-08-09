@@ -2,7 +2,7 @@
 
 class RostersController < ApplicationController
   load_and_authorize_resource :team
-  load_and_authorize_resource through: :team, except: :create
+  load_and_authorize_resource through: :team, except: %i[create update]
   before_action :set_league
 
   def index
@@ -21,11 +21,21 @@ class RostersController < ApplicationController
   end
 
   def update
-    if @roster.update(roster_params)
-      redirect_to team_rosters_url(@team),
-                  notice: 'Roster spot was successfully updated.'
-    else
-      render :edit
+    @roster = @team.rosters.find(params[:id])
+    authorize! :update, @roster
+
+    respond_to do |format|
+      format.html do
+        if @roster.update(roster_params)
+          redirect_to team_rosters_url(@team),
+                      notice: 'Roster spot was successfully updated.'
+        else
+          render :edit
+        end
+      end
+      format.js do
+        update_js_response
+      end
     end
   end
 
@@ -115,6 +125,34 @@ class RostersController < ApplicationController
       else
         @rosterless_player = @player
         render :new
+      end
+    end
+
+    def update_js_response
+      @player = Player.find_by(id: roster_params[:player_id])
+      old_player_id = @roster.player_id
+      old_position = @roster.position
+      old_level = @roster.level
+      @roster.assign_attributes(roster_params)
+      authorize! :update, @roster
+
+      if @roster.player_id != old_player_id
+        old_roster = @roster
+        old_roster.player_id = old_player_id
+        old_roster.save
+        @roster = @player.roster || @team.rosters.build
+        @roster.assign_attributes(roster_params)
+        @roster.row_order_position = old_roster.row_order_rank
+      end
+
+      @rosters = @team.rosters
+      if @roster.player_id == old_player_id &&
+         @roster.position == old_position && @roster.level == old_level
+        render :edit
+      elsif @roster.save
+        render :show
+      else
+        render :edit
       end
     end
 end

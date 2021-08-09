@@ -341,43 +341,44 @@ RSpec.describe RostersController, type: :controller do
               end
             end
           end
-        end
 
-        context "when player already has a roster for the current position" do
-          let(:other_player) { Fabricate(:pitcher) }
-          let!(:current_roster) do
-            Fabricate(:roster, team: team, player: player,
-                               level: valid_attributes[:level],
-                               position: valid_attributes[:position])
-          end
+          context "for the current position" do
+            let(:other_player) { Fabricate(:pitcher) }
+            let!(:current_roster) do
+              Fabricate(:roster, team: team, player: player,
+                                 level: valid_attributes[:level],
+                                 position: valid_attributes[:position])
+            end
 
-          before do
-            Fabricate(:roster, team: team, level: 2, position: 1,
-                               player: other_player, row_order_position: :last)
-          end
+            before do
+              Fabricate(:roster, team: team, level: 2, position: 1,
+                                 player: other_player,
+                                 row_order_position: :last)
+            end
 
-          it "doesn't destroy old Roster" do
-            expect do
+            it "doesn't destroy old Roster" do
+              expect do
+                post :create, xhr: true,
+                              params: { team_id: team.to_param,
+                                        roster: valid_attributes }
+              end.not_to change(Roster, :count)
+            end
+
+            it "updates current Roster's order" do
+              expect do
+                post :create, xhr: true,
+                              params: { team_id: team.to_param,
+                                        roster: valid_attributes }
+                current_roster.reload
+              end.to change(current_roster, :row_order)
+            end
+
+            it "renders new" do
               post :create, xhr: true,
                             params: { team_id: team.to_param,
                                       roster: valid_attributes }
-            end.not_to change(Roster, :count)
-          end
-
-          it "updates current Roster's order" do
-            expect do
-              post :create, xhr: true,
-                            params: { team_id: team.to_param,
-                                      roster: valid_attributes }
-              current_roster.reload
-            end.to change(current_roster, :row_order)
-          end
-
-          it "renders new" do
-            post :create, xhr: true,
-                          params: { team_id: team.to_param,
-                                    roster: valid_attributes }
-            expect(response).to be_successful
+              expect(response).to be_successful
+            end
           end
         end
       end
@@ -438,38 +439,210 @@ RSpec.describe RostersController, type: :controller do
   end
 
   describe "PUT #update" do
+    before { roster }
+
     context "for an admin" do
       before { sign_in(admin) }
 
-      context "when valid params" do
-        it "updates the requested Roster" do
-          expect do
-            put :update, params: { team_id: team.to_param, id: roster.to_param,
+      context "for an HTML request" do
+        context "when valid params" do
+          it "updates the requested Roster" do
+            expect do
+              put :update, params: { team_id: team.to_param,
+                                     id: roster.to_param,
+                                     roster: valid_attributes }
+              roster.reload
+            end.to change(roster, :level)
+          end
+
+          it "redirects to the Roster" do
+            put :update, params: { team_id: team.to_param,
+                                   id: roster.to_param,
                                    roster: valid_attributes }
-            roster.reload
-          end.to change(roster, :level)
+            expect(response).to redirect_to(team_rosters_url(team))
+          end
         end
 
-        it "redirects to the Roster" do
-          put :update, params: { team_id: team.to_param, id: roster.to_param,
-                                 roster: valid_attributes }
-          expect(response).to redirect_to(team_rosters_url(team))
+        context "when invalid params" do
+          it "doesn't create a new Roster" do
+            expect do
+              put :update, params: { team_id: team.to_param,
+                                     id: roster.to_param,
+                                     roster: invalid_attributes }
+              roster.reload
+            end.not_to change(roster, :level)
+          end
+
+          it "renders edit" do
+            put :update, params: { team_id: team.to_param,
+                                   id: roster.to_param,
+                                   roster: invalid_attributes }
+            expect(response).to be_successful
+          end
         end
       end
 
-      context "when invalid params" do
-        it "doesn't create a new Roster" do
-          expect do
-            put :update, params: { team_id: team.to_param, id: roster.to_param,
-                                   roster: invalid_attributes }
-            roster.reload
-          end.not_to change(roster, :level)
+      context "for a JS request" do
+        context "when params are different level" do
+          let(:js_attributes) do
+            { player_id: roster.player.id, level: "2",
+              position: roster.position }
+          end
+
+          it "updates the requested Roster" do
+            expect do
+              put :update, xhr: true, params: { team_id: team.to_param,
+                                                id: roster.to_param,
+                                                roster: js_attributes }
+              roster.reload
+            end.to change(roster, :level)
+          end
+
+          it "renders show" do
+            put :update, xhr: true, params: { team_id: team.to_param,
+                                              id: roster.to_param,
+                                              roster: js_attributes }
+            expect(response).to be_successful
+          end
         end
 
-        it "renders edit" do
-          put :update, params: { team_id: team.to_param, id: roster.to_param,
-                                 roster: invalid_attributes }
-          expect(response).to be_successful
+        context "when params are same player, level, position" do
+          let(:js_attributes) do
+            { player_id: roster.player.id, level: roster.level,
+              position: roster.position }
+          end
+
+          it "doesn't update the requested Roster" do
+            expect do
+              put :update, xhr: true, params: { team_id: team.to_param,
+                                                id: roster.to_param,
+                                                roster: js_attributes }
+              roster.reload
+            end.not_to change(roster, :updated_at)
+          end
+
+          it "renders edit" do
+            put :update, xhr: true, params: { team_id: team.to_param,
+                                              id: roster.to_param,
+                                              roster: js_attributes }
+            expect(response).to be_successful
+          end
+        end
+
+        context "when params are player without a roster" do
+          let(:other_player) { Fabricate(:pitcher) }
+          let(:js_attributes) do
+            { player_id: other_player.id, level: roster.level,
+              position: roster.position }
+          end
+
+          before { Fabricate(:contract, team: team, player: other_player) }
+
+          it "updates the requested Roster's order" do
+            expect do
+              put :update, xhr: true, params: { team_id: team.to_param,
+                                                id: roster.to_param,
+                                                roster: js_attributes }
+              roster.reload
+            end.to change(roster, :row_order_rank)
+          end
+
+          it "doesn't change the requested Rosters player" do
+            expect do
+              put :update, xhr: true, params: { team_id: team.to_param,
+                                                id: roster.to_param,
+                                                roster: js_attributes }
+              roster.reload
+            end.not_to change(roster, :player_id)
+          end
+
+          it "creates a new Roster" do
+            expect do
+              put :update, xhr: true, params: { team_id: team.to_param,
+                                                id: roster.to_param,
+                                                roster: js_attributes }
+            end.to change(Roster, :count).by(1)
+          end
+
+          it "creates a Roster for the other player" do
+            expect do
+              put :update, xhr: true, params: { team_id: team.to_param,
+                                                id: roster.to_param,
+                                                roster: js_attributes }
+              other_player.reload
+            end.to change(other_player, :roster).from(nil)
+          end
+
+          it "renders show" do
+            put :update, xhr: true, params: { team_id: team.to_param,
+                                              id: roster.to_param,
+                                              roster: js_attributes }
+            expect(response).to be_successful
+          end
+        end
+
+        context "when new player has roster at that position" do
+          let(:other_player) { Fabricate(:pitcher) }
+          let(:js_attributes) do
+            { player_id: other_player.id, level: roster.level,
+              position: roster.position }
+          end
+
+          let!(:other_roster) do
+            Fabricate(:roster, team: team, player: other_player,
+                               level: roster.level, position: roster.position)
+          end
+
+          it "updates the requested Roster's order" do
+            expect do
+              put :update, xhr: true, params: { team_id: team.to_param,
+                                                id: roster.to_param,
+                                                roster: js_attributes }
+              roster.reload
+            end.to change(roster, :row_order_rank)
+          end
+
+          it "updates the other Roster's order" do
+            expect do
+              put :update, xhr: true, params: { team_id: team.to_param,
+                                                id: roster.to_param,
+                                                roster: js_attributes }
+              other_roster.reload
+            end.to change(other_roster, :row_order_rank)
+          end
+
+          it "doesn't create a new Roster" do
+            expect do
+              put :update, xhr: true, params: { team_id: team.to_param,
+                                                id: roster.to_param,
+                                                roster: js_attributes }
+            end.not_to change(Roster, :count)
+          end
+
+          it "renders show" do
+            put :update, xhr: true, params: { team_id: team.to_param,
+                                              id: roster.to_param,
+                                              roster: js_attributes }
+            expect(response).to be_successful
+          end
+        end
+
+        context "when invalid params" do
+          it "doesn't create a new Roster" do
+            expect do
+              put :update, xhr: true, params: { team_id: team.to_param,
+                                                id: roster.to_param,
+                                                roster: invalid_attributes }
+              roster.reload
+            end.not_to change(roster, :level)
+          end
+
+          it "renders edit" do
+            put :update, xhr: true, params: { team_id: team.to_param,
+                                              id: roster.to_param,
+                                              roster: invalid_attributes }
+            expect(response).to be_successful
+          end
         end
       end
     end
