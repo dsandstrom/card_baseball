@@ -1,4 +1,5 @@
 // TODO: update level count
+// FIXME: when drop to another level on another player, js duplicates
 
 var oldRoster;
 
@@ -25,6 +26,6 @@ var oldRoster;
   // reload new position
   var position = document.getElementById('rosters_level_' + <%= @roster.level %> + '_position_' + <%= @roster.position %>);
   if (position) {
-    position.outerHTML = "<%= j render('rosters/position', team: @team, level: @roster.level, position: @roster.position, rosters: @rosters) %>";
+    position.outerHTML = "<%= j render('rosters/position', team: @team, level: @roster.level, position: @roster.position, rosters: @rosters.where(level: @roster.level).rank(:row_order)) %>";
   }
 <% end %>
