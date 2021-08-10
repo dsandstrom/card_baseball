@@ -191,12 +191,16 @@ body {
     color: $off-white;
     font-weight: bold;
     line-height: 1;
+  }
 
-    &.incomplete {
+  &.incomplete {
+    .count {
       background-color: $color-warning;
     }
+  }
 
-    &.complete {
+  &.complete {
+    .count {
       background-color: $color-success;
     }
   }

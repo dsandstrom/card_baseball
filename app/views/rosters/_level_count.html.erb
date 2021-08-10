@@ -1,0 +1,18 @@
+<%
+  rosters = rosters.where(level: level)
+  css_class =
+    if level == 4
+      if rosters.count == Roster::MAX_LEVEL4
+        'complete'
+      else
+        'incomplete'
+      end
+    end
+%>
+
+<%= content_tag :div, id: "rosters_level_#{level}_count",
+                      class: "heading-and-count #{css_class}" do %>
+  <%= content_tag :h2, Roster::LEVEL_MAP[level][:name] %>
+  <%= content_tag :span, rosters.count,
+                  class: "count rosters-count" %>
+<% end %>
