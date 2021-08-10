@@ -37,6 +37,7 @@ interact('.roster-position-form')
 interact('.roster-player-field')
   .draggable({
     inertia: true,
+    autoScroll: true,
     snap: {
       targets: [startPos],
       range: Infinity,

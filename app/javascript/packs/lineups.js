@@ -38,6 +38,7 @@ interact('.batting-spot-form')
 interact('.spot-hitter-field')
   .draggable({
     inertia: true,
+    autoScroll: true,
     snap: {
       targets: [startPos],
       range: Infinity,
