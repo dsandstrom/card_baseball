@@ -6,12 +6,10 @@
   }
 <% end %>
 
-<% @roster.reload %>
-
-<% if false # @roster.level.present? && @roster.position.present? %>
+<% if @old_level.present? && @old_position.present? %>
   // reload valid position
-  var position = document.getElementById('rosters_level_' + <%= @roster.level %> + '_position_' + <%= @roster.position %>);
+  var position = document.getElementById('rosters_level_' + <%= @old_level %> + '_position_' + <%= @old_position %>);
   if (position) {
-    position.outerHTML = "<%= j render('rosters/position', team: @team, level: @roster.level, position: @roster.position, rosters: @rosters) %>";
+    position.outerHTML = "<%= j render('rosters/position', team: @team, level: @old_level, position: @old_position, rosters: @rosters) %>";
   }
 <% end %>
