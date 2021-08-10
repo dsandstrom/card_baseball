@@ -10,7 +10,7 @@ var startPos = null;
 interact('.draggable.rosterless-player')
   .draggable({
     inertia: true,
-    autoScroll: false,
+    autoScroll: true,
     snap: {
       targets: [startPos],
       range: Infinity,

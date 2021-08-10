@@ -11,7 +11,7 @@ var startPos = null;
 interact('.draggable.bench-hitter')
   .draggable({
     inertia: true,
-    autoScroll: false,
+    autoScroll: true,
     snap: {
       targets: [startPos],
       range: Infinity,
