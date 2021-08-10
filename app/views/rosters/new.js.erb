@@ -2,7 +2,7 @@
   // reload invalid position
   var position = document.getElementById('rosters_level_' + <%= @roster.level %> + '_position_' + <%= @roster.position %>);
   if (position) {
-    position.outerHTML = "<%= j render('rosters/position', team: @team, level: @roster.level, position: @roster.position, rosters: @rosters.where(level: @roster.level)) %>";
+    position.outerHTML = "<%= j render('rosters/position', team: @team, level: @roster.level, position: @roster.position, rosters: @rosters) %>";
   }
 <% end %>
 
@@ -13,7 +13,7 @@
     // reload valid position
     var position = document.getElementById('rosters_level_' + <%= @roster.level %> + '_position_' + <%= @roster.position %>);
     if (position) {
-      position.outerHTML = "<%= j render('rosters/position', team: @team, level: @roster.level, position: @roster.position, rosters: @rosters.where(level: @roster.level)) %>";
+      position.outerHTML = "<%= j render('rosters/position', team: @team, level: @roster.level, position: @roster.position, rosters: @rosters) %>";
     }
   <% end %>
 <% elsif @rosterless_player.present? %>

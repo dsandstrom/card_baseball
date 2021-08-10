@@ -5,7 +5,7 @@
                   class: 'roster-position' %>
 
   <div class="rosters">
-    <% position_rosters = rosters.where(position: position).rank(:row_order) %>
+    <% position_rosters = rosters.where(level: level, position: position).rank(:row_order) %>
     <% position_rosters.each do |roster| %>
       <% if can?(:update, roster) %>
         <%= render 'position_form', team: team, roster: roster %>
