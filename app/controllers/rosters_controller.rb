@@ -99,8 +99,8 @@ class RostersController < ApplicationController
       @player = Player.find_by(id: roster_params[:player_id])
       @roster = @player&.roster || @team.rosters.build
 
-      @old_position = @roster.position.dup
-      @old_level = @roster.level.dup
+      @old_position = @roster.position
+      @old_level = @roster.level
       # TODO: verify original roster is same team before updating
       @roster.assign_attributes(roster_params)
 
@@ -145,9 +145,9 @@ class RostersController < ApplicationController
     end
 
     def update_roster
-      old_player_id = @roster.player_id.dup
-      old_level = @roster.level.dup
-      old_position = @roster.position.dup
+      old_player_id = @roster.player_id
+      old_level = @roster.level
+      old_position = @roster.position
       @roster.assign_attributes(roster_params)
 
       swap_roster_player(old_player_id)
