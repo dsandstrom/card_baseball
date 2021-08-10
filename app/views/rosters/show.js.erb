@@ -29,8 +29,9 @@ var oldRoster;
   }
 <% end %>
 
+var levelCount;
 <% (1..4).each do |level| %>
-  var levelCount = document.querySelector('#rosters_level_' + <%= level %> + '_count');
+  levelCount = document.querySelector('#rosters_level_' + <%= level %> + '_count');
   if (levelCount) {
     levelCount.outerHTML = "<%= j render('rosters/level_count', level: level, rosters: @rosters) %>";
   }
