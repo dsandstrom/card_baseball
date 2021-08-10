@@ -2,6 +2,7 @@ import interact from 'interactjs'
 import Rails from '@rails/ujs'
 
 // https://github.com/taye/interact.js/issues/79
+// TODO: only allow dragover/drop if player plays position
 
 // TODO: share code with lineups
 
