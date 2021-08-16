@@ -11,6 +11,11 @@ module FlashMessagesHelper
     flash.each { |t, m| concat flash_message(t, m) }
   end
 
+  def flash_form_errors(obj)
+    message = form_errors_messages(obj)
+    flash_message('alert', message)
+  end
+
   private
 
     def flash_message_class(key)

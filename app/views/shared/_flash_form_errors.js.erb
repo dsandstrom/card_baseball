@@ -1,0 +1,13 @@
+<% if object.errors.present? %>
+  var flashMessage = document.querySelector('.flash-message');
+  if (flashMessage) {
+    flashMessage.outerHTML = "<%= j flash_form_errors(object) %>";
+  } else {
+    var main = document.getElementById('main-content');
+    if (main) {
+      main.innerHTML += "<%= j flash_form_errors(object) %>";
+    }
+  }
+  var event = new Event('custom:reload-flash');
+  document.dispatchEvent(event);
+<% end %>

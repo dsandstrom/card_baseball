@@ -1,3 +1,5 @@
+<%= render 'shared/flash_form_errors.js', object: @roster %>
+
 <% if @roster.level.present? && @roster.position.present? %>
   // reload invalid position
   var position = document.getElementById('rosters_level_' + <%= @roster.level %> + '_position_' + <%= @roster.position %>);

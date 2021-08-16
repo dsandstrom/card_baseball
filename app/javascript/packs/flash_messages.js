@@ -53,8 +53,11 @@ class FlashMessage {
   }
 }
 
-document.addEventListener('turbolinks:load', function() {
+const enableFlashMessages = function (event) {
   for (var message of document.querySelectorAll('.flash-message')) {
     new FlashMessage(message);
   }
-})
+}
+
+document.addEventListener('turbolinks:load', enableFlashMessages);
+document.addEventListener('custom:reload-flash', enableFlashMessages);
