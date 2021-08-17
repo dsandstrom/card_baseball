@@ -263,7 +263,7 @@ RSpec.describe "rosters/index", type: :view do
       it "renders rosterless" do
         render
 
-        assert_select "#rosterless_player_#{catcher.id}"
+        assert_select "#rosterless_player_#{catcher.id}", count: 0
       end
     end
   end
