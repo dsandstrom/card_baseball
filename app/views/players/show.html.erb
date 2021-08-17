@@ -46,9 +46,13 @@
             Available
           <% end %>
         </dd>
-
         <% if can?(:create, new_contract) %>
           <dd><%= link_to 'change', player_contract_path(@player) %></dd>
+        <% end %>
+
+        <% if @player.roster_level.present? %>
+          <dt>Roster Level</dt>
+          <%= content_tag :dd, @player.roster_level %>
         <% end %>
       </dl>
     </div>
