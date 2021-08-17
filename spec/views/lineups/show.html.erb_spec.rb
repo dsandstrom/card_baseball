@@ -8,7 +8,11 @@ RSpec.describe "lineups/show", type: :view do
   let(:team) { Fabricate(:team) }
   let(:player) { Fabricate(:hitter) }
 
-  before { Fabricate(:contract, team: team, player: player) }
+  before do
+    Fabricate(:contract, team: team, player: player)
+    Fabricate(:roster, team: team, player: player, level: 4,
+                       position: player.primary_position)
+  end
 
   context "for an admin" do
     before { enable_can(view, admin) }

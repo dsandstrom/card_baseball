@@ -391,23 +391,32 @@ RSpec.describe Lineup, type: :model do
       end
     end
 
-    context "when team has 2 hitters" do
+    context "when team has 3 hitters" do
       let(:first_hitter) do
         Fabricate(:hitter, primary_position: 2, defense2: 2)
       end
       let(:second_hitter) do
         Fabricate(:hitter, primary_position: 3, defense3: 5)
       end
+      let(:third_hitter) do
+        Fabricate(:hitter, primary_position: 5, defense5: 5)
+      end
 
       before do
         Fabricate(:contract, team: team, player: first_hitter)
         Fabricate(:contract, team: team, player: second_hitter)
+        Fabricate(:contract, team: team, player: third_hitter)
         Fabricate(:contract)
+
+        Fabricate(:roster, team: team, player: first_hitter, level: 4,
+                           position: 2)
+        Fabricate(:roster, team: team, player: second_hitter, level: 3,
+                           position: 3)
       end
 
       context "and none in the lineup" do
-        it "returns both" do
-          expect(lineup.bench).to match_array([first_hitter, second_hitter])
+        it "returns hitters with MLB roster" do
+          expect(lineup.bench).to eq([first_hitter])
         end
       end
 
@@ -416,21 +425,8 @@ RSpec.describe Lineup, type: :model do
           Fabricate(:spot, hitter: first_hitter, lineup: lineup, position: 2)
         end
 
-        it "returns both" do
-          expect(lineup.bench).to match_array([second_hitter])
-        end
-      end
-
-      context "and both in the lineup" do
-        before do
-          Fabricate(:spot, hitter: first_hitter, lineup: lineup, position: 2,
-                           batting_order: 1)
-          Fabricate(:spot, hitter: second_hitter, lineup: lineup, position: 3,
-                           batting_order: 2)
-        end
-
-        it "returns both" do
-          expect(lineup.bench).to match_array([])
+        it "returns none" do
+          expect(lineup.bench).to eq([])
         end
       end
     end

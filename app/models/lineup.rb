@@ -34,7 +34,9 @@ class Lineup < ApplicationRecord
   end
 
   def bench
-    @bench ||= team.hitters.where.not(id: hitters.map(&:id))
+    @bench ||= team.hitters.joins(:roster)
+                   .where('rosters.level = ?', 4)
+                   .where.not(id: hitters.map(&:id))
   end
 
   def position_form_options
