@@ -8,6 +8,7 @@
     end
   show_contract = true if show_contract.nil?
   show_team = true if show_team.nil?
+  show_roster = true if show_roster.nil?
   highlight ||= nil
 %>
 
@@ -33,6 +34,9 @@
       <th colspan="4" class="vs-right<%= ' highlight' if highlight == 'right' %>">vs Righties</th>
       <th colspan="8" class="defense">Defense</th>
       <% if show_contract %>
+        <th class="left-border"></th>
+      <% end %>
+      <% if show_roster %>
         <th class="left-border"></th>
       <% end %>
     </tr>
@@ -68,6 +72,9 @@
       <% if show_contract %>
         <th class="left-border">Contract</th>
       <% end %>
+      <% if show_roster %>
+        <th class="left-border">Level</th>
+      <% end %>
     </tr>
   </thead>
 
@@ -79,6 +86,7 @@
                    table_index: (table_index + page_index + 1),
                    show_contract: show_contract,
                    show_team: show_team,
+                   show_roster: show_roster,
                    highlight: highlight %>
       <% end %>
     <% elsif searching? %>

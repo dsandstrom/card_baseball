@@ -2,6 +2,7 @@
   table_index ||= nil
   highlight ||= nil
   show_team = true if show_team.nil?
+  show_roster = true if show_roster.nil?
 %>
 
 <tr class="player" id="player_<%= player.id %>">
@@ -24,5 +25,8 @@
     <td class="left-border">
       <%= render 'players/contract', player: player, show_team: show_team %>
     </td>
+  <% end %>
+  <% if show_roster %>
+    <%= content_tag :td, player.roster_level, class: 'left-border roster-level' %>
   <% end %>
 </tr>

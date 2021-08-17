@@ -16,8 +16,8 @@
 
 <% if show_team %>
   <%= content_tag :span, "(#{pluralize(contract.length, 'year')})",
-                  class: 'no-wrap' %>
+                  class: 'no-wrap contract-length' %>
 <% else %>
   <%= content_tag :span, pluralize(contract.length, 'year'),
-                  class: 'no-wrap' %>
+                  class: 'no-wrap contract-length' %>
 <% end %>

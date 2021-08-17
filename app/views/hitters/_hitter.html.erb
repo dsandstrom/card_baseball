@@ -33,4 +33,7 @@
   <% if show_contract %>
     <td class="left-border"><%= render 'players/contract', player: hitter, show_team: show_team %></td>
   <% end %>
+  <% if show_roster %>
+    <%= content_tag :td, hitter.roster_level, class: 'left-border roster-level' %>
+  <% end %>
 </tr>
