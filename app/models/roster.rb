@@ -101,9 +101,9 @@ class Roster < ApplicationRecord
       max += 1 if persisted?
       return if team.rosters.where(level: 4).count < max
 
-      message = 'Team already has the maximum amount of players at '\
+      message = 'already has the maximum amount of players at '\
                 "#{LEVEL_MAP[4][:name]} level"
-      errors.add(:player, message)
+      errors.add(:team, message)
     end
 
     # level 4, use all positions (1: SP, 10: RP)
