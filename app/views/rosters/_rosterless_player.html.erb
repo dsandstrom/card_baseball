@@ -1,11 +1,5 @@
-<%
-  css_class = 'rosterless-player'
-  if can?(:create, new_roster)
-    css_class += ' draggable'
-  end
-%>
-
 <%= content_tag :div, id: "rosterless_player_#{ rosterless_player.id }",
-                      class: css_class, data: { id: rosterless_player.id } do %>
+                      class: 'rosterless-player draggable',
+                      data: { id: rosterless_player.id } do %>
   <%= render 'rosters/player', player: rosterless_player, show_positions: true %>
 <% end %>

@@ -18,7 +18,7 @@
     <%= render 'rosters/rosters', team: @team, rosters: @rosters, level: 1 %>
   </div>
 
-  <% if @rosterless_players.any? %>
+  <% if can?(:create, new_roster) && @rosterless_players.any? %>
     <div class="second-column">
       <h2>Pending</h2>
       <div id="rosterless-players" class="rosterless-players">

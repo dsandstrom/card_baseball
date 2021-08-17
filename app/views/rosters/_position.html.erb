@@ -10,7 +10,7 @@
       <% if can?(:update, roster) %>
         <%= render 'position_form', team: team, roster: roster %>
       <% else %>
-        <%= render roster, team: @team %>
+        <%= render roster, team: team %>
       <% end %>
     <% end %>
 

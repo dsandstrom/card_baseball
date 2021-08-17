@@ -5,5 +5,6 @@
 
 <div id="roster_<%= roster.id %>" class="roster-player-field draggable"
      data-id="<%= player.id %>">
-  <%= render 'rosters/player', player: player, position: position %>
+  <%= render 'rosters/player', player: player, position: position,
+                               show_positions: true %>
 </div>
