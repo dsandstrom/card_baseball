@@ -311,6 +311,10 @@ class Player < ApplicationRecord # rubocop:disable Metrics/ClassLength
     position_defense(pos).present?
   end
 
+  def roster_level
+    @roster_level ||= Roster::LEVEL_MAP[roster.level][:name] if roster&.level
+  end
+
   private
 
     def build_name

@@ -1616,4 +1616,46 @@ RSpec.describe Player, type: :model do
       end
     end
   end
+
+  describe "#roster_level" do
+    let(:player) { Fabricate(:player, primary_position: 5) }
+
+    context "when no roster" do
+      it "returns nil" do
+        expect(player.roster_level).to eq(nil)
+      end
+    end
+
+    context "when roster level is 1" do
+      before { Fabricate(:roster, player: player, level: 1, position: 3) }
+
+      it "returns A" do
+        expect(player.roster_level).to eq("A")
+      end
+    end
+
+    context "when roster level is 2" do
+      before { Fabricate(:roster, player: player, level: 2, position: 3) }
+
+      it "returns A" do
+        expect(player.roster_level).to eq("AA")
+      end
+    end
+
+    context "when roster level is 3" do
+      before { Fabricate(:roster, player: player, level: 3, position: 3) }
+
+      it "returns A" do
+        expect(player.roster_level).to eq("AAA")
+      end
+    end
+
+    context "when roster level is 4" do
+      before { Fabricate(:roster, player: player, level: 4, position: 5) }
+
+      it "returns A" do
+        expect(player.roster_level).to eq("Majors")
+      end
+    end
+  end
 end
