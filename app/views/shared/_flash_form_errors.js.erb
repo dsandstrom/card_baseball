@@ -1,5 +1,5 @@
+var flashMessage = document.querySelector('.flash-message');
 <% if object.errors.present? %>
-  var flashMessage = document.querySelector('.flash-message');
   if (flashMessage) {
     flashMessage.outerHTML = "<%= j flash_form_errors(object) %>";
   } else {
@@ -10,4 +10,8 @@
   }
   var event = new Event('custom:reload-flash');
   document.dispatchEvent(event);
+<% else %>
+  if (flashMessage) {
+    flashMessage.parentNode.removeChild(flashMessage);
+  }
 <% end %>
