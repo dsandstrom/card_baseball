@@ -12,6 +12,7 @@ class Spot < ApplicationRecord
   validate :hitter_plays_position
   validate :correct_batters_amount
   validate :hitter_on_team
+  validate :hitter_on_level
 
   belongs_to :lineup
   belongs_to :hitter, class_name: 'Player'
@@ -54,5 +55,13 @@ class Spot < ApplicationRecord
       return if hitter.team == lineup.team
 
       errors.add(:hitter, 'no longer on team')
+    end
+
+    def hitter_on_level
+      return unless hitter && lineup&.team
+      return unless hitter.team == lineup.team
+      return if hitter.roster&.level == 4
+
+      errors.add(:hitter, 'not on MLB roster')
     end
 end

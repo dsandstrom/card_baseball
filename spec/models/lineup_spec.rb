@@ -557,6 +557,10 @@ RSpec.describe Lineup, type: :model do
       before do
         Fabricate(:contract, player: second_base_hitter, team: team)
         Fabricate(:contract, player: third_base_hitter, team: team)
+        Fabricate(:roster, player: second_base_hitter, team: team, level: 4,
+                           position: 4)
+        Fabricate(:roster, player: third_base_hitter, team: team, level: 4,
+                           position: 5)
         Fabricate(:spot, lineup: lineup, batting_order: 2, position: 4,
                          hitter: second_base_hitter)
         Fabricate(:spot, lineup: lineup, batting_order: 3, position: 5,
@@ -580,6 +584,10 @@ RSpec.describe Lineup, type: :model do
       before do
         Fabricate(:contract, player: second_base_hitter, team: team)
         Fabricate(:contract, player: third_base_hitter, team: team)
+        Fabricate(:roster, player: second_base_hitter, team: team, level: 4,
+                           position: 4)
+        Fabricate(:roster, player: third_base_hitter, team: team, level: 4,
+                           position: 5)
         Fabricate(:spot, lineup: lineup, batting_order: 2, position: 4,
                          hitter: second_base_hitter)
         Fabricate(:spot, lineup: lineup, batting_order: 3, position: 5,
@@ -599,7 +607,10 @@ RSpec.describe Lineup, type: :model do
       Fabricate(:hitter, primary_position: 2, defense2: 4, bar2: 2)
     end
 
-    before { Fabricate(:contract, team: team, player: hitter) }
+    before do
+      Fabricate(:contract, team: team, player: hitter)
+      Fabricate(:roster, team: team, player: hitter, level: 4, position: 2)
+    end
 
     context "when no catcher spot" do
       it "returns 0" do

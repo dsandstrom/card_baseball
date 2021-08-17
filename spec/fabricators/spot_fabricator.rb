@@ -20,6 +20,8 @@ Fabricator(:spot) do
         Fabricate(:hitter)
       end
     Fabricate(:contract, player: hitter, team: attrs[:lineup].team)
+    Fabricate(:roster, player: hitter, team: attrs[:lineup].team, level: 4,
+                       position: hitter.primary_position)
     hitter
   end
 end

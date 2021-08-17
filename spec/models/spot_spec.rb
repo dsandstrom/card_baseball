@@ -6,9 +6,13 @@ RSpec.describe Spot, type: :model do
   let(:team) { Fabricate(:team) }
   let(:lineup) { Fabricate(:lineup, team: team) }
   let(:hitter) { Fabricate(:hitter, primary_position: 2, defense2: 5) }
+  let(:roster) do
+    Fabricate(:roster, player: hitter, team: team, level: 4, position: 2)
+  end
 
   before do
     Fabricate(:contract, player: hitter, team: team)
+    roster
     @spot = Spot.new(lineup_id: lineup.id, hitter_id: hitter.id,
                      position: 2, batting_order: 1)
   end
@@ -50,13 +54,17 @@ RSpec.describe Spot, type: :model do
           before do
             subject.position = 7
             hitter.update(defense7: -3)
+            roster.update(position: 7)
           end
 
           it { is_expected.to be_valid }
         end
 
         context "and position is 2" do
-          before { subject.position = 2 }
+          before do
+            subject.position = 2
+            roster.update(position: 2)
+          end
 
           it { is_expected.not_to be_valid }
         end
@@ -163,14 +171,31 @@ RSpec.describe Spot, type: :model do
         it { is_expected.not_to be_valid }
       end
     end
+
+    describe "#hitter_on_level" do
+      context "when contract, but no roster" do
+        let(:roster) { nil }
+
+        it { is_expected.not_to be_valid }
+      end
+
+      context "when level 3 roster" do
+        let(:roster) do
+          Fabricate(:roster, team: team, player: hitter, level: 3, position: 3)
+        end
+
+        it { is_expected.not_to be_valid }
+      end
+    end
   end
 
   describe "#defense" do
     let(:hitter) do
       Fabricate(:hitter, primary_position: 3, defense3: 1, defense4: -1)
     end
-
-    before { Fabricate(:contract, player: hitter, team: team) }
+    let(:roster) do
+      Fabricate(:roster, player: hitter, team: team, level: 4, position: 3)
+    end
 
     context "when no hitter" do
       let(:spot) do

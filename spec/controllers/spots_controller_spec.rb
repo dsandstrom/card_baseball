@@ -15,7 +15,10 @@ RSpec.describe SpotsController, type: :controller do
                      position: 2)
   end
 
-  before { Fabricate(:contract, player: hitter, team: team) }
+  before do
+    Fabricate(:contract, player: hitter, team: team)
+    Fabricate(:roster, player: hitter, team: team, level: 4, position: 2)
+  end
 
   let(:valid_attributes) do
     { hitter_id: hitter.to_param, position: 2, batting_order: 2 }
@@ -565,6 +568,8 @@ RSpec.describe SpotsController, type: :controller do
 
               before do
                 Fabricate(:contract, player: bench_hitter, team: team)
+                Fabricate(:roster, player: bench_hitter, team: team, level: 4,
+                                   position: 2)
               end
 
               it "updates the requested Spot" do
@@ -632,6 +637,8 @@ RSpec.describe SpotsController, type: :controller do
 
             before do
               Fabricate(:contract, player: new_hitter, team: team)
+              Fabricate(:roster, player: new_hitter, team: team, level: 4,
+                                 position: 2)
             end
 
             let!(:old_spot) do
@@ -822,6 +829,8 @@ RSpec.describe SpotsController, type: :controller do
 
                 before do
                   Fabricate(:contract, player: bench_hitter, team: team)
+                  Fabricate(:roster, player: bench_hitter, team: team, level: 4,
+                                     position: 2)
                 end
 
                 it "updates the requested Spot" do
@@ -860,6 +869,8 @@ RSpec.describe SpotsController, type: :controller do
 
                 before do
                   Fabricate(:contract, player: bench_hitter, team: team)
+                  Fabricate(:roster, player: bench_hitter, team: team, level: 4,
+                                     position: 3)
                 end
 
                 it "doesn't update the requested Spot" do
@@ -890,6 +901,8 @@ RSpec.describe SpotsController, type: :controller do
 
               before do
                 Fabricate(:contract, player: new_hitter, team: team)
+                Fabricate(:roster, player: new_hitter, team: team, level: 4,
+                                   position: 2)
               end
 
               let!(:old_spot) do
