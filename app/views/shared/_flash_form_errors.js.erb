@@ -1,17 +1,12 @@
-var flashMessage = document.querySelector('.flash-message');
+document.querySelectorAll('.flash-message').forEach((message, i) => {
+  message.parentNode.removeChild(message);
+});
+
 <% if object.errors.present? %>
-  if (flashMessage) {
-    flashMessage.outerHTML = "<%= j flash_form_errors(object) %>";
-  } else {
-    var main = document.getElementById('main-content');
-    if (main) {
-      main.innerHTML += "<%= j flash_form_errors(object) %>";
-    }
+  var main = document.getElementById('main-header');
+  if (main) {
+    main.innerHTML += "<%= j flash_form_errors(object) %>";
   }
   var event = new Event('custom:reload-flash');
   document.dispatchEvent(event);
-<% else %>
-  if (flashMessage) {
-    flashMessage.parentNode.removeChild(flashMessage);
-  }
 <% end %>

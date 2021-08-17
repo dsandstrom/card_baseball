@@ -1,4 +1,4 @@
-<%= render('shared/flash_form_errors.js', object: @spot) %>
+<%= render('shared/flash_form_errors.js', object: @spot) if @spot.position %>
 
 <% if @old_spot %>
   var form = document.getElementById("spot_batting_order_<%= @old_spot.batting_order %>_form");
