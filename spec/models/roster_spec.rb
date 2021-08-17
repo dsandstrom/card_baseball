@@ -373,6 +373,47 @@ RSpec.describe Roster, type: :model do
             end
           end
         end
+
+        context "for a catcher" do
+          let(:player) { Fabricate(:player, primary_position: 2) }
+
+          before do
+            Fabricate(:contract, team: team, player: player)
+            subject.player = player
+          end
+
+          context "when position is 3" do
+            before { subject.position = 3 }
+
+            it "should not be valid" do
+              expect(subject).to be_valid
+            end
+          end
+
+          context "when position is 7" do
+            before { subject.position = 7 }
+
+            it "should be valid" do
+              expect(subject).to_not be_valid
+            end
+          end
+
+          context "when position is 1" do
+            before { subject.position = 1 }
+
+            it "should not be valid" do
+              expect(subject).not_to be_valid
+            end
+          end
+
+          context "when position is 10" do
+            before { subject.position = 10 }
+
+            it "should not be valid" do
+              expect(subject).not_to be_valid
+            end
+          end
+        end
       end
 
       context "when level is 4" do

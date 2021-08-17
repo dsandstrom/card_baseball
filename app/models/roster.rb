@@ -135,7 +135,7 @@ class Roster < ApplicationRecord
       when 1
         player.starting_pitcher?
       when 3
-        player.infielder?
+        player.infielder? || player.plays_position?(2)
       when 7
         player.outfielder?
       when 10
