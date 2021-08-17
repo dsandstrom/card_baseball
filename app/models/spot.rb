@@ -62,6 +62,6 @@ class Spot < ApplicationRecord
       return unless hitter.team == lineup.team
       return if hitter.roster&.level == 4
 
-      errors.add(:hitter, 'not on MLB roster')
+      errors.add(:hitter, "not on #{LEVEL_MAP[4][:name]} roster")
     end
 end

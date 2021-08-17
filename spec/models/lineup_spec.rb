@@ -415,7 +415,7 @@ RSpec.describe Lineup, type: :model do
       end
 
       context "and none in the lineup" do
-        it "returns hitters with MLB roster" do
+        it "returns hitters with level 4 roster" do
           expect(lineup.bench).to eq([first_hitter])
         end
       end
