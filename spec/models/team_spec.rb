@@ -30,6 +30,8 @@ RSpec.describe Team, type: :model do
   it { is_expected.to have_many(:lineups) }
   it { is_expected.to have_many(:rosters) }
 
+  # INSTANCE
+
   describe "#hitters" do
     let(:team) { Fabricate(:team, league: league) }
     let(:first_base) do
@@ -151,6 +153,280 @@ RSpec.describe Team, type: :model do
 
       it "orders by pitcher_rating" do
         expect(team.pitchers).to eq([hitting_pitcher, pitcher])
+      end
+    end
+  end
+
+  describe "#auto_roster!" do
+    let(:team) { Fabricate(:team) }
+
+    context "when no players" do
+      before do
+        Fabricate(:contract)
+        Fabricate(:roster)
+      end
+
+      it "doesn't create any rosters" do
+        expect do
+          team.auto_roster!
+        end.not_to change(Roster, :count)
+      end
+    end
+
+    context "when starting pitcher" do
+      let(:starting_pitcher) { Fabricate(:starting_pitcher) }
+
+      before do
+        Fabricate(:contract, team: team, player: starting_pitcher)
+        Fabricate(:contract)
+      end
+
+      context "without roster" do
+        it "creates one" do
+          expect do
+            team.auto_roster!
+          end.to change(team.rosters.where(level: 4), :count).by(1)
+        end
+      end
+
+      context "with roster" do
+        before do
+          Fabricate(:roster, team: team, player: starting_pitcher, position: 1)
+        end
+
+        it "doesn't create any rosters" do
+          expect do
+            team.auto_roster!
+          end.not_to change(Roster, :count)
+        end
+      end
+    end
+
+    context "when relief pitcher" do
+      let(:relief_pitcher) { Fabricate(:relief_pitcher) }
+
+      before do
+        Fabricate(:contract, team: team, player: relief_pitcher)
+        Fabricate(:contract)
+      end
+
+      context "without roster" do
+        it "creates one" do
+          expect do
+            team.auto_roster!
+          end.to change(team.rosters.where(level: 4), :count).by(1)
+        end
+      end
+
+      context "with roster" do
+        before do
+          Fabricate(:roster, team: team, player: relief_pitcher, position: 10)
+        end
+
+        it "doesn't create any rosters" do
+          expect do
+            team.auto_roster!
+          end.not_to change(Roster, :count)
+        end
+      end
+    end
+
+    context "when infielder" do
+      let(:infielder) { Fabricate(:player, primary_position: 5) }
+
+      before do
+        Fabricate(:contract, team: team, player: infielder)
+        Fabricate(:contract)
+      end
+
+      context "without roster" do
+        it "creates one" do
+          expect do
+            team.auto_roster!
+          end.to change(team.rosters.where(level: 4), :count).by(1)
+        end
+      end
+
+      context "with roster" do
+        before do
+          Fabricate(:roster, team: team, player: infielder, level: 3,
+                             position: 3)
+        end
+
+        it "doesn't create any rosters" do
+          expect do
+            team.auto_roster!
+          end.not_to change(Roster, :count)
+        end
+      end
+    end
+
+    context "when 7 starting pitchers" do
+      before do
+        7.times do |n|
+          pitcher = Fabricate(:starting_pitcher, pitcher_rating: 70 + n)
+          Fabricate(:contract, team: team, player: pitcher)
+        end
+      end
+
+      it "creates 7 rosters" do
+        expect do
+          team.auto_roster!
+        end.to change(team.rosters, :count).by(7)
+      end
+
+      it "creates 5 level 4 rosters" do
+        expect do
+          team.auto_roster!
+        end.to change(team.rosters.where(level: 4).where(position: 1), :count)
+          .by(5)
+      end
+
+      it "creates 1 level 3 roster" do
+        expect do
+          team.auto_roster!
+        end.to change(team.rosters.where(level: 3), :count).by(1)
+      end
+
+      it "creates 1 level 2 roster" do
+        expect do
+          team.auto_roster!
+        end.to change(team.rosters.where(level: 2), :count).by(1)
+      end
+    end
+
+    context "when 9 starting pitchers" do
+      before do
+        9.times do |n|
+          pitcher = Fabricate(:starting_pitcher, pitcher_rating: 70 + n)
+          Fabricate(:contract, team: team, player: pitcher)
+        end
+      end
+
+      it "creates 9 rosters" do
+        expect do
+          team.auto_roster!
+        end.to change(team.rosters, :count).by(9)
+      end
+
+      it "creates 5 level 4 rosters" do
+        expect do
+          team.auto_roster!
+        end.to change(team.rosters.where(level: 4), :count).by(5)
+      end
+
+      it "creates 2 level 3 roster" do
+        expect do
+          team.auto_roster!
+        end.to change(team.rosters.where(level: 3), :count).by(2)
+      end
+
+      it "creates 1 level 2 roster" do
+        expect do
+          team.auto_roster!
+        end.to change(team.rosters.where(level: 2), :count).by(1)
+      end
+
+      it "creates 1 level 1 roster" do
+        expect do
+          team.auto_roster!
+        end.to change(team.rosters.where(level: 1), :count).by(1)
+      end
+    end
+
+    context "when 7 relief pitchers" do
+      before do
+        7.times do |n|
+          pitcher = Fabricate(:relief_pitcher, pitcher_rating: 70 + n)
+          Fabricate(:contract, team: team, player: pitcher)
+        end
+      end
+
+      it "creates 7 rosters" do
+        expect do
+          team.auto_roster!
+        end.to change(team.rosters, :count).by(7)
+      end
+
+      it "creates 5 level 4 rosters" do
+        expect do
+          team.auto_roster!
+        end.to change(team.rosters.where(level: 4), :count).by(6)
+      end
+
+      it "creates 1 level 3 roster" do
+        expect do
+          team.auto_roster!
+        end.to change(team.rosters.where(level: 3), :count).by(1)
+      end
+    end
+
+    context "when 9 relief pitchers" do
+      before do
+        9.times do |n|
+          pitcher = Fabricate(:relief_pitcher, pitcher_rating: 70 + n)
+          Fabricate(:contract, team: team, player: pitcher)
+        end
+      end
+
+      it "creates 9 rosters" do
+        expect do
+          team.auto_roster!
+        end.to change(team.rosters, :count).by(9)
+      end
+
+      it "creates 5 level 4 rosters" do
+        expect do
+          team.auto_roster!
+        end.to change(team.rosters.where(level: 4).where(position: 10), :count)
+          .by(6)
+      end
+
+      it "creates 1 level 3 roster" do
+        expect do
+          team.auto_roster!
+        end.to change(team.rosters.where(level: 3), :count).by(1)
+      end
+
+      it "creates 1 level 2 roster" do
+        expect do
+          team.auto_roster!
+        end.to change(team.rosters.where(level: 2), :count).by(1)
+      end
+
+      it "creates 1 level 1 roster" do
+        expect do
+          team.auto_roster!
+        end.to change(team.rosters.where(level: 1), :count).by(1)
+      end
+    end
+
+    context "when 5 catchers" do
+      before do
+        5.times do |n|
+          player = Fabricate(:player, primary_position: 2,
+                                      offensive_rating: 70 + n)
+          Fabricate(:contract, team: team, player: player)
+        end
+      end
+
+      it "creates 5 rosters" do
+        expect do
+          team.auto_roster!
+        end.to change(team.rosters, :count).by(5)
+      end
+
+      it "creates 4 level 4 rosters" do
+        expect do
+          team.auto_roster!
+        end.to change(team.rosters.where(level: 4).where(position: 2), :count)
+          .by(4)
+      end
+
+      it "creates 1 level 3 roster" do
+        expect do
+          team.auto_roster!
+        end.to change(team.rosters.where(level: 3), :count).by(1)
       end
     end
   end
