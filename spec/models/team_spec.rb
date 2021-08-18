@@ -261,6 +261,77 @@ RSpec.describe Team, type: :model do
       end
     end
 
+    context "when outfielder" do
+      let(:outfielder) { Fabricate(:player, primary_position: 7) }
+
+      before do
+        Fabricate(:contract, team: team, player: outfielder)
+        Fabricate(:contract)
+      end
+
+      context "without roster" do
+        it "creates one" do
+          expect do
+            team.auto_roster!
+          end.to change(team.rosters.where(level: 4), :count).by(1)
+        end
+      end
+
+      context "with roster" do
+        before do
+          Fabricate(:roster, team: team, player: outfielder, level: 3,
+                             position: 7)
+        end
+
+        it "doesn't create any rosters" do
+          expect do
+            team.auto_roster!
+          end.not_to change(Roster, :count)
+        end
+      end
+    end
+
+    context "when 25 level 4 rosters with 2 rosterless" do
+      before do
+        5.times do |n|
+          player = Fabricate(:starting_pitcher, pitcher_rating: 70 + n)
+          Fabricate(:roster, team: team, player: player, level: 4, position: 1)
+        end
+
+        6.times do |n|
+          player = Fabricate(:relief_pitcher, pitcher_rating: 70 + n)
+          Fabricate(:roster, team: team, player: player, level: 4, position: 10)
+        end
+
+        14.times do |n|
+          player =
+            Fabricate(:player, primary_position: 3, offensive_rating: 70 + n)
+          Fabricate(:roster, team: team, player: player, level: 4, position: 3)
+        end
+      end
+
+      context "with 2 rosterless" do
+        before do
+          2.times do
+            player = Fabricate(:hitter)
+            Fabricate(:contract, team: team, player: player)
+          end
+        end
+
+        it "creates one level 4" do
+          expect do
+            team.auto_roster!
+          end.to change(team.rosters.where(level: 4), :count).by(1)
+        end
+
+        it "creates one level 3" do
+          expect do
+            team.auto_roster!
+          end.to change(team.rosters.where(level: 3), :count).by(1)
+        end
+      end
+    end
+
     context "when 7 starting pitchers" do
       before do
         7.times do |n|
