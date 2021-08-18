@@ -63,20 +63,52 @@
   }
 }
 
-.player-offensive-rating,
-.player-left-hitting,
-.player-right-hitting,
-.player-starting-pitching,
-.player-relief-pitching {
-  display: flex;
-  align-items: baseline;
+.rosters-level {
+  .player-offensive-rating,
+  .player-left-hitting,
+  .player-right-hitting,
+  .player-starting-pitching,
+  .player-relief-pitching {
+    display: flex;
+    align-items: baseline;
 
-  &::before {
-    display: inline-block;
-    margin-right: .25rem;
-    color: $gray;
-    font-size: 80%;
-    text-transform: uppercase;
+    &::before {
+      display: inline-block;
+      margin-right: .25rem;
+      color: $gray;
+      font-size: 80%;
+      text-transform: uppercase;
+    }
+  }
+
+  .player-offensive-rating {
+    &::before {
+      content: 'Rtg';
+    }
+  }
+
+  .player-left-hitting {
+    &::before {
+      content: 'LH';
+    }
+  }
+
+  .player-right-hitting {
+    &::before {
+      content: 'RH';
+    }
+  }
+
+  .player-starting-pitching {
+    &::before {
+      content: 'SP';
+    }
+  }
+
+  .player-relief-pitching {
+    &::before {
+      content: 'RP';
+    }
   }
 }
 
@@ -146,36 +178,6 @@
 
   .rating-90 {
     color: $dark-red;
-  }
-}
-
-.player-offensive-rating {
-  &::before {
-    content: 'Rtg';
-  }
-}
-
-.player-left-hitting {
-  &::before {
-    content: 'LH';
-  }
-}
-
-.player-right-hitting {
-  &::before {
-    content: 'RH';
-  }
-}
-
-.player-starting-pitching {
-  &::before {
-    content: 'SP';
-  }
-}
-
-.player-relief-pitching {
-  &::before {
-    content: 'RP';
   }
 }
 
