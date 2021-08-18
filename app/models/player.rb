@@ -128,6 +128,14 @@ class Player < ApplicationRecord # rubocop:disable Metrics/ClassLength
     Player.where(query)
   end
 
+  def self.starting_pitchers
+    pitchers.where(pitcher_type: 'S')
+  end
+
+  def self.relief_pitchers
+    pitchers.where(pitcher_type: 'R')
+  end
+
   def self.filter_by(filters = {})
     players = all
     players = players.filter_by_name(filters[:query])

@@ -337,6 +337,76 @@ RSpec.describe Player, type: :model do
     end
   end
 
+  describe ".starting_pitchers" do
+    let(:first_base) do
+      Fabricate(:player, defense3: 1, defense7: -1, primary_position: 3,
+                         offensive_rating: 80)
+    end
+    let(:starting_pitcher) do
+      Fabricate(:player, defense1: 0, bar1: 2, primary_position: 1,
+                         pitcher_type: "S", throws: "R", pitcher_rating: 70,
+                         hitting_pitcher: false)
+    end
+    let(:relief_pitcher) do
+      Fabricate(:player, defense1: 0, bar1: 2, primary_position: 1,
+                         pitcher_type: "R", throws: "L", pitcher_rating: 80,
+                         hitting_pitcher: false)
+    end
+
+    context "when no players" do
+      it "returns []" do
+        expect(Player.starting_pitchers).to eq([])
+      end
+    end
+
+    context "when pitchers" do
+      before do
+        first_base
+        starting_pitcher
+        relief_pitcher
+      end
+
+      it "returns pitcher" do
+        expect(Player.starting_pitchers).to eq([starting_pitcher])
+      end
+    end
+  end
+
+  describe ".relief_pitchers" do
+    let(:first_base) do
+      Fabricate(:player, defense3: 1, defense7: -1, primary_position: 3,
+                         offensive_rating: 80)
+    end
+    let(:starting_pitcher) do
+      Fabricate(:player, defense1: 0, bar1: 2, primary_position: 1,
+                         pitcher_type: "S", throws: "R", pitcher_rating: 70,
+                         hitting_pitcher: false)
+    end
+    let(:relief_pitcher) do
+      Fabricate(:player, defense1: 0, bar1: 2, primary_position: 1,
+                         pitcher_type: "R", throws: "L", pitcher_rating: 80,
+                         hitting_pitcher: false)
+    end
+
+    context "when no players" do
+      it "returns []" do
+        expect(Player.relief_pitchers).to eq([])
+      end
+    end
+
+    context "when pitchers" do
+      before do
+        first_base
+        starting_pitcher
+        relief_pitcher
+      end
+
+      it "returns pitcher" do
+        expect(Player.relief_pitchers).to eq([relief_pitcher])
+      end
+    end
+  end
+
   describe ".filter_by" do
     context "when no players" do
       it "returns []" do
