@@ -131,6 +131,18 @@ Rails.application.configure do
   #   ActiveRecord::Middleware::DatabaseSelector::Resolver::Session
 
   # required for devise
-  # TODO: change to real host
-  config.action_mailer.default_url_options = { host: 'card-baseball.com' }
+  config.action_mailer.default_url_options =
+    { host: (ENV['FRONTEND_URL'] || 'task-roller.net') }
+
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    address: 'smtp.gmail.com',
+    port: 587,
+    domain: 'task-roller.net',
+    user_name: ENV['EMAIL_USER_NAME'],
+    password: ENV['EMAIL_PASSWORD'],
+    authentication: 'plain',
+    enable_starttls_auto: true
+  }
 end
