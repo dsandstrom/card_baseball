@@ -47,6 +47,91 @@ class Team < ApplicationRecord
 
   private
 
+    def rosterless_starting_pitchers
+      rosterless.starting_pitchers
+    end
+
+    def best_rosterless_starting_pitcher
+      rosterless_starting_pitchers.order(pitcher_rating: :desc).first
+    end
+
+    def rosterless_relief_pitchers
+      rosterless.relief_pitchers
+    end
+
+    def best_rosterless_relief_pitcher
+      rosterless.relief_pitchers.order(pitcher_rating: :desc).first
+    end
+
+    def rosterless_infielders
+      rosterless.where(primary_position: 2..6)
+    end
+
+    def best_rosterless_infielder
+      rosterless_infielders.order(offensive_rating: :desc).first
+    end
+
+    def rosterless_outfielders
+      rosterless.where(primary_position: [7, 8])
+    end
+
+    def best_rosterless_outfielder
+      rosterless_outfielders.order(offensive_rating: :desc).first
+    end
+
+    def rosterless_at_position(position)
+      options = rosterless.where(primary_position: position)
+      return options if options.any?
+
+      rosterless.where("defense#{position} IS NOT NULL")
+    end
+
+    def best_rosterless_at_position(position)
+      options = rosterless_at_position(position)
+      options.order(offensive_rating: :desc, "defense#{position}": :desc).first
+    end
+
+    def create_roster(roster_attrs)
+      return unless roster_attrs[:player]
+
+      rosters.create!(roster_attrs)
+    end
+
+    def create_starting_pitcher_rosters(amount, level)
+      amount.times do
+        create_roster player: best_rosterless_starting_pitcher, level: level,
+                      position: 1
+      end
+    end
+
+    def create_relief_pitcher_rosters(amount, level)
+      amount.times do
+        create_roster player: best_rosterless_relief_pitcher, level: level,
+                      position: 10
+      end
+    end
+
+    def create_outfielder_rosters(amount, level)
+      amount.times do
+        create_roster(player: best_rosterless_outfielder, level: level,
+                      position: 7)
+      end
+    end
+
+    def create_infielder_rosters(amount, level)
+      amount.times do
+        create_roster(player: best_rosterless_infielder, level: level,
+                      position: 3)
+      end
+    end
+
+    def auto_roster_lower_levels
+      create_lower_level_starting_pitcher_rosters
+      create_lower_level_relief_pitcher_rosters
+      create_lower_level_infielder_rosters
+      create_lower_level_outfielder_rosters
+    end
+
     def auto_roster_level4_starting_pitchers
       level = 4
 
@@ -55,16 +140,8 @@ class Team < ApplicationRecord
       return if level_balance <= 0
 
       position_balance = 5 - players_at_level_and_position(level, 1).count
-
-      position_balance.times do
-        break if level_balance <= 0
-
-        best = rosterless.starting_pitchers.order(pitcher_rating: :desc).first
-        next unless best
-
-        rosters.create!(player: best, level: level, position: 1)
-        level_balance -= 1
-      end
+      position_balance = level_balance if level_balance < position_balance
+      create_starting_pitcher_rosters(position_balance, level)
     end
 
     def auto_roster_level4_relief_pitchers
@@ -75,154 +152,127 @@ class Team < ApplicationRecord
       return if level_balance <= 0
 
       position_balance = 6 - players_at_level_and_position(level, 10).count
+      position_balance = level_balance if level_balance < position_balance
+      create_relief_pitcher_rosters(position_balance, level)
+    end
 
-      position_balance.times do
+    def disperse_level4_positions(level_balance, amount)
+      [2, 3, 4, 5, 6, 7, 8].each do |position|
         break if level_balance <= 0
+        next if players_at_level_and_position(4, position).count >= amount
 
-        best = rosterless.relief_pitchers.order(pitcher_rating: :desc).first
+        best = best_rosterless_at_position(position)
         next unless best
 
-        rosters.create!(player: best, level: level, position: 10)
+        create_roster(player: best, level: 4, position: position)
         level_balance -= 1
       end
+
+      level_balance
     end
 
     def auto_roster_level4_hitters
       level = 4
-
       level_count = players_at_level(level).count
       level_balance = Roster::MAX_LEVEL4 - level_count
       return if level_balance <= 0
 
-      (1..4).each do |index|
+      # trying to spread players out
+      # check to see if any at 0, then 1 ...
+      (1..4).each do |amount_at_position|
         break if level_balance <= 0
 
-        [2, 3, 4, 5, 6, 7, 8].each do |position|
-          break if level_balance <= 0
-          next if players_at_level_and_position(level, position).count >= index
-
-          options = rosterless.where(primary_position: position)
-          if options.none?
-            options = rosterless.where("defense#{position} IS NOT NULL")
-          end
-          next if options.none?
-
-          best = options.order(offensive_rating: :desc,
-                               "defense#{position}": :desc).first
-          rosters.create!(player: best, level: level, position: position)
-          level_balance -= 1
-        end
+        level_balance = disperse_level4_positions(level_balance,
+                                                  amount_at_position)
       end
     end
 
-    def auto_roster_lower_levels
-      disperse_starting_pitchers
-      disperse_relief_pitchers
-      disperse_infielders
-      disperse_outfielders
-    end
+    def create_lower_level_starting_pitcher_rosters
+      starting_pitchers_count = rosterless_starting_pitchers.count
+      return if starting_pitchers_count <= 0
 
-    def disperse_starting_pitchers
-      starting_pitchers = rosterless.starting_pitchers
-      return if starting_pitchers.none?
-
-      per_level = starting_pitchers.count / 3
-      extra_levels = starting_pitchers.count % 3
+      per_level = starting_pitchers_count / 3
+      extra_levels = starting_pitchers_count % 3
 
       [3, 2, 1].each do |level|
         amount = per_level
         amount += 1 if extra_levels.positive?
-
-        amount.times do
-          best = rosterless.starting_pitchers.order(pitcher_rating: :desc).first
-          rosters.create!(player: best, level: level, position: 1)
-        end
-
+        create_starting_pitcher_rosters(amount, level)
         extra_levels -= 1
       end
     end
 
-    def disperse_relief_pitchers
+    def disperse_relief_pitchers(per_level, extra_levels)
       position = 10
+      index = 1
+      [3, 2, 1].each do |level|
+        next if players_at_level_and_position(level, position).count >= index
 
-      relief_pitchers = rosterless.relief_pitchers
-      return if relief_pitchers.none?
+        amount = per_level
+        amount += 1 if extra_levels.positive?
+        create_relief_pitcher_rosters(amount, level)
+        extra_levels -= 1
+      end
+      index += 1
+    end
 
-      per_level = relief_pitchers.count / 3
-      extra_levels = relief_pitchers.count % 3
+    def create_lower_level_relief_pitcher_rosters
+      relief_pitchers_count = rosterless_relief_pitchers.count
+      return if relief_pitchers_count <= 0
+
+      per_level = relief_pitchers_count / 3
+      extra_levels = relief_pitchers_count % 3
 
       while rosterless.relief_pitchers.any?
-        index = 1
-        [3, 2, 1].each do |level|
-          next if players_at_level_and_position(level, position).count >= index
-
-          amount = per_level
-          amount += 1 if extra_levels.positive?
-
-          amount.times do
-            best = rosterless.relief_pitchers.order(pitcher_rating: :desc).first
-            break unless best
-
-            rosters.create!(player: best, level: level, position: position)
-          end
-          extra_levels -= 1
-        end
-        index += 1
+        disperse_relief_pitchers(per_level, extra_levels)
       end
     end
 
-    def disperse_infielders
+    def disperse_infielders(per_level, extra_levels)
       position = 3
-      infielders = rosterless.where(primary_position: 2..6)
+      index = 1
+      [3, 2, 1].each do |level|
+        next if players_at_level_and_position(level, position).count >= index
 
+        amount = per_level
+        amount += 1 if extra_levels.positive?
+        create_infielder_rosters(amount, level)
+        extra_levels -= 1
+      end
+      index += 1
+    end
+
+    def create_lower_level_infielder_rosters
+      infielders = rosterless_infielders
       per_level = infielders.count / 3
       extra_levels = infielders.count % 3
 
-      while rosterless.where(primary_position: 2..6).any?
-        index = 1
-        [3, 2, 1].each do |level|
-          next if players_at_level_and_position(level, position).count >= index
-
-          amount = per_level
-          amount += 1 if extra_levels.positive?
-
-          amount.times do
-            best = rosterless.where(primary_position: 2..6).order(offensive_rating: :desc).first
-            break unless best
-
-            rosters.create!(player: best, level: level, position: position)
-          end
-          extra_levels -= 1
-        end
-        index += 1
+      while rosterless_infielders.any?
+        disperse_infielders(per_level, extra_levels)
       end
     end
 
-    def disperse_outfielders
+    def disperse_outfielders(per_level, extra_levels)
       position = 7
-      outfielders = rosterless.where(primary_position: [7, 8])
+      index = 1
+      [3, 2, 1].each do |level|
+        next if players_at_level_and_position(level, position).count >= index
 
-      per_level = outfielders.count / 3
-      extra_levels = outfielders.count % 3
+        amount = per_level
+        amount += 1 if extra_levels.positive?
+        create_outfielder_rosters(amount, level)
+        extra_levels -= 1
+      end
+      index += 1
+    end
 
-      while rosterless.where(primary_position: [7, 8]).any?
-        index = 1
-        [3, 2, 1].each do |level|
-          next if players_at_level_and_position(level, position).count >= index
+    def create_lower_level_outfielder_rosters
+      outfielders_count = rosterless_outfielders.count
+      per_level = outfielders_count / 3
+      extra_levels = outfielders_count % 3
 
-          amount = per_level
-          amount += 1 if extra_levels.positive?
-
-          amount.times do
-            best = rosterless.where(primary_position: [7,
-                                                       8]).order(offensive_rating: :desc).first
-            break unless best
-
-            rosters.create!(player: best, level: level, position: position)
-          end
-          extra_levels -= 1
-        end
-        index += 1
+      while rosterless_outfielders.any?
+        disperse_outfielders(per_level, extra_levels)
       end
     end
 end
