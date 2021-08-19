@@ -9,7 +9,7 @@ class League < ApplicationRecord
   validates :row_order_position, inclusion: { in: SORT_OPTIONS },
                                  allow_nil: true
 
-  has_many :teams, dependent: :nullify
+  has_many :teams, dependent: :destroy
 
   ranks :row_order
 
