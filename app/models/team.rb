@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Team < ApplicationRecord
+class Team < ApplicationRecord # rubocop:disable Metrics/ClassLength
   validates :name, presence: true, uniqueness: { case_sensitive: false }
   validates :identifier, presence: true, uniqueness: { case_sensitive: false }
   validates :league_id, presence: true
