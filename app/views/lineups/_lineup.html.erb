@@ -30,8 +30,10 @@
                             class: 'spot-batting-order' %>
             <%= content_tag :span, '',
                             class: 'spot-hitter' %>
-            <%= content_tag :span, 'X',
-                            class: 'spot-defense defense-missing' %>
+            <div class="spot-defense-wrapper">
+              <%= content_tag :span, 'X',
+                              class: 'spot-defense defense-missing' %>
+            </div>
           </div>
         <% end %>
       <% end %>

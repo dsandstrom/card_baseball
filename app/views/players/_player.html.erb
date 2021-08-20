@@ -15,7 +15,8 @@
       <%= player.primary_position_initials %>
     </span>
   </td>
-  <td><%= player.offensive_rating %></td>
+  <td><%= player.bats %>/<%= player.throws || Player::DEFAULT_THROW %></td>
+  <td class="left-border"><%= player.offensive_rating %></td>
   <td class="left-border"><%= player.pitcher_rating %></td>
   <td class="left-border">
     <%= content_tag :div, player_positions(player),

@@ -36,8 +36,11 @@
 
     <%= form.hidden_field :hitter_id, id: "spot_batting_order_#{batting_order}_hitter_id" %>
     <div class="spot-hitter-field draggable" data-id="<%= hitter.id %>">
-      <%= content_tag :span, hitter.roster_name,
-                      class: 'spot-hitter-name' %>
+      <div class="spot-hitter">
+        <%= content_tag :span, hitter.roster_name,
+                        class: 'spot-hitter-name' %>
+        <%= content_tag :span, hitter.bats, class: 'spot-hitter-bats' %>
+      </div>
 
       <%= content_tag :div, class: radio_button_class do %>
         <% Player::POSITION_MAP.each do |position, options| %>
@@ -83,5 +86,7 @@
     </div>
   <% end %>
 
-  <%= format_defense(defense, tag: :span, class: 'spot-defense') %>
+  <span class="spot-defense-wrapper">
+    <%= format_defense(defense, tag: :span, class: 'spot-defense') %>
+  </span>
 <% end %>

@@ -63,7 +63,8 @@
   }
 }
 
-.rosters-level {
+.rosters-level,
+.rosterless-players {
   .player-offensive-rating,
   .player-left-hitting,
   .player-right-hitting,
@@ -188,10 +189,22 @@
 }
 
 .roster-player {
-  .player-name-wrapper {
+  .player-name-and-positions {
     display: flex;
     align-items: baseline;
     justify-content: space-between;
+  }
+
+  .player-name-wrapper {
+    display: flex;
+    align-items: baseline;
+  }
+
+  .player-bats,
+  .player-throws {
+    margin-left: .5rem;
+    color: $gray;
+    font-size: 80%;
   }
 
   .player-ratings {

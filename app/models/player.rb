@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 # TODO: validate throws presence when pitcher
+# TODO: show bats/throws in rosters & tables
+# TODO: add roster level filter
 
 class Player < ApplicationRecord # rubocop:disable Metrics/ClassLength
   BUNT_GRADE_OPTIONS = %w[A B].freeze
@@ -33,6 +35,7 @@ class Player < ApplicationRecord # rubocop:disable Metrics/ClassLength
     'R' => { name: 'Reliever', key: :relief },
     'S' => { name: 'Starter', key: :starting }
   }.freeze
+  DEFAULT_THROW = 'R'
 
   validates :first_name, length: { maximum: 200 }
   validates :nick_name, length: { maximum: 200 }

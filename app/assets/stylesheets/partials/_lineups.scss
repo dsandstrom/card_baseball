@@ -20,7 +20,7 @@
   }
 }
 
-.spot-defense {
+.spot-defense-wrapper {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -28,11 +28,19 @@
 
 .batting-spot-form,
 .position-rosters,
-.rosterless-players {
+.rosterless-players,
+.spot,
+.bench-hitter {
   .hitter-name,
   .spot-hitter-name,
   .player-name {
     font-weight: bold;
+  }
+
+  .spot-hitter-bats,
+  .hitter-bats {
+    color: $gray;
+    font-size: 80%;
   }
 }
 
@@ -72,11 +80,14 @@
     font-family: $code-font;
   }
 
-  .spot-defense {
+  .spot-defense-wrapper {
     border: 0 solid $border-color;
     border-width: 1px 1px 1px 0;
     border-radius: 0 $border-radius $border-radius 0;
     background-color: $off-white;
+  }
+
+  .spot-defense {
     font-size: 1.8rem;
   }
 }
@@ -382,19 +393,26 @@
     justify-content: center;
   }
 
-  .spot-position {
+  .spot-hitter-bats {
     margin-left: .5rem;
     color: $dark-gray;
     font-size: 1.2rem;
+  }
+
+  .spot-position {
+    margin-right: .25rem;
     font-weight: bold;
   }
 }
 
 .card {
-  .spot-defense {
+  .spot-defense-wrapper {
     padding: .4rem .5rem;
     border-left: 1px solid $border-color;
     background-color: $off-white;
+  }
+
+  .spot-defense {
     font-size: 1.8rem;
   }
 }

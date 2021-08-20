@@ -5,8 +5,15 @@
 %>
 
 <div id="roster_player_<%= player.id %>" class="roster-player">
-  <div class="player-name-wrapper">
-    <%= content_tag :span, player.roster_name, class: 'player-name' %>
+  <div class="player-name-and-positions">
+    <span class="player-name-wrapper">
+      <%= content_tag :span, player.roster_name, class: 'player-name' %>
+      <% if [1, 10].include?(position) %>
+        <%= content_tag :span, player.throws, class: 'player-throws' %>
+      <% else %>
+        <%= content_tag :span, player.bats, class: 'player-bats' %>
+      <% end %>
+    </span>
 
     <% if show_positions %>
       <%= content_tag :div, player_positions(player),

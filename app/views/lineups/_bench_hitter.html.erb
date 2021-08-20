@@ -7,7 +7,10 @@
 
 <%= content_tag :div, id: "bench_hitter_#{ bench_hitter.id }",
                       class: css_class, data: { id: bench_hitter.id } do %>
-  <%= content_tag :span, bench_hitter.roster_name, class: 'hitter-name' %>
+  <span class="hitter-wrapper">
+    <%= content_tag :span, bench_hitter.roster_name, class: 'hitter-name' %>
+    <%= content_tag :span, bench_hitter.bats, class: 'hitter-bats' %>
+  </span>
   <%= content_tag :div, player_positions(bench_hitter, skip: [1]),
                   class: 'player-positions' %>
 <% end %>
