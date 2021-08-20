@@ -12,7 +12,8 @@
 
   <div class="field">
     <%= required_field_label form, :name %>
-    <%= form.text_field :name, autofocus: !team.persisted? %>
+    <%= form.text_field :name, autofocus: !team.persisted?,
+                               autocomplete: 'off' %>
   </div>
 
   <div class="field">
