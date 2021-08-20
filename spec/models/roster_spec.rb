@@ -827,7 +827,7 @@ RSpec.describe Roster, type: :model do
         end
       end
 
-      context "for a persisted roster" do
+      context "for a persisted level 4 roster" do
         let!(:roster) do
           Fabricate(:roster, team: team, player: player, level: 4, position: 3)
         end
@@ -837,6 +837,34 @@ RSpec.describe Roster, type: :model do
 
           it "should be valid" do
             expect(roster).to be_valid
+          end
+        end
+      end
+
+      context "for a persisted level 3 roster" do
+        let(:roster) do
+          Fabricate(:roster, team: team, player: player, level: 3, position: 3)
+        end
+
+        context "when already 25 at level 4" do
+          before do
+            25.times { Fabricate(:roster, team: team, level: 4) }
+            roster
+          end
+
+          it "should be valid" do
+            expect(roster).to be_valid
+          end
+        end
+
+        context "when already 26 at level 4 and moving to 4" do
+          before do
+            26.times { Fabricate(:roster, team: team, level: 4) }
+            roster.level = 4
+          end
+
+          it "should not be valid" do
+            expect(roster).not_to be_valid
           end
         end
       end

@@ -96,10 +96,8 @@ class Roster < ApplicationRecord
 
     def players_at_level4
       return unless team && level == 4
-
-      max = MAX_LEVEL4.dup
-      max += 1 if persisted?
-      return if team.rosters.where(level: 4).count < max
+      return if persisted? && !level_changed?
+      return if team.rosters.where(level: 4).count < MAX_LEVEL4
 
       message = 'already has the maximum amount of players at '\
                 "#{LEVEL_MAP[4][:name]} level"
