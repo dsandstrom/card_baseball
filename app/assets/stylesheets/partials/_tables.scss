@@ -48,6 +48,10 @@ th {
   .defense-bar {
     color: $gray;
   }
+
+  &.highlight {
+    border-color: $color-quinary;
+  }
 }
 
 td {
