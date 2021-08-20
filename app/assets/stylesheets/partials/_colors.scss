@@ -2,29 +2,27 @@
 $black: #000;
 $dark-gray: #696969;
 $light-gray: #e1e1e1;
+// $lighter-gray: #eef3f5;
 $white: #fff;
 
 // colormind
-$blue: #287eff;
-$light-blue: #5cbedb;
-$dark-blue: #1c1e34;
+$blue: #5678c6;
+$light-blue: #7285a9;
+$dark-blue: #1a274d;
 
 $ink: #191919;
 $gray: #999;
-$pearl: #f6efec;
 $off-white: #f6f6f6;
 
-$light-brown: #c5b2b2;
-$lavender: #7b5c78;
+$teal: #74c9db;
 
-$green: #42a17f;
-$yellow: #bf9147;
-$red: #f44335;
+$green: #4f9f73;
+$yellow: #cc8e3b;
+$red: #f44336;
 
 $dark-green: darken($green, 10%);
 $dark-yellow: darken($yellow, 10%);
-$dark-red: #d61a0b;
-$brown: darken($light-brown, 30%);
+$dark-red: darken($red, 10%);
 
 $color-danger: $red;
 $color-warning: $yellow;
@@ -37,10 +35,10 @@ $color-success-hover: darken($green, 8%);
 // milligram
 $color-initial: $white;
 $color-primary: $blue;
-$color-secondary: $light-blue;
+$color-secondary: $teal;
 $color-tertiary: $gray;
 $color-quaternary: $dark-blue;
-$color-quinary: $lavender;
+$color-quinary: $light-blue;
 
 // layout
 $background-color: $white;
