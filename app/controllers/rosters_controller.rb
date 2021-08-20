@@ -104,9 +104,9 @@ class RostersController < ApplicationController
       @old_level = @roster.level
       # TODO: verify original roster is same team before updating
       @roster.assign_attributes(roster_params)
+      @roster.row_order_position = :last
       return if @roster.position != @old_position || @roster.level != @old_level
 
-      @roster.row_order_position = :last
       @old_position = nil
       @old_level = nil
     end
