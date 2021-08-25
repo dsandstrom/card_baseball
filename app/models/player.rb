@@ -260,7 +260,6 @@ class Player < ApplicationRecord # rubocop:disable Metrics/ClassLength
     end
   end
 
-  # TODO: use SP for starter, RP for reliever
   def primary_position_initials
     @primary_position_initials ||= build_primary_position_initials
   end
@@ -338,8 +337,11 @@ class Player < ApplicationRecord # rubocop:disable Metrics/ClassLength
     def build_primary_position_initials
       return if primary_position.blank?
 
-      if primary_position == 1 && hitting_pitcher?
-        'P+H'
+      if primary_position == 1
+        initial = "#{pitcher_type}P".upcase
+        return initial unless hitting_pitcher
+
+        "#{initial}+H"
       else
         POSITION_MAP[primary_position][:initials]
       end

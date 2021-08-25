@@ -1013,19 +1013,63 @@ RSpec.describe Player, type: :model do
     context "when primary_position is 1" do
       before { subject.primary_position = 1 }
 
-      context "and hitting_pitcher is false" do
-        before { subject.hitting_pitcher = false }
+      context "and pitcher_type is nil" do
+        before { subject.pitcher_type = nil }
 
-        it "returns 'P'" do
-          expect(subject.primary_position_initials).to eq("P")
+        context "and hitting_pitcher is false" do
+          before { subject.hitting_pitcher = false }
+
+          it "returns 'P'" do
+            expect(subject.primary_position_initials).to eq("P")
+          end
+        end
+
+        context "and hitting_pitcher is true" do
+          before { subject.hitting_pitcher = true }
+
+          it "returns 'P+H'" do
+            expect(subject.primary_position_initials).to eq("P+H")
+          end
         end
       end
 
-      context "and hitting_pitcher is true" do
-        before { subject.hitting_pitcher = true }
+      context "and pitcher_type is 'S'" do
+        before { subject.pitcher_type = "S" }
 
-        it "returns 'P'" do
-          expect(subject.primary_position_initials).to eq("P+H")
+        context "and hitting_pitcher is false" do
+          before { subject.hitting_pitcher = false }
+
+          it "returns 'SP'" do
+            expect(subject.primary_position_initials).to eq("SP")
+          end
+        end
+
+        context "and hitting_pitcher is true" do
+          before { subject.hitting_pitcher = true }
+
+          it "returns 'SP+H'" do
+            expect(subject.primary_position_initials).to eq("SP+H")
+          end
+        end
+      end
+
+      context "and pitcher_type is 'R'" do
+        before { subject.pitcher_type = "R" }
+
+        context "and hitting_pitcher is false" do
+          before { subject.hitting_pitcher = false }
+
+          it "returns 'RP'" do
+            expect(subject.primary_position_initials).to eq("RP")
+          end
+        end
+
+        context "and hitting_pitcher is true" do
+          before { subject.hitting_pitcher = true }
+
+          it "returns 'RP+H'" do
+            expect(subject.primary_position_initials).to eq("RP+H")
+          end
         end
       end
     end
