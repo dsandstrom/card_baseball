@@ -10,8 +10,8 @@
   <td><%= link_to pitcher.roster_name, pitcher, class: 'pitcher-name' %></td>
   <td><%= pitcher.verbose_pitcher_type %></td>
   <td><%= pitcher.throws %></td>
-  <td><%= pitcher.starting_pitching %></td>
-  <td><%= pitcher.relief_pitching %></td>
+  <td><%= format_pitching(pitcher.starting_pitching) %></td>
+  <td><%= format_pitching(pitcher.relief_pitching) %></td>
   <td><%= pitcher.pitching_durability %></td>
   <%= defense_td(pitcher.defense1, pitcher.bar1) %>
   <% if show_contract %>

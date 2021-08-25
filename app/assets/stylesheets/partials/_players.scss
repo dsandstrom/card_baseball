@@ -121,7 +121,9 @@
 
 .player-starting-pitching,
 .player-relief-pitching,
-.players {
+.players,
+.pitchers,
+.hitters {
   .rating-missing {
     color: $light-gray;
   }

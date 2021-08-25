@@ -12,13 +12,13 @@
   <td><%= hitter.speed %></td>
   <td><%= hitter.bunt_grade %></td>
   <td><%= hitter.primary_position_initials %></td>
-  <td><%= hitter.offensive_rating %></td>
+  <td><%= format_hitting(hitter.offensive_rating) %></td>
   <td><%= hitter.offensive_durability %></td>
-  <%= left_td hitter.left_hitting, highlight: highlight, class: 'left-border' %></td>
+  <%= left_td format_hitting(hitter.left_hitting), highlight: highlight, class: 'left-border' %></td>
   <%= left_td hitter.left_on_base_percentage, highlight: highlight %></td>
   <%= left_td hitter.left_slugging, highlight: highlight %></td>
   <%= left_td hitter.left_homerun, highlight: highlight %></td>
-  <%= right_td hitter.right_hitting, class: 'left-border', highlight: highlight %>
+  <%= right_td format_hitting(hitter.right_hitting), class: 'left-border', highlight: highlight %>
   <%= right_td hitter.right_on_base_percentage, highlight: highlight %>
   <%= right_td hitter.right_slugging, highlight: highlight %>
   <%= right_td hitter.right_homerun, highlight: highlight %>
