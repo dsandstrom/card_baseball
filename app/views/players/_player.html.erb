@@ -17,7 +17,12 @@
   </td>
   <td><%= player.bats %>/<%= player.throws || Player::DEFAULT_THROW %></td>
   <td class="left-border"><%= player.offensive_rating %></td>
-  <td class="left-border"><%= player.pitcher_rating %></td>
+  <td class="left-border pitcher-ratings">
+    <% if player.starting_pitching.present? || player.relief_pitching.present? %>
+      <%= format_pitching(player.starting_pitching) %>
+      <%= format_pitching(player.relief_pitching) %>
+    <% end %>
+  </td>
   <td class="left-border">
     <%= content_tag :div, player_positions(player),
                     class: 'player-positions' %>

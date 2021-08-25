@@ -61,14 +61,13 @@
 
 <h2>Ratings</h2>
 
-<% if @player.pitcher_rating.present? %>
+<% if @player.pitcher_type.present? %>
   <table class="pitcher">
     <thead>
       <tr>
         <th>Pitching</th>
         <th>Type</th>
         <th>Throws</th>
-        <th>Rating</th>
         <th>Starter</th>
         <th>Reliever</th>
         <th>Durability</th>
@@ -79,7 +78,6 @@
       <%= content_tag :td, @player.roster_name, class: 'player-roster-name' %>
       <%= content_tag :td, @player.verbose_pitcher_type, class: 'player-pitcher-type' %>
       <%= content_tag :td, @player.verbose_throws, class: 'player-throws' %>
-      <%= content_tag :td, @player.pitcher_rating, class: 'player-pitcher-rating' %>
       <%= content_tag :td, @player.starting_pitching, class: 'player-starting-pitching' %>
       <%= content_tag :td, @player.relief_pitching, class: 'player-relief-pitching' %>
       <%= content_tag :td, @player.pitching_durability, class: 'player-pitching-durability' %>

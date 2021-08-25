@@ -162,12 +162,6 @@ RSpec.describe "players/show", type: :view do
       assert_select ".player-pitcher-type", player.verbose_pitcher_type
     end
 
-    it "renders player's pitcher_rating" do
-      render
-
-      assert_select ".player-pitcher-rating", player.pitcher_rating.to_s
-    end
-
     it "renders player's relief_pitching" do
       render
 
