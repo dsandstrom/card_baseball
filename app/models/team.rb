@@ -10,6 +10,7 @@ class Team < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_many :contracts, dependent: :nullify
   has_many :players, through: :contracts
   has_many :lineups, dependent: :destroy
+  has_many :spots, through: :lineups
   has_many :rosters, dependent: :destroy
 
   # CLASS

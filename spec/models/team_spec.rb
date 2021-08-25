@@ -28,6 +28,7 @@ RSpec.describe Team, type: :model do
   it { is_expected.to have_many(:contracts) }
   it { is_expected.to have_many(:players) }
   it { is_expected.to have_many(:lineups) }
+  it { is_expected.to have_many(:spots) }
   it { is_expected.to have_many(:rosters) }
 
   # INSTANCE
