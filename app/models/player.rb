@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 # TODO: validate throws presence when pitcher
-# TODO: show bats/throws in rosters & tables
 # TODO: add roster level filter
 
 class Player < ApplicationRecord # rubocop:disable Metrics/ClassLength
