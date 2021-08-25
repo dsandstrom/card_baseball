@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# TODO: when roster level changes from level 4, remove lineup batting spots
+
 class Roster < ApplicationRecord
   include RankedModel
 
