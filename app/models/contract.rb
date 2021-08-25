@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# TODO: when contract changes, destroy rosters and lineup spots
+
 class Contract < ApplicationRecord
   LENGTH_OPTIONS = 1..3
 

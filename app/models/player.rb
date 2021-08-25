@@ -260,6 +260,7 @@ class Player < ApplicationRecord # rubocop:disable Metrics/ClassLength
     end
   end
 
+  # TODO: use SP for starter, RP for reliever
   def primary_position_initials
     @primary_position_initials ||= build_primary_position_initials
   end
