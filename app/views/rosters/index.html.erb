@@ -35,14 +35,14 @@
   <h2>Player Stats</h2>
   <%= render 'players/players', players: @players, show_contract: false %>
 <% else %>
-  <%= breadcrumbs([['Home', root_path]]) %>
-
   <div class="page-header">
     <div class="columns">
       <div class="first-column">
         <h1>All Rosters</h1>
       </div>
     </div>
+
+    <%= leagues_nav %>
   </div>
 
   <div class="rosters">

@@ -68,7 +68,6 @@ class RostersController < ApplicationController
                                    .where('rosters.id IS NULL')
       else
         @leagues = League.rank(:row_order).joins(teams: :rosters).distinct
-        # @teams = Team.all.order(name: :asc).joins(:rosters).distinct
       end
     end
 
