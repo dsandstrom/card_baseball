@@ -502,4 +502,60 @@ RSpec.describe Team, type: :model do
       end
     end
   end
+
+  describe "#cleanup_lineup_spots" do
+    let(:team) { Fabricate(:team) }
+
+    context "when no lineups" do
+      it "doesn't destroy any spots" do
+        expect do
+          team.cleanup_lineup_spots
+        end.not_to change(Spot, :count)
+      end
+    end
+
+    context "when no spots" do
+      before { Fabricate(:lineup, team: team) }
+
+      it "doesn't destroy any spots" do
+        expect do
+          team.cleanup_lineup_spots
+        end.not_to change(Spot, :count)
+      end
+    end
+
+    context "when spot from player with level 4 roster" do
+      let(:player) { Fabricate(:player, primary_position: 5) }
+      let(:lineup) { Fabricate(:lineup, team: team) }
+
+      before do
+        Fabricate(:roster, team: team, player: player, position: 5, level: 4)
+        Fabricate(:spot, lineup: lineup, hitter: player, position: 5)
+      end
+
+      it "doesn't destroy any spots" do
+        expect do
+          team.cleanup_lineup_spots
+        end.not_to change(Spot, :count)
+      end
+    end
+
+    context "when spot from player with level 3 roster" do
+      let(:player) { Fabricate(:player, primary_position: 5) }
+      let(:lineup) { Fabricate(:lineup, team: team) }
+
+      before do
+        roster = Fabricate(:roster, team: team, player: player, position: 5,
+                                    level: 4)
+        Fabricate(:spot, lineup: lineup, hitter: player, position: 5)
+        roster.update(position: 3, level: 3)
+      end
+
+      it "destroys spot" do
+        expect do
+          team.cleanup_lineup_spots
+        end.to change(Spot, :count).by(-1)
+      end
+    end
+  end
 end

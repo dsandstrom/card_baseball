@@ -46,6 +46,10 @@ class Team < ApplicationRecord # rubocop:disable Metrics/ClassLength
     auto_roster_lower_levels
   end
 
+  def cleanup_lineup_spots
+    spots.joins(hitter: :roster).where('rosters.level != ?', 4).destroy_all
+  end
+
   private
 
     def rosterless_starting_pitchers
