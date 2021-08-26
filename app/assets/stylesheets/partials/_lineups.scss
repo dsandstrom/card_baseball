@@ -1,5 +1,4 @@
-.lineup-detail,
-.rosters-wrapper {
+.lineup-detail {
   .first-column,
   .second-column {
     overflow: visible;
@@ -146,7 +145,8 @@
 .empty-roster-player-field,
 .spot-hitter-field,
 .roster-player-field,
-.roster {
+.team-rosters .roster,
+.rosters .rosters-position {
   padding: .5rem .5rem .5rem 1rem;
   border: 1px solid $light-gray;
   background-color: $white;

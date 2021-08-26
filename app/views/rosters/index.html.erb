@@ -46,14 +46,20 @@
   </div>
 
   <div class="rosters">
-    <div class="roster-labels">
+    <div class="rosters-labels">
       <% [4, 3, 2, 1].each do |level| %>
-        <%= content_tag :h3, Roster::LEVEL_MAP[level][:name] %>
+        <div id="rosters_labels_level_<%= level %>"
+             class="rosters-level">
+          <%= content_tag :h3, Roster::LEVEL_MAP[level][:name] %>
 
-        <% Roster.level_positions(level).each do |position| %>
-          <%= content_tag :h4, Roster.position_initials(position, level),
-                          class: 'roster-position' %>
-        <% end %>
+          <% Roster.level_positions(level).each do |position| %>
+            <div id="rosters_labels_level_<%= level %>_position_<%= position %>"
+                 class="rosters-position">
+              <%= content_tag :h4, Roster.position_initials(position, level),
+                              class: 'roster-position' %>
+            </div>
+          <% end %>
+        </div>
       <% end %>
     </div>
 
@@ -66,16 +72,22 @@
         <div class="rosters-league-teams">
           <% teams.each do |team| %>
             <div id="rosters_team_<%= team.id %>" class="rosters-team">
-              <%= content_tag :h3, team.name %>
+              <div class="rosters-team-header">
+                <%= content_tag :h3, link_to_if(can?(:read, team), team.name, league_team_path(team.league, team)) %>
+                <%= content_tag :span, team.rosters.count,
+                                class: "count rosters-count" %>
+                <% if can?(:create, team.rosters.build) %>
+                  <p>
+                    <%= link_to 'Edit', team_rosters_path(team), class: 'secondary-link' %>
+                  </p>
+                <% end %>
+              </div>
 
               <% [4, 3, 2, 1].each do |level| %>
                 <% rosters = team.rosters.where(level: level)  %>
 
                 <div id="rosters_team_<%= team.id %>_level_<%= level %>"
                      class="rosters-level">
-                  <%= content_tag :span, rosters.count,
-                                  class: "count rosters-count" %>
-
                   <% Roster.level_positions(level).each do |position| %>
                     <div id="rosters_team_<%= team.id %>_level_<%= level %>_position_<%= position %>"
                          class="rosters-position">
@@ -84,28 +96,30 @@
                         <div id="roster_<%= roster.id %>" class="roster">
                           <% player = roster.player %>
                           <% if player %>
-                            <%= content_tag :p, player.roster_name %>
-                            <% if [1, 10].include?(position) %>
-                              <%= content_tag :span, player.throws, class: 'player-throws' %>
-                            <% else %>
-                              <%= content_tag :span, player.bats, class: 'player-bats' %>
-                            <% end %>
+                            <div class="roster-player">
+                              <div class="player-name-wrapper">
+                                <%= content_tag :span, player.roster_name %>
+                                <% if [1, 10].include?(position) %>
+                                  <%= content_tag :span, player.throws, class: 'player-throws' %>
+                                <% else %>
+                                  <%= content_tag :span, player.bats, class: 'player-bats' %>
+                                <% end %>
+                              </div>
 
-                            <% case position %>
-                            <% when 1 %>
-                              <%= content_tag :span, format_pitching(player.starting_pitching),
-                                                     class: 'player-starting-pitching' %>
-                            <% when 10 %>
-                              <%= content_tag :span, format_pitching(player.relief_pitching),
-                                                     class: 'player-relief-pitching' %>
-                            <% else %>
-                              <%= content_tag :span, format_hitting(player.offensive_rating),
-                                                     class: 'player-offensive-rating' %>
-                              <%= content_tag :span, format_hitting(player.left_hitting),
-                                                     class: 'player-left-hitting' %>
-                              <%= content_tag :span, format_hitting(player.right_hitting),
-                                                     class: 'player-right-hitting' %>
-                            <% end %>
+                              <div class="player-ratings">
+                                <% case position %>
+                                <% when 1 %>
+                                  <%= content_tag :span, format_pitching(player.starting_pitching),
+                                                         class: 'player-starting-pitching' %>
+                                <% when 10 %>
+                                  <%= content_tag :span, format_pitching(player.relief_pitching),
+                                                         class: 'player-relief-pitching' %>
+                                <% else %>
+                                  <%= content_tag :span, format_hitting(player.offensive_rating),
+                                                         class: 'player-offensive-rating' %>
+                                <% end %>
+                              </div>
+                            </div>
                           <% end %>
                         </div>
                       <% end %>

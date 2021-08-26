@@ -5,7 +5,6 @@
 # so player can be dropped in a certain order
 # TODO: when dropping on another player, swap places
 # TODO: when max at level 4, hide create forms, lock adding
-# TODO: add index with all team rosters
 
 class RostersController < ApplicationController
   load_and_authorize_resource :team, except: :index

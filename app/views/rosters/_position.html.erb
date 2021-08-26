@@ -4,7 +4,7 @@
   <%= content_tag :span, Roster.position_initials(position, level),
                   class: 'roster-position' %>
 
-  <div class="rosters">
+  <div class="rosters-wrapper">
     <% position_rosters = rosters.where(level: level, position: position).rank(:row_order) %>
     <% position_rosters.each do |roster| %>
       <% if can?(:update, roster) %>

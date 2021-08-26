@@ -8,6 +8,11 @@
 
 .rosters {
   display: flex;
+
+  .rosters-level {
+    // display: grid;
+    // grid-template-columns: 1fr;
+  }
 }
 
 .rosters-league-teams {
