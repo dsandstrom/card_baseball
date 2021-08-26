@@ -1,3 +1,6 @@
+<% show_positions = true if show_positions.nil? %>
+
 <div id="roster_<%= roster.id %>" class="roster">
-  <%= render 'rosters/player', player: roster.player, position: roster.position  %>
+  <%= render 'rosters/player', player: roster.player, position: roster.position,
+                               show_positions: show_positions %>
 </div>

@@ -8,11 +8,16 @@
 # TODO: add index with all team rosters
 
 class RostersController < ApplicationController
-  load_and_authorize_resource :team
-  load_and_authorize_resource through: :team, except: :create
-  before_action :set_league
+  load_and_authorize_resource :team, except: :index
+  load_and_authorize_resource through: :team, except: %i[index create]
 
   def index
+    if params[:team_id]
+      @team = Team.find(params[:team_id])
+      authorize! :read, @team
+    else
+      authorize! :read, Roster
+    end
     build_rosters
   end
 
@@ -56,10 +61,15 @@ class RostersController < ApplicationController
     end
 
     def build_rosters
-      @rosters = @team.rosters
-      @players = @team.players
-      @rosterless_players = @team.players.left_outer_joins(:roster)
-                                 .where('rosters.id IS NULL')
+      if @team
+        @rosters = @team.rosters
+        @players = @team.players
+        @rosterless_players = @team.players.left_outer_joins(:roster)
+                                   .where('rosters.id IS NULL')
+      else
+        @leagues = League.rank(:row_order).joins(teams: :rosters).distinct
+        # @teams = Team.all.order(name: :asc).joins(:rosters).distinct
+      end
     end
 
     def valid_except_player?(roster, current)
