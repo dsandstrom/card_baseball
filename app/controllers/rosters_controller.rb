@@ -66,7 +66,9 @@ class RostersController < ApplicationController
         @rosterless_players = @team.players.left_outer_joins(:roster)
                                    .where('rosters.id IS NULL')
       else
-        @leagues = League.rank(:row_order).joins(teams: :rosters).distinct
+        teams = Team.joins(:league).preload(:rosters)
+                    .order('leagues.row_order asc, teams.name asc')
+        @leagues = teams.group_by(&:league)
       end
     end
 

@@ -54,12 +54,6 @@ th {
   }
 }
 
-td {
-  &:first-child {
-    font-size: 1.4rem;
-  }
-}
-
 // sticky thead and first column
 // https://css-tricks.com/a-table-with-both-a-sticky-header-and-a-sticky-first-column/
 .hitters,
@@ -203,6 +197,114 @@ td {
       border-left: 1px solid $light-gray;
       background-color: $light-gray;
     }
+  }
+}
+
+.rosters {
+  width: 100%;
+
+  td,
+  th {
+    padding: .25rem .5rem;
+
+    &:first-child {
+      text-align: center;
+    }
+  }
+
+  td {
+    background-color: $background-color;
+    font-size: 1.4rem;
+    text-align: center;
+  }
+
+  thead {
+    position: sticky;
+    z-index: 3;
+    top: 0;
+    left: 0;
+
+    // scss-lint:disable NestingDepth SelectorDepth
+    tr {
+      background-color: $color-quaternary;
+
+      // stylelint-disable selector-max-compound-selectors
+      th {
+        border: 1px solid $black;
+        border-width: 0 1px 1px 0;
+        color: $off-white;
+
+        // stylelint-disable-next-line max-nesting-depth
+        &:first-child { // scss-lint:disable SelectorDepth
+          position: sticky;
+          z-index: 4;
+          top: 0;
+          left: 0;
+          // border-right: 1px solid $black;
+          border-left-width: 1px;
+          background-color: $color-quaternary;
+          color: $color-quinary;
+        }
+      }
+      // stylelint-enable selector-max-compound-selectors
+    }
+  }
+
+  tbody {
+    tr {
+      &:nth-child(2n + 1) {
+        // scss-lint:disable NestingDepth SelectorDepth
+        // stylelint-disable selector-max-compound-selectors
+        td {
+          background-color: $off-white;
+        }
+
+        &:last-child {
+          // stylelint-disable-next-line max-nesting-depth
+          td {
+            border-bottom-width: 0;
+          }
+        }
+        // stylelint-enable selector-max-compound-selectors
+      }
+    }
+
+    td {
+      position: relative;
+      z-index: 1;
+
+      &:first-child {
+        position: sticky;
+        z-index: 2;
+        top: 0;
+        left: 0;
+        font-weight: bold;
+      }
+    }
+
+    td {
+      border: 1px solid $border-color;
+      border-width: 0 1px 1px 0;
+
+      &:not(:first-child) {
+        vertical-align: top;
+      }
+
+      &:first-child {
+        border-left-width: 1px;
+      }
+    }
+  }
+
+  .player-name {
+    font-weight: bold;
+  }
+
+  .rosters-position-label {
+    color: $dark-gray;
+    font-family: $heading-font;
+    font-size: 1.5rem;
+    font-weight: normal;
   }
 }
 

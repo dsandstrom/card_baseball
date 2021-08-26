@@ -45,92 +45,70 @@
     <%= leagues_nav %>
   </div>
 
-  <div class="rosters">
-    <div class="rosters-labels">
-      <% [4, 3, 2, 1].each do |level| %>
-        <div id="rosters_labels_level_<%= level %>"
-             class="rosters-level">
-          <%= content_tag :h3, Roster::LEVEL_MAP[level][:name] %>
-
-          <% Roster.level_positions(level).each do |position| %>
-            <div id="rosters_labels_level_<%= level %>_position_<%= position %>"
-                 class="rosters-position">
-              <%= content_tag :h4, Roster.position_initials(position, level),
-                              class: 'roster-position' %>
-            </div>
+  <table class="rosters">
+    <% [4, 3, 2, 1].each do |level| %>
+      <thead>
+        <tr>
+          <%= content_tag :th, Roster::LEVEL_MAP[level][:name] %>
+          <% @leagues.each do |_, teams| %>
+            <% teams.each do |team| %>
+              <%= content_tag :th, team.name %>
+            <% end %>
           <% end %>
-        </div>
-      <% end %>
-    </div>
+        </tr>
+      </thead>
 
-    <% @leagues.each do |league| %>
-      <div class="rosters-league">
-        <%= content_tag :h2, league.name %>
+      <tbody id="rosters_level_<%= level %>" class="rosters-level">
+        <% Roster.level_positions(level).each do |position| %>
+          <tr id="rosters_level_<%= level %>_position_<%= position %>"
+               class="rosters-position">
+            <%= content_tag :td, Roster.position_initials(position, level),
+                            class: 'rosters-position-label' %>
 
-        <% teams = league.teams.order(name: :asc) %>
+            <% position_rosters = Roster.where(level: level, position: position) %>
 
-        <div class="rosters-league-teams">
-          <% teams.each do |team| %>
-            <div id="rosters_team_<%= team.id %>" class="rosters-team">
-              <div class="rosters-team-header">
-                <%= content_tag :h3, link_to_if(can?(:read, team), team.name, league_team_path(team.league, team)) %>
-                <%= content_tag :span, team.rosters.count,
-                                class: "count rosters-count" %>
-                <% if can?(:create, team.rosters.build) %>
-                  <p>
-                    <%= link_to 'Edit', team_rosters_path(team), class: 'secondary-link' %>
-                  </p>
-                <% end %>
-              </div>
+            <% @leagues.each do |league, teams| %>
+              <% teams.each do |team| %>
+                <% rosters = position_rosters.where(team: team)  %>
+                <td id="rosters_team_<%= team.id %>_level_<%= level %>_position_<%= position %>"
+                     class="rosters-team left-border">
+                  <% rosters.each do |roster| %>
+                    <div id="roster_<%= roster.id %>" class="roster">
+                      <% player = roster.player %>
+                      <% if player %>
+                        <div class="roster-player">
+                          <div class="player-name-wrapper">
+                            <%= content_tag :span, player.roster_name, class: 'player-name' %>
+                            <% if [1, 10].include?(position) %>
+                              <%= content_tag :span, player.throws, class: 'player-throws' %>
+                            <% else %>
+                              <%= content_tag :span, player.bats, class: 'player-bats' %>
+                            <% end %>
+                          </div>
 
-              <% [4, 3, 2, 1].each do |level| %>
-                <% rosters = team.rosters.where(level: level)  %>
-
-                <div id="rosters_team_<%= team.id %>_level_<%= level %>"
-                     class="rosters-level">
-                  <% Roster.level_positions(level).each do |position| %>
-                    <div id="rosters_team_<%= team.id %>_level_<%= level %>_position_<%= position %>"
-                         class="rosters-position">
-                      <% position_rosters = rosters.where(position: position).rank(:row_order) %>
-                      <% position_rosters.each do |roster| %>
-                        <div id="roster_<%= roster.id %>" class="roster">
-                          <% player = roster.player %>
-                          <% if player %>
-                            <div class="roster-player">
-                              <div class="player-name-wrapper">
-                                <%= content_tag :span, player.roster_name %>
-                                <% if [1, 10].include?(position) %>
-                                  <%= content_tag :span, player.throws, class: 'player-throws' %>
-                                <% else %>
-                                  <%= content_tag :span, player.bats, class: 'player-bats' %>
-                                <% end %>
-                              </div>
-
-                              <div class="player-ratings">
-                                <% case position %>
-                                <% when 1 %>
-                                  <%= content_tag :span, format_pitching(player.starting_pitching),
-                                                         class: 'player-starting-pitching' %>
-                                <% when 10 %>
-                                  <%= content_tag :span, format_pitching(player.relief_pitching),
-                                                         class: 'player-relief-pitching' %>
-                                <% else %>
-                                  <%= content_tag :span, format_hitting(player.offensive_rating),
-                                                         class: 'player-offensive-rating' %>
-                                <% end %>
-                              </div>
-                            </div>
-                          <% end %>
+                          <div class="player-ratings">
+                            <% case position %>
+                            <% when 1 %>
+                              <%= content_tag :span, format_pitching(player.starting_pitching),
+                                                     class: 'player-starting-pitching' %>
+                            <% when 10 %>
+                              <%= content_tag :span, format_pitching(player.relief_pitching),
+                                                     class: 'player-relief-pitching' %>
+                            <% else %>
+                              <%= content_tag :span, format_hitting(player.offensive_rating),
+                                                     class: 'player-offensive-rating' %>
+                            <% end %>
+                          </div>
                         </div>
                       <% end %>
                     </div>
                   <% end %>
-                </div>
+                </td>
               <% end %>
-            </div>
-          <% end %>
-        </div>
-      </div>
+            <% end %>
+          </tr>
+        <% end %>
+      </tbody>
     <% end %>
-  </div>
+  </table>
 <% end %>
