@@ -480,6 +480,52 @@ RSpec.describe RostersController, type: :controller do
             expect(response).to be_successful
           end
         end
+
+        context "when level doesn't change from 4" do
+          let(:player) { Fabricate(:player, primary_position: 3) }
+          let(:roster) do
+            Fabricate(:roster, team: team, player: player, level: 4,
+                               position: player.primary_position)
+          end
+          let(:update_attributes) { { level: 4 } }
+          let(:lineup) { Fabricate(:lineup, team: team) }
+
+          before do
+            Fabricate(:spot, lineup: lineup, hitter: player,
+                             position: player.primary_position)
+          end
+
+          it "doesn't destroy any spots" do
+            expect do
+              put :update, params: { team_id: team.to_param,
+                                     id: roster.to_param,
+                                     roster: update_attributes }
+            end.not_to change(Spot, :count)
+          end
+        end
+
+        context "when level changes from 4" do
+          let(:player) { Fabricate(:player, primary_position: 3) }
+          let(:roster) do
+            Fabricate(:roster, team: team, player: player, level: 4,
+                               position: player.primary_position)
+          end
+          let(:update_attributes) { { level: 3 } }
+          let(:lineup) { Fabricate(:lineup, team: team) }
+
+          before do
+            Fabricate(:spot, lineup: lineup, hitter: player,
+                             position: player.primary_position)
+          end
+
+          it "destroys player's lineup spots" do
+            expect do
+              put :update, params: { team_id: team.to_param,
+                                     id: roster.to_param,
+                                     roster: update_attributes }
+            end.to change(Spot, :count).by(-1)
+          end
+        end
       end
 
       context "for a JS request" do
@@ -642,6 +688,29 @@ RSpec.describe RostersController, type: :controller do
                                               id: roster.to_param,
                                               roster: invalid_attributes }
             expect(response).to be_successful
+          end
+        end
+
+        context "when level changes from 4" do
+          let(:player) { Fabricate(:player, primary_position: 3) }
+          let(:roster) do
+            Fabricate(:roster, team: team, player: player, level: 4,
+                               position: player.primary_position)
+          end
+          let(:update_attributes) { { level: 3 } }
+          let(:lineup) { Fabricate(:lineup, team: team) }
+
+          before do
+            Fabricate(:spot, lineup: lineup, hitter: player,
+                             position: player.primary_position)
+          end
+
+          it "destroys player's lineup spots" do
+            expect do
+              put :update, xhr: true, params: { team_id: team.to_param,
+                                                id: roster.to_param,
+                                                roster: update_attributes }
+            end.to change(Spot, :count).by(-1)
           end
         end
       end

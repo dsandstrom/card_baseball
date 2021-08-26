@@ -25,6 +25,7 @@ class RostersController < ApplicationController
       format.html { create_html_response }
       format.js { create_js_response }
     end
+    @team&.cleanup_lineup_spots
   end
 
   def update
@@ -35,6 +36,7 @@ class RostersController < ApplicationController
         update_js_response
       end
     end
+    @team&.cleanup_lineup_spots
   end
 
   def destroy
