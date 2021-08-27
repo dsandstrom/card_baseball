@@ -7,14 +7,10 @@
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_pack_tag 'flash_messages', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_pack_tag 'dropdowns', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_pack_tag 'submitting_radio_buttons', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_pack_tag 'check_boxes', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_pack_tag 'lineups', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_pack_tag 'rosters', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_pack_tag 'toggle_links', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'check_boxes', 'dropdowns',
+                            'flash_messages', 'lineups', 'rosters',
+                            'submitting_radio_buttons', 'toggle_links',
+                            'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
