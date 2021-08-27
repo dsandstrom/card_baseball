@@ -167,8 +167,12 @@
     color: $light-gray;
   }
 
-  .rating-0 {
-    color: $color-quinary;
+  .rating-0,
+  .rating-10,
+  .rating-20,
+  .rating-30,
+  .rating-40 {
+    color: $light-blue;
   }
 
   .rating-50 {
@@ -181,14 +185,17 @@
 
   .rating-70 {
     color: $yellow;
+    font-weight: bold;
   }
 
   .rating-80 {
     color: $red;
+    font-weight: bold;
   }
 
   .rating-90 {
     color: $dark-red;
+    font-weight: bold;
   }
 }
 
