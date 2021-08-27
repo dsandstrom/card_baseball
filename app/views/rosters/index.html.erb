@@ -69,7 +69,7 @@
 
             <% @leagues.each do |league, teams| %>
               <% teams.each do |team| %>
-                <% rosters = position_rosters.where(team: team)  %>
+                <% rosters = position_rosters.where(team: team).rank(:row_order)  %>
                 <td id="rosters_team_<%= team.id %>_level_<%= level %>_position_<%= position %>"
                      class="rosters-team left-border">
                   <% rosters.each do |roster| %>
