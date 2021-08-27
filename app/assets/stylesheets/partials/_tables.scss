@@ -241,10 +241,11 @@ th {
         z-index: 4;
         top: 0;
         left: 0;
-        // border-right: 1px solid $black;
         border-left-width: 1px;
         background-color: $color-quaternary;
-        color: $gray;
+        color: $light-gray;
+        font-family: $heading-font;
+        font-weight: normal;
       }
 
       a {
@@ -281,26 +282,19 @@ th {
     td {
       position: relative;
       z-index: 1;
+      border: 1px solid $border-color;
+      border-width: 0 1px 1px 0;
 
       &:first-child {
         position: sticky;
         z-index: 2;
         top: 0;
         left: 0;
-        font-weight: bold;
+        border-left-width: 1px;
       }
-    }
-
-    td {
-      border: 1px solid $border-color;
-      border-width: 0 1px 1px 0;
 
       &:not(:first-child) {
         vertical-align: top;
-      }
-
-      &:first-child {
-        border-left-width: 1px;
       }
     }
   }
