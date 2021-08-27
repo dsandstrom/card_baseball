@@ -231,9 +231,11 @@ th {
 
     // stylelint-disable selector-max-compound-selectors
     th {
+      padding: .5rem;
       border: 1px solid $black;
       border-width: 0 1px 1px 0;
       color: $off-white;
+      line-height: 1.2;
 
       // stylelint-disable-next-line max-nesting-depth
       &:first-child { // scss-lint:disable SelectorDepth
