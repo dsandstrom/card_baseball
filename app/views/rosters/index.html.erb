@@ -52,7 +52,7 @@
           <%= content_tag :th, Roster::LEVEL_MAP[level][:name] %>
           <% @leagues.each do |_, teams| %>
             <% teams.each do |team| %>
-              <%= content_tag :th, team.name %>
+              <th><%= link_to_if can?(:read, team), team.name, league_team_path(team.league, team) %></th>
             <% end %>
           <% end %>
         </tr>

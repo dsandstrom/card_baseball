@@ -227,27 +227,36 @@ th {
     // scss-lint:disable NestingDepth SelectorDepth
     tr {
       background-color: $color-quaternary;
+    }
 
-      // stylelint-disable selector-max-compound-selectors
-      th {
-        border: 1px solid $black;
-        border-width: 0 1px 1px 0;
-        color: $off-white;
+    // stylelint-disable selector-max-compound-selectors
+    th {
+      border: 1px solid $black;
+      border-width: 0 1px 1px 0;
+      color: $off-white;
 
-        // stylelint-disable-next-line max-nesting-depth
-        &:first-child { // scss-lint:disable SelectorDepth
-          position: sticky;
-          z-index: 4;
-          top: 0;
-          left: 0;
-          // border-right: 1px solid $black;
-          border-left-width: 1px;
-          background-color: $color-quaternary;
-          color: $color-quinary;
+      // stylelint-disable-next-line max-nesting-depth
+      &:first-child { // scss-lint:disable SelectorDepth
+        position: sticky;
+        z-index: 4;
+        top: 0;
+        left: 0;
+        // border-right: 1px solid $black;
+        border-left-width: 1px;
+        background-color: $color-quaternary;
+        color: $gray;
+      }
+
+      a {
+        color: $white;
+
+        &:hover,
+        &:active {
+          color: $color-secondary;
         }
       }
-      // stylelint-enable selector-max-compound-selectors
     }
+    // stylelint-enable selector-max-compound-selectors
   }
 
   tbody {
