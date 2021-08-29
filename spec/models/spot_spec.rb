@@ -82,30 +82,6 @@ RSpec.describe Spot, type: :model do
       end
     end
 
-    describe "#hitter_plays_position" do
-      context "when position is 4" do
-        before { subject.position = 4 }
-
-        context "and hitter has a defense score" do
-          before { hitter.update(defense4: 1) }
-
-          it { is_expected.to be_valid }
-        end
-
-        context "and hitter doesn't have a defense score" do
-          before { hitter.update(defense4: nil) }
-
-          it { is_expected.not_to be_valid }
-        end
-      end
-
-      context "when position is 9" do
-        before { subject.position = 9 }
-
-        it { is_expected.to be_valid }
-      end
-    end
-
     describe "#correct_batters_amount" do
       let(:lineup) { Fabricate(:lineup, team: team) }
 

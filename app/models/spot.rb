@@ -9,7 +9,6 @@ class Spot < ApplicationRecord
                             uniqueness: { scope: :lineup_id }
 
   validate :position_available
-  validate :hitter_plays_position
   validate :correct_batters_amount
   validate :hitter_on_team
   validate :hitter_on_level
@@ -35,13 +34,6 @@ class Spot < ApplicationRecord
       return if count.zero? || (count == 1 && position == 7)
 
       errors.add(:position, 'already taken in lineup')
-    end
-
-    def hitter_plays_position
-      return if position.blank? || hitter.blank? || position == 9
-      return if hitter.plays_position?(position)
-
-      errors.add(:position, "can't be filled by hitter")
     end
 
     def correct_batters_amount
