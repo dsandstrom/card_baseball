@@ -596,7 +596,7 @@ RSpec.describe Lineup, type: :model do
       end
 
       it "returns the valid defense" do
-        expect(lineup.defense).to eq(5)
+        expect(lineup.defense).to eq(-5)
       end
     end
   end
