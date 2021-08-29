@@ -18,7 +18,7 @@ class Spot < ApplicationRecord
 
   # hitter's def score
   def defense
-    @defense ||= hitter.position_defense(position) if hitter && position
+    @defense ||= build_defense if hitter && position
   end
 
   def position_initials
@@ -55,5 +55,19 @@ class Spot < ApplicationRecord
       return if hitter.roster&.level == 4
 
       errors.add(:hitter, "not on #{Roster::LEVEL_MAP[4][:name]} roster")
+    end
+
+    def build_defense
+      value = hitter.position_defense(position)
+      return value if value.present?
+
+      case position
+      when 2
+        -25
+      when 4, 6
+        -20
+      else
+        -10
+      end
     end
 end

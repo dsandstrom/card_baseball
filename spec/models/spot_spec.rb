@@ -165,50 +165,250 @@ RSpec.describe Spot, type: :model do
   end
 
   describe "#defense" do
-    let(:hitter) do
-      Fabricate(:hitter, primary_position: 3, defense3: 1, defense4: -1)
-    end
-    let(:roster) do
-      Fabricate(:roster, player: hitter, team: team, level: 4, position: 3)
-    end
+    context "for position 1" do
+      context "when player plays the position" do
+        let(:player) { Fabricate(:starting_pitcher, defense1: -1) }
 
-    context "when no hitter" do
-      let(:spot) do
-        Fabricate.build(:spot, lineup: lineup, hitter: nil, position: 3)
+        before do
+          subject.position = 1
+          subject.hitter = player
+        end
+
+        it "returns their score" do
+          expect(subject.defense).to eq(-1)
+        end
       end
 
-      it "returns nil" do
-        expect(spot.defense).to be_nil
-      end
-    end
+      context "when player doesn't play the position" do
+        let(:player) { Fabricate(:hitter, defense1: nil) }
 
-    context "when no position" do
-      let(:spot) do
-        Fabricate.build(:spot, lineup: lineup, hitter: hitter, position: nil)
-      end
+        before do
+          subject.position = 1
+          subject.hitter = player
+        end
 
-      it "returns nil" do
-        expect(spot.defense).to be_nil
-      end
-    end
-
-    context "when hitter plays the position" do
-      let(:spot) do
-        Fabricate(:spot, lineup: lineup, hitter: hitter, position: 3)
-      end
-
-      it "returns their score" do
-        expect(spot.defense).to eq(1)
+        it "returns nil" do
+          expect(subject.defense).to eq(-10)
+        end
       end
     end
 
-    context "when hitter doesn't play the position" do
-      let(:spot) do
-        Fabricate.build(:spot, lineup: lineup, hitter: hitter, position: 7)
+    context "for position 2" do
+      context "when player plays the position" do
+        let(:player) { Fabricate(:hitter, primary_position: 2, defense2: 2) }
+
+        before do
+          subject.position = 2
+          subject.hitter = player
+        end
+
+        it "returns their score" do
+          expect(subject.defense).to eq(2)
+        end
       end
 
-      it "returns nil" do
-        expect(spot.defense).to be_nil
+      context "when player doesn't play the position" do
+        let(:player) { Fabricate(:hitter, primary_position: 3, defense2: nil) }
+
+        before do
+          subject.position = 2
+          subject.hitter = player
+        end
+
+        it "returns nil" do
+          expect(subject.defense).to eq(-25)
+        end
+      end
+    end
+
+    context "for position 3" do
+      context "when player plays the position" do
+        let(:player) { Fabricate(:hitter, primary_position: 3, defense3: 2) }
+
+        before do
+          subject.position = 3
+          subject.hitter = player
+        end
+
+        it "returns their score" do
+          expect(subject.defense).to eq(2)
+        end
+      end
+
+      context "when player doesn't play the position" do
+        let(:player) { Fabricate(:hitter, primary_position: 2, defense3: nil) }
+
+        before do
+          subject.position = 3
+          subject.hitter = player
+        end
+
+        it "returns nil" do
+          expect(subject.defense).to eq(-10)
+        end
+      end
+    end
+
+    context "for position 4" do
+      context "when player plays the position" do
+        let(:player) { Fabricate(:hitter, primary_position: 4, defense4: 2) }
+
+        before do
+          subject.position = 4
+          subject.hitter = player
+        end
+
+        it "returns their score" do
+          expect(subject.defense).to eq(2)
+        end
+      end
+
+      context "when player doesn't play the position" do
+        let(:player) do
+          Fabricate(:hitter, primary_position: 2, defense4: nil)
+        end
+
+        before do
+          subject.position = 4
+          subject.hitter = player
+        end
+
+        it "returns nil" do
+          expect(subject.defense).to eq(-20)
+        end
+      end
+    end
+
+    context "for position 5" do
+      context "when player plays the position" do
+        let(:player) { Fabricate(:hitter, primary_position: 5, defense5: 2) }
+
+        before do
+          subject.position = 5
+          subject.hitter = player
+        end
+
+        it "returns their score" do
+          expect(subject.defense).to eq(2)
+        end
+      end
+
+      context "when player doesn't play the position" do
+        let(:player) do
+          Fabricate(:hitter, primary_position: 2, defense5: nil)
+        end
+
+        before do
+          subject.position = 5
+          subject.hitter = player
+        end
+
+        it "returns nil" do
+          expect(subject.defense).to eq(-10)
+        end
+      end
+    end
+
+    context "for position 6" do
+      context "when player plays the position" do
+        let(:player) { Fabricate(:hitter, primary_position: 6, defense6: 2) }
+
+        before do
+          subject.position = 6
+          subject.hitter = player
+        end
+
+        it "returns their score" do
+          expect(subject.defense).to eq(2)
+        end
+      end
+
+      context "when player doesn't play the position" do
+        let(:player) do
+          Fabricate(:hitter, primary_position: 2, defense6: nil)
+        end
+
+        before do
+          subject.position = 6
+          subject.hitter = player
+        end
+
+        it "returns nil" do
+          expect(subject.defense).to eq(-20)
+        end
+      end
+    end
+
+    context "for position 7" do
+      context "when player plays the position" do
+        let(:player) { Fabricate(:hitter, primary_position: 7, defense7: 2) }
+
+        before do
+          subject.position = 7
+          subject.hitter = player
+        end
+
+        it "returns their score" do
+          expect(subject.defense).to eq(2)
+        end
+      end
+
+      context "when player doesn't play the position" do
+        let(:player) do
+          Fabricate(:hitter, primary_position: 2, defense7: nil)
+        end
+
+        before do
+          subject.position = 7
+          subject.hitter = player
+        end
+
+        it "returns nil" do
+          expect(subject.defense).to eq(-10)
+        end
+      end
+    end
+
+    context "for position 8" do
+      context "when player plays the position" do
+        let(:player) { Fabricate(:hitter, primary_position: 8, defense8: 2) }
+
+        before do
+          subject.position = 8
+          subject.hitter = player
+        end
+
+        it "returns their score" do
+          expect(subject.defense).to eq(2)
+        end
+      end
+
+      context "when player doesn't play the position" do
+        let(:player) do
+          Fabricate(:hitter, primary_position: 2, defense8: nil)
+        end
+
+        before do
+          subject.position = 8
+          subject.hitter = player
+        end
+
+        it "returns nil" do
+          expect(subject.defense).to eq(-10)
+        end
+      end
+    end
+
+    context "for position 9" do
+      let(:player) { Fabricate(:hitter) }
+
+      before do
+        subject.position = 9
+        subject.hitter = player
+      end
+
+      it "returns 0" do
+        expect(subject.defense).to eq(0)
       end
     end
   end
