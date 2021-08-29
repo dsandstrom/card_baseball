@@ -11,7 +11,6 @@ RSpec.describe Spot, type: :model do
   end
 
   before do
-    Fabricate(:contract, player: hitter, team: team)
     roster
     @spot = Spot.new(lineup_id: lineup.id, hitter_id: hitter.id,
                      position: 2, batting_order: 1)
