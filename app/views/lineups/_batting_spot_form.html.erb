@@ -46,16 +46,11 @@
         <% Player::POSITION_MAP.each do |position, options| %>
           <% next if [1, 9].include?(position) %>
 
-          <% if hitter.plays_position?(position) %>
-            <%= form.label "batting_order_#{batting_order}_position_#{position}",
-                           title: options[:name] do %>
-              <%= options[:initials] %>
-              <%= form.radio_button :position, position,
-                                    id: "spot_batting_order_#{batting_order}_position_#{position}" %>
-            <% end %>
-          <% else %>
-            <%= content_tag :span, options[:initials],
-                            class: 'missing-spot-position' %>
+          <%= form.label "batting_order_#{batting_order}_position_#{position}",
+                         title: options[:name] do %>
+            <%= options[:initials] %>
+            <%= form.radio_button :position, position,
+                                  id: "spot_batting_order_#{batting_order}_position_#{position}" %>
           <% end %>
         <% end %>
 
