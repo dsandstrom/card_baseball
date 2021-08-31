@@ -5,14 +5,14 @@ require "rails_helper"
 RSpec.describe Spot, type: :model do
   let(:team) { Fabricate(:team) }
   let(:lineup) { Fabricate(:lineup, team: team) }
-  let(:hitter) { Fabricate(:hitter, primary_position: 2, defense2: 5) }
+  let(:hitter) { Fabricate(:player, primary_position: 2, defense2: 5) }
   let(:roster) do
     Fabricate(:roster, player: hitter, team: team, level: 4, position: 2)
   end
 
   before do
     roster
-    @spot = Spot.new(lineup_id: lineup.id, hitter_id: hitter.id,
+    @spot = Spot.new(lineup_id: lineup.id, player_id: hitter.id,
                      position: 2, batting_order: 1)
   end
 
@@ -21,20 +21,20 @@ RSpec.describe Spot, type: :model do
   it { is_expected.to be_valid }
 
   it { is_expected.to validate_presence_of(:lineup_id) }
-  it { is_expected.to validate_presence_of(:hitter_id) }
+  it { is_expected.to validate_presence_of(:player_id) }
   it { is_expected.to validate_presence_of(:position) }
   it { is_expected.to validate_presence_of(:batting_order) }
 
-  it { is_expected.to validate_inclusion_of(:position).in_range(2..9) }
+  it { is_expected.to validate_inclusion_of(:position).in_range(1..9) }
   it { is_expected.to validate_inclusion_of(:batting_order).in_range(1..9) }
 
   it do
     is_expected.to validate_uniqueness_of(:batting_order).scoped_to(:lineup_id)
   end
-  it { is_expected.to validate_uniqueness_of(:hitter_id).scoped_to(:lineup_id) }
+  it { is_expected.to validate_uniqueness_of(:player_id).scoped_to(:lineup_id) }
 
   it { is_expected.to belong_to(:lineup) }
-  it { is_expected.to belong_to(:hitter) }
+  it { is_expected.to belong_to(:player) }
 
   describe "#validate" do
     describe "#position_available" do
@@ -134,20 +134,17 @@ RSpec.describe Spot, type: :model do
       end
     end
 
-    describe "#hitter_on_team" do
+    describe "#player_on_team" do
       context "when no contract" do
         let(:lineup) { Fabricate(:lineup) }
 
-        before do
-          subject.lineup = lineup
-          subject.hitter = hitter
-        end
+        before { subject.lineup = lineup }
 
         it { is_expected.not_to be_valid }
       end
     end
 
-    describe "#hitter_on_level" do
+    describe "#player_on_level" do
       context "when contract, but no roster" do
         let(:roster) { nil }
 
@@ -171,7 +168,7 @@ RSpec.describe Spot, type: :model do
 
         before do
           subject.position = 1
-          subject.hitter = player
+          subject.player = player
         end
 
         it "returns their score" do
@@ -180,11 +177,11 @@ RSpec.describe Spot, type: :model do
       end
 
       context "when player doesn't play the position" do
-        let(:player) { Fabricate(:hitter, defense1: nil) }
+        let(:player) { Fabricate(:player, defense1: nil) }
 
         before do
           subject.position = 1
-          subject.hitter = player
+          subject.player = player
         end
 
         it "returns nil" do
@@ -195,11 +192,11 @@ RSpec.describe Spot, type: :model do
 
     context "for position 2" do
       context "when player plays the position" do
-        let(:player) { Fabricate(:hitter, primary_position: 2, defense2: 2) }
+        let(:player) { Fabricate(:player, primary_position: 2, defense2: 2) }
 
         before do
           subject.position = 2
-          subject.hitter = player
+          subject.player = player
         end
 
         it "returns their score" do
@@ -208,11 +205,11 @@ RSpec.describe Spot, type: :model do
       end
 
       context "when player doesn't play the position" do
-        let(:player) { Fabricate(:hitter, primary_position: 3, defense2: nil) }
+        let(:player) { Fabricate(:player, primary_position: 3, defense2: nil) }
 
         before do
           subject.position = 2
-          subject.hitter = player
+          subject.player = player
         end
 
         it "returns nil" do
@@ -223,11 +220,11 @@ RSpec.describe Spot, type: :model do
 
     context "for position 3" do
       context "when player plays the position" do
-        let(:player) { Fabricate(:hitter, primary_position: 3, defense3: 2) }
+        let(:player) { Fabricate(:player, primary_position: 3, defense3: 2) }
 
         before do
           subject.position = 3
-          subject.hitter = player
+          subject.player = player
         end
 
         it "returns their score" do
@@ -236,11 +233,11 @@ RSpec.describe Spot, type: :model do
       end
 
       context "when player doesn't play the position" do
-        let(:player) { Fabricate(:hitter, primary_position: 2, defense3: nil) }
+        let(:player) { Fabricate(:player, primary_position: 2, defense3: nil) }
 
         before do
           subject.position = 3
-          subject.hitter = player
+          subject.player = player
         end
 
         it "returns nil" do
@@ -251,11 +248,11 @@ RSpec.describe Spot, type: :model do
 
     context "for position 4" do
       context "when player plays the position" do
-        let(:player) { Fabricate(:hitter, primary_position: 4, defense4: 2) }
+        let(:player) { Fabricate(:player, primary_position: 4, defense4: 2) }
 
         before do
           subject.position = 4
-          subject.hitter = player
+          subject.player = player
         end
 
         it "returns their score" do
@@ -265,12 +262,12 @@ RSpec.describe Spot, type: :model do
 
       context "when player doesn't play the position" do
         let(:player) do
-          Fabricate(:hitter, primary_position: 2, defense4: nil)
+          Fabricate(:player, primary_position: 2, defense4: nil)
         end
 
         before do
           subject.position = 4
-          subject.hitter = player
+          subject.player = player
         end
 
         it "returns nil" do
@@ -281,11 +278,11 @@ RSpec.describe Spot, type: :model do
 
     context "for position 5" do
       context "when player plays the position" do
-        let(:player) { Fabricate(:hitter, primary_position: 5, defense5: 2) }
+        let(:player) { Fabricate(:player, primary_position: 5, defense5: 2) }
 
         before do
           subject.position = 5
-          subject.hitter = player
+          subject.player = player
         end
 
         it "returns their score" do
@@ -295,12 +292,12 @@ RSpec.describe Spot, type: :model do
 
       context "when player doesn't play the position" do
         let(:player) do
-          Fabricate(:hitter, primary_position: 2, defense5: nil)
+          Fabricate(:player, primary_position: 2, defense5: nil)
         end
 
         before do
           subject.position = 5
-          subject.hitter = player
+          subject.player = player
         end
 
         it "returns nil" do
@@ -311,11 +308,11 @@ RSpec.describe Spot, type: :model do
 
     context "for position 6" do
       context "when player plays the position" do
-        let(:player) { Fabricate(:hitter, primary_position: 6, defense6: 2) }
+        let(:player) { Fabricate(:player, primary_position: 6, defense6: 2) }
 
         before do
           subject.position = 6
-          subject.hitter = player
+          subject.player = player
         end
 
         it "returns their score" do
@@ -325,12 +322,12 @@ RSpec.describe Spot, type: :model do
 
       context "when player doesn't play the position" do
         let(:player) do
-          Fabricate(:hitter, primary_position: 2, defense6: nil)
+          Fabricate(:player, primary_position: 2, defense6: nil)
         end
 
         before do
           subject.position = 6
-          subject.hitter = player
+          subject.player = player
         end
 
         it "returns nil" do
@@ -341,11 +338,11 @@ RSpec.describe Spot, type: :model do
 
     context "for position 7" do
       context "when player plays the position" do
-        let(:player) { Fabricate(:hitter, primary_position: 7, defense7: 2) }
+        let(:player) { Fabricate(:player, primary_position: 7, defense7: 2) }
 
         before do
           subject.position = 7
-          subject.hitter = player
+          subject.player = player
         end
 
         it "returns their score" do
@@ -355,12 +352,12 @@ RSpec.describe Spot, type: :model do
 
       context "when player doesn't play the position" do
         let(:player) do
-          Fabricate(:hitter, primary_position: 2, defense7: nil)
+          Fabricate(:player, primary_position: 2, defense7: nil)
         end
 
         before do
           subject.position = 7
-          subject.hitter = player
+          subject.player = player
         end
 
         it "returns nil" do
@@ -371,11 +368,11 @@ RSpec.describe Spot, type: :model do
 
     context "for position 8" do
       context "when player plays the position" do
-        let(:player) { Fabricate(:hitter, primary_position: 8, defense8: 2) }
+        let(:player) { Fabricate(:player, primary_position: 8, defense8: 2) }
 
         before do
           subject.position = 8
-          subject.hitter = player
+          subject.player = player
         end
 
         it "returns their score" do
@@ -385,12 +382,12 @@ RSpec.describe Spot, type: :model do
 
       context "when player doesn't play the position" do
         let(:player) do
-          Fabricate(:hitter, primary_position: 2, defense8: nil)
+          Fabricate(:player, primary_position: 2, defense8: nil)
         end
 
         before do
           subject.position = 8
-          subject.hitter = player
+          subject.player = player
         end
 
         it "returns nil" do
@@ -400,11 +397,11 @@ RSpec.describe Spot, type: :model do
     end
 
     context "for position 9" do
-      let(:player) { Fabricate(:hitter) }
+      let(:player) { Fabricate(:player) }
 
       before do
         subject.position = 9
-        subject.hitter = player
+        subject.player = player
       end
 
       it "returns 0" do

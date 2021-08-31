@@ -530,7 +530,7 @@ RSpec.describe Team, type: :model do
 
       before do
         Fabricate(:roster, team: team, player: player, position: 5, level: 4)
-        Fabricate(:spot, lineup: lineup, hitter: player, position: 5)
+        Fabricate(:spot, lineup: lineup, player: player, position: 5)
       end
 
       it "doesn't destroy any spots" do
@@ -547,7 +547,7 @@ RSpec.describe Team, type: :model do
       before do
         roster = Fabricate(:roster, team: team, player: player, position: 5,
                                     level: 4)
-        Fabricate(:spot, lineup: lineup, hitter: player, position: 5)
+        Fabricate(:spot, lineup: lineup, player: player, position: 5)
         roster.update(position: 3, level: 3)
       end
 

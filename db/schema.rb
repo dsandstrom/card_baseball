@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_02_235234) do
+ActiveRecord::Schema.define(version: 2021_08_31_001235) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,6 +39,16 @@ ActiveRecord::Schema.define(version: 2021_08_02_235234) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["team_id"], name: "index_lineups_on_team_id"
+  end
+
+  create_table "pitcher_spots", force: :cascade do |t|
+    t.integer "lineup_id", null: false
+    t.integer "pitcher_id"
+    t.integer "batting_order", default: 9
+    t.integer "defense", default: 0
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["lineup_id"], name: "index_pitcher_spots_on_lineup_id", unique: true
   end
 
   create_table "players", force: :cascade do |t|
@@ -103,7 +113,7 @@ ActiveRecord::Schema.define(version: 2021_08_02_235234) do
     t.integer "batting_order", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "hitter_id", null: false
+    t.integer "player_id"
     t.index ["lineup_id"], name: "index_spots_on_lineup_id"
   end
 

@@ -5,7 +5,7 @@ if (form) {
 
 var bench = document.querySelector('.lineup-bench');
 if (bench) {
-  bench.innerHTML = "<%= j render('lineups/bench_hitter', bench_hitter: @bench_hitter) %>" + bench.innerHTML;
+  bench.innerHTML = "<%= j render('lineups/bench_player', bench_player: @bench_player) %>" + bench.innerHTML;
 }
 
 <%= render 'lineups/defense', team: @team, lineup: @lineup %>

@@ -26,7 +26,7 @@ RSpec.describe Lineup, type: :model do
 
   it { is_expected.to belong_to(:team) }
   it { is_expected.to have_many(:spots) }
-  it { is_expected.to have_many(:hitters) }
+  it { is_expected.to have_many(:players) }
 
   describe "#validate" do
     context "when name and vs are blank" do
@@ -385,44 +385,44 @@ RSpec.describe Lineup, type: :model do
   describe "#bench" do
     let(:lineup) { Fabricate(:lineup, team: team) }
 
-    context "when no hitters" do
+    context "when no players" do
       it "returns []" do
         expect(lineup.bench).to eq([])
       end
     end
 
-    context "when team has 3 hitters" do
-      let(:first_hitter) do
+    context "when team has 3 players" do
+      let(:first_player) do
         Fabricate(:hitter, primary_position: 2, defense2: 2)
       end
-      let(:second_hitter) do
+      let(:second_player) do
         Fabricate(:hitter, primary_position: 3, defense3: 5)
       end
-      let(:third_hitter) do
+      let(:third_player) do
         Fabricate(:hitter, primary_position: 5, defense5: 5)
       end
 
       before do
-        Fabricate(:contract, team: team, player: first_hitter)
-        Fabricate(:contract, team: team, player: second_hitter)
-        Fabricate(:contract, team: team, player: third_hitter)
+        Fabricate(:contract, team: team, player: first_player)
+        Fabricate(:contract, team: team, player: second_player)
+        Fabricate(:contract, team: team, player: third_player)
         Fabricate(:contract)
 
-        Fabricate(:roster, team: team, player: first_hitter, level: 4,
+        Fabricate(:roster, team: team, player: first_player, level: 4,
                            position: 2)
-        Fabricate(:roster, team: team, player: second_hitter, level: 3,
+        Fabricate(:roster, team: team, player: second_player, level: 3,
                            position: 3)
       end
 
       context "and none in the lineup" do
-        it "returns hitters with level 4 roster" do
-          expect(lineup.bench).to eq([first_hitter])
+        it "returns players with level 4 roster" do
+          expect(lineup.bench).to eq([first_player])
         end
       end
 
       context "and one in the lineup" do
         before do
-          Fabricate(:spot, hitter: first_hitter, lineup: lineup, position: 2)
+          Fabricate(:spot, player: first_player, lineup: lineup, position: 2)
         end
 
         it "returns none" do
@@ -547,24 +547,24 @@ RSpec.describe Lineup, type: :model do
 
     context "when 2 valid spots" do
       let(:lineup) { Fabricate(:lineup, team: team) }
-      let(:second_base_hitter) do
-        Fabricate(:hitter, primary_position: 4, defense4: 5)
+      let(:second_base_player) do
+        Fabricate(:player, primary_position: 4, defense4: 5)
       end
-      let(:third_base_hitter) do
-        Fabricate(:hitter, primary_position: 5, defense5: -1)
+      let(:third_base_player) do
+        Fabricate(:player, primary_position: 5, defense5: -1)
       end
 
       before do
-        Fabricate(:contract, player: second_base_hitter, team: team)
-        Fabricate(:contract, player: third_base_hitter, team: team)
-        Fabricate(:roster, player: second_base_hitter, team: team, level: 4,
+        Fabricate(:contract, player: second_base_player, team: team)
+        Fabricate(:contract, player: third_base_player, team: team)
+        Fabricate(:roster, player: second_base_player, team: team, level: 4,
                            position: 4)
-        Fabricate(:roster, player: third_base_hitter, team: team, level: 4,
+        Fabricate(:roster, player: third_base_player, team: team, level: 4,
                            position: 5)
         Fabricate(:spot, lineup: lineup, batting_order: 2, position: 4,
-                         hitter: second_base_hitter)
+                         player: second_base_player)
         Fabricate(:spot, lineup: lineup, batting_order: 3, position: 5,
-                         hitter: third_base_hitter)
+                         player: third_base_player)
       end
 
       it "returns a sum of their defenses" do
@@ -574,25 +574,25 @@ RSpec.describe Lineup, type: :model do
 
     context "when a spot is missing defense" do
       let(:lineup) { Fabricate(:lineup, team: team) }
-      let(:second_base_hitter) do
-        Fabricate(:hitter, primary_position: 4, defense4: 5)
+      let(:second_base_player) do
+        Fabricate(:player, primary_position: 4, defense4: 5)
       end
-      let(:third_base_hitter) do
-        Fabricate(:hitter, primary_position: 5, defense5: -1)
+      let(:third_base_player) do
+        Fabricate(:player, primary_position: 5, defense5: -1)
       end
 
       before do
-        Fabricate(:contract, player: second_base_hitter, team: team)
-        Fabricate(:contract, player: third_base_hitter, team: team)
-        Fabricate(:roster, player: second_base_hitter, team: team, level: 4,
+        Fabricate(:contract, player: second_base_player, team: team)
+        Fabricate(:contract, player: third_base_player, team: team)
+        Fabricate(:roster, player: second_base_player, team: team, level: 4,
                            position: 4)
-        Fabricate(:roster, player: third_base_hitter, team: team, level: 4,
+        Fabricate(:roster, player: third_base_player, team: team, level: 4,
                            position: 5)
         Fabricate(:spot, lineup: lineup, batting_order: 2, position: 4,
-                         hitter: second_base_hitter)
+                         player: second_base_player)
         Fabricate(:spot, lineup: lineup, batting_order: 3, position: 5,
-                         hitter: third_base_hitter)
-        third_base_hitter.update_column :defense5, nil
+                         player: third_base_player)
+        third_base_player.update_column :defense5, nil
       end
 
       it "returns the valid defense" do
@@ -603,13 +603,13 @@ RSpec.describe Lineup, type: :model do
 
   describe "#catcher_bar" do
     let(:lineup) { Fabricate(:lineup, team: team) }
-    let(:hitter) do
-      Fabricate(:hitter, primary_position: 2, defense2: 4, bar2: 2)
+    let(:player) do
+      Fabricate(:player, primary_position: 2, defense2: 4, bar2: 2)
     end
 
     before do
-      Fabricate(:contract, team: team, player: hitter)
-      Fabricate(:roster, team: team, player: hitter, level: 4, position: 2)
+      Fabricate(:contract, team: team, player: player)
+      Fabricate(:roster, team: team, player: player, level: 4, position: 2)
     end
 
     context "when no catcher spot" do
@@ -619,16 +619,16 @@ RSpec.describe Lineup, type: :model do
     end
 
     context "when catcher spot" do
-      before { Fabricate(:spot, lineup: lineup, hitter: hitter, position: 2) }
+      before { Fabricate(:spot, lineup: lineup, player: player, position: 2) }
 
       context "with a good catcher" do
-        it "returns the hitter's catcher_bar" do
+        it "returns the player's catcher_bar" do
           expect(lineup.catcher_bar).to eq(2)
         end
       end
 
       context "with a bad catcher" do
-        before { hitter.update(bar2: nil) }
+        before { player.update(bar2: nil) }
 
         it "returns 0" do
           expect(lineup.catcher_bar).to eq(0)

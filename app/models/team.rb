@@ -47,7 +47,7 @@ class Team < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def cleanup_lineup_spots
-    spots.joins(hitter: :roster).where('rosters.level != ?', 4).destroy_all
+    spots.joins(player: :roster).where('rosters.level != ?', 4).destroy_all
   end
 
   private

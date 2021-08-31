@@ -2,23 +2,23 @@
 
 class Spot < ApplicationRecord
   validates :lineup_id, presence: true
-  validates :hitter_id, presence: true, uniqueness: { scope: :lineup_id }
+  validates :player_id, presence: true, uniqueness: { scope: :lineup_id }
   # 2(c)-9(dh)
-  validates :position, presence: true, inclusion: { in: 2..9 }
+  validates :position, presence: true, inclusion: { in: 1..9 }
   validates :batting_order, presence: true, inclusion: { in: 1..9 },
                             uniqueness: { scope: :lineup_id }
 
   validate :position_available
   validate :correct_batters_amount
-  validate :hitter_on_team
-  validate :hitter_on_level
+  validate :player_on_team
+  validate :player_on_level
 
   belongs_to :lineup
-  belongs_to :hitter, class_name: 'Player'
+  belongs_to :player
 
-  # hitter's def score
+  # player's def score
   def defense
-    @defense ||= build_defense if hitter && position
+    @defense ||= build_defense if player && position
   end
 
   def position_initials
@@ -42,23 +42,23 @@ class Spot < ApplicationRecord
       errors.add(:batting_order, 'not allowed to be 9 with this lineup')
     end
 
-    def hitter_on_team
-      return unless hitter && lineup&.team
-      return if hitter.team == lineup.team
+    def player_on_team
+      return unless player && lineup&.team
+      return if player.team == lineup.team
 
-      errors.add(:hitter, 'no longer on team')
+      errors.add(:player, 'no longer on team')
     end
 
-    def hitter_on_level
-      return unless hitter && lineup&.team
-      return unless hitter.team == lineup.team
-      return if hitter.roster&.level == 4
+    def player_on_level
+      return unless player && lineup&.team
+      return unless player.team == lineup.team
+      return if player.roster&.level == 4
 
-      errors.add(:hitter, "not on #{Roster::LEVEL_MAP[4][:name]} roster")
+      errors.add(:player, "not on #{Roster::LEVEL_MAP[4][:name]} roster")
     end
 
     def build_defense
-      value = hitter.position_defense(position)
+      value = player.position_defense(position)
       return value if value.present?
 
       case position

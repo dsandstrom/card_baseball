@@ -8,7 +8,7 @@ import Rails from '@rails/ujs'
 
 var startPos = null;
 
-interact('.draggable.bench-hitter')
+interact('.draggable.bench-player')
   .draggable({
     inertia: true,
     autoScroll: true,
@@ -27,7 +27,7 @@ interact('.draggable.bench-hitter')
 
 interact('.batting-spot-form')
   .dropzone({
-    accept: ['.bench-hitter', '.spot-hitter-field'],
+    accept: ['.bench-player', '.spot-player-field'],
     listeners: {
       enter: dropEnterListener,
       leave: dropLeaveListener,
@@ -35,7 +35,7 @@ interact('.batting-spot-form')
     }
   })
 
-interact('.spot-hitter-field')
+interact('.spot-player-field')
   .draggable({
     inertia: true,
     autoScroll: true,
@@ -130,15 +130,15 @@ function dropEndListener (event) {
 // set form fields from dragged and submit
 function addToLineup(event) {
   var form = event.currentTarget;
-  var hitter = event.relatedTarget;
-  var hitterId = hitter.dataset.id;
+  var player = event.relatedTarget;
+  var playerId = player.dataset.id;
 
-  if (hitterId && hitterId.length) {
-    var formHitterField = form.querySelector('input[name="spot[hitter_id]"]');
-    if (formHitterField) {
+  if (playerId && playerId.length) {
+    var formPlayerField = form.querySelector('input[name="spot[player_id]"]');
+    if (formPlayerField) {
       // FIXME: if redropping on same spot, don't send extra request
-      // if (formHitterField.value == hitterId) {
-      formHitterField.value = hitterId;
+      // if (formPlayerField.value == playerId) {
+      formPlayerField.value = playerId;
       Rails.fire(form, 'submit');
     }
   }

@@ -12,7 +12,7 @@
       lineup_spots_path(lineup)
     end
   defense = spot.defense
-  radio_button_class = 'spot-hitter-positions'
+  radio_button_class = 'spot-player-positions'
 
   if spot.errors.any? && spot.errors[:position].present?
     radio_button_class += ' highlight'
@@ -31,15 +31,15 @@
   <%= content_tag :span, batting_order,
                   class: 'spot-batting-order' %>
 
-  <% if spot.hitter %>
-    <% hitter = spot.hitter %>
+  <% if spot.player %>
+    <% player = spot.player %>
 
-    <%= form.hidden_field :hitter_id, id: "spot_batting_order_#{batting_order}_hitter_id" %>
-    <div class="spot-hitter-field draggable" data-id="<%= hitter.id %>">
-      <div class="spot-hitter">
-        <%= content_tag :span, hitter.roster_name,
-                        class: 'spot-hitter-name' %>
-        <%= content_tag :span, hitter.bats, class: 'spot-hitter-bats' %>
+    <%= form.hidden_field :player_id, id: "spot_batting_order_#{batting_order}_player_id" %>
+    <div class="spot-player-field draggable" data-id="<%= player.id %>">
+      <div class="spot-player">
+        <%= content_tag :span, player.roster_name,
+                        class: 'spot-player-name' %>
+        <%= content_tag :span, player.bats, class: 'spot-player-bats' %>
       </div>
 
       <%= content_tag :div, class: radio_button_class do %>
@@ -69,14 +69,14 @@
                       title: 'Move to Bench', data: { remote: true } %>
         <% else %>
           <%= link_to "&rArr;".html_safe,
-                      new_lineup_spot_path(lineup, batting_order: batting_order, bench_hitter_id: hitter&.id),
+                      new_lineup_spot_path(lineup, batting_order: batting_order, bench_player_id: player&.id),
                       class: 'destroy-link', title: 'Cancel', remote: true %>
         <% end %>
       <% end %>
     </div>
   <% else %>
-    <div class="empty-spot-hitter-field">
-      <%= form.hidden_field :hitter_id, id: "spot_batting_order_#{batting_order}_hitter_id" %>
+    <div class="empty-spot-player-field">
+      <%= form.hidden_field :player_id, id: "spot_batting_order_#{batting_order}_player_id" %>
       <%= form.hidden_field :position, id: "spot_batting_order_#{batting_order}_position" %>
     </div>
   <% end %>

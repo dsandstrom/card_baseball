@@ -51,9 +51,9 @@ class RadioButtons {
 const radioButtonClasses = [];
 
 document.addEventListener('turbolinks:load', function() {
-  for (let klass of radioButtonClasses) {
-    document.querySelectorAll('.' + klass).forEach((radioButtons) => {
-      new RadioButtons(radioButtons);
-    });
-  }
+  // for (let klass of radioButtonClasses) {
+  //   document.querySelectorAll('.' + klass).forEach((radioButtons) => {
+  //     new RadioButtons(radioButtons);
+  //   });
+  // }
 });

@@ -10,8 +10,8 @@ class SpotsController < ApplicationController
       format.html { render :new }
       format.js do
         @spot.batting_order = params.delete(:batting_order)
-        bench_hitter_id = params.delete(:bench_hitter_id)
-        @bench_hitter = Player.find(bench_hitter_id) if bench_hitter_id
+        bench_player_id = params.delete(:bench_player_id)
+        @bench_player = Player.find(bench_player_id) if bench_player_id
         render :destroy
       end
     end
@@ -36,7 +36,7 @@ class SpotsController < ApplicationController
   end
 
   def destroy
-    @bench_hitter = @spot.hitter
+    @bench_player = @spot.player
     batting_order = @spot.batting_order
     @spot.destroy
 
@@ -57,11 +57,11 @@ class SpotsController < ApplicationController
     end
 
     def spot_params
-      params.require(:spot).permit(:hitter_id, :position, :batting_order)
+      params.require(:spot).permit(:player_id, :position, :batting_order)
     end
 
     def update_params
-      params.require(:spot).permit(:hitter_id, :position)
+      params.require(:spot).permit(:player_id, :position)
     end
 
     def html_create_response
@@ -105,10 +105,10 @@ class SpotsController < ApplicationController
     end
 
     def move_from_another_spot
-      hitter = @spot.hitter
-      return unless hitter
+      player = @spot.player
+      return unless player
 
-      old_spot = @lineup.spots.find_by(hitter_id: hitter.id)
+      old_spot = @lineup.spots.find_by(player_id: player.id)
       return unless old_spot
 
       @spot.position = old_spot.position
@@ -117,21 +117,21 @@ class SpotsController < ApplicationController
     end
 
     def update_spot
-      old_hitter = @spot.hitter
+      old_player = @spot.player
       old_position = @spot.position
       @spot.assign_attributes(update_params)
-      @old_spot = @lineup.spots.find_by(hitter_id: @spot.hitter_id)
-      return if old_hitter == @spot.hitter
+      @old_spot = @lineup.spots.find_by(player_id: @spot.player_id)
+      return if old_player == @spot.player
 
       if @old_spot
-        switch_spots(old_hitter, old_position)
+        switch_spots(old_player, old_position)
       else
-        @bench_hitter = old_hitter
+        @bench_player = old_player
       end
     end
 
-    def switch_spots(hitter, position)
+    def switch_spots(player, position)
       @spot.position = @old_spot.position
-      @old_spot.update_columns(hitter_id: hitter.id, position: position)
+      @old_spot.update_columns(player_id: player.id, position: position)
     end
 end

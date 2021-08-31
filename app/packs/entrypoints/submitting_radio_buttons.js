@@ -55,7 +55,7 @@ class SubmittingRadioButtons {
 }
 
 const enableSubmittingRadioButtons = function (event) {
-  const classes = ['spot-hitter-positions'];
+  const classes = ['spot-player-positions'];
 
   for (let klass of classes) {
     document.querySelectorAll('.' + klass).forEach((radioButtons) => {

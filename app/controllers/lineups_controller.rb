@@ -11,7 +11,7 @@ class LineupsController < ApplicationController
 
   def show
     @spots = @lineup.spots
-    @hitters = @lineup.hitters
+    @players = @lineup.players
     @bench = @lineup.bench
   end
 

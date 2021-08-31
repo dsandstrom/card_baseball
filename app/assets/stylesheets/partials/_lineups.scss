@@ -29,15 +29,15 @@
 .position-rosters,
 .rosterless-players,
 .spot,
-.bench-hitter {
-  .hitter-name,
-  .spot-hitter-name,
+.bench-player {
+  .player-name,
+  .spot-player-name,
   .player-name {
     font-weight: bold;
   }
 
-  .spot-hitter-bats,
-  .hitter-bats {
+  .spot-player-bats,
+  .player-bats {
     color: $gray;
     font-size: 80%;
   }
@@ -119,8 +119,8 @@
   grid-template-columns: 3.2rem 1fr 5rem;
 
   &.drag-over {
-    .empty-spot-hitter-field,
-    .spot-hitter-field {
+    .empty-spot-player-field,
+    .spot-player-field {
       border-style: dashed;
       border-color: $dark-gray;
 
@@ -140,9 +140,9 @@
   }
 }
 
-.empty-spot-hitter-field,
+.empty-spot-player-field,
 .empty-roster-player-field,
-.spot-hitter-field,
+.spot-player-field,
 .roster-player-field,
 .team-rosters .roster {
   padding: .5rem .5rem .5rem 1rem;
@@ -166,7 +166,7 @@
   }
 }
 
-.spot-hitter-field {
+.spot-player-field {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -178,7 +178,7 @@
 }
 
 .roster-player-field,
-.spot-hitter-field,
+.spot-player-field,
 .roster {
   .roster-player {
     display: flex;
@@ -193,7 +193,7 @@
   }
 }
 
-.spot-hitter-positions,
+.spot-player-positions,
 .check-box-buttons {
   display: flex;
   align-items: center;
@@ -263,7 +263,7 @@
   }
 }
 
-.spot-hitter-positions {
+.spot-player-positions {
   margin-left: 1rem;
 }
 
@@ -276,7 +276,7 @@
   }
 }
 
-.bench-hitter,
+.bench-player,
 .rosterless-player {
   position: relative;
   z-index: 2;
@@ -311,7 +311,7 @@
   }
 }
 
-.bench-hitter {
+.bench-player {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -378,20 +378,20 @@
     }
   }
 
-  .spot-hitter-and-position {
+  .spot-player-and-position {
     display: flex;
     align-items: center;
     justify-content: flex-start;
     padding: .2rem .5rem .2rem 0;
   }
 
-  .spot-hitter {
+  .spot-player {
     display: flex;
     align-items: baseline;
     justify-content: center;
   }
 
-  .spot-hitter-bats {
+  .spot-player-bats {
     margin-left: .5rem;
     color: $dark-gray;
     font-size: 1.2rem;

@@ -491,7 +491,7 @@ RSpec.describe RostersController, type: :controller do
           let(:lineup) { Fabricate(:lineup, team: team) }
 
           before do
-            Fabricate(:spot, lineup: lineup, hitter: player,
+            Fabricate(:spot, lineup: lineup, player: player,
                              position: player.primary_position)
           end
 
@@ -514,7 +514,7 @@ RSpec.describe RostersController, type: :controller do
           let(:lineup) { Fabricate(:lineup, team: team) }
 
           before do
-            Fabricate(:spot, lineup: lineup, hitter: player,
+            Fabricate(:spot, lineup: lineup, player: player,
                              position: player.primary_position)
           end
 
@@ -701,7 +701,7 @@ RSpec.describe RostersController, type: :controller do
           let(:lineup) { Fabricate(:lineup, team: team) }
 
           before do
-            Fabricate(:spot, lineup: lineup, hitter: player,
+            Fabricate(:spot, lineup: lineup, player: player,
                              position: player.primary_position)
           end
 

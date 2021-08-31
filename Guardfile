@@ -54,6 +54,7 @@ group :frontend do
     # file needing a full reload of the page anyway
     watch(%r{app/views/.+\.(#{rails_view_exts * '|'})$})
     watch(%r{app/javascript/packs/.+\.js$})
+    watch(%r{app/packs/**/.+\.js$})
     watch(%r{app/helpers/.+\.rb})
     watch(%r{config/locales/.+\.yml})
   end

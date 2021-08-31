@@ -46,10 +46,10 @@ RSpec.describe "lineups/show", type: :view do
         assert_select "form[action=?]", lineup_spots_path(lineup), count: 8
       end
 
-      it "renders draggable bench hitter" do
+      it "renders draggable bench player" do
         render
 
-        assert_select ".draggable.bench-hitter"
+        assert_select ".draggable.bench-player"
       end
     end
 
@@ -82,10 +82,10 @@ RSpec.describe "lineups/show", type: :view do
         assert_select "form[action=?]", lineup_spots_path(lineup), count: 9
       end
 
-      it "renders draggable bench hitter" do
+      it "renders draggable bench player" do
         render
 
-        assert_select ".draggable.bench-hitter"
+        assert_select ".draggable.bench-player"
       end
     end
   end
@@ -125,10 +125,10 @@ RSpec.describe "lineups/show", type: :view do
           assert_select "form[action=?]", lineup_spots_path(lineup), count: 8
         end
 
-        it "renders draggable bench hitter" do
+        it "renders draggable bench player" do
           render
 
-          assert_select ".draggable.bench-hitter"
+          assert_select ".draggable.bench-player"
         end
       end
 
@@ -161,10 +161,10 @@ RSpec.describe "lineups/show", type: :view do
           assert_select "form[action=?]", lineup_spots_path(lineup), count: 9
         end
 
-        it "renders draggable bench hitter" do
+        it "renders draggable bench player" do
           render
 
-          assert_select ".draggable.bench-hitter"
+          assert_select ".draggable.bench-player"
         end
       end
     end
@@ -201,10 +201,10 @@ RSpec.describe "lineups/show", type: :view do
           assert_select "form[action=?]", lineup_spots_path(lineup), count: 0
         end
 
-        it "doesn't render draggable bench hitter" do
+        it "doesn't render draggable bench player" do
           render
 
-          assert_select ".bench-hitter"
+          assert_select ".bench-player"
           assert_select ".draggable", count: 0
         end
       end
@@ -238,10 +238,10 @@ RSpec.describe "lineups/show", type: :view do
           assert_select "form[action=?]", lineup_spots_path(lineup), count: 0
         end
 
-        it "doesn't render draggable bench hitter" do
+        it "doesn't render draggable bench player" do
           render
 
-          assert_select ".bench-hitter"
+          assert_select ".bench-player"
           assert_select ".draggable", count: 0
         end
       end

@@ -17,7 +17,7 @@ class Lineup < ApplicationRecord
 
   belongs_to :team
   has_many :spots, -> { order('batting_order asc') }, dependent: :destroy
-  has_many :hitters, through: :spots
+  has_many :players, through: :spots
 
   after_update :fix_dh_spot
 
@@ -37,7 +37,7 @@ class Lineup < ApplicationRecord
   def bench
     @bench ||= team.hitters.joins(:roster)
                    .where('rosters.level = ?', 4)
-                   .where.not(id: hitters.map(&:id))
+                   .where.not(id: players.map(&:id))
   end
 
   def position_form_options
@@ -122,6 +122,6 @@ class Lineup < ApplicationRecord
 
     def build_catcher_bar
       catcher_spot = spots_at_position(2).first
-      catcher_spot&.hitter&.bar2 || 0
+      catcher_spot&.player&.bar2 || 0
     end
 end

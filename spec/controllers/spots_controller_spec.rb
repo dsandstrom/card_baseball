@@ -6,22 +6,22 @@ RSpec.describe SpotsController, type: :controller do
   let(:team) { Fabricate(:team) }
   let(:admin) { Fabricate(:admin) }
   let(:user) { Fabricate(:user) }
-  let(:hitter) do
+  let(:player) do
     Fabricate(:hitter, primary_position: 2, defense2: 5, defense3: 1)
   end
   let(:lineup) { Fabricate(:lineup, team: team) }
   let(:spot) do
-    Fabricate(:spot, lineup: lineup, hitter: hitter, batting_order: 4,
+    Fabricate(:spot, lineup: lineup, player: player, batting_order: 4,
                      position: 2)
   end
 
   before do
-    Fabricate(:contract, player: hitter, team: team)
-    Fabricate(:roster, player: hitter, team: team, level: 4, position: 2)
+    Fabricate(:contract, player: player, team: team)
+    Fabricate(:roster, player: player, team: team, level: 4, position: 2)
   end
 
   let(:valid_attributes) do
-    { hitter_id: hitter.to_param, position: 2, batting_order: 2 }
+    { player_id: player.to_param, position: 2, batting_order: 2 }
   end
 
   let(:update_attributes) { { position: 3 } }
@@ -236,14 +236,14 @@ RSpec.describe SpotsController, type: :controller do
           end
         end
 
-        context "when hitter has a current spot in the lineup" do
+        context "when player has a current spot in the lineup" do
           before do
-            Fabricate(:spot, lineup: lineup, hitter: hitter, batting_order: 1,
+            Fabricate(:spot, lineup: lineup, player: player, batting_order: 1,
                              position: 2)
           end
 
           let(:valid_attributes) do
-            { hitter_id: hitter.to_param, batting_order: 2 }
+            { player_id: player.to_param, batting_order: 2 }
           end
 
           it "doesn't change the overall Spot's count" do
@@ -255,7 +255,7 @@ RSpec.describe SpotsController, type: :controller do
           end
 
           it "destroys the old spot" do
-            old_spot = lineup.spots.find_by(hitter_id: hitter.id)
+            old_spot = lineup.spots.find_by(player_id: player.id)
             expect(old_spot).not_to be_nil
             old_spot_id = old_spot.id
 
@@ -271,7 +271,7 @@ RSpec.describe SpotsController, type: :controller do
                           xhr: true
             new_spot = Spot.last
             expect(new_spot).not_to be_nil
-            expect(new_spot.hitter_id).to eq(hitter.id)
+            expect(new_spot.player_id).to eq(player.id)
             expect(new_spot.batting_order).to eq(2)
             expect(new_spot.position).to eq(2)
           end
@@ -360,14 +360,14 @@ RSpec.describe SpotsController, type: :controller do
             end
           end
 
-          context "when hitter has a current spot in the lineup" do
+          context "when player has a current spot in the lineup" do
             before do
-              Fabricate(:spot, lineup: lineup, hitter: hitter, batting_order: 1,
+              Fabricate(:spot, lineup: lineup, player: player, batting_order: 1,
                                position: 2)
             end
 
             let(:valid_attributes) do
-              { hitter_id: hitter.to_param, batting_order: 2 }
+              { player_id: player.to_param, batting_order: 2 }
             end
 
             it "doesn't change the overall Spot's count" do
@@ -379,7 +379,7 @@ RSpec.describe SpotsController, type: :controller do
             end
 
             it "destroys the old spot" do
-              old_spot = lineup.spots.find_by(hitter_id: hitter.id)
+              old_spot = lineup.spots.find_by(player_id: player.id)
               expect(old_spot).not_to be_nil
               old_spot_id = old_spot.id
 
@@ -395,7 +395,7 @@ RSpec.describe SpotsController, type: :controller do
                             xhr: true
               new_spot = Spot.last
               expect(new_spot).not_to be_nil
-              expect(new_spot.hitter_id).to eq(hitter.id)
+              expect(new_spot.player_id).to eq(player.id)
               expect(new_spot.batting_order).to eq(2)
               expect(new_spot.position).to eq(2)
             end
@@ -516,7 +516,7 @@ RSpec.describe SpotsController, type: :controller do
 
         context "when the same params" do
           let(:update_attributes) do
-            { hitter_id: spot.hitter_id, position: spot.position }
+            { player_id: spot.player_id, position: spot.position }
           end
 
           it "updates the requested Spot" do
@@ -526,7 +526,7 @@ RSpec.describe SpotsController, type: :controller do
                                      spot: update_attributes },
                            xhr: true
               spot.reload
-            end.not_to change(spot, :hitter_id)
+            end.not_to change(spot, :player_id)
           end
 
           it "redirects to the Spot" do
@@ -558,17 +558,17 @@ RSpec.describe SpotsController, type: :controller do
           end
         end
 
-        context "when switching hitters" do
+        context "when switching players" do
           context "from the bench" do
-            context "when hitter plays spot's position" do
-              let(:bench_hitter) do
-                Fabricate(:hitter, primary_position: 2, defense2: -1)
+            context "when player plays spot's position" do
+              let(:bench_player) do
+                Fabricate(:player, primary_position: 2, defense2: -1)
               end
-              let(:update_attributes) { { hitter_id: bench_hitter.to_param } }
+              let(:update_attributes) { { player_id: bench_player.to_param } }
 
               before do
-                Fabricate(:contract, player: bench_hitter, team: team)
-                Fabricate(:roster, player: bench_hitter, team: team, level: 4,
+                Fabricate(:contract, player: bench_player, team: team)
+                Fabricate(:roster, player: bench_player, team: team, level: 4,
                                    position: 2)
               end
 
@@ -579,7 +579,7 @@ RSpec.describe SpotsController, type: :controller do
                                          spot: update_attributes },
                                xhr: true
                   spot.reload
-                end.to change(spot, :hitter_id).to(bench_hitter.id)
+                end.to change(spot, :player_id).to(bench_player.id)
               end
 
               it "doesn't change overall Spot count" do
@@ -600,14 +600,14 @@ RSpec.describe SpotsController, type: :controller do
               end
             end
 
-            context "when hitter doesn't play spot's position" do
-              let(:bench_hitter) do
-                Fabricate(:hitter, primary_position: 3, defense3: 9)
+            context "when player doesn't play spot's position" do
+              let(:bench_player) do
+                Fabricate(:player, primary_position: 3, defense3: 9)
               end
-              let(:update_attributes) { { hitter_id: bench_hitter.to_param } }
+              let(:update_attributes) { { player_id: bench_player.to_param } }
 
               before do
-                Fabricate(:contract, player: bench_hitter, team: team)
+                Fabricate(:contract, player: bench_player, team: team)
               end
 
               it "updates the requested Spot" do
@@ -617,7 +617,7 @@ RSpec.describe SpotsController, type: :controller do
                                          spot: update_attributes },
                                xhr: true
                   spot.reload
-                end.not_to change(spot, :hitter_id)
+                end.not_to change(spot, :player_id)
               end
 
               it "renders edit" do
@@ -631,31 +631,31 @@ RSpec.describe SpotsController, type: :controller do
           end
 
           context "from another spot in the requested lineup" do
-            let(:new_hitter) do
-              Fabricate(:hitter, primary_position: 2, defense2: 10, defense3: 0)
+            let(:new_player) do
+              Fabricate(:player, primary_position: 2, defense2: 10, defense3: 0)
             end
 
             before do
-              Fabricate(:contract, player: new_hitter, team: team)
-              Fabricate(:roster, player: new_hitter, team: team, level: 4,
+              Fabricate(:contract, player: new_player, team: team)
+              Fabricate(:roster, player: new_player, team: team, level: 4,
                                  position: 2)
             end
 
             let!(:old_spot) do
-              Fabricate(:spot, lineup: lineup, hitter: new_hitter, position: 3,
+              Fabricate(:spot, lineup: lineup, player: new_player, position: 3,
                                batting_order: 7)
             end
 
-            let(:update_attributes) { { hitter_id: new_hitter.to_param } }
+            let(:update_attributes) { { player_id: new_player.to_param } }
 
-            it "updates the requested Spot's hitter" do
+            it "updates the requested Spot's player" do
               expect do
                 put :update, params: { lineup_id: lineup.to_param,
                                        id: spot.to_param,
                                        spot: update_attributes },
                              xhr: true
                 spot.reload
-              end.to change(spot, :hitter_id).to(new_hitter.id)
+              end.to change(spot, :player_id).to(new_player.id)
             end
 
             it "updates the requested Spot's position" do
@@ -668,14 +668,14 @@ RSpec.describe SpotsController, type: :controller do
               end.to change(spot, :position).to(3)
             end
 
-            it "updates the old Spot's hitter" do
+            it "updates the old Spot's player" do
               expect do
                 put :update, params: { lineup_id: lineup.to_param,
                                        id: spot.to_param,
                                        spot: update_attributes },
                              xhr: true
                 old_spot.reload
-              end.to change(old_spot, :hitter_id).to(hitter.id)
+              end.to change(old_spot, :player_id).to(player.id)
             end
 
             it "updates the old Spot's position" do
@@ -777,7 +777,7 @@ RSpec.describe SpotsController, type: :controller do
 
           context "when the same params" do
             let(:update_attributes) do
-              { hitter_id: spot.hitter_id, position: spot.position }
+              { player_id: spot.player_id, position: spot.position }
             end
 
             it "updates the requested Spot" do
@@ -787,7 +787,7 @@ RSpec.describe SpotsController, type: :controller do
                                        spot: update_attributes },
                              xhr: true
                 spot.reload
-              end.not_to change(spot, :hitter_id)
+              end.not_to change(spot, :player_id)
             end
 
             it "redirects to the Spot" do
@@ -819,17 +819,17 @@ RSpec.describe SpotsController, type: :controller do
             end
           end
 
-          context "when switching hitters" do
+          context "when switching players" do
             context "from the bench" do
-              context "when hitter plays spot's position" do
-                let(:bench_hitter) do
-                  Fabricate(:hitter, primary_position: 2, defense2: -1)
+              context "when player plays spot's position" do
+                let(:bench_player) do
+                  Fabricate(:player, primary_position: 2, defense2: -1)
                 end
-                let(:update_attributes) { { hitter_id: bench_hitter.to_param } }
+                let(:update_attributes) { { player_id: bench_player.to_param } }
 
                 before do
-                  Fabricate(:contract, player: bench_hitter, team: team)
-                  Fabricate(:roster, player: bench_hitter, team: team, level: 4,
+                  Fabricate(:contract, player: bench_player, team: team)
+                  Fabricate(:roster, player: bench_player, team: team, level: 4,
                                      position: 2)
                 end
 
@@ -840,7 +840,7 @@ RSpec.describe SpotsController, type: :controller do
                                            spot: update_attributes },
                                  xhr: true
                     spot.reload
-                  end.to change(spot, :hitter_id).to(bench_hitter.id)
+                  end.to change(spot, :player_id).to(bench_player.id)
                 end
 
                 it "doesn't change overall Spot count" do
@@ -863,32 +863,32 @@ RSpec.describe SpotsController, type: :controller do
             end
 
             context "from another spot in the requested lineup" do
-              let(:new_hitter) do
-                Fabricate(:hitter, primary_position: 2, defense2: 10,
+              let(:new_player) do
+                Fabricate(:player, primary_position: 2, defense2: 10,
                                    defense3: 0)
               end
 
               before do
-                Fabricate(:contract, player: new_hitter, team: team)
-                Fabricate(:roster, player: new_hitter, team: team, level: 4,
+                Fabricate(:contract, player: new_player, team: team)
+                Fabricate(:roster, player: new_player, team: team, level: 4,
                                    position: 2)
               end
 
               let!(:old_spot) do
-                Fabricate(:spot, lineup: lineup, hitter: new_hitter,
+                Fabricate(:spot, lineup: lineup, player: new_player,
                                  position: 3, batting_order: 7)
               end
 
-              let(:update_attributes) { { hitter_id: new_hitter.to_param } }
+              let(:update_attributes) { { player_id: new_player.to_param } }
 
-              it "updates the requested Spot's hitter" do
+              it "updates the requested Spot's player" do
                 expect do
                   put :update, params: { lineup_id: lineup.to_param,
                                          id: spot.to_param,
                                          spot: update_attributes },
                                xhr: true
                   spot.reload
-                end.to change(spot, :hitter_id).to(new_hitter.id)
+                end.to change(spot, :player_id).to(new_player.id)
               end
 
               it "updates the requested Spot's position" do
@@ -901,14 +901,14 @@ RSpec.describe SpotsController, type: :controller do
                 end.to change(spot, :position).to(3)
               end
 
-              it "updates the old Spot's hitter" do
+              it "updates the old Spot's player" do
                 expect do
                   put :update, params: { lineup_id: lineup.to_param,
                                          id: spot.to_param,
                                          spot: update_attributes },
                                xhr: true
                   old_spot.reload
-                end.to change(old_spot, :hitter_id).to(hitter.id)
+                end.to change(old_spot, :player_id).to(player.id)
               end
 
               it "updates the old Spot's position" do

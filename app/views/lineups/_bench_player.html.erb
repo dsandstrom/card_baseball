@@ -1,0 +1,16 @@
+<%
+  css_class = 'bench-player'
+  if can?(:create, new_spot)
+    css_class += ' draggable'
+  end
+%>
+
+<%= content_tag :div, id: "bench_player_#{ bench_player.id }",
+                      class: css_class, data: { id: bench_player.id } do %>
+  <span class="player-wrapper">
+    <%= content_tag :span, bench_player.roster_name, class: 'player-name' %>
+    <%= content_tag :span, bench_player.bats, class: 'player-bats' %>
+  </span>
+  <%= content_tag :div, player_positions(bench_player, skip: [1]),
+                  class: 'player-positions' %>
+<% end %>

@@ -1,6 +1,6 @@
-var hitter = document.getElementById("bench_hitter_<%= @spot.hitter_id %>");
-if (hitter) {
-  hitter.parentNode.removeChild(hitter);
+var player = document.getElementById("bench_player_<%= @spot.player_id %>");
+if (player) {
+  player.parentNode.removeChild(player);
 }
 
 var form = document.getElementById("spot_batting_order_<%= spot.batting_order %>_form");
