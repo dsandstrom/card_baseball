@@ -20,7 +20,7 @@
 
   <main class="card-items">
     <div class="lineup-spots">
-      <% (1..8).each do |batting_order| %>
+      <% (1..9).each do |batting_order| %>
         <% spot = lineup.spots.find_by(batting_order: batting_order)  %>
         <% if spot %>
           <%= render spot %>
