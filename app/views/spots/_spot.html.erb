@@ -4,12 +4,16 @@
   <%= content_tag :span, spot.batting_order,
                   class: 'spot-batting-order' %>
   <span class="spot-player-and-position">
-    <span class="spot-player">
-      <%= content_tag :span, player.roster_name,
-                      class: 'spot-player-name' %>
-      <%= content_tag :span, player.bats,
-                      class: 'spot-player-bats' %>
-    </span>
+    <% if spot.player %>
+      <span class="spot-player">
+        <%= content_tag :span, player.roster_name,
+                        class: 'spot-player-name' %>
+        <%= content_tag :span, player.bats,
+                        class: 'spot-player-bats' %>
+      </span>
+    <% else %>
+      Pitcher
+    <% end %>
   </span>
 
   <div class="spot-defense-wrapper">

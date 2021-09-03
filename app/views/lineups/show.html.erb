@@ -28,15 +28,11 @@
 
       <% if can?(:create, new_spot) %>
         <div class="lineup-spots">
-          <% 8.times do |n|  %>
+          <% 9.times do |n|  %>
             <% batting_order = n + 1 %>
 
             <%= render 'lineups/batting_spot_form', lineup: @lineup, team: @team,
                                                     batting_order: batting_order %>
-          <% end %>
-          <% if @lineup.with_dh? %>
-            <%= render 'lineups/batting_spot_form', lineup: @lineup, team: @team,
-                                                    batting_order: 9 %>
           <% end %>
         </div>
       <% else %>
