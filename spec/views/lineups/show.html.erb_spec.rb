@@ -19,6 +19,10 @@ RSpec.describe "lineups/show", type: :view do
 
     context "when with_dh is false" do
       let(:lineup) { Fabricate(:lineup, team: team, with_dh: false) }
+      let!(:pitcher_spot) do
+        Fabricate(:spot, lineup: lineup, player: nil, position: 1,
+                         batting_order: 9)
+      end
 
       before(:each) do
         assign(:team, team)
@@ -44,6 +48,12 @@ RSpec.describe "lineups/show", type: :view do
         render
 
         assert_select "form[action=?]", lineup_spots_path(lineup), count: 8
+      end
+
+      it "renders pitcher spot form" do
+        render
+
+        assert_select "form[action=?]", lineup_spot_path(lineup, pitcher_spot)
       end
 
       it "renders draggable bench player" do
@@ -98,6 +108,10 @@ RSpec.describe "lineups/show", type: :view do
 
       context "when with_dh is false" do
         let(:lineup) { Fabricate(:lineup, team: team, with_dh: false) }
+        let!(:pitcher_spot) do
+          Fabricate(:spot, lineup: lineup, player: nil, position: 1,
+                           batting_order: 9)
+        end
 
         before(:each) do
           assign(:team, team)
@@ -123,6 +137,12 @@ RSpec.describe "lineups/show", type: :view do
           render
 
           assert_select "form[action=?]", lineup_spots_path(lineup), count: 8
+        end
+
+        it "renders pitcher spot form" do
+          render
+
+          assert_select "form[action=?]", lineup_spot_path(lineup, pitcher_spot)
         end
 
         it "renders draggable bench player" do

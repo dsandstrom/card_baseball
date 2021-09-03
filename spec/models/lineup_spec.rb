@@ -490,7 +490,8 @@ RSpec.describe Lineup, type: :model do
                              position: (batting_order + 1))
           end
           Fabricate(:spot, lineup: lineup, batting_order: 8, position: 7)
-          Fabricate(:spot, lineup: lineup, batting_order: 9, position: 1)
+          Fabricate(:spot, lineup: lineup, batting_order: 9, position: 1,
+                           player: nil)
         end
 
         it "returns true" do

@@ -35,6 +35,7 @@
     <% player = spot.player %>
 
     <%= form.hidden_field :player_id, id: "spot_batting_order_#{batting_order}_player_id" %>
+
     <div class="spot-player-field draggable" data-id="<%= player.id %>">
       <div class="spot-player">
         <%= content_tag :span, player.roster_name,
@@ -75,7 +76,7 @@
       <% end %>
     </div>
   <% elsif spot.position == 1 %>
-    <div class="spot-player-field draggable">
+    <div class="spot-player-field draggable" data-id="pitcher">
       <%= form.hidden_field :player_id, id: "spot_batting_order_#{batting_order}_player_id" %>
       <%= form.hidden_field :position, id: "spot_batting_order_#{batting_order}_position" %>
 
