@@ -283,6 +283,52 @@ RSpec.describe SpotsController, type: :controller do
             expect(response).to be_successful
           end
         end
+
+        context "when pitcher's spot" do
+          before do
+            Fabricate(:spot, lineup: lineup, batting_order: 9, position: 1,
+                             player: nil)
+          end
+
+          let(:valid_attributes) { { player_id: "pitcher", batting_order: 2 } }
+
+          it "doesn't change the overall Spot's count" do
+            expect do
+              post :create, params: { lineup_id: lineup.to_param,
+                                      spot: valid_attributes },
+                            xhr: true
+            end.not_to change(Spot, :count)
+          end
+
+          it "destroys the old spot" do
+            old_spot = lineup.spots.find_by(position: 1)
+            expect(old_spot).not_to be_nil
+            old_spot_id = old_spot.id
+
+            post :create, params: { lineup_id: lineup.to_param,
+                                    spot: valid_attributes },
+                          xhr: true
+            expect(Spot.find_by(id: old_spot_id)).to be_nil
+          end
+
+          it "creates a new spot" do
+            post :create, params: { lineup_id: lineup.to_param,
+                                    spot: valid_attributes },
+                          xhr: true
+            new_spot = Spot.last
+            expect(new_spot).not_to be_nil
+            expect(new_spot.player_id).to be_nil
+            expect(new_spot.batting_order).to eq(2)
+            expect(new_spot.position).to eq(1)
+          end
+
+          it "renders show" do
+            post :create, params: { lineup_id: lineup.to_param,
+                                    spot: valid_attributes },
+                          xhr: true
+            expect(response).to be_successful
+          end
+        end
       end
     end
 
@@ -560,14 +606,13 @@ RSpec.describe SpotsController, type: :controller do
 
         context "when switching players" do
           context "from the bench" do
-            context "when player plays spot's position" do
+            context "when dropping on a position player" do
               let(:bench_player) do
                 Fabricate(:player, primary_position: 2, defense2: -1)
               end
               let(:update_attributes) { { player_id: bench_player.to_param } }
 
               before do
-                Fabricate(:contract, player: bench_player, team: team)
                 Fabricate(:roster, player: bench_player, team: team, level: 4,
                                    position: 2)
               end
@@ -600,29 +645,73 @@ RSpec.describe SpotsController, type: :controller do
               end
             end
 
-            context "when player doesn't play spot's position" do
+            # context "when player doesn't play spot's position" do
+            #   let(:bench_player) do
+            #     Fabricate(:player, primary_position: 3, defense3: 9)
+            #   end
+            #   let(:update_attributes) { { player_id: bench_player.to_param } }
+            #
+            #   before do
+            #     Fabricate(:roster, player: bench_player, team: team, level: 4,
+            #                        position: 3)
+            #   end
+            #
+            #   it "updates the requested Spot" do
+            #     expect do
+            #       put :update, params: { lineup_id: lineup.to_param,
+            #                              id: spot.to_param,
+            #                              spot: update_attributes },
+            #                    xhr: true
+            #       spot.reload
+            #     end.not_to change(spot, :player_id)
+            #   end
+            #
+            #   it "renders edit" do
+            #     put :update, params: { lineup_id: lineup.to_param,
+            #                            id: spot.to_param,
+            #                            spot: update_attributes },
+            #                  xhr: true
+            #     expect(response).to be_successful
+            #   end
+            # end
+
+            context "when dropping on pitcher" do
               let(:bench_player) do
-                Fabricate(:player, primary_position: 3, defense3: 9)
+                Fabricate(:player, primary_position: 2, defense2: -1)
+              end
+              let!(:pitcher_spot) do
+                Fabricate(:spot, lineup: lineup, position: 1, batting_order: 9,
+                                 player: nil)
               end
               let(:update_attributes) { { player_id: bench_player.to_param } }
 
               before do
-                Fabricate(:contract, player: bench_player, team: team)
+                Fabricate(:roster, player: bench_player, team: team, level: 4,
+                                   position: 2)
               end
 
-              it "updates the requested Spot" do
+              it "doesn't update the requested Spot" do
+                expect do
+                  put :update, params: { lineup_id: lineup.to_param,
+                                         id: pitcher_spot.to_param,
+                                         spot: update_attributes },
+                               xhr: true
+                  pitcher_spot.reload
+                end.not_to change(pitcher_spot, :player_id)
+              end
+
+              it "doesn't change overall Spot count" do
                 expect do
                   put :update, params: { lineup_id: lineup.to_param,
                                          id: spot.to_param,
                                          spot: update_attributes },
                                xhr: true
-                  spot.reload
-                end.not_to change(spot, :player_id)
+                end.not_to change(Spot, :count)
               end
 
               it "renders edit" do
                 put :update, params: { lineup_id: lineup.to_param,
-                                       id: spot.to_param,
+                                       id: pitcher_spot.to_param,
                                        spot: update_attributes },
                              xhr: true
                 expect(response).to be_successful
@@ -636,7 +725,6 @@ RSpec.describe SpotsController, type: :controller do
             end
 
             before do
-              Fabricate(:contract, player: new_player, team: team)
               Fabricate(:roster, player: new_player, team: team, level: 4,
                                  position: 2)
             end
@@ -700,6 +788,152 @@ RSpec.describe SpotsController, type: :controller do
             it "redirects to the Spot" do
               put :update, params: { lineup_id: lineup.to_param,
                                      id: spot.to_param,
+                                     spot: update_attributes },
+                           xhr: true
+              expect(response).to be_successful
+            end
+          end
+
+          context "from the pitcher's spot" do
+            let!(:old_spot) do
+              Fabricate(:spot, lineup: lineup, position: 1, batting_order: 9,
+                               player: nil)
+            end
+
+            let(:update_attributes) { { player_id: "pitcher" } }
+
+            it "updates the requested Spot's player" do
+              expect do
+                put :update, params: { lineup_id: lineup.to_param,
+                                       id: spot.to_param,
+                                       spot: update_attributes },
+                             xhr: true
+                spot.reload
+              end.to change(spot, :player_id).to(nil)
+            end
+
+            it "updates the requested Spot's position" do
+              expect do
+                put :update, params: { lineup_id: lineup.to_param,
+                                       id: spot.to_param,
+                                       spot: update_attributes },
+                             xhr: true
+                spot.reload
+              end.to change(spot, :position).to(1)
+            end
+
+            it "updates the old Spot's player" do
+              expect do
+                put :update, params: { lineup_id: lineup.to_param,
+                                       id: spot.to_param,
+                                       spot: update_attributes },
+                             xhr: true
+                old_spot.reload
+              end.to change(old_spot, :player_id).to(player.id)
+            end
+
+            it "updates the old Spot's position" do
+              expect do
+                put :update, params: { lineup_id: lineup.to_param,
+                                       id: spot.to_param,
+                                       spot: update_attributes },
+                             xhr: true
+                old_spot.reload
+              end.to change(old_spot, :position).to(2)
+            end
+
+            it "doesn't change overall Spot count" do
+              expect do
+                put :update, params: { lineup_id: lineup.to_param,
+                                       id: spot.to_param,
+                                       spot: update_attributes },
+                             xhr: true
+              end.not_to change(Spot, :count)
+            end
+
+            it "redirects to the Spot" do
+              put :update, params: { lineup_id: lineup.to_param,
+                                     id: spot.to_param,
+                                     spot: update_attributes },
+                           xhr: true
+              expect(response).to be_successful
+            end
+          end
+
+          context "to the pitcher's spot" do
+            let(:new_player) do
+              Fabricate(:player, primary_position: 2, defense2: 10, defense3: 0)
+            end
+
+            before do
+              Fabricate(:roster, player: new_player, team: team, level: 4,
+                                 position: 2)
+            end
+
+            let!(:pitcher_spot) do
+              Fabricate(:spot, lineup: lineup, position: 1, batting_order: 9,
+                               player: nil)
+            end
+
+            let!(:old_spot) do
+              Fabricate(:spot, lineup: lineup, player: new_player, position: 3,
+                               batting_order: 7)
+            end
+
+            let(:update_attributes) { { player_id: new_player.to_param } }
+
+            it "updates the requested Spot's player" do
+              expect do
+                put :update, params: { lineup_id: lineup.to_param,
+                                       id: pitcher_spot.to_param,
+                                       spot: update_attributes },
+                             xhr: true
+                pitcher_spot.reload
+              end.to change(pitcher_spot, :player_id).to(new_player.id)
+            end
+
+            it "updates the requested Spot's position" do
+              expect do
+                put :update, params: { lineup_id: lineup.to_param,
+                                       id: pitcher_spot.to_param,
+                                       spot: update_attributes },
+                             xhr: true
+                pitcher_spot.reload
+              end.to change(pitcher_spot, :position).to(3)
+            end
+
+            it "updates the old Spot's player" do
+              expect do
+                put :update, params: { lineup_id: lineup.to_param,
+                                       id: pitcher_spot.to_param,
+                                       spot: update_attributes },
+                             xhr: true
+                old_spot.reload
+              end.to change(old_spot, :player_id).to(nil)
+            end
+
+            it "updates the old Spot's position" do
+              expect do
+                put :update, params: { lineup_id: lineup.to_param,
+                                       id: pitcher_spot.to_param,
+                                       spot: update_attributes },
+                             xhr: true
+                old_spot.reload
+              end.to change(old_spot, :position).to(1)
+            end
+
+            it "doesn't change overall Spot count" do
+              expect do
+                put :update, params: { lineup_id: lineup.to_param,
+                                       id: pitcher_spot.to_param,
+                                       spot: update_attributes },
+                             xhr: true
+              end.not_to change(Spot, :count)
+            end
+
+            it "redirects to the Spot" do
+              put :update, params: { lineup_id: lineup.to_param,
+                                     id: pitcher_spot.to_param,
                                      spot: update_attributes },
                            xhr: true
               expect(response).to be_successful

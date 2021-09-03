@@ -106,9 +106,14 @@ class SpotsController < ApplicationController
 
     def move_from_another_spot
       player = @spot.player
-      return unless player
 
-      old_spot = @lineup.spots.find_by(player_id: player.id)
+      old_spot =
+        if player
+          @lineup.spots.find_by(player_id: player.id)
+        elsif spot_params[:player_id] == 'pitcher'
+          @spot.player_id = nil
+          @lineup.spots.find_by(position: 1)
+        end
       return unless old_spot
 
       @spot.position = old_spot.position
@@ -120,18 +125,25 @@ class SpotsController < ApplicationController
       old_player = @spot.player
       old_position = @spot.position
       @spot.assign_attributes(update_params)
-      @old_spot = @lineup.spots.find_by(player_id: @spot.player_id)
-      return if old_player == @spot.player
+
+      @old_spot =
+        if @spot.player
+          @lineup.spots.find_by(player_id: @spot.player_id)
+        elsif spot_params[:player_id] == 'pitcher'
+          @spot.player_id = nil
+          @lineup.spots.find_by(position: 1)
+        end
+      return if old_player && old_player == @spot.player
 
       if @old_spot
-        switch_spots(old_player, old_position)
+        switch_spots(player_id: old_player&.id, position: old_position)
       else
         @bench_player = old_player
       end
     end
 
-    def switch_spots(player, position)
+    def switch_spots(attrs = {})
       @spot.position = @old_spot.position
-      @old_spot.update_columns(player_id: player.id, position: position)
+      @old_spot.update_columns(attrs)
     end
 end
