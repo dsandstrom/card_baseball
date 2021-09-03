@@ -13,6 +13,7 @@
     end
   defense = spot.defense
   radio_button_class = 'spot-player-positions'
+  form_class = spot.position == 1 ? 'pitcher-spot-form' : 'batting-spot-form'
 
   if spot.errors.any? && spot.errors[:position].present?
     radio_button_class += ' highlight'
@@ -23,7 +24,7 @@
 
 <%= form_with(model: spot, url: url,
               id: "spot_batting_order_#{batting_order}_form",
-              class: 'batting-spot-form',
+              class: form_class,
               local: false) do |form| %>
   <%= form.hidden_field :batting_order,
                         id: "spot_batting_order_#{batting_order}" %>
@@ -81,8 +82,7 @@
       <%= form.hidden_field :position, id: "spot_batting_order_#{batting_order}_position" %>
 
       <div class="spot-player">
-        <%= content_tag :span, 'Pitcher',
-                        class: 'spot-player-name' %>
+        <%= content_tag :span, 'Pitcher', class: 'spot-player-name' %>
       </div>
     </div>
   <% else %>

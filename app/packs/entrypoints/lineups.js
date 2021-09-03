@@ -27,7 +27,17 @@ interact('.draggable.bench-player')
 
 interact('.batting-spot-form')
   .dropzone({
-    accept: ['.bench-player', '.spot-player-field'],
+    accept: '.draggable',
+    listeners: {
+      enter: dropEnterListener,
+      leave: dropLeaveListener,
+      drop: dropEndListener
+    }
+  })
+
+interact('.pitcher-spot-form')
+  .dropzone({
+    accept: '.spot-player-field',
     listeners: {
       enter: dropEnterListener,
       leave: dropLeaveListener,

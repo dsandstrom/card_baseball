@@ -26,6 +26,7 @@
 }
 
 .batting-spot-form,
+.pitcher-spot-form,
 .position-rosters,
 .rosterless-players,
 .spot,
@@ -44,6 +45,7 @@
 }
 
 .batting-spot-form,
+.pitcher-spot-form,
 .position-rosters {
   display: grid;
   margin-bottom: .5rem;
@@ -115,7 +117,8 @@
   }
 }
 
-.batting-spot-form {
+.batting-spot-form,
+.pitcher-spot-form {
   grid-template-columns: 3.2rem 1fr 5rem;
 
   &.drag-over {
