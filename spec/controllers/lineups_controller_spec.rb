@@ -151,12 +151,45 @@ RSpec.describe LineupsController, type: :controller do
     context "for an admin" do
       before { sign_in(admin) }
 
-      context "when valid params" do
+      context "when valid params with dh" do
+        before { valid_attributes.merge!(with_dh: true) }
+
         it "creates a new Lineup" do
           expect do
             post :create, params: { team_id: team.to_param,
                                     lineup: valid_attributes }
           end.to change(Lineup, :count).by(1)
+        end
+
+        it "doesn't create a pitcher spot" do
+          expect do
+            post :create, params: { team_id: team.to_param,
+                                    lineup: valid_attributes }
+          end.not_to change(Spot, :count)
+        end
+
+        it "redirects to the Lineup list" do
+          post :create, params: { team_id: team.to_param,
+                                  lineup: valid_attributes }
+          expect(response).to redirect_to(team_lineup_url(team, Lineup.last))
+        end
+      end
+
+      context "when valid params without dh" do
+        before { valid_attributes.merge!(with_dh: false) }
+
+        it "creates a new Lineup" do
+          expect do
+            post :create, params: { team_id: team.to_param,
+                                    lineup: valid_attributes }
+          end.to change(Lineup, :count).by(1)
+        end
+
+        it "creates a pitcher spot" do
+          expect do
+            post :create, params: { team_id: team.to_param,
+                                    lineup: valid_attributes }
+          end.to change(Spot, :count).by(1)
         end
 
         it "redirects to the Lineup list" do
