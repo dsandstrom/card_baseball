@@ -21,7 +21,6 @@ RSpec.describe Spot, type: :model do
   it { is_expected.to be_valid }
 
   it { is_expected.to validate_presence_of(:lineup_id) }
-  it { is_expected.to validate_presence_of(:player_id) }
   it { is_expected.to validate_presence_of(:position) }
   it { is_expected.to validate_presence_of(:batting_order) }
 
@@ -34,7 +33,7 @@ RSpec.describe Spot, type: :model do
   it { is_expected.to validate_uniqueness_of(:player_id).scoped_to(:lineup_id) }
 
   it { is_expected.to belong_to(:lineup) }
-  it { is_expected.to belong_to(:player) }
+  it { is_expected.to belong_to(:player).required(false) }
 
   describe "#validate" do
     describe "#position_available" do
@@ -82,54 +81,78 @@ RSpec.describe Spot, type: :model do
       end
     end
 
-    describe "#correct_batters_amount" do
-      let(:lineup) { Fabricate(:lineup, team: team) }
+    describe "#player_unless_pitcher" do
+      context "for position 1" do
+        let(:pitcher) { Fabricate(:starting_pitcher) }
 
-      context "when no DH" do
-        context "for first batting spot" do
-          before { subject.batting_order = 1 }
-
-          it { is_expected.to be_valid }
+        before do
+          Fabricate(:roster, level: 4, team: team, player: pitcher, position: 1)
+          subject.position = 1
         end
 
-        context "for 9th batting_order" do
-          before { subject.batting_order = 9 }
+        context "when player_id blank" do
+          before { subject.player_id = nil }
 
-          it { is_expected.not_to be_valid }
+          it "should be valid" do
+            expect(subject).to be_valid
+          end
         end
 
-        context "for 0 batting_order" do
-          before { subject.batting_order = 0 }
+        context "when player" do
+          before { subject.player_id = pitcher.id }
 
-          it { is_expected.not_to be_valid }
+          it "should be valid" do
+            expect(subject).to be_valid
+          end
         end
 
-        context "for -1 batting_order" do
-          before { subject.batting_order = -1 }
+        context "when invalid player_id" do
+          before do
+            subject.player_id = pitcher.id
+            pitcher.destroy
+          end
 
-          it { is_expected.not_to be_valid }
+          it "should not be valid" do
+            expect(subject).not_to be_valid
+          end
         end
       end
 
-      context "when DH" do
-        let(:lineup) { Fabricate(:dh_lineup, team: team) }
+      context "for position 2" do
+        let(:player) { Fabricate(:player, primary_position: 2) }
 
-        context "for 8th batting_order" do
-          before { subject.batting_order = 8 }
-
-          it { is_expected.to be_valid }
+        before do
+          Fabricate(:roster, level: 4, team: team, player: player, position: 2)
+          subject.position = 2
         end
 
-        context "for 9th batting_order" do
-          before { subject.batting_order = 9 }
+        before { subject.position = 2 }
 
-          it { is_expected.to be_valid }
+        context "when player_id blank" do
+          before { subject.player_id = nil }
+
+          it "should be valid" do
+            expect(subject).not_to be_valid
+          end
         end
 
-        context "for 10th batting_order" do
-          before { subject.batting_order = 10 }
+        context "when player" do
+          before { subject.player_id = player.id }
 
-          it { is_expected.not_to be_valid }
+          it "should be valid" do
+            expect(subject).to be_valid
+          end
+        end
+
+        context "when invalid player_id" do
+          before do
+            subject.player_id = player.id
+            player.destroy
+          end
+
+          it "should not be valid" do
+            expect(subject).not_to be_valid
+          end
         end
       end
     end
@@ -184,7 +207,7 @@ RSpec.describe Spot, type: :model do
           subject.player = player
         end
 
-        it "returns nil" do
+        it "returns -10" do
           expect(subject.defense).to eq(-10)
         end
       end

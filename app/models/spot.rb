@@ -2,19 +2,20 @@
 
 class Spot < ApplicationRecord
   validates :lineup_id, presence: true
-  validates :player_id, presence: true, uniqueness: { scope: :lineup_id }
+  validates :player_id, uniqueness: { scope: :lineup_id }
+  validates :player, presence: true, if: :player_id_present?
   # 2(c)-9(dh)
   validates :position, presence: true, inclusion: { in: 1..9 }
   validates :batting_order, presence: true, inclusion: { in: 1..9 },
                             uniqueness: { scope: :lineup_id }
 
   validate :position_available
-  validate :correct_batters_amount
+  validate :player_unless_pitcher
   validate :player_on_team
   validate :player_on_level
 
   belongs_to :lineup
-  belongs_to :player
+  belongs_to :player, optional: true
 
   # player's def score
   def defense
@@ -40,6 +41,13 @@ class Spot < ApplicationRecord
       return unless batting_order == 9 && lineup && !lineup&.with_dh?
 
       errors.add(:batting_order, 'not allowed to be 9 with this lineup')
+    end
+
+    def player_unless_pitcher
+      return unless position
+      return if player || position == 1
+
+      errors.add(:player, 'required')
     end
 
     def player_on_team
@@ -69,5 +77,9 @@ class Spot < ApplicationRecord
       else
         -10
       end
+    end
+
+    def player_id_present?
+      player_id.present?
     end
 end
