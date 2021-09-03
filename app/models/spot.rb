@@ -13,6 +13,7 @@ class Spot < ApplicationRecord
   validate :player_unless_pitcher
   validate :player_on_team
   validate :player_on_level
+  validate :player_plays_position
 
   belongs_to :lineup
   belongs_to :player, optional: true
@@ -63,6 +64,14 @@ class Spot < ApplicationRecord
       return if player.roster&.level == 4
 
       errors.add(:player, "not on #{Roster::LEVEL_MAP[4][:name]} roster")
+    end
+
+    def player_plays_position
+      return if position.blank? || player.blank? || position == 9
+      return if position != 1
+      return if player.starting_pitcher? || player.relief_pitcher?
+
+      errors.add(:position, "can't be filled by player")
     end
 
     def build_defense

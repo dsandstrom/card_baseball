@@ -182,6 +182,60 @@ RSpec.describe Spot, type: :model do
         it { is_expected.not_to be_valid }
       end
     end
+
+    describe "#player_plays_position" do
+      context "when position is 1" do
+        before { subject.position = 1 }
+
+        context "and player is a starting pitcher" do
+          let(:starting_pitcher) { Fabricate(:starting_pitcher) }
+
+          before do
+            Fabricate(:roster, team: team, player: starting_pitcher, level: 4,
+                               position: 1)
+            subject.player_id = starting_pitcher.id
+          end
+
+          it { is_expected.to be_valid }
+        end
+
+        context "and player is a relief pitcher" do
+          let(:relief_pitcher) do
+            Fabricate(:relief_pitcher, starting_pitching: nil)
+          end
+
+          before do
+            Fabricate(:roster, team: team, player: relief_pitcher, level: 4,
+                               position: 10)
+            subject.player_id = relief_pitcher.id
+          end
+
+          it { is_expected.to be_valid }
+        end
+
+        context "and player is a catcher" do
+          before { subject.player_id = hitter.id }
+
+          it { is_expected.not_to be_valid }
+        end
+      end
+
+      context "when position is 5" do
+        before { subject.position = 5 }
+
+        context "and player is a catcher" do
+          before { subject.player_id = hitter.id }
+
+          it { is_expected.to be_valid }
+        end
+      end
+
+      context "when position is 9" do
+        before { subject.position = 9 }
+
+        it { is_expected.to be_valid }
+      end
+    end
   end
 
   describe "#defense" do
