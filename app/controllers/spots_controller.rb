@@ -104,16 +104,19 @@ class SpotsController < ApplicationController
       team_lineup_path(@team, @lineup)
     end
 
-    def move_from_another_spot
+    def build_old_spot
       player = @spot.player
 
-      old_spot =
-        if player
-          @lineup.spots.find_by(player_id: player.id)
-        elsif spot_params[:player_id] == 'pitcher'
-          @spot.player_id = nil
-          @lineup.spots.find_by(position: 1)
-        end
+      if player
+        @lineup.spots.find_by(player_id: player.id)
+      elsif spot_params[:player_id] == 'pitcher'
+        @spot.player_id = nil
+        @lineup.spots.find_by(position: 1)
+      end
+    end
+
+    def move_from_another_spot
+      old_spot = build_old_spot
       return unless old_spot
 
       @spot.position = old_spot.position
@@ -126,13 +129,7 @@ class SpotsController < ApplicationController
       old_position = @spot.position
       @spot.assign_attributes(update_params)
 
-      @old_spot =
-        if @spot.player
-          @lineup.spots.find_by(player_id: @spot.player_id)
-        elsif spot_params[:player_id] == 'pitcher'
-          @spot.player_id = nil
-          @lineup.spots.find_by(position: 1)
-        end
+      @old_spot = build_old_spot
       return if old_player && old_player == @spot.player
 
       if @old_spot
