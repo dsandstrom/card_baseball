@@ -19,10 +19,7 @@ RSpec.describe "lineups/show", type: :view do
 
     context "when with_dh is false" do
       let(:lineup) { Fabricate(:lineup, team: team, with_dh: false) }
-      let!(:pitcher_spot) do
-        Fabricate(:spot, lineup: lineup, player: nil, position: 1,
-                         batting_order: 9)
-      end
+      let!(:pitcher_spot) { lineup.spots.find_by(position: 1) }
 
       before(:each) do
         assign(:team, team)
@@ -108,10 +105,7 @@ RSpec.describe "lineups/show", type: :view do
 
       context "when with_dh is false" do
         let(:lineup) { Fabricate(:lineup, team: team, with_dh: false) }
-        let!(:pitcher_spot) do
-          Fabricate(:spot, lineup: lineup, player: nil, position: 1,
-                           batting_order: 9)
-        end
+        let!(:pitcher_spot) { lineup.spots.find_by(position: 1) }
 
         before(:each) do
           assign(:team, team)

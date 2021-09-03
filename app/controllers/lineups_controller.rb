@@ -21,9 +21,6 @@ class LineupsController < ApplicationController
 
   def create
     if @lineup.save
-      unless @lineup.with_dh?
-        @lineup.spots.create(position: 1, batting_order: 9)
-      end
       redirect_to team_lineup_url(@team, @lineup),
                   notice: 'Lineup was successfully added.'
     else

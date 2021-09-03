@@ -306,6 +306,71 @@ RSpec.describe LineupsController, type: :controller do
           expect(response).to be_successful
         end
       end
+
+      context "when with_dh changes to true" do
+        let!(:lineup) { Fabricate(:lineup, team: team, with_dh: false) }
+
+        let(:valid_attributes) { { with_dh: true } }
+
+        it "updates the requested Lineup" do
+          expect do
+            put :update, params: { team_id: team.to_param, id: lineup.to_param,
+                                   lineup: valid_attributes }
+            lineup.reload
+          end.to change(lineup, :with_dh).to(true)
+        end
+
+        it "destroys the pitcher's spot" do
+          Fabricate(:spot, lineup: lineup, position: 2, batting_order: 3)
+          expect do
+            put :update, params: { team_id: team.to_param, id: lineup.to_param,
+                                   lineup: valid_attributes }
+          end.to change(Spot, :count).by(-1)
+        end
+
+        it "redirects to the Lineup" do
+          put :update, params: { team_id: team.to_param, id: lineup.to_param,
+                                 lineup: valid_attributes }
+          expect(response).to redirect_to(team_lineup_url(team, lineup))
+        end
+      end
+
+      context "when with_dh changes to false" do
+        let!(:lineup) { Fabricate(:lineup, team: team, with_dh: true) }
+
+        let(:valid_attributes) { { with_dh: false } }
+
+        it "updates the requested Lineup" do
+          expect do
+            put :update, params: { team_id: team.to_param, id: lineup.to_param,
+                                   lineup: valid_attributes }
+            lineup.reload
+          end.to change(lineup, :with_dh).to(false)
+        end
+
+        it "removes the DH spot" do
+          Fabricate(:spot, lineup: lineup, position: 2, batting_order: 3)
+          Fabricate(:spot, lineup: lineup, position: 9, batting_order: 5)
+          expect do
+            put :update, params: { team_id: team.to_param, id: lineup.to_param,
+                                   lineup: valid_attributes }
+          end.to change(Spot, :count).by(0)
+        end
+
+        it "adds pitcher spot" do
+          Fabricate(:spot, lineup: lineup, position: 2, batting_order: 3)
+          expect do
+            put :update, params: { team_id: team.to_param, id: lineup.to_param,
+                                   lineup: valid_attributes }
+          end.to change(Spot, :count).by(1)
+        end
+
+        it "redirects to the Lineup" do
+          put :update, params: { team_id: team.to_param, id: lineup.to_param,
+                                 lineup: valid_attributes }
+          expect(response).to redirect_to(team_lineup_url(team, lineup))
+        end
+      end
     end
 
     context "for a user" do

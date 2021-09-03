@@ -66,11 +66,11 @@ RSpec.describe Lineup, type: :model do
           end
         end
 
-        context "and with_dh doesn't change" do
+        context "and with_dh changes to false" do
           it "removes DH spot" do
             expect do
               lineup.update(with_dh: false)
-            end.to change(lineup.spots, :count).by(-1)
+            end.to change(lineup.spots.where(position: 9), :count).by(-1)
           end
         end
       end
@@ -83,10 +83,38 @@ RSpec.describe Lineup, type: :model do
           Fabricate(:spot, lineup: lineup, batting_order: 2, position: 9)
         end
 
-        it "removes DH spot" do
-          expect do
-            lineup.update(name: "New")
-          end.to change(lineup.spots, :count).by(-1)
+        context "and with_dh doesn't change" do
+          it "removes DH spot" do
+            expect do
+              lineup.update(name: "New")
+            end.to change(lineup.spots.where(position: 9), :count).by(-1)
+          end
+        end
+      end
+    end
+
+    describe "#fix_pitcher_spot" do
+      context "when lineup with_dh is false" do
+        let(:lineup) { Fabricate(:lineup, with_dh: false) }
+
+        before do
+          Fabricate(:spot, lineup: lineup, batting_order: 1, position: 2)
+        end
+
+        context "and with_dh doesn't change" do
+          it "doesn't change spots count" do
+            expect do
+              lineup.update(name: "New")
+            end.not_to change(lineup.spots, :count)
+          end
+        end
+
+        context "and with_dh changes to true" do
+          it "removes pitcher spot" do
+            expect do
+              lineup.update(with_dh: true)
+            end.to change(lineup.spots.where(position: 1), :count).by(-1)
+          end
         end
       end
     end
@@ -472,7 +500,7 @@ RSpec.describe Lineup, type: :model do
 
       context "and 8 spots" do
         before do
-          (1..8).each do |batting_order|
+          (2..8).each do |batting_order|
             Fabricate(:spot, lineup: lineup, batting_order: batting_order,
                              position: (batting_order + 1))
           end
@@ -490,8 +518,6 @@ RSpec.describe Lineup, type: :model do
                              position: (batting_order + 1))
           end
           Fabricate(:spot, lineup: lineup, batting_order: 8, position: 7)
-          Fabricate(:spot, lineup: lineup, batting_order: 9, position: 1,
-                           player: nil)
         end
 
         it "returns true" do

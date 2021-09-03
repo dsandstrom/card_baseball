@@ -166,6 +166,8 @@ RSpec.describe SpotsController, type: :controller do
   end
 
   describe "POST #create" do
+    before { lineup }
+
     context "for an admin" do
       before { sign_in(admin) }
 
@@ -285,10 +287,7 @@ RSpec.describe SpotsController, type: :controller do
         end
 
         context "when pitcher's spot" do
-          before do
-            Fabricate(:spot, lineup: lineup, batting_order: 9, position: 1,
-                             player: nil)
-          end
+          before { lineup }
 
           let(:valid_attributes) { { player_id: "pitcher", batting_order: 2 } }
 
@@ -645,44 +644,11 @@ RSpec.describe SpotsController, type: :controller do
               end
             end
 
-            # context "when player doesn't play spot's position" do
-            #   let(:bench_player) do
-            #     Fabricate(:player, primary_position: 3, defense3: 9)
-            #   end
-            #   let(:update_attributes) { { player_id: bench_player.to_param } }
-            #
-            #   before do
-            #     Fabricate(:roster, player: bench_player, team: team, level: 4,
-            #                        position: 3)
-            #   end
-            #
-            #   it "updates the requested Spot" do
-            #     expect do
-            #       put :update, params: { lineup_id: lineup.to_param,
-            #                              id: spot.to_param,
-            #                              spot: update_attributes },
-            #                    xhr: true
-            #       spot.reload
-            #     end.not_to change(spot, :player_id)
-            #   end
-            #
-            #   it "renders edit" do
-            #     put :update, params: { lineup_id: lineup.to_param,
-            #                            id: spot.to_param,
-            #                            spot: update_attributes },
-            #                  xhr: true
-            #     expect(response).to be_successful
-            #   end
-            # end
-
             context "when dropping on pitcher" do
               let(:bench_player) do
                 Fabricate(:player, primary_position: 2, defense2: -1)
               end
-              let!(:pitcher_spot) do
-                Fabricate(:spot, lineup: lineup, position: 1, batting_order: 9,
-                                 player: nil)
-              end
+              let(:pitcher_spot) { lineup.spots.find_by(position: 1) }
               let(:update_attributes) { { player_id: bench_player.to_param } }
 
               before do
@@ -795,10 +761,7 @@ RSpec.describe SpotsController, type: :controller do
           end
 
           context "from the pitcher's spot" do
-            let!(:old_spot) do
-              Fabricate(:spot, lineup: lineup, position: 1, batting_order: 9,
-                               player: nil)
-            end
+            let!(:old_spot) { lineup.spots.find_by(position: 1) }
 
             let(:update_attributes) { { player_id: "pitcher" } }
 
@@ -870,10 +833,7 @@ RSpec.describe SpotsController, type: :controller do
                                  position: 2)
             end
 
-            let!(:pitcher_spot) do
-              Fabricate(:spot, lineup: lineup, position: 1, batting_order: 9,
-                               player: nil)
-            end
+            let(:pitcher_spot) { lineup.spots.find_by(position: 1) }
 
             let!(:old_spot) do
               Fabricate(:spot, lineup: lineup, player: new_player, position: 3,

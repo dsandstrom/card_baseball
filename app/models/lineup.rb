@@ -20,6 +20,7 @@ class Lineup < ApplicationRecord
   has_many :players, through: :spots
 
   after_update :fix_dh_spot
+  after_save :fix_pitcher_spot
 
   def full_name
     @full_name ||= build_full_name
@@ -66,6 +67,16 @@ class Lineup < ApplicationRecord
 
     def fix_dh_spot
       remove_dh_spot unless with_dh?
+    end
+
+    def fix_pitcher_spot
+      pitcher_spot = spots.find_by(position: 1)
+
+      if with_dh?
+        pitcher_spot&.destroy
+      elsif !pitcher_spot
+        spots.create!(position: 1, batting_order: 9)
+      end
     end
 
     def name_or_vs_present

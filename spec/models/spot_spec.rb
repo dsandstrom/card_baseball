@@ -82,6 +82,8 @@ RSpec.describe Spot, type: :model do
     end
 
     describe "#player_unless_pitcher" do
+      before { lineup.spots.destroy_all }
+
       context "for position 1" do
         let(:pitcher) { Fabricate(:starting_pitcher) }
 
@@ -184,6 +186,8 @@ RSpec.describe Spot, type: :model do
     end
 
     describe "#player_plays_position" do
+      before { lineup.spots.destroy_all }
+
       context "when position is 1" do
         before { subject.position = 1 }
 
