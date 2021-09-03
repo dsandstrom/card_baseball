@@ -51,8 +51,7 @@ class Lineup < ApplicationRecord
   end
 
   def complete?
-    complete_count = with_dh? ? 9 : 8
-    spots.count == complete_count
+    spots.count == 9
   end
 
   def defense

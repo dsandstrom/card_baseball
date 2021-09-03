@@ -470,9 +470,9 @@ RSpec.describe Lineup, type: :model do
         end
       end
 
-      context "and 7 spots" do
+      context "and 8 spots" do
         before do
-          (1..7).each do |batting_order|
+          (1..8).each do |batting_order|
             Fabricate(:spot, lineup: lineup, batting_order: batting_order,
                              position: (batting_order + 1))
           end
@@ -483,13 +483,14 @@ RSpec.describe Lineup, type: :model do
         end
       end
 
-      context "and 8 spots" do
+      context "and 8 spots and a pitcher" do
         before do
           (1..7).each do |batting_order|
             Fabricate(:spot, lineup: lineup, batting_order: batting_order,
                              position: (batting_order + 1))
           end
           Fabricate(:spot, lineup: lineup, batting_order: 8, position: 7)
+          Fabricate(:spot, lineup: lineup, batting_order: 9, position: 1)
         end
 
         it "returns true" do
