@@ -75,6 +75,7 @@ class Lineup < ApplicationRecord
       if with_dh?
         pitcher_spot&.destroy
       elsif !pitcher_spot
+        spots.where(batting_order: 9).destroy_all
         spots.create!(position: 1, batting_order: 9)
       end
     end

@@ -117,6 +117,56 @@ RSpec.describe Lineup, type: :model do
           end
         end
       end
+
+      context "when lineup with_dh is true" do
+        let(:lineup) { Fabricate(:lineup, with_dh: true) }
+
+        before do
+          Fabricate(:spot, lineup: lineup, batting_order: 1, position: 2)
+        end
+
+        context "and with_dh doesn't change" do
+          it "doesn't change spots count" do
+            expect do
+              lineup.update(name: "New")
+            end.not_to change(lineup.spots, :count)
+          end
+        end
+
+        context "and with_dh changes to false" do
+          context "and no ninth batter" do
+            it "adds pitcher spot" do
+              expect do
+                lineup.update(with_dh: false)
+              end.to change(lineup.spots.where(position: 1), :count).by(1)
+            end
+
+            it "removes 9th batting_order spot" do
+              expect do
+                lineup.update(with_dh: false)
+              end.to change(lineup.spots.where(batting_order: 9), :count).by(1)
+            end
+          end
+
+          context "and ninth batter" do
+            before do
+              Fabricate(:spot, lineup: lineup, batting_order: 9, position: 5)
+            end
+
+            it "adds pitcher spot" do
+              expect do
+                lineup.update(with_dh: false)
+              end.to change(lineup.spots.where(position: 1), :count).by(1)
+            end
+
+            it "removes 9th batting_order spot" do
+              expect do
+                lineup.update(with_dh: false)
+              end.to change(lineup.spots.where(batting_order: 9), :count).by(0)
+            end
+          end
+        end
+      end
     end
   end
 
