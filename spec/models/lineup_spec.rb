@@ -17,7 +17,7 @@ RSpec.describe Lineup, type: :model do
 
   it do
     is_expected.to validate_uniqueness_of(:name)
-      .scoped_to(%i[team_id vs with_dh]).case_insensitive
+      .scoped_to(%i[team_id vs with_dh away]).case_insensitive
   end
 
   it do
@@ -27,26 +27,6 @@ RSpec.describe Lineup, type: :model do
   it { is_expected.to belong_to(:team) }
   it { is_expected.to have_many(:spots) }
   it { is_expected.to have_many(:players) }
-
-  describe "#validate" do
-    context "when name and vs are blank" do
-      before do
-        subject.name = ""
-        subject.vs = ""
-      end
-
-      it { is_expected.not_to be_valid }
-    end
-
-    context "when vs is not blank" do
-      before do
-        subject.name = ""
-        subject.vs = "left"
-      end
-
-      it { is_expected.to be_valid }
-    end
-  end
 
   describe ".after_update" do
     describe "#fix_dh_spot" do

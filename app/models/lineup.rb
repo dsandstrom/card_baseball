@@ -7,12 +7,11 @@ class Lineup < ApplicationRecord
   VS_OPTIONS = %w[left right].freeze
   HOME_DEFENSE_ADVANTAGE = 6
 
-  validates :name, uniqueness: { scope: %i[team_id vs with_dh],
+  validates :name, uniqueness: { scope: %i[team_id vs with_dh away],
                                  case_sensitive: false }
   validates :team_id, presence: true
   # nil vs = either side
   validates :vs, inclusion: { in: VS_OPTIONS }, allow_blank: true
-  validate :name_or_vs_present
 
   belongs_to :team
   has_many :spots, -> { order('batting_order asc') }, dependent: :destroy
@@ -77,12 +76,6 @@ class Lineup < ApplicationRecord
         spots.where(batting_order: 9).destroy_all
         spots.create!(position: 1, batting_order: 9)
       end
-    end
-
-    def name_or_vs_present
-      return if name.present? || vs.present?
-
-      errors.add(:base, 'Name or vs is required')
     end
 
     def build_full_name
