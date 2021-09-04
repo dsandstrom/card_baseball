@@ -5,6 +5,7 @@
 
 class Lineup < ApplicationRecord
   VS_OPTIONS = %w[left right].freeze
+  HOME_DEFENSE_ADVANTAGE = 6
 
   validates :name, uniqueness: { scope: %i[team_id vs with_dh],
                                  case_sensitive: false }
@@ -123,10 +124,11 @@ class Lineup < ApplicationRecord
     end
 
     def build_defense
+      total = away? ? 0 : HOME_DEFENSE_ADVANTAGE
       spot_defenses = spots.map(&:defense).compact
-      return 0 unless spot_defenses&.any?
+      return total unless spot_defenses&.any?
 
-      spot_defenses.inject(:+)
+      total + spot_defenses.inject(:+)
     end
 
     def build_catcher_bar

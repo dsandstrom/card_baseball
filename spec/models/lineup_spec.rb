@@ -616,65 +616,134 @@ RSpec.describe Lineup, type: :model do
 
   describe "#defense" do
     context "when no spots" do
-      let(:lineup) { Fabricate(:lineup) }
+      context "for away" do
+        let(:lineup) { Fabricate(:lineup, away: true) }
 
-      it "returns 0" do
-        expect(lineup.defense).to eq(0)
+        it "returns 0" do
+          expect(lineup.defense).to eq(0)
+        end
+      end
+
+      context "for home" do
+        let(:lineup) { Fabricate(:lineup, away: false) }
+
+        it "returns 6" do
+          expect(lineup.defense).to eq(6)
+        end
       end
     end
 
     context "when 2 valid spots" do
-      let(:lineup) { Fabricate(:lineup, team: team) }
-      let(:second_base_player) do
-        Fabricate(:player, primary_position: 4, defense4: 5)
-      end
-      let(:third_base_player) do
-        Fabricate(:player, primary_position: 5, defense5: -1)
+      context "for away" do
+        let(:lineup) { Fabricate(:lineup, team: team, away: true) }
+        let(:second_base_player) do
+          Fabricate(:player, primary_position: 4, defense4: 5)
+        end
+        let(:third_base_player) do
+          Fabricate(:player, primary_position: 5, defense5: -1)
+        end
+
+        before do
+          Fabricate(:contract, player: second_base_player, team: team)
+          Fabricate(:contract, player: third_base_player, team: team)
+          Fabricate(:roster, player: second_base_player, team: team, level: 4,
+                             position: 4)
+          Fabricate(:roster, player: third_base_player, team: team, level: 4,
+                             position: 5)
+          Fabricate(:spot, lineup: lineup, batting_order: 2, position: 4,
+                           player: second_base_player)
+          Fabricate(:spot, lineup: lineup, batting_order: 3, position: 5,
+                           player: third_base_player)
+        end
+
+        it "returns a sum of their defenses" do
+          expect(lineup.defense).to eq(4)
+        end
       end
 
-      before do
-        Fabricate(:contract, player: second_base_player, team: team)
-        Fabricate(:contract, player: third_base_player, team: team)
-        Fabricate(:roster, player: second_base_player, team: team, level: 4,
-                           position: 4)
-        Fabricate(:roster, player: third_base_player, team: team, level: 4,
-                           position: 5)
-        Fabricate(:spot, lineup: lineup, batting_order: 2, position: 4,
-                         player: second_base_player)
-        Fabricate(:spot, lineup: lineup, batting_order: 3, position: 5,
-                         player: third_base_player)
-      end
+      context "for home" do
+        let(:lineup) { Fabricate(:lineup, team: team, away: false) }
+        let(:second_base_player) do
+          Fabricate(:player, primary_position: 4, defense4: 5)
+        end
+        let(:third_base_player) do
+          Fabricate(:player, primary_position: 5, defense5: -1)
+        end
 
-      it "returns a sum of their defenses" do
-        expect(lineup.defense).to eq(4)
+        before do
+          Fabricate(:contract, player: second_base_player, team: team)
+          Fabricate(:contract, player: third_base_player, team: team)
+          Fabricate(:roster, player: second_base_player, team: team, level: 4,
+                             position: 4)
+          Fabricate(:roster, player: third_base_player, team: team, level: 4,
+                             position: 5)
+          Fabricate(:spot, lineup: lineup, batting_order: 2, position: 4,
+                           player: second_base_player)
+          Fabricate(:spot, lineup: lineup, batting_order: 3, position: 5,
+                           player: third_base_player)
+        end
+
+        it "returns a sum of their defenses" do
+          expect(lineup.defense).to eq(10)
+        end
       end
     end
 
     context "when a spot is missing defense" do
-      let(:lineup) { Fabricate(:lineup, team: team) }
-      let(:second_base_player) do
-        Fabricate(:player, primary_position: 4, defense4: 5)
-      end
-      let(:third_base_player) do
-        Fabricate(:player, primary_position: 5, defense5: -1)
+      context "for away" do
+        let(:lineup) { Fabricate(:lineup, team: team, away: true) }
+        let(:second_base_player) do
+          Fabricate(:player, primary_position: 4, defense4: 5)
+        end
+        let(:third_base_player) do
+          Fabricate(:player, primary_position: 5, defense5: -1)
+        end
+
+        before do
+          Fabricate(:contract, player: second_base_player, team: team)
+          Fabricate(:contract, player: third_base_player, team: team)
+          Fabricate(:roster, player: second_base_player, team: team, level: 4,
+                             position: 4)
+          Fabricate(:roster, player: third_base_player, team: team, level: 4,
+                             position: 5)
+          Fabricate(:spot, lineup: lineup, batting_order: 2, position: 4,
+                           player: second_base_player)
+          Fabricate(:spot, lineup: lineup, batting_order: 3, position: 5,
+                           player: third_base_player)
+          third_base_player.update_column :defense5, nil
+        end
+
+        it "returns the valid defense" do
+          expect(lineup.defense).to eq(-5)
+        end
       end
 
-      before do
-        Fabricate(:contract, player: second_base_player, team: team)
-        Fabricate(:contract, player: third_base_player, team: team)
-        Fabricate(:roster, player: second_base_player, team: team, level: 4,
-                           position: 4)
-        Fabricate(:roster, player: third_base_player, team: team, level: 4,
-                           position: 5)
-        Fabricate(:spot, lineup: lineup, batting_order: 2, position: 4,
-                         player: second_base_player)
-        Fabricate(:spot, lineup: lineup, batting_order: 3, position: 5,
-                         player: third_base_player)
-        third_base_player.update_column :defense5, nil
-      end
+      context "for home" do
+        let(:lineup) { Fabricate(:lineup, team: team, away: false) }
+        let(:second_base_player) do
+          Fabricate(:player, primary_position: 4, defense4: 5)
+        end
+        let(:third_base_player) do
+          Fabricate(:player, primary_position: 5, defense5: -1)
+        end
 
-      it "returns the valid defense" do
-        expect(lineup.defense).to eq(-5)
+        before do
+          Fabricate(:contract, player: second_base_player, team: team)
+          Fabricate(:contract, player: third_base_player, team: team)
+          Fabricate(:roster, player: second_base_player, team: team, level: 4,
+                             position: 4)
+          Fabricate(:roster, player: third_base_player, team: team, level: 4,
+                             position: 5)
+          Fabricate(:spot, lineup: lineup, batting_order: 2, position: 4,
+                           player: second_base_player)
+          Fabricate(:spot, lineup: lineup, batting_order: 3, position: 5,
+                           player: third_base_player)
+          third_base_player.update_column :defense5, nil
+        end
+
+        it "returns the valid defense" do
+          expect(lineup.defense).to eq(1)
+        end
       end
     end
   end
