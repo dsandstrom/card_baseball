@@ -79,9 +79,7 @@ class Lineup < ApplicationRecord
     end
 
     def build_full_name
-      return unless name.present? || vs.present?
-
-      temp = "#{name} Lineup "
+      temp = "#{name} #{away? ? 'Away' : 'Home'} Lineup "
       case vs
       when 'left'
         temp += 'vs Lefty '
@@ -93,9 +91,7 @@ class Lineup < ApplicationRecord
     end
 
     def build_short_name
-      return unless name.present? || vs.present?
-
-      temp = "#{name} "
+      temp = "#{name} #{away? ? 'Away' : 'Home'} "
       case vs
       when 'left'
         temp += 'vs Lefty '

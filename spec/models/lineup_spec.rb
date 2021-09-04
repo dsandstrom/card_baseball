@@ -177,15 +177,57 @@ RSpec.describe Lineup, type: :model do
   end
 
   describe "#full_name" do
-    context "when name, vs, with_dh are blank" do
-      before do
-        subject.name = ""
-        subject.vs = ""
-        subject.with_dh = false
+    context "when name and vs are blank" do
+      context "and with_dh and away are default" do
+        before do
+          subject.name = ""
+          subject.vs = ""
+          subject.with_dh = false
+          subject.away = true
+        end
+
+        it "returns nil" do
+          expect(subject.full_name).to eq("Away Lineup")
+        end
       end
 
-      it "returns nil" do
-        expect(subject.full_name).to be_nil
+      context "and with_dh is false, away is false" do
+        before do
+          subject.name = ""
+          subject.vs = ""
+          subject.with_dh = false
+          subject.away = false
+        end
+
+        it "returns nil" do
+          expect(subject.full_name).to eq("Home Lineup")
+        end
+      end
+
+      context "and with_dh is true, away is true" do
+        before do
+          subject.name = ""
+          subject.vs = ""
+          subject.with_dh = true
+          subject.away = true
+        end
+
+        it "returns nil" do
+          expect(subject.full_name).to eq("Away Lineup (DH)")
+        end
+      end
+
+      context "and with_dh is true, away is false" do
+        before do
+          subject.name = ""
+          subject.vs = ""
+          subject.with_dh = true
+          subject.away = false
+        end
+
+        it "returns nil" do
+          expect(subject.full_name).to eq("Home Lineup (DH)")
+        end
       end
     end
 
@@ -194,10 +236,11 @@ RSpec.describe Lineup, type: :model do
         subject.name = "Something"
         subject.vs = ""
         subject.with_dh = false
+        subject.away = true
       end
 
       it "returns name only" do
-        expect(subject.full_name).to eq("Something Lineup")
+        expect(subject.full_name).to eq("Something Away Lineup")
       end
     end
 
@@ -209,7 +252,7 @@ RSpec.describe Lineup, type: :model do
       end
 
       it "returns name and DH" do
-        expect(subject.full_name).to eq("Something Lineup (DH)")
+        expect(subject.full_name).to eq("Something Away Lineup (DH)")
       end
     end
 
@@ -221,7 +264,7 @@ RSpec.describe Lineup, type: :model do
       end
 
       it "returns 'Lineup vs Lefty'" do
-        expect(subject.full_name).to eq("Lineup vs Lefty")
+        expect(subject.full_name).to eq("Away Lineup vs Lefty")
       end
     end
 
@@ -233,7 +276,7 @@ RSpec.describe Lineup, type: :model do
       end
 
       it "returns 'Lineup vs Lefty (DH)'" do
-        expect(subject.full_name).to eq("Lineup vs Lefty (DH)")
+        expect(subject.full_name).to eq("Away Lineup vs Lefty (DH)")
       end
     end
 
@@ -245,7 +288,7 @@ RSpec.describe Lineup, type: :model do
       end
 
       it "returns name and vs" do
-        expect(subject.full_name).to eq("Main Lineup vs Lefty")
+        expect(subject.full_name).to eq("Main Away Lineup vs Lefty")
       end
     end
 
@@ -257,7 +300,7 @@ RSpec.describe Lineup, type: :model do
       end
 
       it "returns name and vs" do
-        expect(subject.full_name).to eq("Main Lineup vs Righty")
+        expect(subject.full_name).to eq("Main Away Lineup vs Righty")
       end
     end
 
@@ -269,7 +312,7 @@ RSpec.describe Lineup, type: :model do
       end
 
       it "returns name, vs, DH" do
-        expect(subject.full_name).to eq("Main Lineup vs Lefty (DH)")
+        expect(subject.full_name).to eq("Main Away Lineup vs Lefty (DH)")
       end
     end
 
@@ -281,33 +324,91 @@ RSpec.describe Lineup, type: :model do
       end
 
       it "returns name, vs, DH" do
-        expect(subject.full_name).to eq("Main Lineup vs Righty (DH)")
+        expect(subject.full_name).to eq("Main Away Lineup vs Righty (DH)")
       end
     end
   end
 
   describe "#short_name" do
-    context "when name, vs, with_dh are blank" do
-      before do
-        subject.name = ""
-        subject.vs = ""
-        subject.with_dh = false
+    context "when name and vs are blank" do
+      context "and with_dh and away are default" do
+        before do
+          subject.name = ""
+          subject.vs = ""
+          subject.with_dh = false
+          subject.away = true
+        end
+
+        it "returns nil" do
+          expect(subject.short_name).to eq("Away")
+        end
       end
 
-      it "returns nil" do
-        expect(subject.short_name).to be_nil
+      context "and with_dh is false and away is false" do
+        before do
+          subject.name = ""
+          subject.vs = ""
+          subject.with_dh = false
+          subject.away = false
+        end
+
+        it "returns nil" do
+          expect(subject.short_name).to eq("Home")
+        end
+      end
+
+      context "and with_dh is true and away is true" do
+        before do
+          subject.name = ""
+          subject.vs = ""
+          subject.with_dh = true
+          subject.away = true
+        end
+
+        it "returns nil" do
+          expect(subject.short_name).to eq("Away (DH)")
+        end
+      end
+
+      context "and with_dh is true and away is false" do
+        before do
+          subject.name = ""
+          subject.vs = ""
+          subject.with_dh = true
+          subject.away = false
+        end
+
+        it "returns nil" do
+          expect(subject.short_name).to eq("Home (DH)")
+        end
       end
     end
 
     context "when name is something" do
-      before do
-        subject.name = "Something"
-        subject.vs = ""
-        subject.with_dh = false
+      context "and with_dh is false, away is true" do
+        before do
+          subject.name = "Something"
+          subject.vs = ""
+          subject.with_dh = false
+          subject.away = true
+        end
+
+        it "returns name only" do
+          expect(subject.short_name).to eq("Something Away")
+        end
       end
 
-      it "returns name only" do
-        expect(subject.short_name).to eq("Something")
+      context "and with_dh is false, away is false" do
+        before do
+          subject.name = "Something"
+          subject.vs = ""
+          subject.with_dh = false
+          subject.away = false
+        end
+
+        it "returns name only" do
+          expect(subject.short_name).to eq("Something Home")
+        end
       end
     end
 
@@ -319,7 +420,7 @@ RSpec.describe Lineup, type: :model do
       end
 
       it "returns name and DH" do
-        expect(subject.short_name).to eq("Something (DH)")
+        expect(subject.short_name).to eq("Something Away (DH)")
       end
     end
 
@@ -331,7 +432,7 @@ RSpec.describe Lineup, type: :model do
       end
 
       it "returns 'vs Lefty'" do
-        expect(subject.short_name).to eq("vs Lefty")
+        expect(subject.short_name).to eq("Away vs Lefty")
       end
     end
 
@@ -343,7 +444,7 @@ RSpec.describe Lineup, type: :model do
       end
 
       it "returns 'vs Lefty (DH)'" do
-        expect(subject.short_name).to eq("vs Lefty (DH)")
+        expect(subject.short_name).to eq("Away vs Lefty (DH)")
       end
     end
 
@@ -355,7 +456,7 @@ RSpec.describe Lineup, type: :model do
       end
 
       it "returns name and vs" do
-        expect(subject.short_name).to eq("Main vs Lefty")
+        expect(subject.short_name).to eq("Main Away vs Lefty")
       end
     end
 
@@ -367,7 +468,7 @@ RSpec.describe Lineup, type: :model do
       end
 
       it "returns name and vs" do
-        expect(subject.short_name).to eq("Main vs Righty")
+        expect(subject.short_name).to eq("Main Away vs Righty")
       end
     end
 
@@ -379,19 +480,34 @@ RSpec.describe Lineup, type: :model do
       end
 
       it "returns name, vs, DH" do
-        expect(subject.short_name).to eq("Main vs Lefty (DH)")
+        expect(subject.short_name).to eq("Main Away vs Lefty (DH)")
       end
     end
 
     context "when name is something and vs is right with DH" do
-      before do
-        subject.name = "Main"
-        subject.vs = "right"
-        subject.with_dh = true
+      context "and away is true" do
+        before do
+          subject.name = "Main"
+          subject.vs = "right"
+          subject.with_dh = true
+        end
+
+        it "returns name, vs, DH" do
+          expect(subject.short_name).to eq("Main Away vs Righty (DH)")
+        end
       end
 
-      it "returns name, vs, DH" do
-        expect(subject.short_name).to eq("Main vs Righty (DH)")
+      context "and away is false" do
+        before do
+          subject.name = "Main"
+          subject.vs = "right"
+          subject.with_dh = true
+          subject.away = false
+        end
+
+        it "returns name, vs, DH" do
+          expect(subject.short_name).to eq("Main Home vs Righty (DH)")
+        end
       end
     end
   end
