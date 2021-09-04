@@ -26,6 +26,15 @@
         <p class="lineup-defense-bar"><%= content_tag :span, format_lineup_defense(@lineup.defense), class: 'lineup-defense' %>/<%= content_tag :span, @lineup.catcher_bar, class: 'lineup-bar' %></p>
       </div>
 
+      <% unless @lineup.away? %>
+        <div class="lineup-away-wrapper">
+          <div class="lineup-away">
+            <%= content_tag :span, 'Home Advantage', class: 'lineup-away-text' %>
+            <%= content_tag :span, "+#{Lineup::HOME_DEFENSE_ADVANTAGE}", class: 'lineup-away-value' %>
+          </div>
+        </div>
+      <% end %>
+
       <% if can?(:create, new_spot) %>
         <div class="lineup-spots">
           <% 9.times do |n|  %>

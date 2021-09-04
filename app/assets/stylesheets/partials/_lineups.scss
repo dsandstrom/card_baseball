@@ -169,7 +169,8 @@
   }
 }
 
-.spot-player-field {
+.spot-player-field,
+.lineup-away-text {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -415,5 +416,35 @@
 
   .spot-defense {
     font-size: 1.8rem;
+  }
+}
+
+.lineup-away-wrapper {
+  display: flex;
+}
+
+.lineup-away {
+  display: grid;
+  grid-template-columns: auto 5rem;
+  margin-bottom: .5rem;
+  margin-left: auto;
+  border: 1px solid $gray;
+
+  .lineup-away-text {
+    padding: .25rem 1rem;
+    background-color: $off-white;
+    color: $dark-gray;
+    font-size: 1.4rem;
+    font-weight: bold;
+  }
+
+  .lineup-away-value {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-left: 1px solid $gray;
+    background-color: rgba($green, .15);
+    color: $dark-green;
+    font-size: 1.9rem;
   }
 }
