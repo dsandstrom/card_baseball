@@ -17,8 +17,9 @@ RSpec.describe "lineups/new", type: :view do
 
     assert_select "form[action=?][method=?]", team_lineups_path(team), "post" do
       assert_select "input[name=?]", "lineup[name]"
-      assert_select "select[name=?]", "lineup[vs]"
+      assert_select "input[name=?]", "lineup[vs]"
       assert_select "input[name=?]", "lineup[with_dh]"
+      assert_select "input[name=?]", "lineup[away]"
     end
   end
 end

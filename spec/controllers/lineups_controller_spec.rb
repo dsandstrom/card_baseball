@@ -199,7 +199,26 @@ RSpec.describe LineupsController, type: :controller do
         end
       end
 
+      context "when valid params with 'all' vs" do
+        before { valid_attributes.merge!(vs: "all") }
+
+        it "creates a new Lineup" do
+          expect do
+            post :create, params: { team_id: team.to_param,
+                                    lineup: valid_attributes }
+          end.to change(Lineup, :count).by(1)
+        end
+
+        it "redirects to the Lineup list" do
+          post :create, params: { team_id: team.to_param,
+                                  lineup: valid_attributes }
+          expect(response).to redirect_to(team_lineup_url(team, Lineup.last))
+        end
+      end
+
       context "when invalid params" do
+        before { Fabricate(:lineup, team: team, name: "") }
+
         it "doesn't create a new Lineup" do
           expect do
             post :create, params: { team_id: team.to_param,
@@ -237,6 +256,8 @@ RSpec.describe LineupsController, type: :controller do
         end
 
         context "when invalid params" do
+          before { Fabricate(:lineup, team: team, name: "") }
+
           it "doesn't create a new Lineup" do
             expect do
               post :create, params: { team_id: team.to_param,
@@ -292,6 +313,8 @@ RSpec.describe LineupsController, type: :controller do
       end
 
       context "when invalid params" do
+        before { Fabricate(:lineup, team: team, name: "") }
+
         it "doesn't create a new Lineup" do
           expect do
             put :update, params: { team_id: team.to_param, id: lineup.to_param,
@@ -398,6 +421,8 @@ RSpec.describe LineupsController, type: :controller do
         end
 
         context "when invalid params" do
+          before { Fabricate(:lineup, team: team, name: "") }
+
           it "doesn't create a new Lineup" do
             expect do
               put :update, params: { team_id: team.to_param,
@@ -418,6 +443,8 @@ RSpec.describe LineupsController, type: :controller do
 
       context "when not their team" do
         let(:team) { Fabricate(:team) }
+
+        before { Fabricate(:lineup, team: team, name: "") }
 
         it "doesn't create a new Lineup" do
           expect do

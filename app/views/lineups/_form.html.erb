@@ -13,17 +13,56 @@
 
   <div class="field">
     <%= form.label :name %>
-    <%= form.text_field :name, autofocus: !lineup.persisted? %>
+    <%= form.text_field :name, placeholder: 'optional',
+                               autofocus: !lineup.persisted? %>
   </div>
 
   <div class="field">
-    <%= form.label :vs %>
-    <%= form.select :vs, vs_options, include_blank: 'any' %>
+    <div class="check-box-buttons">
+      <%= label_tag 'lineup_away_true', class: 'radio-button-label' do %>
+        <%= form.radio_button :away, true %>
+        Away
+      <% end %>
+
+      <%= label_tag 'lineup_away_false', class: 'radio-button-label' do %>
+        <%= form.radio_button :away, false %>
+        Home
+      <% end %>
+    </div>
   </div>
 
   <div class="field">
-    <%= form.label :with_dh %>
-    <%= form.check_box :with_dh %>
+    <div class="check-box-buttons">
+      <%= label_tag :lineup_vs_all,
+                    class: 'radio-button-label' do %>
+        <%= form.radio_button :vs, 'all', checked: (params[:vs].blank? || params[:vs] == 'all') %>
+        vs Any
+      <% end %>
+
+      <%= label_tag 'lineup_vs_left', class: 'radio-button-label' do %>
+        <%= form.radio_button :vs, 'left' %>
+        vs Lefty
+      <% end %>
+
+      <%= label_tag 'lineup_vs_right', class: 'radio-button-label' do %>
+        <%= form.radio_button :vs, 'right' %>
+        vs Righty
+      <% end %>
+    </div>
+  </div>
+
+  <div class="field">
+    <div class="check-box-buttons">
+      <%= label_tag 'lineup_with_dh_false', class: 'radio-button-label' do %>
+        <%= form.radio_button :with_dh, false %>
+        Pitcher
+      <% end %>
+
+      <%= label_tag 'lineup_with_dh_true', class: 'radio-button-label' do %>
+        <%= form.radio_button :with_dh, true %>
+        DH
+      <% end %>
+    </div>
   </div>
 
   <div class="actions">

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class LineupsController < ApplicationController
+  before_action :convert_params, only: %i[create update]
   load_and_authorize_resource :team
   load_and_authorize_resource through: :team
   before_action :set_league
@@ -50,6 +51,16 @@ class LineupsController < ApplicationController
     end
 
     def lineup_params
-      params.require(:lineup).permit(:name, :vs, :with_dh)
+      params.require(:lineup).permit(:name, :vs, :with_dh, :away)
+    end
+
+    def convert_params
+      return unless params && params[:lineup]
+
+      params[:lineup].each do |key, value|
+        next unless value == 'all'
+
+        params[:lineup][key] = ''
+      end
     end
 end
