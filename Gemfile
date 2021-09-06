@@ -43,6 +43,8 @@ gem 'kaminari', '~> 1.2'
 # https://github.com/brendon/ranked-model
 gem 'ranked-model', '~> 0.4'
 
+gem 'rollbar', '~> 3.2'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger
   # console
