@@ -1,6 +1,9 @@
 # Card Baseball
 
-[![Rubocop Actions Status](https://github.com/dsandstrom/card_baseball/workflows/Rubocop/badge.svg)](https://github.com/dsandstrom/card_baseball/actions?query=workflow%3ARubocop)
+[![Rubocop Actions Status](https://github.com/dsandstrom/card_baseball/workflows/Rubocop/badge.svg)](https://github.com/dsandstrom/card_baseball/actions?query=workflow%3ARubocop) [![Stylelint Actions Status](https://github.com/dsandstrom/card_baseball/workflows/Stylelint/badge.svg)](https://github.com/dsandstrom/card_baseball/actions?query=workflow%3AStylelint)
+
+## Introduction
+This is a Ruby on Rails app built to house League and Player information for a Card Baseball Game. The "card" game has since been abandoned and heartfully continued using an Excel file. This app hopes to reproduce the game, but is currently a work in progress.
 
 ## Local Setup
 
@@ -43,13 +46,9 @@ yarn install
 
 #### Setup secrets
 
-```sh
-bin/rails secrets:edit
-```
+Environment variables are used to store passwords and tokens. The gem [dotenv-rails](https://github.com/bkeepers/dotenv) is used in test and development environments. An example file is included in the repo for an idea of the key options.  For production, set variables when running the app.
 
-* Copy config/secrets.yml.example and paste in open window
-* Add secret key bases (Use `bin/rails secret` to generate them)
-* Set db username and password to match your PostgreSQL database
+* Rename `.env.example` to `.env` and add the real values
 
 #### Database creation/initialization
 
