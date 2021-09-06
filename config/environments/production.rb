@@ -132,8 +132,7 @@ Rails.application.configure do
 
   # required for devise
   config.action_mailer.default_url_options =
-    { host: (ENV['FRONTEND_URL'] || 'task-roller.net'), port: 80,
-      protocol: 'https' }
+    { host: (ENV['FRONTEND_URL'] || 'task-roller.net'), protocol: 'https' }
 
   config.action_mailer.perform_deliveries = true
   config.action_mailer.delivery_method = :smtp
