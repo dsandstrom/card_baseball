@@ -62,82 +62,86 @@
 <h2>Ratings</h2>
 
 <% if @player.pitcher_type.present? %>
-  <table class="pitcher">
+  <div class="table-wrapper">
+    <table class="pitcher">
+      <thead>
+        <tr>
+          <th>Pitching</th>
+          <th>Type</th>
+          <th>Throws</th>
+          <th>Starter</th>
+          <th>Reliever</th>
+          <th>Durability</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <%= content_tag :td, @player.roster_name, class: 'player-roster-name' %>
+        <%= content_tag :td, @player.verbose_pitcher_type, class: 'player-pitcher-type' %>
+        <%= content_tag :td, @player.verbose_throws, class: 'player-throws' %>
+        <%= content_tag :td, @player.starting_pitching, class: 'player-starting-pitching' %>
+        <%= content_tag :td, @player.relief_pitching, class: 'player-relief-pitching' %>
+        <%= content_tag :td, @player.pitching_durability, class: 'player-pitching-durability' %>
+      </tbody>
+    </table>
+  </div>
+<% end %>
+
+<div class="table-wrapper">
+  <table class="player-offense">
     <thead>
       <tr>
-        <th>Pitching</th>
-        <th>Type</th>
-        <th>Throws</th>
-        <th>Starter</th>
-        <th>Reliever</th>
+        <th>Hitting</th>
+        <th>Bats</th>
+        <th>Speed</th>
+        <th>Bunt</th>
+        <th>Rating</th>
         <th>Durability</th>
       </tr>
     </thead>
 
     <tbody>
-      <%= content_tag :td, @player.roster_name, class: 'player-roster-name' %>
-      <%= content_tag :td, @player.verbose_pitcher_type, class: 'player-pitcher-type' %>
-      <%= content_tag :td, @player.verbose_throws, class: 'player-throws' %>
-      <%= content_tag :td, @player.starting_pitching, class: 'player-starting-pitching' %>
-      <%= content_tag :td, @player.relief_pitching, class: 'player-relief-pitching' %>
-      <%= content_tag :td, @player.pitching_durability, class: 'player-pitching-durability' %>
+      <tr>
+        <%= content_tag :td, @player.roster_name, class: 'player-roster-name' %>
+        <%= content_tag :td, @player.verbose_bats, class: 'player-bats' %>
+        <%= content_tag :td, @player.speed, class: 'player-speed' %>
+        <%= content_tag :td, @player.bunt_grade, class: 'player-bunt-grade' %>
+        <%= content_tag :td, @player.offensive_rating, class: 'player-offensive-rating' %>
+        <%= content_tag :td, @player.offensive_durability, class: 'player-offensive-durability' %>
+      </tr>
     </tbody>
   </table>
-<% end %>
 
-<table class="player-offense">
-  <thead>
-    <tr>
-      <th>Hitting</th>
-      <th>Bats</th>
-      <th>Speed</th>
-      <th>Bunt</th>
-      <th>Rating</th>
-      <th>Durability</th>
-    </tr>
-  </thead>
+  <table class="hitter">
+    <thead>
+      <tr>
+        <th>Breakdown</th>
+        <th>vs Left</th>
+        <th>vs Right</th>
+      </tr>
+    </thead>
 
-  <tbody>
-    <tr>
-      <%= content_tag :td, @player.roster_name, class: 'player-roster-name' %>
-      <%= content_tag :td, @player.verbose_bats, class: 'player-bats' %>
-      <%= content_tag :td, @player.speed, class: 'player-speed' %>
-      <%= content_tag :td, @player.bunt_grade, class: 'player-bunt-grade' %>
-      <%= content_tag :td, @player.offensive_rating, class: 'player-offensive-rating' %>
-      <%= content_tag :td, @player.offensive_durability, class: 'player-offensive-durability' %>
-    </tr>
-  </tbody>
-</table>
-
-<table class="hitter">
-  <thead>
-    <tr>
-      <th>Breakdown</th>
-      <th>vs Left</th>
-      <th>vs Right</th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <tr>
-      <td>Hitting</td>
-      <%= content_tag :td, @player.left_hitting, class: 'player-left-hitting' %>
-      <%= content_tag :td, @player.right_hitting, class: 'player-right-hitting' %>
-    </tr>
-    <tr>
-      <td>OBP</td>
-      <%= content_tag :td, @player.left_on_base_percentage, class: 'player-left-on-base-percentage' %>
-      <%= content_tag :td, @player.right_on_base_percentage, class: 'player-right-on-base-percentage' %>
-    </tr>
-    <tr>
-      <td>Slugging</td>
-      <%= content_tag :td, @player.left_slugging, class: 'player-left-slugging' %>
-      <%= content_tag :td, @player.right_slugging, class: 'player-right-slugging' %>
-    </tr>
-    <tr>
-      <td>Homerun</td>
-      <%= content_tag :td, @player.left_homerun, class: 'player-left-homerun' %>
-      <%= content_tag :td, @player.right_homerun, class: 'player-right-homerun' %>
-    </tr>
-  </tbody>
-</table>
+    <tbody>
+      <tr>
+        <td>Hitting</td>
+        <%= content_tag :td, @player.left_hitting, class: 'player-left-hitting' %>
+        <%= content_tag :td, @player.right_hitting, class: 'player-right-hitting' %>
+      </tr>
+      <tr>
+        <td>OBP</td>
+        <%= content_tag :td, @player.left_on_base_percentage, class: 'player-left-on-base-percentage' %>
+        <%= content_tag :td, @player.right_on_base_percentage, class: 'player-right-on-base-percentage' %>
+      </tr>
+      <tr>
+        <td>Slugging</td>
+        <%= content_tag :td, @player.left_slugging, class: 'player-left-slugging' %>
+        <%= content_tag :td, @player.right_slugging, class: 'player-right-slugging' %>
+      </tr>
+      <tr>
+        <td>Homerun</td>
+        <%= content_tag :td, @player.left_homerun, class: 'player-left-homerun' %>
+        <%= content_tag :td, @player.right_homerun, class: 'player-right-homerun' %>
+      </tr>
+    </tbody>
+  </table>
+</div>

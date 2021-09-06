@@ -14,18 +14,20 @@
 </div>
 
 
-<table class="users">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Email</th>
-      <th>Teams</th>
-      <th>Location</th>
-      <th colspan="2"></th>
-    </tr>
-  </thead>
+<div class="table-wrapper">
+  <table class="users">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Teams</th>
+        <th>Location</th>
+        <th colspan="2"></th>
+      </tr>
+    </thead>
 
-  <tbody>
-    <%= render @users %>
-  </tbody>
-</table>
+    <tbody>
+      <%= render @users %>
+    </tbody>
+  </table>
+</div>

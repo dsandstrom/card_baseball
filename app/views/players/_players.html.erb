@@ -16,47 +16,49 @@
   <%= content_tag :div, paginate(players), class: 'page-links' %>
 <% end %>
 
-<table class="players">
-  <thead>
-    <% if players.any? && pages %>
+<div class="table-wrapper">
+  <table class="players">
+    <thead>
+      <% if players.any? && pages %>
+        <tr>
+          <th colspan=20><%= page_entries_info players %></th>
+        </tr>
+      <% end %>
       <tr>
-        <th colspan=20><%= page_entries_info players %></th>
+        <th></th>
+        <th class="align-left">Name</th>
+        <th>Bat/Thr</th>
+        <th>Offense</th>
+        <th>Pitching</th>
+        <th>Defense</th>
+        <% if show_contract %>
+          <th class="left-border">Contract</th>
+        <% end %>
+        <% if show_roster %>
+          <th class="left-border">Level</th>
+        <% end %>
       </tr>
-    <% end %>
-    <tr>
-      <th></th>
-      <th class="align-left">Name</th>
-      <th>Bat/Thr</th>
-      <th>Offense</th>
-      <th>Pitching</th>
-      <th>Defense</th>
-      <% if show_contract %>
-        <th class="left-border">Contract</th>
-      <% end %>
-      <% if show_roster %>
-        <th class="left-border">Level</th>
-      <% end %>
-    </tr>
-  </thead>
+    </thead>
 
-  <tbody class="players">
-    <% if players.any? %>
-      <% players.each_with_index do |player, table_index| %>
-        <%= render player, table_index: (table_index + page_index + 1),
-                           show_contract: show_contract, show_team: show_team,
-                           highlight: highlight %>
+    <tbody class="players">
+      <% if players.any? %>
+        <% players.each_with_index do |player, table_index| %>
+          <%= render player, table_index: (table_index + page_index + 1),
+                             show_contract: show_contract, show_team: show_team,
+                             highlight: highlight %>
+        <% end %>
+      <% elsif searching? %>
+        <tr>
+          <td colspan="30"><%= page_entries_info players %></td>
+        </tr>
+      <% else %>
+        <tr>
+          <td colspan="30">No players yet</td>
+        </tr>
       <% end %>
-    <% elsif searching? %>
-      <tr>
-        <td colspan="30"><%= page_entries_info players %></td>
-      </tr>
-    <% else %>
-      <tr>
-        <td colspan="30">No players yet</td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+    </tbody>
+  </table>
+</div>
 
 <% if pages %>
   <div class="page-links">
