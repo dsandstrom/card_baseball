@@ -7,7 +7,7 @@ class LineupsController < ApplicationController
   before_action :set_league
 
   def index
-    @lineups = @lineups.order(name: :asc, vs: :asc, with_dh: :asc)
+    @lineups = @lineups.order(name: :asc, away: :desc, vs: :asc, with_dh: :asc)
   end
 
   def show
