@@ -18,90 +18,88 @@
   </div>
 <% end %>
 
-<div class="table-wrapper">
-  <table class="hitters">
-    <thead>
-      <tr>
-        <th colspan="8">
-          <% if hitters.any? %>
-            <% if pages %>
-              <%= page_entries_info hitters %>
-            <% else %>
-              Hitters
-            <% end %>
+<table class="hitters">
+  <thead>
+    <tr>
+      <th colspan="8">
+        <% if hitters.any? %>
+          <% if pages %>
+            <%= page_entries_info hitters %>
+          <% else %>
+            Hitters
           <% end %>
-        </th>
-        <th colspan="4" class="vs-left<%= ' highlight' if highlight == 'left' %>">vs Lefties</th>
-        <th colspan="4" class="vs-right<%= ' highlight' if highlight == 'right' %>">vs Righties</th>
-        <th colspan="8" class="defense">Defense</th>
-        <% if show_contract %>
-          <th class="left-border"></th>
         <% end %>
-        <% if show_roster %>
-          <th class="left-border"></th>
-        <% end %>
-      </tr>
-      <tr>
-        <th></th>
-        <th class="align-left">Name</th>
-        <th>Bat</th>
-        <th>Spd</th>
-        <th>Bnt</th>
-        <th>Pos</th>
-        <th>Rtg</th>
-        <th>Dur</th>
-        <th class="left-border">Hit</th>
-        <th>OBP</th>
-        <th>Slg</th>
-        <th>HR</th>
-        <th class="left-border">Hit</th>
-        <th>OBP</th>
-        <th>Slg</th>
-        <th>HR</th>
-        <th class="left-border no-wrap">
-          C<span class="defense-bar">/Bar</span>
-        </th>
-        <th>1B</th>
-        <th>2B</th>
-        <th>3B</th>
-        <th>SS</th>
-        <th>OF</th>
-        <th>CF</th>
-        <th class="no-wrap">
-          P<span class="defense-bar">/Bar</span>
-        </th>
-        <% if show_contract %>
-          <th class="left-border">Contract</th>
-        <% end %>
-        <% if show_roster %>
-          <th class="left-border">Level</th>
-        <% end %>
-      </tr>
-    </thead>
-
-    <tbody class="hitters">
-      <% if hitters.any? %>
-        <% hitters.each_with_index do |hitter, table_index| %>
-          <%= render 'hitters/hitter',
-                     hitter: hitter,
-                     table_index: (table_index + page_index + 1),
-                     show_contract: show_contract,
-                     show_team: show_team,
-                     show_roster: show_roster,
-                     highlight: highlight %>
-        <% end %>
-      <% elsif searching? %>
-        <tr>
-          <td colspan="30">No hitters found</td>
-        </tr>
-      <% else %>
-        <tr>
-          <td colspan="30">No hitters yet</td>
-        </tr>
+      </th>
+      <th colspan="4" class="vs-left<%= ' highlight' if highlight == 'left' %>">vs Lefties</th>
+      <th colspan="4" class="vs-right<%= ' highlight' if highlight == 'right' %>">vs Righties</th>
+      <th colspan="8" class="defense">Defense</th>
+      <% if show_contract %>
+        <th class="left-border"></th>
       <% end %>
-    </tbody>
-  </table>
-</div>
+      <% if show_roster %>
+        <th class="left-border"></th>
+      <% end %>
+    </tr>
+    <tr>
+      <th></th>
+      <th class="align-left">Name</th>
+      <th>Bat</th>
+      <th>Spd</th>
+      <th>Bnt</th>
+      <th>Pos</th>
+      <th>Rtg</th>
+      <th>Dur</th>
+      <th class="left-border">Hit</th>
+      <th>OBP</th>
+      <th>Slg</th>
+      <th>HR</th>
+      <th class="left-border">Hit</th>
+      <th>OBP</th>
+      <th>Slg</th>
+      <th>HR</th>
+      <th class="left-border no-wrap">
+        C<span class="defense-bar">/Bar</span>
+      </th>
+      <th>1B</th>
+      <th>2B</th>
+      <th>3B</th>
+      <th>SS</th>
+      <th>OF</th>
+      <th>CF</th>
+      <th class="no-wrap">
+        P<span class="defense-bar">/Bar</span>
+      </th>
+      <% if show_contract %>
+        <th class="left-border">Contract</th>
+      <% end %>
+      <% if show_roster %>
+        <th class="left-border">Level</th>
+      <% end %>
+    </tr>
+  </thead>
+
+  <tbody class="hitters">
+    <% if hitters.any? %>
+      <% hitters.each_with_index do |hitter, table_index| %>
+        <%= render 'hitters/hitter',
+                   hitter: hitter,
+                   table_index: (table_index + page_index + 1),
+                   show_contract: show_contract,
+                   show_team: show_team,
+                   show_roster: show_roster,
+                   highlight: highlight %>
+      <% end %>
+    <% elsif searching? %>
+      <tr>
+        <td colspan="30">No hitters found</td>
+      </tr>
+    <% else %>
+      <tr>
+        <td colspan="30">No hitters yet</td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
 
 <% if pages %>
   <div class="page-links">

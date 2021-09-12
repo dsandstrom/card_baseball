@@ -18,57 +18,55 @@
   </div>
 <% end %>
 
-<div class="table-wrapper">
-  <table class="pitchers">
-    <thead>
-      <% if pitchers.any? && pages %>
-        <tr>
-          <th colspan=20><%= page_entries_info pitchers %></th>
-        </tr>
-      <% end %>
+<table class="pitchers">
+  <thead>
+    <% if pitchers.any? && pages %>
       <tr>
-        <th></th>
-        <th class="align-left">Name</th>
-        <th>Type</th>
-        <th>Thr</th>
-        <th>Start</th>
-        <th>Relief</th>
-        <th>Dur</th>
-        <th class="no-wrap">
-          Def<span class="defense-bar">/Bar</span>
-        </th>
-        <% if show_contract %>
-          <th class="left-border">Contract</th>
-        <% end %>
-        <% if show_roster %>
-          <th class="left-border">Level</th>
-        <% end %>
+        <th colspan=20><%= page_entries_info pitchers %></th>
       </tr>
-    </thead>
-
-    <tbody class="pitchers">
-      <% if pitchers.any? %>
-        <% pitchers.each_with_index do |pitcher, table_index| %>
-          <%= render 'pitchers/pitcher',
-                     pitcher: pitcher,
-                     table_index: (table_index + page_index + 1),
-                     show_contract: show_contract,
-                     show_team: show_team,
-                     show_roster: show_roster,
-                     highlight: highlight %>
-        <% end %>
-      <% elsif searching? %>
-        <tr>
-          <td colspan="30">No pitchers found</td>
-        </tr>
-      <% else %>
-        <tr>
-          <td colspan="30">No pitchers yet</td>
-        </tr>
+    <% end %>
+    <tr>
+      <th></th>
+      <th class="align-left">Name</th>
+      <th>Type</th>
+      <th>Thr</th>
+      <th>Start</th>
+      <th>Relief</th>
+      <th>Dur</th>
+      <th class="no-wrap">
+        Def<span class="defense-bar">/Bar</span>
+      </th>
+      <% if show_contract %>
+        <th class="left-border">Contract</th>
       <% end %>
-    </tbody>
-  </table>
-</div>
+      <% if show_roster %>
+        <th class="left-border">Level</th>
+      <% end %>
+    </tr>
+  </thead>
+
+  <tbody class="pitchers">
+    <% if pitchers.any? %>
+      <% pitchers.each_with_index do |pitcher, table_index| %>
+        <%= render 'pitchers/pitcher',
+                   pitcher: pitcher,
+                   table_index: (table_index + page_index + 1),
+                   show_contract: show_contract,
+                   show_team: show_team,
+                   show_roster: show_roster,
+                   highlight: highlight %>
+      <% end %>
+    <% elsif searching? %>
+      <tr>
+        <td colspan="30">No pitchers found</td>
+      </tr>
+    <% else %>
+      <tr>
+        <td colspan="30">No pitchers yet</td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
 
 <% if pages %>
   <div class="page-links">

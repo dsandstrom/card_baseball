@@ -1,4 +1,6 @@
 .table-wrapper {
+  width: 100%;
+  margin-bottom: 1.5rem;
   overflow-x: auto;
 
   table {
@@ -68,7 +70,7 @@ th {
 .hitters,
 .pitchers,
 .players {
-  width: 100%;
+  max-width: 100%;
 
   thead {
     position: sticky;
