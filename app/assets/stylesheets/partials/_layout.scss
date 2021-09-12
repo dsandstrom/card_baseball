@@ -150,6 +150,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-right: 1rem;
 
   p {
     margin-bottom: 0;
@@ -226,8 +227,7 @@ body {
 .app-logo {
   width: 3rem;
   height: 3rem;
-  margin: 0 .5rem 0 0;
-  margin-bottom: 0;
+  margin: 0 0 0 1.5rem;
 }
 
 @include breakpoint(medium up) {
@@ -235,10 +235,6 @@ body {
     display: flex;
     align-items: baseline;
     justify-content: flex-start;
-  }
-
-  .app-name {
-    border-right: 1rem solid transparent;
   }
 
   .app-logo {
