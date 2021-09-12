@@ -82,10 +82,26 @@ RSpec.describe Lineup, type: :model do
         end
 
         context "and with_dh doesn't change" do
-          it "doesn't change spots count" do
-            expect do
-              lineup.update(name: "New")
-            end.not_to change(lineup.spots, :count)
+          context "when pitcher batting 9th" do
+            it "doesn't change spots count" do
+              expect do
+                lineup.update(name: "New")
+              end.not_to change(lineup.spots, :count)
+            end
+          end
+
+          context "when hitter batting 9th" do
+            before do
+              pitcher_spot = lineup.spots.find_by(position: 1)
+              pitcher_spot.update batting_order: 8
+              Fabricate(:spot, lineup: lineup, batting_order: 9, position: 3)
+            end
+
+            it "doesn't change spots count" do
+              expect do
+                lineup.update(name: "New")
+              end.not_to change(lineup.spots, :count)
+            end
           end
         end
 
@@ -538,10 +554,10 @@ RSpec.describe Lineup, type: :model do
     context "when 9th batting_order taken" do
       before { Fabricate(:spot, lineup: lineup, batting_order: 9, position: 7) }
 
-      it "destroys the spot" do
+      it "doesn't destroy the spot" do
         expect do
           lineup.remove_dh_spot
-        end.to change(lineup.spots, :count).by(-1)
+        end.not_to change(lineup.spots, :count)
       end
     end
 

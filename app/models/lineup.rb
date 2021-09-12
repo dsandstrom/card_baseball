@@ -29,8 +29,7 @@ class Lineup < ApplicationRecord
   end
 
   def remove_dh_spot
-    spots.where('spots.batting_order = ? OR spots.position = ?', 9, 9)
-         .destroy_all
+    spots.where(position: 9).destroy_all
   end
 
   def bench
@@ -73,8 +72,7 @@ class Lineup < ApplicationRecord
       if with_dh?
         pitcher_spot&.destroy
       elsif !pitcher_spot
-        spots.where(batting_order: 9).destroy_all
-        spots.create!(position: 1, batting_order: 9)
+        spots.create(position: 1, batting_order: highest_open_batting_order)
       end
     end
 
@@ -123,5 +121,13 @@ class Lineup < ApplicationRecord
     def build_catcher_bar
       catcher_spot = spots_at_position(2).first
       catcher_spot&.player&.bar2 || 0
+    end
+
+    def highest_open_batting_order
+      [9, 8, 7, 6, 5, 4, 3, 2, 1].find do |batting_order|
+        next if spots.find_by(batting_order: batting_order).present?
+
+        return batting_order
+      end
     end
 end
