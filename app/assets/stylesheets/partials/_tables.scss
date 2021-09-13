@@ -211,6 +211,15 @@ th {
   }
 }
 
+.hitters,
+.pitchers {
+  .defense-positive,
+  .defense-negative,
+  .defense-neutral {
+    font-weight: bold;
+  }
+}
+
 .rosters {
   width: 100%;
 
@@ -344,12 +353,12 @@ th {
   color: $color-warning;
 }
 
-.defense-missing {
-  color: $light-gray;
-}
-
 .defense-neutral {
   color: $dark-gray;
+}
+
+.defense-missing {
+  color: $light-gray;
 }
 
 .defense-bar {
