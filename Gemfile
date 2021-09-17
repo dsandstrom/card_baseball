@@ -63,6 +63,7 @@ group :development do
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'guard-livereload', '~> 2.5', require: false
+  gem 'guard-webpacker', '~> 0.2.1'
   # Access an interactive console on exception pages or by calling 'console'
   # anywhere in the code.
   gem 'web-console', '>= 4.1.0'
