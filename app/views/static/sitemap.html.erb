@@ -15,7 +15,7 @@
           <%= link_to league.name, league %>
           <ul>
             <% league.teams.each do |team| %>
-              <li><%= link_to team.name, team %></li>
+              <li><%= link_to team.name, league_team_path(league, team) %></li>
             <% end %>
           </ul>
         </li>
