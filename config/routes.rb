@@ -45,6 +45,7 @@ Rails.application.routes.draw do
   end
 
   get '/unauthorized' => 'static#unauthorized', as: :unauthorized
+  get '/sitemap' => 'static#sitemap', as: :sitemap
 
   root to: 'leagues#index'
 end

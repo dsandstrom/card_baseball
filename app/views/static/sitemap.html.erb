@@ -1,0 +1,39 @@
+<div class="page-header">
+  <div class="columns">
+    <div class="first-column">
+      <%= content_tag :h1, 'Sitemap' %>
+    </div>
+  </div>
+</div>
+
+<ul class="sitemap-pages">
+  <li>
+    <%= link_to 'Leagues', root_path %>
+    <ul>
+      <% @leagues.each do |league| %>
+        <li>
+          <%= link_to league.name, league %>
+          <ul>
+            <% league.teams.each do |team| %>
+              <li><%= link_to team.name, team %></li>
+            <% end %>
+          </ul>
+        </li>
+      <% end %>
+    </ul>
+  </li>
+
+  <li><%= link_to 'Players', players_path %></li>
+  <li><%= link_to 'Hitters', hitters_path %></li>
+  <li><%= link_to 'Pitchers', pitchers_path %></li>
+
+  <li>
+    <%= link_to_if can?(:read, User), 'Users', users_path %>
+
+    <ul>
+      <li>
+        <%= link_to current_user.name, user_path(current_user) %>
+      </li>
+    </ul>
+  </li>
+</ul>
