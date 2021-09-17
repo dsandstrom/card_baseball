@@ -34,8 +34,19 @@
 
   <% if current_user.admin? && current_user != @user %>
     <div class="field">
-      <%= form.label :admin_role %>
-      <%= form.check_box :admin_role %>
+      <%= label_tag 'Role' %>
+
+      <div class="check-box-buttons">
+        <%= label_tag 'user_admin_role_false', class: 'radio-button-label' do %>
+          <%= form.radio_button :admin_role, false %>
+          User
+        <% end %>
+
+        <%= label_tag 'user_admin_role_true', class: 'radio-button-label' do %>
+          <%= form.radio_button :admin_role, true %>
+          Admin
+        <% end %>
+      </div>
     </div>
   <% end %>
 
