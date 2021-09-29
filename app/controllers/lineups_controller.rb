@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# FIXME: when dropping bench player on spot, then dragging to another spot
+
 class LineupsController < ApplicationController
   before_action :convert_params, only: %i[create update]
   load_and_authorize_resource :team
