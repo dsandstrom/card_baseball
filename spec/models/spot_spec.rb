@@ -258,7 +258,7 @@ RSpec.describe Spot, type: :model do
       end
 
       context "when player doesn't play the position" do
-        let(:player) { Fabricate(:player, defense1: nil) }
+        let(:player) { Fabricate(:hitter, defense1: nil) }
 
         before do
           subject.position = 1
