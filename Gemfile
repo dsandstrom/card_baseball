@@ -78,7 +78,7 @@ group :development do
   gem 'rubocop', '~> 1.18.4', require: false
   gem 'scss_lint', '~> 0.59', require: false
   # gem 'scss_lint_reporter_junit', '~> 0.1', require: false
-  gem 'spring'
+  gem 'spring', '~> 2.1'
 end
 
 group :test do
