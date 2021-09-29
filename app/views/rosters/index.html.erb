@@ -1,5 +1,6 @@
 <% if @team %>
   <%= league_team_breadcrumbs(@team.league, @team) %>
+  <%= enable_page_title "#{@team.name} Rosters" %>
 
   <div class="page-header">
     <div class="columns">
@@ -43,6 +44,7 @@
     </div>
 
     <%= leagues_nav %>
+    <%= enable_page_title 'Rosters' %>
   </div>
 
   <div class="table-wrapper">

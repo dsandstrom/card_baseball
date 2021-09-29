@@ -1,5 +1,8 @@
 <% if @team %>
   <%= league_team_breadcrumbs(@league, @team) %>
+  <%= enable_page_title "#{@team.name} Pitchers" %>
+<% else %>
+  <%= enable_page_title 'Pitchers' %>
 <% end %>
 
 <div class="page-header">
