@@ -302,10 +302,13 @@
     background-color: $off-white;
   }
 
+  .player-wrapper {
+    margin-right: 1rem;
+  }
+
   .player-positions {
     display: flex;
     align-items: center;
-    margin-left: 1rem;
   }
 
   .player-position {
@@ -317,6 +320,7 @@
 
 .bench-player {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
 }
