@@ -5,7 +5,6 @@
 require 'csv'
 
 class HittersImporter
-  FILE_PATH = %w[tmp csv hitters.csv].freeze
   MAP = {
     bats: 'Bats', speed: 'Spd',
     bunt_grade: 'Bunt', offensive_rating: 'Rating',
@@ -23,7 +22,7 @@ class HittersImporter
   attr_accessor :csv_file
 
   def initialize
-    self.csv_file = File.read(File.join(FILE_PATH))
+    self.csv_file = File.read(file_path)
   end
 
   def import
@@ -41,6 +40,16 @@ class HittersImporter
   end
 
   private
+
+    def file_path
+      dir_path =
+        if Rails.env.test?
+          %w[tmp test csv].freeze
+        else
+          %w[tmp csv].freeze
+        end
+      File.join(dir_path, 'hitters.csv')
+    end
 
     def map_from_csv(row)
       attrs = {}
