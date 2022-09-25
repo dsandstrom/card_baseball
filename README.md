@@ -3,7 +3,7 @@
 [![Rubocop Actions Status](https://github.com/dsandstrom/card_baseball/workflows/Rubocop/badge.svg)](https://github.com/dsandstrom/card_baseball/actions?query=workflow%3ARubocop) [![Stylelint Actions Status](https://github.com/dsandstrom/card_baseball/workflows/Stylelint/badge.svg)](https://github.com/dsandstrom/card_baseball/actions?query=workflow%3AStylelint)
 
 ## Introduction
-This is a Ruby on Rails app built to house League and Player information for a Card Baseball Game. The "card" game has since been abandoned and heartfully continued using an Excel file. This app hopes to reproduce the game, but is currently a work in progress.
+This is a Ruby on Rails app built to house League and Player information for a Card Baseball Game. The "card" game has since been abandoned, but has been heartfully continued using an Excel file. This app hopes to reproduce the game, but is currently a work in progress.
 
 ## Local Setup
 
