@@ -26,7 +26,7 @@ class ContractsImporter
       roster_name = row['Roster Name']
       return unless roster_name
 
-      player = Player.find_by!(roster_name: roster_name)
+      player = Player.find_by!(roster_name:)
       team = Team.find_by!(identifier: row['Team'])
       contract = player.contract || player.build_contract
       contract.assign_attributes(team_id: team.id,

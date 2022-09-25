@@ -15,7 +15,7 @@ RSpec.describe HittersController, type: :controller do
       before { Fabricate(:hitter) }
 
       context "when team" do
-        before { Fabricate(:contract, team: team, player: hitter) }
+        before { Fabricate(:contract, team:, player: hitter) }
 
         it "returns a success response" do
           get :index, params: { team_id: team.to_param }
@@ -37,7 +37,7 @@ RSpec.describe HittersController, type: :controller do
       before { Fabricate(:hitter) }
 
       context "when team" do
-        before { Fabricate(:contract, team: team, player: hitter) }
+        before { Fabricate(:contract, team:, player: hitter) }
 
         it "returns a success response" do
           get :index, params: { team_id: team.to_param }

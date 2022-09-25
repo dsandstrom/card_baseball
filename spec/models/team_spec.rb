@@ -34,7 +34,7 @@ RSpec.describe Team, type: :model do
   # INSTANCE
 
   describe "#hitters" do
-    let(:team) { Fabricate(:team, league: league) }
+    let(:team) { Fabricate(:team, league:) }
     let(:first_base) do
       Fabricate(:player, defense3: 1, defense7: -1, primary_position: 3,
                          offensive_rating: 80)
@@ -62,8 +62,8 @@ RSpec.describe Team, type: :model do
 
     context "when a first baseman and pitcher" do
       before do
-        Fabricate(:contract, team: team, player: first_base)
-        Fabricate(:contract, team: team, player: pitcher)
+        Fabricate(:contract, team:, player: first_base)
+        Fabricate(:contract, team:, player: pitcher)
       end
 
       it "returns them" do
@@ -72,7 +72,7 @@ RSpec.describe Team, type: :model do
     end
 
     context "when an outfielder" do
-      before { Fabricate(:contract, team: team, player: outfield) }
+      before { Fabricate(:contract, team:, player: outfield) }
 
       it "returns them" do
         expect(team.hitters).to eq([outfield])
@@ -80,7 +80,7 @@ RSpec.describe Team, type: :model do
     end
 
     context "when a hitting_pitcher" do
-      before { Fabricate(:contract, team: team, player: hitting_pitcher) }
+      before { Fabricate(:contract, team:, player: hitting_pitcher) }
 
       it "returns them" do
         expect(team.hitters).to eq([hitting_pitcher])
@@ -89,8 +89,8 @@ RSpec.describe Team, type: :model do
 
     context "when a first baseman and outfielder" do
       before do
-        Fabricate(:contract, team: team, player: first_base)
-        Fabricate(:contract, team: team, player: outfield)
+        Fabricate(:contract, team:, player: first_base)
+        Fabricate(:contract, team:, player: outfield)
       end
 
       it "orders by offensive_rating" do
@@ -100,7 +100,7 @@ RSpec.describe Team, type: :model do
   end
 
   describe "#pitchers" do
-    let(:team) { Fabricate(:team, league: league) }
+    let(:team) { Fabricate(:team, league:) }
     let(:first_base) do
       Fabricate(:player, defense3: 1, defense7: -1, primary_position: 3,
                          offensive_rating: 80)
@@ -128,9 +128,9 @@ RSpec.describe Team, type: :model do
 
     context "when a first baseman, outfielder, and pitcher" do
       before do
-        Fabricate(:contract, team: team, player: first_base)
-        Fabricate(:contract, team: team, player: outfield)
-        Fabricate(:contract, team: team, player: pitcher)
+        Fabricate(:contract, team:, player: first_base)
+        Fabricate(:contract, team:, player: outfield)
+        Fabricate(:contract, team:, player: pitcher)
       end
 
       it "returns pitcher" do
@@ -139,7 +139,7 @@ RSpec.describe Team, type: :model do
     end
 
     context "when a hitting_pitcher" do
-      before { Fabricate(:contract, team: team, player: hitting_pitcher) }
+      before { Fabricate(:contract, team:, player: hitting_pitcher) }
 
       it "returns them" do
         expect(team.pitchers).to eq([hitting_pitcher])
@@ -148,8 +148,8 @@ RSpec.describe Team, type: :model do
 
     context "when two pitchers" do
       before do
-        Fabricate(:contract, team: team, player: pitcher)
-        Fabricate(:contract, team: team, player: hitting_pitcher)
+        Fabricate(:contract, team:, player: pitcher)
+        Fabricate(:contract, team:, player: hitting_pitcher)
       end
 
       it "orders by pitcher_rating" do
@@ -178,7 +178,7 @@ RSpec.describe Team, type: :model do
       let(:starting_pitcher) { Fabricate(:starting_pitcher) }
 
       before do
-        Fabricate(:contract, team: team, player: starting_pitcher)
+        Fabricate(:contract, team:, player: starting_pitcher)
         Fabricate(:contract)
       end
 
@@ -192,7 +192,7 @@ RSpec.describe Team, type: :model do
 
       context "with roster" do
         before do
-          Fabricate(:roster, team: team, player: starting_pitcher, position: 1)
+          Fabricate(:roster, team:, player: starting_pitcher, position: 1)
         end
 
         it "doesn't create any rosters" do
@@ -207,7 +207,7 @@ RSpec.describe Team, type: :model do
       let(:relief_pitcher) { Fabricate(:relief_pitcher) }
 
       before do
-        Fabricate(:contract, team: team, player: relief_pitcher)
+        Fabricate(:contract, team:, player: relief_pitcher)
         Fabricate(:contract)
       end
 
@@ -221,7 +221,7 @@ RSpec.describe Team, type: :model do
 
       context "with roster" do
         before do
-          Fabricate(:roster, team: team, player: relief_pitcher, position: 10)
+          Fabricate(:roster, team:, player: relief_pitcher, position: 10)
         end
 
         it "doesn't create any rosters" do
@@ -236,7 +236,7 @@ RSpec.describe Team, type: :model do
       let(:infielder) { Fabricate(:player, primary_position: 5) }
 
       before do
-        Fabricate(:contract, team: team, player: infielder)
+        Fabricate(:contract, team:, player: infielder)
         Fabricate(:contract)
       end
 
@@ -250,7 +250,7 @@ RSpec.describe Team, type: :model do
 
       context "with roster" do
         before do
-          Fabricate(:roster, team: team, player: infielder, level: 3,
+          Fabricate(:roster, team:, player: infielder, level: 3,
                              position: 3)
         end
 
@@ -266,7 +266,7 @@ RSpec.describe Team, type: :model do
       let(:outfielder) { Fabricate(:player, primary_position: 7) }
 
       before do
-        Fabricate(:contract, team: team, player: outfielder)
+        Fabricate(:contract, team:, player: outfielder)
         Fabricate(:contract)
       end
 
@@ -280,7 +280,7 @@ RSpec.describe Team, type: :model do
 
       context "with roster" do
         before do
-          Fabricate(:roster, team: team, player: outfielder, level: 3,
+          Fabricate(:roster, team:, player: outfielder, level: 3,
                              position: 7)
         end
 
@@ -296,18 +296,18 @@ RSpec.describe Team, type: :model do
       before do
         5.times do |n|
           player = Fabricate(:starting_pitcher, pitcher_rating: 70 + n)
-          Fabricate(:roster, team: team, player: player, level: 4, position: 1)
+          Fabricate(:roster, team:, player:, level: 4, position: 1)
         end
 
         6.times do |n|
           player = Fabricate(:relief_pitcher, pitcher_rating: 70 + n)
-          Fabricate(:roster, team: team, player: player, level: 4, position: 10)
+          Fabricate(:roster, team:, player:, level: 4, position: 10)
         end
 
         14.times do |n|
           player =
             Fabricate(:player, primary_position: 3, offensive_rating: 70 + n)
-          Fabricate(:roster, team: team, player: player, level: 4, position: 3)
+          Fabricate(:roster, team:, player:, level: 4, position: 3)
         end
       end
 
@@ -315,7 +315,7 @@ RSpec.describe Team, type: :model do
         before do
           2.times do
             player = Fabricate(:hitter)
-            Fabricate(:contract, team: team, player: player)
+            Fabricate(:contract, team:, player:)
           end
         end
 
@@ -337,7 +337,7 @@ RSpec.describe Team, type: :model do
       before do
         7.times do |n|
           pitcher = Fabricate(:starting_pitcher, pitcher_rating: 70 + n)
-          Fabricate(:contract, team: team, player: pitcher)
+          Fabricate(:contract, team:, player: pitcher)
         end
       end
 
@@ -371,7 +371,7 @@ RSpec.describe Team, type: :model do
       before do
         9.times do |n|
           pitcher = Fabricate(:starting_pitcher, pitcher_rating: 70 + n)
-          Fabricate(:contract, team: team, player: pitcher)
+          Fabricate(:contract, team:, player: pitcher)
         end
       end
 
@@ -410,7 +410,7 @@ RSpec.describe Team, type: :model do
       before do
         7.times do |n|
           pitcher = Fabricate(:relief_pitcher, pitcher_rating: 70 + n)
-          Fabricate(:contract, team: team, player: pitcher)
+          Fabricate(:contract, team:, player: pitcher)
         end
       end
 
@@ -437,7 +437,7 @@ RSpec.describe Team, type: :model do
       before do
         9.times do |n|
           pitcher = Fabricate(:relief_pitcher, pitcher_rating: 70 + n)
-          Fabricate(:contract, team: team, player: pitcher)
+          Fabricate(:contract, team:, player: pitcher)
         end
       end
 
@@ -478,7 +478,7 @@ RSpec.describe Team, type: :model do
         5.times do |n|
           player = Fabricate(:player, primary_position: 2,
                                       offensive_rating: 70 + n)
-          Fabricate(:contract, team: team, player: player)
+          Fabricate(:contract, team:, player:)
         end
       end
 
@@ -515,7 +515,7 @@ RSpec.describe Team, type: :model do
     end
 
     context "when no spots" do
-      before { Fabricate(:lineup, team: team) }
+      before { Fabricate(:lineup, team:) }
 
       it "doesn't destroy any spots" do
         expect do
@@ -526,11 +526,11 @@ RSpec.describe Team, type: :model do
 
     context "when spot from player with level 4 roster" do
       let(:player) { Fabricate(:player, primary_position: 5) }
-      let(:lineup) { Fabricate(:lineup, team: team) }
+      let(:lineup) { Fabricate(:lineup, team:) }
 
       before do
-        Fabricate(:roster, team: team, player: player, position: 5, level: 4)
-        Fabricate(:spot, lineup: lineup, player: player, position: 5)
+        Fabricate(:roster, team:, player:, position: 5, level: 4)
+        Fabricate(:spot, lineup:, player:, position: 5)
       end
 
       it "doesn't destroy any spots" do
@@ -542,12 +542,12 @@ RSpec.describe Team, type: :model do
 
     context "when spot from player with level 3 roster" do
       let(:player) { Fabricate(:player, primary_position: 5) }
-      let(:lineup) { Fabricate(:lineup, team: team) }
+      let(:lineup) { Fabricate(:lineup, team:) }
 
       before do
-        roster = Fabricate(:roster, team: team, player: player, position: 5,
+        roster = Fabricate(:roster, team:, player:, position: 5,
                                     level: 4)
-        Fabricate(:spot, lineup: lineup, player: player, position: 5)
+        Fabricate(:spot, lineup:, player:, position: 5)
         roster.update(position: 3, level: 3)
       end
 

@@ -104,28 +104,28 @@ class Team < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
     def create_starting_pitcher_rosters(amount, level)
       amount.times do
-        create_roster player: best_rosterless_starting_pitcher, level: level,
+        create_roster player: best_rosterless_starting_pitcher, level:,
                       position: 1
       end
     end
 
     def create_relief_pitcher_rosters(amount, level)
       amount.times do
-        create_roster player: best_rosterless_relief_pitcher, level: level,
+        create_roster player: best_rosterless_relief_pitcher, level:,
                       position: 10
       end
     end
 
     def create_outfielder_rosters(amount, level)
       amount.times do
-        create_roster(player: best_rosterless_outfielder, level: level,
+        create_roster(player: best_rosterless_outfielder, level:,
                       position: 7)
       end
     end
 
     def create_infielder_rosters(amount, level)
       amount.times do
-        create_roster(player: best_rosterless_infielder, level: level,
+        create_roster(player: best_rosterless_infielder, level:,
                       position: 3)
       end
     end
@@ -169,7 +169,7 @@ class Team < ApplicationRecord # rubocop:disable Metrics/ClassLength
         best = best_rosterless_at_position(position)
         next unless best
 
-        create_roster(player: best, level: 4, position: position)
+        create_roster(player: best, level: 4, position:)
         level_balance -= 1
       end
 

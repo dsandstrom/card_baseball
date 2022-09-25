@@ -25,7 +25,7 @@ RSpec.describe ContractsController, type: :controller do
       end
 
       context "when player has a contract" do
-        before { Fabricate(:contract, player: player) }
+        before { Fabricate(:contract, player:) }
 
         it "returns a success response" do
           get :edit, params: { player_id: player.to_param }
@@ -47,7 +47,7 @@ RSpec.describe ContractsController, type: :controller do
       end
 
       context "when player has a contract" do
-        before { Fabricate(:contract, player: player) }
+        before { Fabricate(:contract, player:) }
 
         it "returns a success response" do
           get :edit, params: { player_id: player.to_param }
@@ -96,7 +96,7 @@ RSpec.describe ContractsController, type: :controller do
       end
 
       context "when player has a contract" do
-        let!(:contract) { Fabricate(:contract, player: player) }
+        let!(:contract) { Fabricate(:contract, player:) }
 
         context "when valid params" do
           it "updates the requested Contract" do
@@ -160,7 +160,7 @@ RSpec.describe ContractsController, type: :controller do
       end
 
       context "when player has a contract" do
-        let!(:contract) { Fabricate(:contract, player: player) }
+        let!(:contract) { Fabricate(:contract, player:) }
 
         it "doesn't change the requested Contract" do
           expect do
@@ -201,7 +201,7 @@ RSpec.describe ContractsController, type: :controller do
       end
 
       context "when player has a contract" do
-        let!(:contract) { Fabricate(:contract, player: player) }
+        let!(:contract) { Fabricate(:contract, player:) }
 
         it "destroys the requested Contract" do
           expect do
@@ -235,7 +235,7 @@ RSpec.describe ContractsController, type: :controller do
       end
 
       context "when player has a contract" do
-        let!(:contract) { Fabricate(:contract, player: player) }
+        let!(:contract) { Fabricate(:contract, player:) }
 
         it "destroys the requested Contract" do
           expect do

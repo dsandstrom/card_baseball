@@ -34,8 +34,8 @@ RSpec.describe Lineup, type: :model do
         let(:lineup) { Fabricate(:lineup, with_dh: true) }
 
         before do
-          Fabricate(:spot, lineup: lineup, batting_order: 1, position: 2)
-          Fabricate(:spot, lineup: lineup, batting_order: 2, position: 9)
+          Fabricate(:spot, lineup:, batting_order: 1, position: 2)
+          Fabricate(:spot, lineup:, batting_order: 2, position: 9)
         end
 
         context "and with_dh doesn't change" do
@@ -59,8 +59,8 @@ RSpec.describe Lineup, type: :model do
         let(:lineup) { Fabricate(:lineup, with_dh: false) }
 
         before do
-          Fabricate(:spot, lineup: lineup, batting_order: 1, position: 2)
-          Fabricate(:spot, lineup: lineup, batting_order: 2, position: 9)
+          Fabricate(:spot, lineup:, batting_order: 1, position: 2)
+          Fabricate(:spot, lineup:, batting_order: 2, position: 9)
         end
 
         context "and with_dh doesn't change" do
@@ -78,7 +78,7 @@ RSpec.describe Lineup, type: :model do
         let(:lineup) { Fabricate(:lineup, with_dh: false) }
 
         before do
-          Fabricate(:spot, lineup: lineup, batting_order: 1, position: 2)
+          Fabricate(:spot, lineup:, batting_order: 1, position: 2)
         end
 
         context "and with_dh doesn't change" do
@@ -94,7 +94,7 @@ RSpec.describe Lineup, type: :model do
             before do
               pitcher_spot = lineup.spots.find_by(position: 1)
               pitcher_spot.update batting_order: 8
-              Fabricate(:spot, lineup: lineup, batting_order: 9, position: 3)
+              Fabricate(:spot, lineup:, batting_order: 9, position: 3)
             end
 
             it "doesn't change spots count" do
@@ -118,7 +118,7 @@ RSpec.describe Lineup, type: :model do
         let(:lineup) { Fabricate(:lineup, with_dh: true) }
 
         before do
-          Fabricate(:spot, lineup: lineup, batting_order: 1, position: 2)
+          Fabricate(:spot, lineup:, batting_order: 1, position: 2)
         end
 
         context "and with_dh doesn't change" do
@@ -146,7 +146,7 @@ RSpec.describe Lineup, type: :model do
 
           context "and ninth batter" do
             before do
-              Fabricate(:spot, lineup: lineup, batting_order: 9, position: 5)
+              Fabricate(:spot, lineup:, batting_order: 9, position: 5)
             end
 
             it "adds pitcher spot" do
@@ -531,7 +531,7 @@ RSpec.describe Lineup, type: :model do
   describe "#remove_dh_spot" do
     let(:lineup) { Fabricate(:dh_lineup) }
 
-    before { Fabricate(:spot, lineup: lineup, batting_order: 2, position: 2) }
+    before { Fabricate(:spot, lineup:, batting_order: 2, position: 2) }
 
     context "when the dh spot and 9th batting order are empty" do
       it "doesn't destroy any spots" do
@@ -542,7 +542,7 @@ RSpec.describe Lineup, type: :model do
     end
 
     context "when the dh spot taken" do
-      before { Fabricate(:spot, lineup: lineup, batting_order: 3, position: 9) }
+      before { Fabricate(:spot, lineup:, batting_order: 3, position: 9) }
 
       it "destroys the spot" do
         expect do
@@ -552,7 +552,7 @@ RSpec.describe Lineup, type: :model do
     end
 
     context "when 9th batting_order taken" do
-      before { Fabricate(:spot, lineup: lineup, batting_order: 9, position: 7) }
+      before { Fabricate(:spot, lineup:, batting_order: 9, position: 7) }
 
       it "doesn't destroy the spot" do
         expect do
@@ -562,7 +562,7 @@ RSpec.describe Lineup, type: :model do
     end
 
     context "when dh is batting 9th" do
-      before { Fabricate(:spot, lineup: lineup, batting_order: 9, position: 9) }
+      before { Fabricate(:spot, lineup:, batting_order: 9, position: 9) }
 
       it "destroys the spot" do
         expect do
@@ -573,7 +573,7 @@ RSpec.describe Lineup, type: :model do
   end
 
   describe "#bench" do
-    let(:lineup) { Fabricate(:lineup, team: team) }
+    let(:lineup) { Fabricate(:lineup, team:) }
 
     context "when no players" do
       it "returns []" do
@@ -593,14 +593,14 @@ RSpec.describe Lineup, type: :model do
       end
 
       before do
-        Fabricate(:contract, team: team, player: first_player)
-        Fabricate(:contract, team: team, player: second_player)
-        Fabricate(:contract, team: team, player: third_player)
+        Fabricate(:contract, team:, player: first_player)
+        Fabricate(:contract, team:, player: second_player)
+        Fabricate(:contract, team:, player: third_player)
         Fabricate(:contract)
 
-        Fabricate(:roster, team: team, player: first_player, level: 4,
+        Fabricate(:roster, team:, player: first_player, level: 4,
                            position: 2)
-        Fabricate(:roster, team: team, player: second_player, level: 3,
+        Fabricate(:roster, team:, player: second_player, level: 3,
                            position: 3)
       end
 
@@ -612,7 +612,7 @@ RSpec.describe Lineup, type: :model do
 
       context "and one in the lineup" do
         before do
-          Fabricate(:spot, player: first_player, lineup: lineup, position: 2)
+          Fabricate(:spot, player: first_player, lineup:, position: 2)
         end
 
         it "returns none" do
@@ -635,7 +635,7 @@ RSpec.describe Lineup, type: :model do
 
     context "when spot with position 2" do
       it "returns it" do
-        spot = Fabricate(:spot, lineup: lineup, position: 2)
+        spot = Fabricate(:spot, lineup:, position: 2)
 
         expect(lineup.spots_at_position(2)).to eq([spot])
       end
@@ -643,7 +643,7 @@ RSpec.describe Lineup, type: :model do
 
     context "when given spot id" do
       it "returns []" do
-        spot = Fabricate(:spot, lineup: lineup, position: 2)
+        spot = Fabricate(:spot, lineup:, position: 2)
 
         expect(lineup.spots_at_position(2, spot.id)).to eq([])
       end
@@ -663,7 +663,7 @@ RSpec.describe Lineup, type: :model do
       context "and 8 spots" do
         before do
           (2..8).each do |batting_order|
-            Fabricate(:spot, lineup: lineup, batting_order: batting_order,
+            Fabricate(:spot, lineup:, batting_order:,
                              position: (batting_order + 1))
           end
         end
@@ -676,10 +676,10 @@ RSpec.describe Lineup, type: :model do
       context "and 8 spots and a pitcher" do
         before do
           (1..7).each do |batting_order|
-            Fabricate(:spot, lineup: lineup, batting_order: batting_order,
+            Fabricate(:spot, lineup:, batting_order:,
                              position: (batting_order + 1))
           end
-          Fabricate(:spot, lineup: lineup, batting_order: 8, position: 7)
+          Fabricate(:spot, lineup:, batting_order: 8, position: 7)
         end
 
         it "returns true" do
@@ -700,7 +700,7 @@ RSpec.describe Lineup, type: :model do
       context "and 8 spots" do
         before do
           (1..8).each do |batting_order|
-            Fabricate(:spot, lineup: lineup, batting_order: batting_order,
+            Fabricate(:spot, lineup:, batting_order:,
                              position: (batting_order + 1))
           end
         end
@@ -713,10 +713,10 @@ RSpec.describe Lineup, type: :model do
       context "and 9 spots" do
         before do
           (1..8).each do |batting_order|
-            Fabricate(:spot, lineup: lineup, batting_order: batting_order,
+            Fabricate(:spot, lineup:, batting_order:,
                              position: (batting_order + 1))
           end
-          Fabricate(:spot, lineup: lineup, batting_order: 9, position: 7)
+          Fabricate(:spot, lineup:, batting_order: 9, position: 7)
         end
 
         it "returns true" do
@@ -747,7 +747,7 @@ RSpec.describe Lineup, type: :model do
 
     context "when 2 valid spots" do
       context "for away" do
-        let(:lineup) { Fabricate(:lineup, team: team, away: true) }
+        let(:lineup) { Fabricate(:lineup, team:, away: true) }
         let(:second_base_player) do
           Fabricate(:player, primary_position: 4, defense4: 5)
         end
@@ -756,15 +756,15 @@ RSpec.describe Lineup, type: :model do
         end
 
         before do
-          Fabricate(:contract, player: second_base_player, team: team)
-          Fabricate(:contract, player: third_base_player, team: team)
-          Fabricate(:roster, player: second_base_player, team: team, level: 4,
+          Fabricate(:contract, player: second_base_player, team:)
+          Fabricate(:contract, player: third_base_player, team:)
+          Fabricate(:roster, player: second_base_player, team:, level: 4,
                              position: 4)
-          Fabricate(:roster, player: third_base_player, team: team, level: 4,
+          Fabricate(:roster, player: third_base_player, team:, level: 4,
                              position: 5)
-          Fabricate(:spot, lineup: lineup, batting_order: 2, position: 4,
+          Fabricate(:spot, lineup:, batting_order: 2, position: 4,
                            player: second_base_player)
-          Fabricate(:spot, lineup: lineup, batting_order: 3, position: 5,
+          Fabricate(:spot, lineup:, batting_order: 3, position: 5,
                            player: third_base_player)
         end
 
@@ -774,7 +774,7 @@ RSpec.describe Lineup, type: :model do
       end
 
       context "for home" do
-        let(:lineup) { Fabricate(:lineup, team: team, away: false) }
+        let(:lineup) { Fabricate(:lineup, team:, away: false) }
         let(:second_base_player) do
           Fabricate(:player, primary_position: 4, defense4: 5)
         end
@@ -783,15 +783,15 @@ RSpec.describe Lineup, type: :model do
         end
 
         before do
-          Fabricate(:contract, player: second_base_player, team: team)
-          Fabricate(:contract, player: third_base_player, team: team)
-          Fabricate(:roster, player: second_base_player, team: team, level: 4,
+          Fabricate(:contract, player: second_base_player, team:)
+          Fabricate(:contract, player: third_base_player, team:)
+          Fabricate(:roster, player: second_base_player, team:, level: 4,
                              position: 4)
-          Fabricate(:roster, player: third_base_player, team: team, level: 4,
+          Fabricate(:roster, player: third_base_player, team:, level: 4,
                              position: 5)
-          Fabricate(:spot, lineup: lineup, batting_order: 2, position: 4,
+          Fabricate(:spot, lineup:, batting_order: 2, position: 4,
                            player: second_base_player)
-          Fabricate(:spot, lineup: lineup, batting_order: 3, position: 5,
+          Fabricate(:spot, lineup:, batting_order: 3, position: 5,
                            player: third_base_player)
         end
 
@@ -803,7 +803,7 @@ RSpec.describe Lineup, type: :model do
 
     context "when a spot is missing defense" do
       context "for away" do
-        let(:lineup) { Fabricate(:lineup, team: team, away: true) }
+        let(:lineup) { Fabricate(:lineup, team:, away: true) }
         let(:second_base_player) do
           Fabricate(:player, primary_position: 4, defense4: 5)
         end
@@ -812,15 +812,15 @@ RSpec.describe Lineup, type: :model do
         end
 
         before do
-          Fabricate(:contract, player: second_base_player, team: team)
-          Fabricate(:contract, player: third_base_player, team: team)
-          Fabricate(:roster, player: second_base_player, team: team, level: 4,
+          Fabricate(:contract, player: second_base_player, team:)
+          Fabricate(:contract, player: third_base_player, team:)
+          Fabricate(:roster, player: second_base_player, team:, level: 4,
                              position: 4)
-          Fabricate(:roster, player: third_base_player, team: team, level: 4,
+          Fabricate(:roster, player: third_base_player, team:, level: 4,
                              position: 5)
-          Fabricate(:spot, lineup: lineup, batting_order: 2, position: 4,
+          Fabricate(:spot, lineup:, batting_order: 2, position: 4,
                            player: second_base_player)
-          Fabricate(:spot, lineup: lineup, batting_order: 3, position: 5,
+          Fabricate(:spot, lineup:, batting_order: 3, position: 5,
                            player: third_base_player)
           third_base_player.update_column :defense5, nil
         end
@@ -831,7 +831,7 @@ RSpec.describe Lineup, type: :model do
       end
 
       context "for home" do
-        let(:lineup) { Fabricate(:lineup, team: team, away: false) }
+        let(:lineup) { Fabricate(:lineup, team:, away: false) }
         let(:second_base_player) do
           Fabricate(:player, primary_position: 4, defense4: 5)
         end
@@ -840,15 +840,15 @@ RSpec.describe Lineup, type: :model do
         end
 
         before do
-          Fabricate(:contract, player: second_base_player, team: team)
-          Fabricate(:contract, player: third_base_player, team: team)
-          Fabricate(:roster, player: second_base_player, team: team, level: 4,
+          Fabricate(:contract, player: second_base_player, team:)
+          Fabricate(:contract, player: third_base_player, team:)
+          Fabricate(:roster, player: second_base_player, team:, level: 4,
                              position: 4)
-          Fabricate(:roster, player: third_base_player, team: team, level: 4,
+          Fabricate(:roster, player: third_base_player, team:, level: 4,
                              position: 5)
-          Fabricate(:spot, lineup: lineup, batting_order: 2, position: 4,
+          Fabricate(:spot, lineup:, batting_order: 2, position: 4,
                            player: second_base_player)
-          Fabricate(:spot, lineup: lineup, batting_order: 3, position: 5,
+          Fabricate(:spot, lineup:, batting_order: 3, position: 5,
                            player: third_base_player)
           third_base_player.update_column :defense5, nil
         end
@@ -861,14 +861,14 @@ RSpec.describe Lineup, type: :model do
   end
 
   describe "#catcher_bar" do
-    let(:lineup) { Fabricate(:lineup, team: team) }
+    let(:lineup) { Fabricate(:lineup, team:) }
     let(:player) do
       Fabricate(:player, primary_position: 2, defense2: 4, bar2: 2)
     end
 
     before do
-      Fabricate(:contract, team: team, player: player)
-      Fabricate(:roster, team: team, player: player, level: 4, position: 2)
+      Fabricate(:contract, team:, player:)
+      Fabricate(:roster, team:, player:, level: 4, position: 2)
     end
 
     context "when no catcher spot" do
@@ -878,7 +878,7 @@ RSpec.describe Lineup, type: :model do
     end
 
     context "when catcher spot" do
-      before { Fabricate(:spot, lineup: lineup, player: player, position: 2) }
+      before { Fabricate(:spot, lineup:, player:, position: 2) }
 
       context "with a good catcher" do
         it "returns the player's catcher_bar" do

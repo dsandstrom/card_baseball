@@ -9,8 +9,8 @@ RSpec.describe "lineups/show", type: :view do
   let(:player) { Fabricate(:hitter) }
 
   before do
-    Fabricate(:contract, team: team, player: player)
-    Fabricate(:roster, team: team, player: player, level: 4,
+    Fabricate(:contract, team:, player:)
+    Fabricate(:roster, team:, player:, level: 4,
                        position: player.primary_position)
   end
 
@@ -18,7 +18,7 @@ RSpec.describe "lineups/show", type: :view do
     before { enable_can(view, admin) }
 
     context "when with_dh is false" do
-      let(:lineup) { Fabricate(:lineup, team: team, with_dh: false) }
+      let(:lineup) { Fabricate(:lineup, team:, with_dh: false) }
       let!(:pitcher_spot) { lineup.spots.find_by(position: 1) }
 
       before(:each) do
@@ -61,7 +61,7 @@ RSpec.describe "lineups/show", type: :view do
     end
 
     context "when with_dh is true" do
-      let(:lineup) { Fabricate(:lineup, team: team, with_dh: true) }
+      let(:lineup) { Fabricate(:lineup, team:, with_dh: true) }
 
       before(:each) do
         assign(:team, team)
@@ -104,7 +104,7 @@ RSpec.describe "lineups/show", type: :view do
       let(:team) { Fabricate(:team, user_id: user.id) }
 
       context "when with_dh is false" do
-        let(:lineup) { Fabricate(:lineup, team: team, with_dh: false) }
+        let(:lineup) { Fabricate(:lineup, team:, with_dh: false) }
         let!(:pitcher_spot) { lineup.spots.find_by(position: 1) }
 
         before(:each) do
@@ -147,7 +147,7 @@ RSpec.describe "lineups/show", type: :view do
       end
 
       context "when with_dh is true" do
-        let(:lineup) { Fabricate(:lineup, team: team, with_dh: true) }
+        let(:lineup) { Fabricate(:lineup, team:, with_dh: true) }
 
         before(:each) do
           assign(:team, team)
@@ -187,7 +187,7 @@ RSpec.describe "lineups/show", type: :view do
       let(:team) { Fabricate(:team) }
 
       context "when with_dh is false" do
-        let(:lineup) { Fabricate(:lineup, team: team, with_dh: false) }
+        let(:lineup) { Fabricate(:lineup, team:, with_dh: false) }
 
         before(:each) do
           assign(:team, team)
@@ -224,7 +224,7 @@ RSpec.describe "lineups/show", type: :view do
       end
 
       context "when with_dh is true" do
-        let(:lineup) { Fabricate(:lineup, team: team, with_dh: true) }
+        let(:lineup) { Fabricate(:lineup, team:, with_dh: true) }
 
         before(:each) do
           assign(:team, team)

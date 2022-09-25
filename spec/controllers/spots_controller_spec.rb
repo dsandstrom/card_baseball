@@ -9,15 +9,15 @@ RSpec.describe SpotsController, type: :controller do
   let(:player) do
     Fabricate(:hitter, primary_position: 2, defense2: 5, defense3: 1)
   end
-  let(:lineup) { Fabricate(:lineup, team: team) }
+  let(:lineup) { Fabricate(:lineup, team:) }
   let(:spot) do
-    Fabricate(:spot, lineup: lineup, player: player, batting_order: 4,
+    Fabricate(:spot, lineup:, player:, batting_order: 4,
                      position: 2)
   end
 
   before do
-    Fabricate(:contract, player: player, team: team)
-    Fabricate(:roster, player: player, team: team, level: 4, position: 2)
+    Fabricate(:contract, player:, team:)
+    Fabricate(:roster, player:, team:, level: 4, position: 2)
   end
 
   let(:valid_attributes) do
@@ -51,7 +51,7 @@ RSpec.describe SpotsController, type: :controller do
 
       context "when their team" do
         let(:team) { Fabricate(:team, user_id: user.id) }
-        let(:lineup) { Fabricate(:lineup, team: team) }
+        let(:lineup) { Fabricate(:lineup, team:) }
 
         context "for an HTML request" do
           it "returns a success response" do
@@ -70,7 +70,7 @@ RSpec.describe SpotsController, type: :controller do
 
       context "when not their team" do
         let(:team) { Fabricate(:team) }
-        let(:lineup) { Fabricate(:lineup, team: team) }
+        let(:lineup) { Fabricate(:lineup, team:) }
 
         context "for an HTML request" do
           it "returns a success response" do
@@ -117,7 +117,7 @@ RSpec.describe SpotsController, type: :controller do
 
       context "when their team" do
         let(:team) { Fabricate(:team, user_id: user.id) }
-        let(:lineup) { Fabricate(:lineup, team: team) }
+        let(:lineup) { Fabricate(:lineup, team:) }
 
         before { spot }
 
@@ -141,7 +141,7 @@ RSpec.describe SpotsController, type: :controller do
 
       context "when not their team" do
         let(:team) { Fabricate(:team) }
-        let(:lineup) { Fabricate(:lineup, team: team) }
+        let(:lineup) { Fabricate(:lineup, team:) }
 
         before { spot }
 
@@ -240,7 +240,7 @@ RSpec.describe SpotsController, type: :controller do
 
         context "when player has a current spot in the lineup" do
           before do
-            Fabricate(:spot, lineup: lineup, player: player, batting_order: 1,
+            Fabricate(:spot, lineup:, player:, batting_order: 1,
                              position: 2)
           end
 
@@ -336,7 +336,7 @@ RSpec.describe SpotsController, type: :controller do
 
       context "when their team" do
         let(:team) { Fabricate(:team, user_id: user.id) }
-        let(:lineup) { Fabricate(:lineup, team: team) }
+        let(:lineup) { Fabricate(:lineup, team:) }
 
         context "for an HTML request" do
           context "when valid params" do
@@ -407,7 +407,7 @@ RSpec.describe SpotsController, type: :controller do
 
           context "when player has a current spot in the lineup" do
             before do
-              Fabricate(:spot, lineup: lineup, player: player, batting_order: 1,
+              Fabricate(:spot, lineup:, player:, batting_order: 1,
                                position: 2)
             end
 
@@ -457,7 +457,7 @@ RSpec.describe SpotsController, type: :controller do
 
       context "when not their team" do
         let(:team) { Fabricate(:team) }
-        let(:lineup) { Fabricate(:lineup, team: team) }
+        let(:lineup) { Fabricate(:lineup, team:) }
 
         context "for an HTML request" do
           it "doesn't create a new Spot" do
@@ -612,7 +612,7 @@ RSpec.describe SpotsController, type: :controller do
               let(:update_attributes) { { player_id: bench_player.to_param } }
 
               before do
-                Fabricate(:roster, player: bench_player, team: team, level: 4,
+                Fabricate(:roster, player: bench_player, team:, level: 4,
                                    position: 2)
               end
 
@@ -652,7 +652,7 @@ RSpec.describe SpotsController, type: :controller do
               let(:update_attributes) { { player_id: bench_player.to_param } }
 
               before do
-                Fabricate(:roster, player: bench_player, team: team, level: 4,
+                Fabricate(:roster, player: bench_player, team:, level: 4,
                                    position: 2)
               end
 
@@ -691,12 +691,12 @@ RSpec.describe SpotsController, type: :controller do
             end
 
             before do
-              Fabricate(:roster, player: new_player, team: team, level: 4,
+              Fabricate(:roster, player: new_player, team:, level: 4,
                                  position: 2)
             end
 
             let!(:old_spot) do
-              Fabricate(:spot, lineup: lineup, player: new_player, position: 3,
+              Fabricate(:spot, lineup:, player: new_player, position: 3,
                                batting_order: 7)
             end
 
@@ -829,14 +829,14 @@ RSpec.describe SpotsController, type: :controller do
             end
 
             before do
-              Fabricate(:roster, player: new_player, team: team, level: 4,
+              Fabricate(:roster, player: new_player, team:, level: 4,
                                  position: 2)
             end
 
             let(:pitcher_spot) { lineup.spots.find_by(position: 1) }
 
             let!(:old_spot) do
-              Fabricate(:spot, lineup: lineup, player: new_player, position: 3,
+              Fabricate(:spot, lineup:, player: new_player, position: 3,
                                batting_order: 7)
             end
 
@@ -908,7 +908,7 @@ RSpec.describe SpotsController, type: :controller do
 
       context "when their team" do
         let(:team) { Fabricate(:team, user_id: user.id) }
-        let(:lineup) { Fabricate(:lineup, team: team) }
+        let(:lineup) { Fabricate(:lineup, team:) }
 
         context "for an HTML request" do
           context "when valid params" do
@@ -1022,8 +1022,8 @@ RSpec.describe SpotsController, type: :controller do
                 let(:update_attributes) { { player_id: bench_player.to_param } }
 
                 before do
-                  Fabricate(:contract, player: bench_player, team: team)
-                  Fabricate(:roster, player: bench_player, team: team, level: 4,
+                  Fabricate(:contract, player: bench_player, team:)
+                  Fabricate(:roster, player: bench_player, team:, level: 4,
                                      position: 2)
                 end
 
@@ -1063,13 +1063,13 @@ RSpec.describe SpotsController, type: :controller do
               end
 
               before do
-                Fabricate(:contract, player: new_player, team: team)
-                Fabricate(:roster, player: new_player, team: team, level: 4,
+                Fabricate(:contract, player: new_player, team:)
+                Fabricate(:roster, player: new_player, team:, level: 4,
                                    position: 2)
               end
 
               let!(:old_spot) do
-                Fabricate(:spot, lineup: lineup, player: new_player,
+                Fabricate(:spot, lineup:, player: new_player,
                                  position: 3, batting_order: 7)
               end
 
@@ -1138,7 +1138,7 @@ RSpec.describe SpotsController, type: :controller do
 
       context "when not their team" do
         let(:team) { Fabricate(:team) }
-        let(:lineup) { Fabricate(:lineup, team: team) }
+        let(:lineup) { Fabricate(:lineup, team:) }
 
         context "for an HTML request" do
           it "doesn't change the requested Spot's name" do
@@ -1225,7 +1225,7 @@ RSpec.describe SpotsController, type: :controller do
 
       context "when their team" do
         let(:team) { Fabricate(:team, user_id: user.id) }
-        let(:lineup) { Fabricate(:lineup, team: team) }
+        let(:lineup) { Fabricate(:lineup, team:) }
 
         context "for an HTML request" do
           it "destroys the requested Spot" do
@@ -1262,7 +1262,7 @@ RSpec.describe SpotsController, type: :controller do
 
       context "when not their team" do
         let(:team) { Fabricate(:team) }
-        let(:lineup) { Fabricate(:lineup, team: team) }
+        let(:lineup) { Fabricate(:lineup, team:) }
 
         context "for an HTML request" do
           it "doesn't destroys the requested Spot" do

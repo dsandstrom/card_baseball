@@ -34,12 +34,12 @@ RSpec.describe "leagues/show", type: :view do
     end
 
     context "when league has teams" do
-      let(:team) { Fabricate(:team, league: league) }
+      let(:team) { Fabricate(:team, league:) }
       let(:team_path) { league_team_path(league, team) }
 
       before do
         assign(:teams, [team])
-        Fabricate(:contract, team: team, player: hitter)
+        Fabricate(:contract, team:, player: hitter)
       end
 
       it "renders the teams" do
@@ -85,12 +85,12 @@ RSpec.describe "leagues/show", type: :view do
     end
 
     context "when league has teams" do
-      let(:team) { Fabricate(:team, league: league) }
-      let(:user_team) { Fabricate(:team, league: league, user: user) }
+      let(:team) { Fabricate(:team, league:) }
+      let(:user_team) { Fabricate(:team, league:, user:) }
 
       before do
         assign(:teams, [team, user_team])
-        Fabricate(:contract, team: team, player: hitter)
+        Fabricate(:contract, team:, player: hitter)
       end
 
       it "renders the teams" do

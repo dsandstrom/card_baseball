@@ -4,8 +4,8 @@ require "rails_helper"
 
 RSpec.describe "spots/edit", type: :view do
   let(:team) { Fabricate(:team) }
-  let(:lineup) { Fabricate(:lineup, team: team) }
-  let(:spot) { Fabricate(:spot, lineup: lineup) }
+  let(:lineup) { Fabricate(:lineup, team:) }
+  let(:spot) { Fabricate(:spot, lineup:) }
 
   before(:each) do
     assign(:lineup, lineup)

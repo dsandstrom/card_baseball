@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe LineupsController, type: :controller do
   let(:team) { Fabricate(:team) }
-  let(:lineup) { Fabricate(:lineup, team: team) }
+  let(:lineup) { Fabricate(:lineup, team:) }
   let(:admin) { Fabricate(:admin) }
   let(:user) { Fabricate(:user) }
 
@@ -15,7 +15,7 @@ RSpec.describe LineupsController, type: :controller do
     context "for an admin" do
       before { sign_in(admin) }
 
-      before { Fabricate(:lineup, team: team) }
+      before { Fabricate(:lineup, team:) }
 
       it "returns a success response" do
         get :index, params: { team_id: team.to_param }
@@ -26,7 +26,7 @@ RSpec.describe LineupsController, type: :controller do
     context "for a user" do
       before { sign_in(user) }
 
-      before { Fabricate(:lineup, team: team) }
+      before { Fabricate(:lineup, team:) }
 
       context "when their team" do
         let(:team) { Fabricate(:team, user_id: user.id) }
@@ -217,7 +217,7 @@ RSpec.describe LineupsController, type: :controller do
       end
 
       context "when invalid params" do
-        before { Fabricate(:lineup, team: team, name: "") }
+        before { Fabricate(:lineup, team:, name: "") }
 
         it "doesn't create a new Lineup" do
           expect do
@@ -256,7 +256,7 @@ RSpec.describe LineupsController, type: :controller do
         end
 
         context "when invalid params" do
-          before { Fabricate(:lineup, team: team, name: "") }
+          before { Fabricate(:lineup, team:, name: "") }
 
           it "doesn't create a new Lineup" do
             expect do
@@ -313,7 +313,7 @@ RSpec.describe LineupsController, type: :controller do
       end
 
       context "when invalid params" do
-        before { Fabricate(:lineup, team: team, name: "") }
+        before { Fabricate(:lineup, team:, name: "") }
 
         it "doesn't create a new Lineup" do
           expect do
@@ -331,7 +331,7 @@ RSpec.describe LineupsController, type: :controller do
       end
 
       context "when with_dh changes to true" do
-        let!(:lineup) { Fabricate(:lineup, team: team, with_dh: false) }
+        let!(:lineup) { Fabricate(:lineup, team:, with_dh: false) }
 
         let(:valid_attributes) { { with_dh: true } }
 
@@ -344,7 +344,7 @@ RSpec.describe LineupsController, type: :controller do
         end
 
         it "destroys the pitcher's spot" do
-          Fabricate(:spot, lineup: lineup, position: 2, batting_order: 3)
+          Fabricate(:spot, lineup:, position: 2, batting_order: 3)
           expect do
             put :update, params: { team_id: team.to_param, id: lineup.to_param,
                                    lineup: valid_attributes }
@@ -359,7 +359,7 @@ RSpec.describe LineupsController, type: :controller do
       end
 
       context "when with_dh changes to false" do
-        let!(:lineup) { Fabricate(:lineup, team: team, with_dh: true) }
+        let!(:lineup) { Fabricate(:lineup, team:, with_dh: true) }
 
         let(:valid_attributes) { { with_dh: false } }
 
@@ -372,8 +372,8 @@ RSpec.describe LineupsController, type: :controller do
         end
 
         it "removes the DH spot" do
-          Fabricate(:spot, lineup: lineup, position: 2, batting_order: 3)
-          Fabricate(:spot, lineup: lineup, position: 9, batting_order: 5)
+          Fabricate(:spot, lineup:, position: 2, batting_order: 3)
+          Fabricate(:spot, lineup:, position: 9, batting_order: 5)
           expect do
             put :update, params: { team_id: team.to_param, id: lineup.to_param,
                                    lineup: valid_attributes }
@@ -381,7 +381,7 @@ RSpec.describe LineupsController, type: :controller do
         end
 
         it "adds pitcher spot" do
-          Fabricate(:spot, lineup: lineup, position: 2, batting_order: 3)
+          Fabricate(:spot, lineup:, position: 2, batting_order: 3)
           expect do
             put :update, params: { team_id: team.to_param, id: lineup.to_param,
                                    lineup: valid_attributes }
@@ -421,7 +421,7 @@ RSpec.describe LineupsController, type: :controller do
         end
 
         context "when invalid params" do
-          before { Fabricate(:lineup, team: team, name: "") }
+          before { Fabricate(:lineup, team:, name: "") }
 
           it "doesn't create a new Lineup" do
             expect do
@@ -444,7 +444,7 @@ RSpec.describe LineupsController, type: :controller do
       context "when not their team" do
         let(:team) { Fabricate(:team) }
 
-        before { Fabricate(:lineup, team: team, name: "") }
+        before { Fabricate(:lineup, team:, name: "") }
 
         it "doesn't create a new Lineup" do
           expect do

@@ -43,7 +43,7 @@ class Lineup < ApplicationRecord
   end
 
   def spots_at_position(position, current_spot_id = nil)
-    pos_spots = spots.where(position: position)
+    pos_spots = spots.where(position:)
     pos_spots = pos_spots.where.not(id: current_spot_id) if current_spot_id
     pos_spots
   end
@@ -125,7 +125,7 @@ class Lineup < ApplicationRecord
 
     def highest_open_batting_order
       [9, 8, 7, 6, 5, 4, 3, 2, 1].find do |batting_order|
-        next if spots.find_by(batting_order: batting_order).present?
+        next if spots.find_by(batting_order:).present?
 
         return batting_order
       end

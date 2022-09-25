@@ -42,7 +42,7 @@ RSpec.describe "players/show", type: :view do
 
     context "with a contract" do
       before do
-        Fabricate(:contract, player: player)
+        Fabricate(:contract, player:)
         assign(:player, player)
       end
 
@@ -205,7 +205,7 @@ RSpec.describe "players/show", type: :view do
 
     context "with a contract" do
       before do
-        Fabricate(:contract, player: player)
+        Fabricate(:contract, player:)
         assign(:player, player)
       end
 

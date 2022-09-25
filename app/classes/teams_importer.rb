@@ -20,7 +20,7 @@ class TeamsImporter
       next unless name
 
       league = League.find_by!(name: row['League'])
-      team = Team.find_or_initialize_by(name: name)
+      team = Team.find_or_initialize_by(name:)
       team.assign_attributes(league_id: league.id, identifier: row['ID'])
       team.save!
     end

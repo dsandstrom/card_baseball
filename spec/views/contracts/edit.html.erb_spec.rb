@@ -5,7 +5,7 @@ require "rails_helper"
 RSpec.describe "contracts/edit", type: :view do
   let(:player) { Fabricate(:player) }
   let(:league) { Fabricate(:league) }
-  let(:team) { Fabricate(:team, league: league) }
+  let(:team) { Fabricate(:team, league:) }
 
   before do
     @player = assign(:player, player)
@@ -13,7 +13,7 @@ RSpec.describe "contracts/edit", type: :view do
   end
 
   context "when player doesn't have a contract" do
-    let(:contract) { Fabricate.build(:contract, player: player) }
+    let(:contract) { Fabricate.build(:contract, player:) }
 
     before(:each) do
       @contract = assign(:contract, contract)
@@ -31,7 +31,7 @@ RSpec.describe "contracts/edit", type: :view do
   end
 
   context "when player has a contract" do
-    let(:contract) { Fabricate(:contract, player: player) }
+    let(:contract) { Fabricate(:contract, player:) }
 
     before(:each) do
       @contract = assign(:contract, contract)

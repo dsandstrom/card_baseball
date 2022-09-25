@@ -45,7 +45,7 @@ class SpotsController < ApplicationController
         redirect_to redirect_url,
                     notice: 'Batting spot was successfully cleared.'
       end
-      format.js { @spot = @lineup.spots.build(batting_order: batting_order) }
+      format.js { @spot = @lineup.spots.build(batting_order:) }
     end
   end
 

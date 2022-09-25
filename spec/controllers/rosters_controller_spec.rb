@@ -4,12 +4,12 @@ require "rails_helper"
 
 RSpec.describe RostersController, type: :controller do
   let(:team) { Fabricate(:team) }
-  let(:roster) { Fabricate(:roster, team: team) }
+  let(:roster) { Fabricate(:roster, team:) }
   let(:admin) { Fabricate(:admin) }
   let(:user) { Fabricate(:user) }
   let(:player) { Fabricate(:pitcher) }
 
-  before { Fabricate(:contract, team: team, player: player) }
+  before { Fabricate(:contract, team:, player:) }
 
   let(:valid_attributes) do
     { player_id: player.to_param, level: "2", position: "1" }
@@ -21,7 +21,7 @@ RSpec.describe RostersController, type: :controller do
     context "for an admin" do
       before { sign_in(admin) }
 
-      before { Fabricate(:roster, team: team) }
+      before { Fabricate(:roster, team:) }
 
       it "returns a success response" do
         get :index, params: { team_id: team.to_param }
@@ -32,7 +32,7 @@ RSpec.describe RostersController, type: :controller do
     context "for a user" do
       before { sign_in(user) }
 
-      before { Fabricate(:roster, team: team) }
+      before { Fabricate(:roster, team:) }
 
       context "when their team" do
         before { team.update(user_id: user.id) }
@@ -151,8 +151,8 @@ RSpec.describe RostersController, type: :controller do
 
         context "when player already has a roster" do
           before do
-            Fabricate(:roster, team: team, level: 1, position: 1,
-                               player: player)
+            Fabricate(:roster, team:, level: 1, position: 1,
+                               player:)
           end
 
           context "when valid params" do
@@ -188,7 +188,7 @@ RSpec.describe RostersController, type: :controller do
 
         context "when player already has a roster for the current level" do
           before do
-            Fabricate(:roster, team: team, player: player,
+            Fabricate(:roster, team:, player:,
                                level: valid_attributes[:level],
                                position: valid_attributes[:position])
           end
@@ -256,7 +256,7 @@ RSpec.describe RostersController, type: :controller do
             let(:other_player) { Fabricate(:pitcher) }
 
             before do
-              Fabricate(:roster, team: team, level: 2, position: 1,
+              Fabricate(:roster, team:, level: 2, position: 1,
                                  player: other_player)
             end
 
@@ -303,8 +303,8 @@ RSpec.describe RostersController, type: :controller do
         context "when player already has a roster" do
           context "in a different level" do
             before do
-              Fabricate(:roster, team: team, level: 1, position: 1,
-                                 player: player)
+              Fabricate(:roster, team:, level: 1, position: 1,
+                                 player:)
             end
 
             context "when valid params" do
@@ -345,13 +345,13 @@ RSpec.describe RostersController, type: :controller do
           context "for the current position" do
             let(:other_player) { Fabricate(:pitcher) }
             let!(:current_roster) do
-              Fabricate(:roster, team: team, player: player,
+              Fabricate(:roster, team:, player:,
                                  level: valid_attributes[:level],
                                  position: valid_attributes[:position])
             end
 
             before do
-              Fabricate(:roster, team: team, level: 2, position: 1,
+              Fabricate(:roster, team:, level: 2, position: 1,
                                  player: other_player,
                                  row_order_position: :last)
             end
@@ -484,14 +484,14 @@ RSpec.describe RostersController, type: :controller do
         context "when level doesn't change from 4" do
           let(:player) { Fabricate(:player, primary_position: 3) }
           let(:roster) do
-            Fabricate(:roster, team: team, player: player, level: 4,
+            Fabricate(:roster, team:, player:, level: 4,
                                position: player.primary_position)
           end
           let(:update_attributes) { { level: 4 } }
-          let(:lineup) { Fabricate(:lineup, team: team) }
+          let(:lineup) { Fabricate(:lineup, team:) }
 
           before do
-            Fabricate(:spot, lineup: lineup, player: player,
+            Fabricate(:spot, lineup:, player:,
                              position: player.primary_position)
           end
 
@@ -507,14 +507,14 @@ RSpec.describe RostersController, type: :controller do
         context "when level changes from 4" do
           let(:player) { Fabricate(:player, primary_position: 3) }
           let(:roster) do
-            Fabricate(:roster, team: team, player: player, level: 4,
+            Fabricate(:roster, team:, player:, level: 4,
                                position: player.primary_position)
           end
           let(:update_attributes) { { level: 3 } }
-          let(:lineup) { Fabricate(:lineup, team: team) }
+          let(:lineup) { Fabricate(:lineup, team:) }
 
           before do
-            Fabricate(:spot, lineup: lineup, player: player,
+            Fabricate(:spot, lineup:, player:,
                              position: player.primary_position)
           end
 
@@ -582,7 +582,7 @@ RSpec.describe RostersController, type: :controller do
               position: roster.position }
           end
 
-          before { Fabricate(:contract, team: team, player: other_player) }
+          before { Fabricate(:contract, team:, player: other_player) }
 
           it "updates the requested Roster's order" do
             expect do
@@ -635,7 +635,7 @@ RSpec.describe RostersController, type: :controller do
           end
 
           let!(:other_roster) do
-            Fabricate(:roster, team: team, player: other_player,
+            Fabricate(:roster, team:, player: other_player,
                                level: roster.level, position: roster.position)
           end
 
@@ -694,14 +694,14 @@ RSpec.describe RostersController, type: :controller do
         context "when level changes from 4" do
           let(:player) { Fabricate(:player, primary_position: 3) }
           let(:roster) do
-            Fabricate(:roster, team: team, player: player, level: 4,
+            Fabricate(:roster, team:, player:, level: 4,
                                position: player.primary_position)
           end
           let(:update_attributes) { { level: 3 } }
-          let(:lineup) { Fabricate(:lineup, team: team) }
+          let(:lineup) { Fabricate(:lineup, team:) }
 
           before do
-            Fabricate(:spot, lineup: lineup, player: player,
+            Fabricate(:spot, lineup:, player:,
                              position: player.primary_position)
           end
 

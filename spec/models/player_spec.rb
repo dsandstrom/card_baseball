@@ -451,7 +451,7 @@ RSpec.describe Player, type: :model do
       let!(:third_player) { Fabricate(:player) }
 
       before do
-        Fabricate(:contract, player: first_player, team: team)
+        Fabricate(:contract, player: first_player, team:)
         Fabricate(:contract, player: second_player)
       end
 
@@ -555,7 +555,7 @@ RSpec.describe Player, type: :model do
       end
 
       before do
-        Fabricate(:contract, player: first_player, team: team)
+        Fabricate(:contract, player: first_player, team:)
       end
 
       it "returns players that match all filters" do
@@ -1889,7 +1889,7 @@ RSpec.describe Player, type: :model do
     end
 
     context "when roster level is 1" do
-      before { Fabricate(:roster, player: player, level: 1, position: 3) }
+      before { Fabricate(:roster, player:, level: 1, position: 3) }
 
       it "returns A" do
         expect(player.roster_level).to eq("A")
@@ -1897,7 +1897,7 @@ RSpec.describe Player, type: :model do
     end
 
     context "when roster level is 2" do
-      before { Fabricate(:roster, player: player, level: 2, position: 3) }
+      before { Fabricate(:roster, player:, level: 2, position: 3) }
 
       it "returns A" do
         expect(player.roster_level).to eq("AA")
@@ -1905,7 +1905,7 @@ RSpec.describe Player, type: :model do
     end
 
     context "when roster level is 3" do
-      before { Fabricate(:roster, player: player, level: 3, position: 3) }
+      before { Fabricate(:roster, player:, level: 3, position: 3) }
 
       it "returns A" do
         expect(player.roster_level).to eq("AAA")
@@ -1913,7 +1913,7 @@ RSpec.describe Player, type: :model do
     end
 
     context "when roster level is 4" do
-      before { Fabricate(:roster, player: player, level: 4, position: 5) }
+      before { Fabricate(:roster, player:, level: 4, position: 5) }
 
       it "returns A" do
         expect(player.roster_level).to eq("Majors")

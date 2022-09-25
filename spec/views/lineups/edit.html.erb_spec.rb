@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe "lineups/edit", type: :view do
   let(:team) { Fabricate(:team) }
-  let(:lineup) { Fabricate(:lineup, team: team) }
+  let(:lineup) { Fabricate(:lineup, team:) }
 
   before(:each) do
     assign(:team, team)

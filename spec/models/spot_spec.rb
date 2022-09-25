@@ -4,10 +4,10 @@ require "rails_helper"
 
 RSpec.describe Spot, type: :model do
   let(:team) { Fabricate(:team) }
-  let(:lineup) { Fabricate(:lineup, team: team) }
+  let(:lineup) { Fabricate(:lineup, team:) }
   let(:hitter) { Fabricate(:player, primary_position: 2, defense2: 5) }
   let(:roster) do
-    Fabricate(:roster, player: hitter, team: team, level: 4, position: 2)
+    Fabricate(:roster, player: hitter, team:, level: 4, position: 2)
   end
 
   before do
@@ -43,7 +43,7 @@ RSpec.describe Spot, type: :model do
           subject.batting_order = 8
 
           [2, 3, 4, 5, 6, 7, 8].each_with_index do |position, index|
-            Fabricate(:spot, lineup: lineup, position: position,
+            Fabricate(:spot, lineup:, position:,
                              batting_order: (index + 1))
           end
         end
@@ -88,7 +88,7 @@ RSpec.describe Spot, type: :model do
         let(:pitcher) { Fabricate(:starting_pitcher) }
 
         before do
-          Fabricate(:roster, level: 4, team: team, player: pitcher, position: 1)
+          Fabricate(:roster, level: 4, team:, player: pitcher, position: 1)
           subject.position = 1
         end
 
@@ -124,7 +124,7 @@ RSpec.describe Spot, type: :model do
         let(:player) { Fabricate(:player, primary_position: 2) }
 
         before do
-          Fabricate(:roster, level: 4, team: team, player: player, position: 2)
+          Fabricate(:roster, level: 4, team:, player:, position: 2)
           subject.position = 2
         end
 
@@ -178,7 +178,7 @@ RSpec.describe Spot, type: :model do
 
       context "when level 3 roster" do
         let(:roster) do
-          Fabricate(:roster, team: team, player: hitter, level: 3, position: 3)
+          Fabricate(:roster, team:, player: hitter, level: 3, position: 3)
         end
 
         it { is_expected.not_to be_valid }
@@ -195,7 +195,7 @@ RSpec.describe Spot, type: :model do
           let(:starting_pitcher) { Fabricate(:starting_pitcher) }
 
           before do
-            Fabricate(:roster, team: team, player: starting_pitcher, level: 4,
+            Fabricate(:roster, team:, player: starting_pitcher, level: 4,
                                position: 1)
             subject.player_id = starting_pitcher.id
           end
@@ -209,7 +209,7 @@ RSpec.describe Spot, type: :model do
           end
 
           before do
-            Fabricate(:roster, team: team, player: relief_pitcher, level: 4,
+            Fabricate(:roster, team:, player: relief_pitcher, level: 4,
                                position: 10)
             subject.player_id = relief_pitcher.id
           end

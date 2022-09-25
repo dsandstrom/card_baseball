@@ -20,7 +20,7 @@ RSpec.describe Ability do
       end
 
       context "when their team" do
-        let(:team) { Fabricate(:team, user: user) }
+        let(:team) { Fabricate(:team, user:) }
 
         subject(:ability) { Ability.new(user) }
 

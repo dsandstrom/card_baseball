@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe TeamsController, type: :controller do
   let(:league) { Fabricate(:league) }
-  let(:team) { Fabricate(:team, league: league) }
+  let(:team) { Fabricate(:team, league:) }
   let(:admin) { Fabricate(:admin) }
   let(:user) { Fabricate(:user) }
 
@@ -26,7 +26,7 @@ RSpec.describe TeamsController, type: :controller do
       before { sign_in(user) }
 
       context "when their team" do
-        let(:team) { Fabricate(:team, league: league, user_id: user.id) }
+        let(:team) { Fabricate(:team, league:, user_id: user.id) }
 
         it "returns a success response" do
           get :show, params: { league_id: league.to_param,
@@ -36,7 +36,7 @@ RSpec.describe TeamsController, type: :controller do
       end
 
       context "when not their team" do
-        let(:team) { Fabricate(:team, league: league) }
+        let(:team) { Fabricate(:team, league:) }
 
         it "returns a success response" do
           get :show, params: { league_id: league.to_param,
@@ -228,7 +228,7 @@ RSpec.describe TeamsController, type: :controller do
       before { sign_in(user) }
 
       context "when their team" do
-        let(:team) { Fabricate(:team, league: league, user_id: user.id) }
+        let(:team) { Fabricate(:team, league:, user_id: user.id) }
 
         it "destroys the requested Team" do
           expect do
@@ -245,7 +245,7 @@ RSpec.describe TeamsController, type: :controller do
       end
 
       context "when not their team" do
-        let(:team) { Fabricate(:team, league: league) }
+        let(:team) { Fabricate(:team, league:) }
 
         it "destroys the requested Team" do
           expect do

@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe "pitchers/index", type: :view do
   let(:league) { Fabricate(:league) }
-  let(:team) { Fabricate(:team, league: league) }
+  let(:team) { Fabricate(:team, league:) }
   let(:first_pitcher) { Fabricate(:pitcher) }
   let(:second_pitcher) { Fabricate(:pitcher) }
   let(:first_path) { player_path(first_pitcher) }

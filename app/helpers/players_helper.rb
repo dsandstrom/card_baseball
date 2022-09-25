@@ -16,7 +16,7 @@ module PlayersHelper
 
   def format_defense_and_bar(defense, bar, options = {})
     tag = options.delete(:tag) || :td
-    return format_defense(defense, options.merge(tag: tag)) if defense.blank?
+    return format_defense(defense, options.merge(tag:)) if defense.blank?
 
     defense_tag = format_defense(defense, tag: :span)
     bar_tag = content_tag(:span, "/#{bar}", class: 'defense-bar') if bar

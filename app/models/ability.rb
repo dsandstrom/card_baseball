@@ -36,9 +36,9 @@ class Ability
         can :read, class_name
       end
       [Lineup, Roster].each do |class_name|
-        can :manage, class_name, team: { user_id: user_id }
+        can :manage, class_name, team: { user_id: }
       end
-      can :manage, Spot, lineup: { team: { user_id: user_id } }
+      can :manage, Spot, lineup: { team: { user_id: } }
       can :update, Team, user_id: user_id
       can :update, User, id: user_id
     end

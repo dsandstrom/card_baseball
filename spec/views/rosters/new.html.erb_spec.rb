@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe "rosters/new", type: :view do
   let(:team) { Fabricate(:team) }
-  let(:roster) { Fabricate.build(:roster, team: team) }
+  let(:roster) { Fabricate.build(:roster, team:) }
 
   before(:each) do
     assign(:team, team)

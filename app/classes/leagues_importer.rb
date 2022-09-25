@@ -19,7 +19,7 @@ class LeaguesImporter
       name = row['Name']
       next unless name
 
-      League.find_or_create_by!(name: name)
+      League.find_or_create_by!(name:)
     end
   end
 end

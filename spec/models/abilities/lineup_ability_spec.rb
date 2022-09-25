@@ -5,7 +5,7 @@ require "cancan/matchers"
 
 RSpec.describe Ability do
   let(:team) { Fabricate(:team) }
-  let(:lineup) { Fabricate(:lineup, team: team) }
+  let(:lineup) { Fabricate(:lineup, team:) }
   let(:user) { Fabricate(:user) }
   let(:admin) { Fabricate(:admin) }
 
@@ -21,8 +21,8 @@ RSpec.describe Ability do
       end
 
       context "when their team" do
-        let(:team) { Fabricate(:team, user: user) }
-        let(:lineup) { Fabricate(:lineup, team: team) }
+        let(:team) { Fabricate(:team, user:) }
+        let(:lineup) { Fabricate(:lineup, team:) }
 
         subject(:ability) { Ability.new(user) }
 

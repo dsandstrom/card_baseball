@@ -9,7 +9,7 @@ RSpec.describe Roster, type: :model do
   let(:player) { Fabricate(:player, primary_position: 3, defense3: 1) }
 
   before do
-    Fabricate(:contract, team: team, player: player)
+    Fabricate(:contract, team:, player:)
     @roster = Roster.new(team_id: team.id, player_id: player.id, level: 1,
                          position: 3)
   end
@@ -50,7 +50,7 @@ RSpec.describe Roster, type: :model do
           let(:player) { Fabricate(:starting_pitcher, relief_pitching: nil) }
 
           before do
-            Fabricate(:contract, team: team, player: player)
+            Fabricate(:contract, team:, player:)
             subject.player = player
           end
 
@@ -91,7 +91,7 @@ RSpec.describe Roster, type: :model do
           let(:player) { Fabricate(:relief_pitcher, starting_pitching: nil) }
 
           before do
-            Fabricate(:contract, team: team, player: player)
+            Fabricate(:contract, team:, player:)
             subject.player = player
           end
 
@@ -132,7 +132,7 @@ RSpec.describe Roster, type: :model do
           let(:player) { Fabricate(:starting_pitcher, relief_pitching: 55) }
 
           before do
-            Fabricate(:contract, team: team, player: player)
+            Fabricate(:contract, team:, player:)
             subject.player = player
           end
 
@@ -173,7 +173,7 @@ RSpec.describe Roster, type: :model do
           let(:player) { Fabricate(:hitting_pitcher, defense7: 4) }
 
           before do
-            Fabricate(:contract, team: team, player: player)
+            Fabricate(:contract, team:, player:)
             subject.player = player
           end
 
@@ -214,7 +214,7 @@ RSpec.describe Roster, type: :model do
           let(:player) { Fabricate(:player, primary_position: 3) }
 
           before do
-            Fabricate(:contract, team: team, player: player)
+            Fabricate(:contract, team:, player:)
             subject.player = player
           end
 
@@ -255,7 +255,7 @@ RSpec.describe Roster, type: :model do
           let(:player) { Fabricate(:player, primary_position: 6) }
 
           before do
-            Fabricate(:contract, team: team, player: player)
+            Fabricate(:contract, team:, player:)
             subject.player = player
           end
 
@@ -296,7 +296,7 @@ RSpec.describe Roster, type: :model do
           let(:player) { Fabricate(:player, primary_position: 7) }
 
           before do
-            Fabricate(:contract, team: team, player: player)
+            Fabricate(:contract, team:, player:)
             subject.player = player
           end
 
@@ -337,7 +337,7 @@ RSpec.describe Roster, type: :model do
           let(:player) { Fabricate(:player, primary_position: 8) }
 
           before do
-            Fabricate(:contract, team: team, player: player)
+            Fabricate(:contract, team:, player:)
             subject.player = player
           end
 
@@ -378,7 +378,7 @@ RSpec.describe Roster, type: :model do
           let(:player) { Fabricate(:player, primary_position: 2) }
 
           before do
-            Fabricate(:contract, team: team, player: player)
+            Fabricate(:contract, team:, player:)
             subject.player = player
           end
 
@@ -423,7 +423,7 @@ RSpec.describe Roster, type: :model do
           let(:player) { Fabricate(:starting_pitcher, relief_pitching: nil) }
 
           before do
-            Fabricate(:contract, team: team, player: player)
+            Fabricate(:contract, team:, player:)
             subject.player = player
           end
 
@@ -464,7 +464,7 @@ RSpec.describe Roster, type: :model do
           let(:player) { Fabricate(:relief_pitcher, starting_pitching: nil) }
 
           before do
-            Fabricate(:contract, team: team, player: player)
+            Fabricate(:contract, team:, player:)
             subject.player = player
           end
 
@@ -505,7 +505,7 @@ RSpec.describe Roster, type: :model do
           let(:player) { Fabricate(:starting_pitcher, relief_pitching: 55) }
 
           before do
-            Fabricate(:contract, team: team, player: player)
+            Fabricate(:contract, team:, player:)
             subject.player = player
           end
 
@@ -548,7 +548,7 @@ RSpec.describe Roster, type: :model do
           end
 
           before do
-            Fabricate(:contract, team: team, player: player)
+            Fabricate(:contract, team:, player:)
             subject.player = player
           end
 
@@ -597,7 +597,7 @@ RSpec.describe Roster, type: :model do
           let(:player) { Fabricate(:player, primary_position: 3) }
 
           before do
-            Fabricate(:contract, team: team, player: player)
+            Fabricate(:contract, team:, player:)
             subject.player = player
           end
 
@@ -646,7 +646,7 @@ RSpec.describe Roster, type: :model do
           let(:player) { Fabricate(:player, primary_position: 6) }
 
           before do
-            Fabricate(:contract, team: team, player: player)
+            Fabricate(:contract, team:, player:)
             subject.player = player
           end
 
@@ -695,7 +695,7 @@ RSpec.describe Roster, type: :model do
           let(:player) { Fabricate(:player, primary_position: 7) }
 
           before do
-            Fabricate(:contract, team: team, player: player)
+            Fabricate(:contract, team:, player:)
             subject.player = player
           end
 
@@ -744,7 +744,7 @@ RSpec.describe Roster, type: :model do
           let(:player) { Fabricate(:player, primary_position: 8) }
 
           before do
-            Fabricate(:contract, team: team, player: player)
+            Fabricate(:contract, team:, player:)
             subject.player = player
           end
 
@@ -794,12 +794,12 @@ RSpec.describe Roster, type: :model do
     describe "#players_at_level4" do
       context "for a new roster" do
         let(:roster) do
-          Fabricate.build(:roster, team: team, player: player, level: 4,
+          Fabricate.build(:roster, team:, player:, level: 4,
                                    position: 3)
         end
 
         context "when already 25 at level 4" do
-          before { 25.times { Fabricate(:roster, team: team, level: 4) } }
+          before { 25.times { Fabricate(:roster, team:, level: 4) } }
 
           it "should be valid" do
             expect(roster).to be_valid
@@ -807,7 +807,7 @@ RSpec.describe Roster, type: :model do
         end
 
         context "when already 26 at level 4" do
-          before { 26.times { Fabricate(:roster, team: team, level: 4) } }
+          before { 26.times { Fabricate(:roster, team:, level: 4) } }
 
           context "and level is 4" do
             before { roster.level = 4 }
@@ -829,11 +829,11 @@ RSpec.describe Roster, type: :model do
 
       context "for a persisted level 4 roster" do
         let!(:roster) do
-          Fabricate(:roster, team: team, player: player, level: 4, position: 3)
+          Fabricate(:roster, team:, player:, level: 4, position: 3)
         end
 
         context "when already 25 at level 4" do
-          before { 25.times { Fabricate(:roster, team: team, level: 4) } }
+          before { 25.times { Fabricate(:roster, team:, level: 4) } }
 
           it "should be valid" do
             expect(roster).to be_valid
@@ -843,12 +843,12 @@ RSpec.describe Roster, type: :model do
 
       context "for a persisted level 3 roster" do
         let(:roster) do
-          Fabricate(:roster, team: team, player: player, level: 3, position: 3)
+          Fabricate(:roster, team:, player:, level: 3, position: 3)
         end
 
         context "when already 25 at level 4" do
           before do
-            25.times { Fabricate(:roster, team: team, level: 4) }
+            25.times { Fabricate(:roster, team:, level: 4) }
             roster
           end
 
@@ -859,7 +859,7 @@ RSpec.describe Roster, type: :model do
 
         context "when already 26 at level 4 and moving to 4" do
           before do
-            26.times { Fabricate(:roster, team: team, level: 4) }
+            26.times { Fabricate(:roster, team:, level: 4) }
             roster.level = 4
           end
 

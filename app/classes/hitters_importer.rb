@@ -34,7 +34,7 @@ class HittersImporter
       roster_name = row['Roster Name']
       next unless roster_name
 
-      player = Player.find_or_initialize_by(roster_name: roster_name)
+      player = Player.find_or_initialize_by(roster_name:)
       player.assign_attributes(map_from_csv(row))
       player.save!
     end

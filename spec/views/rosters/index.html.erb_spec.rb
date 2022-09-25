@@ -20,19 +20,19 @@ RSpec.describe "rosters/index", type: :view do
     let(:team) { Fabricate(:team) }
 
     let!(:level1_roster) do
-      Fabricate(:roster, team: team, player: second_baseman, level: 1,
+      Fabricate(:roster, team:, player: second_baseman, level: 1,
                          position: 3)
     end
     let!(:level2_roster) do
-      Fabricate(:roster, team: team, player: center_fielder, level: 2,
+      Fabricate(:roster, team:, player: center_fielder, level: 2,
                          position: 7)
     end
     let!(:level4_roster1) do
-      Fabricate(:roster, team: team, player: starting_pitcher, level: 4,
+      Fabricate(:roster, team:, player: starting_pitcher, level: 4,
                          position: 1)
     end
     let!(:level4_roster2) do
-      Fabricate(:roster, team: team, player: relief_pitcher, level: 4,
+      Fabricate(:roster, team:, player: relief_pitcher, level: 4,
                          position: 10)
     end
 

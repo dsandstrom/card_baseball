@@ -7,20 +7,20 @@ RSpec.describe "teams/show", type: :view do
   let(:user) { Fabricate(:user) }
   let(:team_user) { Fabricate(:user) }
   let(:league) { Fabricate(:league) }
-  let(:team) { Fabricate(:team, league: league) }
+  let(:team) { Fabricate(:team, league:) }
   let(:player) { Fabricate(:player) }
 
   context "for an admin" do
     before { enable_can(view, admin) }
 
     before(:each) do
-      Fabricate(:contract, player: player, team: team)
+      Fabricate(:contract, player:, team:)
       @league = assign(:league, league)
       @players = assign(:players, team.players)
     end
 
     context "when team has no user" do
-      let(:team) { Fabricate(:team, league: league, user: nil) }
+      let(:team) { Fabricate(:team, league:, user: nil) }
 
       before(:each) do
         @team = assign(:team, team)
@@ -55,7 +55,7 @@ RSpec.describe "teams/show", type: :view do
     end
 
     context "when team has a user" do
-      let(:team) { Fabricate(:team, league: league, user: team_user) }
+      let(:team) { Fabricate(:team, league:, user: team_user) }
 
       before { assign(:team, team) }
 
@@ -71,13 +71,13 @@ RSpec.describe "teams/show", type: :view do
     before { enable_can(view, user) }
 
     before(:each) do
-      Fabricate(:contract, player: player, team: team)
+      Fabricate(:contract, player:, team:)
       @league = assign(:league, league)
       @players = assign(:players, team.players)
     end
 
     context "when team belongs to a different user" do
-      let(:team) { Fabricate(:team, league: league, user: team_user) }
+      let(:team) { Fabricate(:team, league:, user: team_user) }
 
       before { assign(:team, team) }
 
@@ -116,7 +116,7 @@ RSpec.describe "teams/show", type: :view do
     end
 
     context "when team belongs to the user" do
-      let(:team) { Fabricate(:team, league: league, user: user) }
+      let(:team) { Fabricate(:team, league:, user:) }
 
       before(:each) do
         @team = assign(:team, team)

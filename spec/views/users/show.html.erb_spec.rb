@@ -6,7 +6,7 @@ RSpec.describe "users/show", type: :view do
   let(:admin) { Fabricate(:admin) }
   let(:user) { Fabricate(:user) }
   let(:another_user) { Fabricate(:user) }
-  let(:first_team) { Fabricate(:team, user: user) }
+  let(:first_team) { Fabricate(:team, user:) }
   let(:second_team) { Fabricate(:team, user: another_user) }
 
   before(:each) do

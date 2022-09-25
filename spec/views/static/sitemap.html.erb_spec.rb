@@ -7,7 +7,7 @@ RSpec.describe "static/sitemap", type: :view do
   let(:league) { Fabricate(:league) }
 
   before do
-    Fabricate(:team, league: league)
+    Fabricate(:team, league:)
     enable_can(view, user)
     assign(:leagues, [league])
   end

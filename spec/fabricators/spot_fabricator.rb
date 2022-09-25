@@ -19,7 +19,7 @@ Fabricator(:spot) do
       else
         Fabricate(:hitter)
       end
-    Fabricate(:roster, player: player, team: attrs[:lineup].team, level: 4,
+    Fabricate(:roster, player:, team: attrs[:lineup].team, level: 4,
                        position: player.primary_position)
     player
   end

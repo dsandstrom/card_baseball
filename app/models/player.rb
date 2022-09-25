@@ -251,7 +251,7 @@ class Player < ApplicationRecord # rubocop:disable Metrics/ClassLength
     self.roster_name = last_name
     return if first_name.blank?
 
-    while Player.find_by(roster_name: roster_name)
+    while Player.find_by(roster_name:)
 
       prefix = first_name[0..range]
       self.roster_name = "#{prefix}.#{last_name}"

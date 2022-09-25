@@ -4,8 +4,8 @@ require "rails_helper"
 
 RSpec.describe "lineups/index", type: :view do
   let(:team) { Fabricate(:team) }
-  let(:first_lineup) { Fabricate(:lineup, team: team) }
-  let(:second_lineup) { Fabricate(:lineup, team: team) }
+  let(:first_lineup) { Fabricate(:lineup, team:) }
+  let(:second_lineup) { Fabricate(:lineup, team:) }
   let(:admin) { Fabricate(:admin) }
   let(:user) { Fabricate(:user) }
 
@@ -55,7 +55,7 @@ RSpec.describe "lineups/index", type: :view do
 
     context "when their team" do
       let(:team) { Fabricate(:team, user_id: user.id) }
-      let(:lineup) { Fabricate(:lineup, team: team) }
+      let(:lineup) { Fabricate(:lineup, team:) }
 
       before(:each) do
         assign(:team, team)
@@ -97,7 +97,7 @@ RSpec.describe "lineups/index", type: :view do
 
     context "when not their team" do
       let(:team) { Fabricate(:team) }
-      let(:lineup) { Fabricate(:lineup, team: team) }
+      let(:lineup) { Fabricate(:lineup, team:) }
 
       before(:each) do
         assign(:team, team)

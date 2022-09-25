@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe "teams/edit", type: :view do
   let(:league) { Fabricate(:league) }
-  let(:team) { Fabricate(:team, league: league) }
+  let(:team) { Fabricate(:team, league:) }
   let(:path) { league_team_path(league, team) }
 
   before(:each) do

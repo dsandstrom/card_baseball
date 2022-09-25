@@ -10,7 +10,7 @@ class Seeds
       team_quantity.times do
         name = Faker::Team.unique.creature.titleize
         identifier = Faker::Team.unique.mascot.gsub(/[\s.,]/, '')[0..2].upcase
-        league.teams.create!(name: name, identifier: identifier)
+        league.teams.create!(name:, identifier:)
       end
     end
   end
@@ -42,10 +42,10 @@ class Seeds
       next if team.hitters.count >= 15
 
       (2..8).each do |position|
-        add_hitters(team: team, quanity: 2, position: position)
+        add_hitters(team:, quanity: 2, position:)
       end
 
-      add_hitters(team: team, quanity: 1, position: 7)
+      add_hitters(team:, quanity: 1, position: 7)
     end
   end
 
@@ -53,14 +53,14 @@ class Seeds
     Team.all.each do |team|
       next if team.pitchers.count >= 10
 
-      add_pitchers(team: team, quanity: 5, type: 'S')
-      add_pitchers(team: team, quanity: 6, type: 'R')
+      add_pitchers(team:, quanity: 5, type: 'S')
+      add_pitchers(team:, quanity: 6, type: 'R')
     end
   end
 
   def add_contract(player, team)
     contract = player.build_contract(
-      team: team,
+      team:,
       length: rand(Contract::LENGTH_OPTIONS)
     )
     contract.save!
@@ -69,8 +69,8 @@ class Seeds
   def add_users(quanity = 1)
     quanity.times do
       name = Faker::Name.unique.name
-      User.create!(name: name,
-                   email: Faker::Internet.unique.safe_email(name: name),
+      User.create!(name:,
+                   email: Faker::Internet.unique.safe_email(name:),
                    password: 'password', password_confirmation: 'password')
     end
   end
