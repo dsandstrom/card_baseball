@@ -46,6 +46,8 @@ class Roster < ApplicationRecord
 
   ranks :row_order, with_same: %w[team_id level position]
 
+  # CLASS
+
   def self.level_positions(level)
     if level == 4
       [2, 3, 4, 5, 6, 7, 8, 1, 10]
@@ -69,6 +71,16 @@ class Roster < ApplicationRecord
       POSITION_MAP[position][:name]
     end
   end
+
+  def self.position_from_initials(initials, level)
+    if level == 4
+      (POSITION_MAP_LEVEL4.find { |_, v| v[:initials] == initials }).first
+    else
+      (POSITION_MAP.find { |_, v| v[:initials] == initials }).first
+    end
+  end
+
+  # INSTANCE
 
   def position_initials
     @position_initials ||= Roster.position_initials(position, level)

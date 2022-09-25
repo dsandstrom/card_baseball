@@ -1227,6 +1227,93 @@ RSpec.describe Roster, type: :model do
     end
   end
 
+  describe ".position_from_initials" do
+    context "when given 4 for level" do
+      context "and 'SP' for initials" do
+        it "returns 1" do
+          expect(described_class.position_from_initials("SP", 4)).to eq(1)
+        end
+      end
+
+      context "and 'C' for initials" do
+        it "returns 2" do
+          expect(described_class.position_from_initials("C", 4)).to eq(2)
+        end
+      end
+
+      context "and '1B' for initials" do
+        it "returns 3" do
+          expect(described_class.position_from_initials("1B", 4)).to eq(3)
+        end
+      end
+
+      context "and '2B' for initials" do
+        it "returns 4" do
+          expect(described_class.position_from_initials("2B", 4)).to eq(4)
+        end
+      end
+
+      context "and '3B' for initials" do
+        it "returns 5" do
+          expect(described_class.position_from_initials("3B", 4)).to eq(5)
+        end
+      end
+
+      context "and 'SS' for initials" do
+        it "returns 6" do
+          expect(described_class.position_from_initials("SS", 4)).to eq(6)
+        end
+      end
+
+      context "and 'OF' for initials" do
+        it "returns 7" do
+          expect(described_class.position_from_initials("OF", 4)).to eq(7)
+        end
+      end
+
+      context "and 'CF' for initials" do
+        it "returns 8" do
+          expect(described_class.position_from_initials("CF", 4)).to eq(8)
+        end
+      end
+
+      context "and 'RP' for initials" do
+        it "returns 10" do
+          expect(described_class.position_from_initials("RP", 4)).to eq(10)
+        end
+      end
+    end
+
+    [1, 2, 3].each do |level|
+      context "when given #{level} for level" do
+        context "and 'SP' for initials" do
+          it "returns 1" do
+            expect(described_class.position_from_initials("SP", level)).to eq(1)
+          end
+        end
+
+        context "and 'IF' for initials" do
+          it "returns 3" do
+            expect(described_class.position_from_initials("IF", level)).to eq(3)
+          end
+        end
+
+        context "and 'OF' for initials" do
+          it "returns 7" do
+            expect(described_class.position_from_initials("OF", level)).to eq(7)
+          end
+        end
+
+        context "and 'RP' for initials" do
+          it "returns 10" do
+            expect(described_class.position_from_initials("RP", level))
+              .to eq(10)
+          end
+        end
+      end
+    end
+  end
+
   # INSTANCE
 
   describe "#position_initials" do
