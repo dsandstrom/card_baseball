@@ -80,6 +80,20 @@ class Roster < ApplicationRecord
     end
   end
 
+  def self.imported_attrs(imported_position)
+    if imported_position.match?(/\A1A\d\z/)
+      { level: 1,
+        row_order_position: (imported_position.sub(/\A1A/, '').to_i - 1) }
+    else
+      matches = imported_position.match(/\A(?:(\d)A)?(\w{1,2})(\d)\z/)
+      return unless matches && matches.size == 4
+
+      level = matches[1]&.to_i || 4
+      { level:, position: position_from_initials(matches[2], level),
+        row_order_position: (matches[3].to_i - 1) }
+    end
+  end
+
   # INSTANCE
 
   def position_initials

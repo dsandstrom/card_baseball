@@ -1314,6 +1314,286 @@ RSpec.describe Roster, type: :model do
     end
   end
 
+  describe ".imported_attrs" do
+    context "when given 'SP1'" do
+      it "returns level 4, position 1, row_order_position 0" do
+        expect(described_class.imported_attrs("SP1"))
+          .to eq(level: 4, position: 1, row_order_position: 0)
+      end
+    end
+
+    context "when given 'SP2'" do
+      it "returns level 4, position 1, row_order_position 1" do
+        expect(described_class.imported_attrs("SP2"))
+          .to eq(level: 4, position: 1, row_order_position: 1)
+      end
+    end
+
+    context "when given 'SP5'" do
+      it "returns level 4, position 1, row_order_position 4" do
+        expect(described_class.imported_attrs("SP5"))
+          .to eq(level: 4, position: 1, row_order_position: 4)
+      end
+    end
+
+    context "when given 'C1'" do
+      it "returns level 4, position 2, row_order_position 0" do
+        expect(described_class.imported_attrs("C1"))
+          .to eq(level: 4, position: 2, row_order_position: 0)
+      end
+    end
+
+    context "when given 'C2'" do
+      it "returns level 4, position 2, row_order_position 1" do
+        expect(described_class.imported_attrs("C2"))
+          .to eq(level: 4, position: 2, row_order_position: 1)
+      end
+    end
+
+    context "when given '1B1'" do
+      it "returns level 4, position 3, row_order_position 0" do
+        expect(described_class.imported_attrs("1B1"))
+          .to eq(level: 4, position: 3, row_order_position: 0)
+      end
+    end
+
+    context "when given '1B2'" do
+      it "returns level 4, position 3, row_order_position 1" do
+        expect(described_class.imported_attrs("1B2"))
+          .to eq(level: 4, position: 3, row_order_position: 1)
+      end
+    end
+
+    context "when given '2B1'" do
+      it "returns level 4, position 4, row_order_position 0" do
+        expect(described_class.imported_attrs("2B1"))
+          .to eq(level: 4, position: 4, row_order_position: 0)
+      end
+    end
+
+    context "when given '2B2'" do
+      it "returns level 4, position 1, row_order_position 1" do
+        expect(described_class.imported_attrs("2B2"))
+          .to eq(level: 4, position: 4, row_order_position: 1)
+      end
+    end
+
+    context "when given '3B1'" do
+      it "returns level 4, position 5, row_order_position 0" do
+        expect(described_class.imported_attrs("3B1"))
+          .to eq(level: 4, position: 5, row_order_position: 0)
+      end
+    end
+
+    context "when given '3B2'" do
+      it "returns level 4, position 5, row_order_position 1" do
+        expect(described_class.imported_attrs("3B2"))
+          .to eq(level: 4, position: 5, row_order_position: 1)
+      end
+    end
+
+    context "when given 'SS1'" do
+      it "returns level 4, position 6, row_order_position 0" do
+        expect(described_class.imported_attrs("SS1"))
+          .to eq(level: 4, position: 6, row_order_position: 0)
+      end
+    end
+
+    context "when given 'SS2'" do
+      it "returns level 4, position 6, row_order_position 1" do
+        expect(described_class.imported_attrs("SS2"))
+          .to eq(level: 4, position: 6, row_order_position: 1)
+      end
+    end
+
+    context "when given 'OF1'" do
+      it "returns level 4, position 7, row_order_position 0" do
+        expect(described_class.imported_attrs("OF1"))
+          .to eq(level: 4, position: 7, row_order_position: 0)
+      end
+    end
+
+    context "when given 'OF2'" do
+      it "returns level 4, position 7, row_order_position 1" do
+        expect(described_class.imported_attrs("OF2"))
+          .to eq(level: 4, position: 7, row_order_position: 1)
+      end
+    end
+
+    context "when given 'CF1'" do
+      it "returns level 4, position 8, row_order_position 0" do
+        expect(described_class.imported_attrs("CF1"))
+          .to eq(level: 4, position: 8, row_order_position: 0)
+      end
+    end
+
+    context "when given 'CF2'" do
+      it "returns level 4, position 8, row_order_position 1" do
+        expect(described_class.imported_attrs("CF2"))
+          .to eq(level: 4, position: 8, row_order_position: 1)
+      end
+    end
+
+    context "when given 'RP1'" do
+      it "returns level 4, position 1, row_order_position 0" do
+        expect(described_class.imported_attrs("RP1"))
+          .to eq(level: 4, position: 10, row_order_position: 0)
+      end
+    end
+
+    context "when given 'RP2'" do
+      it "returns level 4, position 1, row_order_position 1" do
+        expect(described_class.imported_attrs("RP2"))
+          .to eq(level: 4, position: 10, row_order_position: 1)
+      end
+    end
+
+    context "when given '2ASP1'" do
+      it "returns level 2, position 1, row_order_position 0" do
+        expect(described_class.imported_attrs("2ASP1"))
+          .to eq(level: 2, position: 1, row_order_position: 0)
+      end
+    end
+
+    context "when given '2ASP2'" do
+      it "returns level 2, position 1, row_order_position 1" do
+        expect(described_class.imported_attrs("2ASP2"))
+          .to eq(level: 2, position: 1, row_order_position: 1)
+      end
+    end
+
+    context "when given '2AIF1'" do
+      it "returns level 2, position 3, row_order_position 0" do
+        expect(described_class.imported_attrs("2AIF1"))
+          .to eq(level: 2, position: 3, row_order_position: 0)
+      end
+    end
+
+    context "when given '2AIF2'" do
+      it "returns level 2, position 3, row_order_position 1" do
+        expect(described_class.imported_attrs("2AIF2"))
+          .to eq(level: 2, position: 3, row_order_position: 1)
+      end
+    end
+
+    context "when given '2AOF1'" do
+      it "returns level 2, position 7, row_order_position 0" do
+        expect(described_class.imported_attrs("2AOF1"))
+          .to eq(level: 2, position: 7, row_order_position: 0)
+      end
+    end
+
+    context "when given '2AOF2'" do
+      it "returns level 2, position 7, row_order_position 1" do
+        expect(described_class.imported_attrs("2AOF2"))
+          .to eq(level: 2, position: 7, row_order_position: 1)
+      end
+    end
+
+    context "when given '2ARP1'" do
+      it "returns level 2, position 10, row_order_position 0" do
+        expect(described_class.imported_attrs("2ARP1"))
+          .to eq(level: 2, position: 10, row_order_position: 0)
+      end
+    end
+
+    context "when given '2ARP2'" do
+      it "returns level 2, position 10, row_order_position 1" do
+        expect(described_class.imported_attrs("2ARP2"))
+          .to eq(level: 2, position: 10, row_order_position: 1)
+      end
+    end
+
+    context "when given '3ASP1'" do
+      it "returns level 3, position 1, row_order_position 0" do
+        expect(described_class.imported_attrs("3ASP1"))
+          .to eq(level: 3, position: 1, row_order_position: 0)
+      end
+    end
+
+    context "when given '3ASP2'" do
+      it "returns level 3, position 1, row_order_position 1" do
+        expect(described_class.imported_attrs("3ASP2"))
+          .to eq(level: 3, position: 1, row_order_position: 1)
+      end
+    end
+
+    context "when given '3AIF1'" do
+      it "returns level 3, position 3, row_order_position 0" do
+        expect(described_class.imported_attrs("3AIF1"))
+          .to eq(level: 3, position: 3, row_order_position: 0)
+      end
+    end
+
+    context "when given '3AIF2'" do
+      it "returns level 3, position 3, row_order_position 1" do
+        expect(described_class.imported_attrs("3AIF2"))
+          .to eq(level: 3, position: 3, row_order_position: 1)
+      end
+    end
+
+    context "when given '3AOF1'" do
+      it "returns level 3, position 7, row_order_position 0" do
+        expect(described_class.imported_attrs("3AOF1"))
+          .to eq(level: 3, position: 7, row_order_position: 0)
+      end
+    end
+
+    context "when given '3AOF2'" do
+      it "returns level 3, position 7, row_order_position 1" do
+        expect(described_class.imported_attrs("3AOF2"))
+          .to eq(level: 3, position: 7, row_order_position: 1)
+      end
+    end
+
+    context "when given '3ARP1'" do
+      it "returns level 3, position 10, row_order_position 0" do
+        expect(described_class.imported_attrs("3ARP1"))
+          .to eq(level: 3, position: 10, row_order_position: 0)
+      end
+    end
+
+    context "when given '3ARP2'" do
+      it "returns level 3, position 10, row_order_position 1" do
+        expect(described_class.imported_attrs("3ARP2"))
+          .to eq(level: 3, position: 10, row_order_position: 1)
+      end
+    end
+
+    context "when given '1A1'" do
+      it "returns level 1, position nil, row_order_position 0" do
+        expect(described_class.imported_attrs("1A1"))
+          .to eq(level: 1, row_order_position: 0)
+      end
+    end
+
+    context "when given '1A2'" do
+      it "returns level 1, position nil, row_order_position 1" do
+        expect(described_class.imported_attrs("1A2"))
+          .to eq(level: 1, row_order_position: 1)
+      end
+    end
+
+    context "when given '1A6'" do
+      it "returns level 1, position nil, row_order_position 5" do
+        expect(described_class.imported_attrs("1A6"))
+          .to eq(level: 1, row_order_position: 5)
+      end
+    end
+
+    context "when given 'X'" do
+      it "returns nil" do
+        expect(described_class.imported_attrs("X")).to be_nil
+      end
+    end
+
+    context "when given '1AX'" do
+      it "returns nil" do
+        expect(described_class.imported_attrs("1AX")).to be_nil
+      end
+    end
+  end
+
   # INSTANCE
 
   describe "#position_initials" do
