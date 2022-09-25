@@ -63,7 +63,7 @@ RSpec.describe ContractsImporter, type: :class do
         end
       end
 
-      context "when the hitter is already on a different team" do
+      context "and the hitter is already on a different team" do
         let(:original_team) { Fabricate(:team) }
         let(:pitcher_row) do
           "#{second_team.identifier},#{pitcher.primary_position}," \
