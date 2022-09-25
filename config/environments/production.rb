@@ -140,8 +140,8 @@ Rails.application.configure do
     address: 'smtp.gmail.com',
     port: 587,
     domain: 'task-roller.net',
-    user_name: ENV['EMAIL_USER_NAME'],
-    password: ENV['EMAIL_PASSWORD'],
+    user_name: ENV.fetch('EMAIL_USER_NAME', nil),
+    password: ENV.fetch('EMAIL_PASSWORD', nil),
     authentication: 'plain',
     enable_starttls_auto: true
   }

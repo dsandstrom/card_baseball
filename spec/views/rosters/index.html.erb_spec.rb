@@ -304,13 +304,13 @@ RSpec.describe "rosters/index", type: :view do
         render
 
         assert_select "#rosters_team_#{first_team.id}_level_1_position_1"
-        assert_select "#rosters_team_#{first_team.id}_level_1_position_3 "\
+        assert_select "#rosters_team_#{first_team.id}_level_1_position_3 " \
                       "#roster_#{level1_roster.id}"
-        assert_select "#rosters_team_#{second_team.id}_level_2_position_7 "\
+        assert_select "#rosters_team_#{second_team.id}_level_2_position_7 " \
                       "#roster_#{level2_roster.id}"
-        assert_select "#rosters_team_#{second_team.id}_level_4_position_1 "\
+        assert_select "#rosters_team_#{second_team.id}_level_4_position_1 " \
                       "#roster_#{level4_roster1.id}"
-        assert_select "#rosters_team_#{first_team.id}_level_4_position_10 "\
+        assert_select "#rosters_team_#{first_team.id}_level_4_position_10 " \
                       "#roster_#{level4_roster2.id}"
       end
 
@@ -334,13 +334,13 @@ RSpec.describe "rosters/index", type: :view do
         render
 
         assert_select "#rosters_team_#{first_team.id}_level_1_position_1"
-        assert_select "#rosters_team_#{first_team.id}_level_1_position_3 "\
+        assert_select "#rosters_team_#{first_team.id}_level_1_position_3 " \
                       "#roster_#{level1_roster.id}"
-        assert_select "#rosters_team_#{second_team.id}_level_2_position_7 "\
+        assert_select "#rosters_team_#{second_team.id}_level_2_position_7 " \
                       "#roster_#{level2_roster.id}"
-        assert_select "#rosters_team_#{second_team.id}_level_4_position_1 "\
+        assert_select "#rosters_team_#{second_team.id}_level_4_position_1 " \
                       "#roster_#{level4_roster1.id}"
-        assert_select "#rosters_team_#{first_team.id}_level_4_position_10 "\
+        assert_select "#rosters_team_#{first_team.id}_level_4_position_10 " \
                       "#roster_#{level4_roster2.id}"
       end
 
