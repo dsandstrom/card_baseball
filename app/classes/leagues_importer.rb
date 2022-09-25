@@ -3,12 +3,10 @@
 require 'csv'
 
 class LeaguesImporter
-  FILE_PATH = %w[tmp csv leagues.csv].freeze
-
   attr_accessor :csv_file
 
   def initialize
-    self.csv_file = File.read(File.join(FILE_PATH))
+    self.csv_file = File.read(file_path)
   end
 
   def import
@@ -22,4 +20,16 @@ class LeaguesImporter
       League.find_or_create_by!(name:)
     end
   end
+
+  private
+
+    def file_path
+      dir_path =
+        if Rails.env.test?
+          %w[tmp test csv].freeze
+        else
+          %w[tmp csv].freeze
+        end
+      File.join(dir_path, 'leagues.csv')
+    end
 end
