@@ -3,12 +3,10 @@
 require 'csv'
 
 class TeamsImporter
-  FILE_PATH = %w[tmp csv teams.csv].freeze
-
   attr_accessor :csv_file
 
   def initialize
-    self.csv_file = File.read(File.join(FILE_PATH))
+    self.csv_file = File.read(file_path)
   end
 
   def import
@@ -25,4 +23,16 @@ class TeamsImporter
       team.save!
     end
   end
+
+  private
+
+    def file_path
+      dir_path =
+        if Rails.env.test?
+          %w[tmp test csv].freeze
+        else
+          %w[tmp csv].freeze
+        end
+      File.join(dir_path, 'teams.csv')
+    end
 end
