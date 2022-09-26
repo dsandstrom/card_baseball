@@ -26,6 +26,12 @@ jobs:
           --health-timeout 5s
           --health-retries 5
 
+    env:
+      RAILS_ENV: test
+      PGHOST: localhost
+      PG_USERNAME: postgres
+      PG_PASSWORD: postgres
+
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
@@ -36,9 +42,6 @@ jobs:
       uses: ruby/setup-ruby@v1
       with:
         ruby-version: 3.1.2
-
-    # - name: Install PostgreSQL
-    #   run: sudo apt-get -yqq install libpq-dev
 
     - name: Setup Bundler cache
       uses: actions/cache@v2
@@ -55,19 +58,9 @@ jobs:
         bundle install --jobs 4 --retry 3
 
     - name: Setup Database
-      env:
-        RAILS_ENV: test
-        PGHOST: localhost
-        PG_USERNAME: postgres
-        PG_PASSWORD: postgres
       run: |
         bin/rails db:prepare
 
     - name: Run RSpec tests
       run: |
         bundle exec rspec spec/
-
-    # - name: Upload Sarif output
-    #   uses: github/codeql-action/upload-sarif@v1
-    #   with:
-    #     sarif_file: tmp/rubocop.sarif
