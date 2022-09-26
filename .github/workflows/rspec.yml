@@ -1,4 +1,4 @@
-name: RSpec Tests
+name: RSpec
 
 on: [push, pull_request]
 
@@ -10,7 +10,7 @@ jobs:
 
     services:
       postgres:
-        image: postgres:12.12
+        image: postgres:12
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: ""
