@@ -12,6 +12,8 @@ class ContractsImporter
   def import
     return unless csv_file
 
+    Roster.destroy_all
+
     csv = CSV.parse(csv_file, headers: true)
     csv.each do |row|
       contract = save_contract(row)

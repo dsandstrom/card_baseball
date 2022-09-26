@@ -25,7 +25,7 @@ RSpec.describe ContractsImporter, type: :class do
     FileUtils.mkdir_p(dir_path)
   end
 
-  after(:each) { File.delete(file_path) }
+  after(:each) { FileUtils.rm_f(file_path) }
 
   describe "#import" do
     subject { described_class.new }
@@ -197,64 +197,58 @@ RSpec.describe ContractsImporter, type: :class do
         it "changes majors1 catcher roster's team" do
           expect do
             subject.import
-            majors1_catcher.roster.reload
-          end.to change(majors1_catcher.roster, :team).to(first_team)
+            majors1_catcher.reload
+          end.to change(majors1_catcher, :team).to(first_team)
         end
 
         it "doesn't change majors1 catcher roster's position" do
-          expect do
-            subject.import
-            majors1_catcher.roster.reload
-          end.not_to change(majors1_catcher.roster, :position)
+          subject.import
+
+          expect(majors1_catcher.roster.position).to eq(2)
         end
 
         it "doesn't change majors1 catcher roster's row_order_rank" do
-          expect do
-            subject.import
-            majors1_catcher.roster.reload
-          end.not_to change(majors1_catcher.roster, :row_order_rank)
+          subject.import
+
+          expect(majors1_catcher.roster.row_order_rank).to eq(0)
         end
 
         it "doesn't change majors2 catcher roster's team" do
           expect do
             subject.import
-            majors2_catcher.roster.reload
-          end.not_to change(majors2_catcher.roster, :team)
+            majors2_catcher.reload
+          end.not_to change(majors2_catcher, :team)
         end
 
         it "doesn't change majors2 catcher roster's position" do
-          expect do
-            subject.import
-            majors2_catcher.roster.reload
-          end.not_to change(majors2_catcher.roster, :position)
+          subject.import
+
+          expect(majors2_catcher.roster.position).to eq(2)
         end
 
         it "changes majors2 catcher roster's row_order_rank" do
-          expect do
-            subject.import
-            majors2_catcher.roster.reload
-          end.to change(majors2_catcher.roster, :row_order_rank).to(1)
+          subject.import
+
+          expect(majors2_catcher.roster.row_order_rank).to eq(1)
         end
 
         it "doesn't change aa catcher roster's team" do
           expect do
             subject.import
-            aa_catcher.roster.reload
-          end.not_to change(aa_catcher.roster, :team)
+            aa_catcher.reload
+          end.not_to change(aa_catcher, :team)
         end
 
         it "doesn't change aa catcher roster's position" do
-          expect do
-            subject.import
-            aa_catcher.roster.reload
-          end.not_to change(aa_catcher.roster, :position)
+          subject.import
+
+          expect(aa_catcher.roster.position).to eq(3)
         end
 
         it "doesn't change aa catcher roster's row_order_rank" do
-          expect do
-            subject.import
-            aa_catcher.roster.reload
-          end.not_to change(aa_catcher.roster, :row_order_rank)
+          subject.import
+
+          expect(aa_catcher.roster.row_order_rank).to eq(0)
         end
       end
 
@@ -437,6 +431,80 @@ RSpec.describe ContractsImporter, type: :class do
           expect do
             subject.import
           end.to change(Spot, :count).by(-1)
+        end
+      end
+    end
+
+    context "when team has a full Majors roster" do
+      let(:catcher1) { Fabricate(:hitter, primary_position: 2) }
+      let(:catcher2) { Fabricate(:hitter, primary_position: 2) }
+      let(:catcher3) { Fabricate(:hitter, primary_position: 2) }
+      let(:first_base1) { Fabricate(:hitter, primary_position: 3) }
+      let(:first_base2) { Fabricate(:hitter, primary_position: 3) }
+      let(:second_base1) { Fabricate(:hitter, primary_position: 4) }
+      let(:second_base2) { Fabricate(:hitter, primary_position: 4) }
+      let(:third_base1) { Fabricate(:hitter, primary_position: 5) }
+      let(:third_base2) { Fabricate(:hitter, primary_position: 5) }
+      let(:shortstop1) { Fabricate(:hitter, primary_position: 6) }
+      let(:shortstop2) { Fabricate(:hitter, primary_position: 6) }
+      let(:outfielder1) { Fabricate(:hitter, primary_position: 7) }
+      let(:outfielder2) { Fabricate(:hitter, primary_position: 7) }
+      let(:outfielder3) { Fabricate(:hitter, primary_position: 7) }
+      let(:centerfielder1) { Fabricate(:hitter, primary_position: 8) }
+      let(:centerfielder2) { Fabricate(:hitter, primary_position: 8) }
+      let(:starter1) { Fabricate(:starting_pitcher, primary_position: 1) }
+      let(:starter2) { Fabricate(:starting_pitcher, primary_position: 1) }
+      let(:starter3) { Fabricate(:starting_pitcher, primary_position: 1) }
+      let(:starter4) { Fabricate(:starting_pitcher, primary_position: 1) }
+      let(:starter5) { Fabricate(:starting_pitcher, primary_position: 1) }
+      let(:reliever1) { Fabricate(:starting_pitcher, primary_position: 1) }
+      let(:reliever2) { Fabricate(:starting_pitcher, primary_position: 1) }
+      let(:reliever3) { Fabricate(:starting_pitcher, primary_position: 1) }
+      let(:reliever4) { Fabricate(:starting_pitcher, primary_position: 1) }
+      let(:reliever5) { Fabricate(:starting_pitcher, primary_position: 1) }
+      let(:aaa_catcher) { Fabricate(:hitter, primary_position: 2) }
+
+      let(:players) do
+        [catcher1, catcher2, catcher3, first_base1, first_base2,
+         second_base1, second_base2, third_base1, third_base2,
+         shortstop1, shortstop2, outfielder1, outfielder2, outfielder3,
+         centerfielder1, centerfielder2,
+         starter1, starter2, starter3, starter4, starter5,
+         reliever1, reliever2, reliever3, reliever4, reliever5]
+      end
+
+      let(:aaa_catcher_row) do
+        "#{first_team.identifier},C1,#{aaa_catcher.name}," \
+          "#{aaa_catcher.roster_name},10"
+      end
+
+      let(:rows) do
+        [header, aaa_catcher_row]
+      end
+
+      before do
+        players.each do |player|
+          Fabricate(:contract, player:, team: first_team)
+          Fabricate(:roster, team: first_team, player:, level: 4,
+                             position: player.primary_position)
+        end
+        Fabricate(:contract, player: aaa_catcher, team: first_team)
+        Fabricate(:roster, team: first_team, player: aaa_catcher, level: 3,
+                           position: 3)
+
+        CSV.open(file_path, "w") do |csv|
+          rows.each do |row|
+            csv << row.split(",")
+          end
+        end
+      end
+
+      context "and a player moves from level 3 to 4" do
+        it "changes the player's roster level" do
+          subject.import
+          aaa_catcher.reload
+
+          expect(aaa_catcher.roster.level).to eq(4)
         end
       end
     end
