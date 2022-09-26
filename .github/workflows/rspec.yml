@@ -1,0 +1,72 @@
+name: RSpec Tests
+
+on: [push, pull_request]
+
+jobs:
+  rspec:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+
+    services:
+      postgres:
+        image: postgres:12.12
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: ""
+          POSTGRES_DB: postgres
+        ports:
+          - 5432:5432
+        # needed because the postgres container does not provide a healthcheck
+        # tmpfs makes DB faster by using RAM
+        options: >-
+          --mount type=tmpfs,destination=/var/lib/postgresql/data
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    # If running on a self-hosted runner, check it meets the requirements
+    # listed at https://github.com/ruby/setup-ruby#using-self-hosted-runners
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 3.1.2
+
+    - name: Install PostgreSQL
+      run: sudo apt-get -yqq install libpq-dev
+
+    - name: Setup Bundler cache
+      uses: actions/cache@v2
+      with:
+        path: vendor/bundle
+        key: bundle-use-ruby-${{ matrix.os }}-${{ matrix.ruby }}-${{ hashFiles('**/Gemfile.lock') }}
+        restore-keys: |
+          bundle-use-ruby-${{ matrix.os }}-${{ matrix.ruby }}-
+
+    - name: Install gems with Bundler
+      run: |
+        bundle config deployment true
+        bundle config path vendor/bundle
+        bundle install --jobs 4 --retry 3
+
+    - name: Setup Database
+      env:
+        RAILS_ENV: test
+        PGHOST: localhost
+        PGUSER: postgres
+      run: |
+        bin/rails db:prepare
+
+    - name: Run RSpec tests
+      run: |
+        bundle exec rspec spec/
+
+    # - name: Upload Sarif output
+    #   uses: github/codeql-action/upload-sarif@v1
+    #   with:
+    #     sarif_file: tmp/rubocop.sarif
