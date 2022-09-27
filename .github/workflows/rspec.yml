@@ -59,6 +59,16 @@ jobs:
       run: |
         bin/rails db:create db:schema:load
 
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '14.x'
+        cache: 'yarn'
+
+    - name: Install Yarn
+      run: |
+        yarn install
+
     - name: Run RSpec tests
       run: |
         bundle exec rspec spec/
