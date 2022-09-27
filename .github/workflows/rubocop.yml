@@ -22,18 +22,18 @@ jobs:
       run: bundle add code-scanning-rubocop --version 0.5.0 --skip-install
 
     - name: Setup Bundler cache
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       with:
         path: vendor/bundle
-        key: bundle-use-ruby-${{ matrix.os }}-${{ matrix.ruby }}-${{ hashFiles('**/Gemfile.lock') }}
+        key: bundle-use-ruby-Linux-${{ hashFiles('**/Gemfile.lock') }}
         restore-keys: |
-          bundle-use-ruby-${{ matrix.os }}-${{ matrix.ruby }}-
+          bundle-use-ruby-Linux-
 
     - name: Install gems with Bundler
       run: |
         bundle config deployment true
         bundle config path vendor/bundle
-        bundle install --jobs 4
+        bundle install --jobs 4 --retry 3
 
     - name: Rubocop run
       run: |

@@ -45,9 +45,9 @@ jobs:
       uses: actions/cache@v3
       with:
         path: vendor/bundle
-        key: bundle-use-ruby-${{ matrix.os }}-${{ matrix.ruby }}-${{ hashFiles('**/Gemfile.lock') }}
+        key: bundle-use-ruby-Linux-${{ hashFiles('**/Gemfile.lock') }}
         restore-keys: |
-          bundle-use-ruby-${{ matrix.os }}-${{ matrix.ruby }}-
+          bundle-use-ruby-Linux-
 
     - name: Install gems with Bundler
       run: |
