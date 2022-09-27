@@ -45,7 +45,7 @@ RSpec.describe League, type: :model do
       before { allow(league).to receive(:row_order_rank) { nil } }
 
       it "returns false" do
-        expect(league.first?).to  eq(false)
+        expect(league.first?).to eq(false)
       end
     end
   end
