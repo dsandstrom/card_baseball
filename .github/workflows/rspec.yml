@@ -34,17 +34,15 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
     # If running on a self-hosted runner, check it meets the requirements
     # listed at https://github.com/ruby/setup-ruby#using-self-hosted-runners
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: 3.1.2
 
     - name: Setup Bundler cache
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       with:
         path: vendor/bundle
         key: bundle-use-ruby-${{ matrix.os }}-${{ matrix.ruby }}-${{ hashFiles('**/Gemfile.lock') }}
@@ -60,6 +58,16 @@ jobs:
     - name: Setup Database
       run: |
         bin/rails db:prepare
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '14.x'
+        cache: 'yarn'
+
+    - name: Install Yarn
+      run: |
+        yarn install
 
     - name: Run RSpec tests
       run: |
