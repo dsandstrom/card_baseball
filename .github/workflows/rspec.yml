@@ -57,7 +57,7 @@ jobs:
 
     - name: Setup Database
       run: |
-        bin/rails db:setup
+        bin/rails db:create db:schema:load
 
     - name: Setup Node.js
       uses: actions/setup-node@v3
