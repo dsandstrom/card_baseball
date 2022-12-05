@@ -1,0 +1,22 @@
+#!/usr/bin/env ruby
+
+ENV["RAILS_ENV"] ||= ENV["RACK_ENV"] || "production"
+
+url = ARGV[0]
+if url.blank?
+  puts 'missing url'
+  return
+end
+
+app_dir = File.join('app')
+import_dir = File.join('app', 'tmp', 'csv')
+
+Dir.chdir(import_dir) do
+  exec 'echo $(pwd)'
+  wget url
+end
+
+Dir.chdir(app_dir) do
+  exec 'echo $(pwd)'
+  exec "RAILS_ENV=#{ENV["RAILS_ENV"]} bin/rake import:contracts"
+end

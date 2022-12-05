@@ -1,0 +1,12 @@
+#!/usr/bin/env ruby
+
+ENV["RAILS_ENV"] ||= ENV["RACK_ENV"] || "production"
+
+upload_source = File.join('tmp', 'csv')
+upload_url = nil
+
+Dir.chdir(upload_source) do
+  upload_url = %x[curl --upload-file contracts.csv https://transfer.sh/]
+end
+
+puts upload_url
