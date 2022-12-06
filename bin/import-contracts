@@ -1,5 +1,7 @@
 #!/usr/bin/env ruby
 
+require 'fileutils'
+
 ENV["RAILS_ENV"] ||= ENV["RACK_ENV"] || "production"
 
 url = ARGV[0]
