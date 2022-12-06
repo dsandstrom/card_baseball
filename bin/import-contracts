@@ -11,6 +11,7 @@ end
 app_dir = File.join('app')
 import_dir = File.join('app', 'tmp', 'csv')
 
+FileUtils.mkdir_p import_dir
 Dir.chdir(import_dir) do
   exec 'echo $(pwd)'
   wget url
