@@ -17,4 +17,9 @@ Dir.chdir(import_dir) do
   exec "wget #{url}"
 end
 
+unless File.exists?(File.join(import_dir, 'contracts.csv'))
+  puts 'missing csv file'
+  return
+end
+
 exec "RAILS_ENV=#{ENV["RAILS_ENV"]} bin/rake import:contracts"
