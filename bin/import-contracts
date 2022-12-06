@@ -15,11 +15,9 @@ import_dir = File.join('app', 'tmp', 'csv')
 
 FileUtils.mkdir_p import_dir
 Dir.chdir(import_dir) do
-  exec 'echo $(pwd)'
   wget url
 end
 
 Dir.chdir(app_dir) do
-  exec 'echo $(pwd)'
   exec "RAILS_ENV=#{ENV["RAILS_ENV"]} bin/rake import:contracts"
 end
