@@ -3,7 +3,7 @@
 ENV["RAILS_ENV"] ||= ENV["RACK_ENV"] || "production"
 
 url = ARGV[0]
-if url.blank?
+unless url
   puts 'missing url'
   return
 end
