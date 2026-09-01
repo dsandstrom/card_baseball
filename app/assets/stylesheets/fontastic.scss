@@ -15,14 +15,14 @@
 [data-icon]::before {
   content: attr(data-icon);
   font-family: 'task-roller';
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
   font-style: normal;
   font-variant: normal;
   font-weight: normal;
   line-height: 1;
   text-transform: none;
   speak: none;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
 }
 
 [class^='icon-'],
@@ -30,14 +30,14 @@
 .fa {
   &::before {
     font-family: 'task-roller';
-    -moz-osx-font-smoothing: grayscale;
-    -webkit-font-smoothing: antialiased;
     font-style: normal;
     font-variant: normal;
     font-weight: normal;
     line-height: 1;
     text-transform: none;
     speak: none;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
   }
 }
 
